@@ -12,4 +12,5 @@
 **방만들기, 공연방, 마이페이지 디자인**
 
 
-
+[피그마 - 메인 컴포넌트](https://www.figma.com/file/v8qBijnIsIbPMszFFpyHJY/D203-%EA%B3%B5%ED%86%B5-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B8%B0%ED%9A%8D-%2F-%EC%84%A4%EA%B3%84?type=design&node-id=97-2&mode=design&t=Bg1RpnLPTiOwcygL-0)
+[노션 - 명세서](https://www.notion.so/50f64ce1013e458aa26b51ec58425cc7)
