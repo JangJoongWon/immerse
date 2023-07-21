@@ -37,6 +37,23 @@
     - 색상 배합
 - 서비스 네임
 
+## 2023.07.20
+- API 명세 작성
+- 목업 작성
+    - 메인 페이지
+    - 로그인 / 회원가입 컴포넌트
+- 팀워크 향상 교육 참여
+    - 더 높은 수준의 소통이 필요
+
+## 2023.07.21
+- 와이어 프레임 수정
+- 디자인 컨셉 구상
+- 목업 작성
+    - 마이 페이지
+    - 방만들기
+    - 검색 페이지
+    
+| 소통을 더 잘 해야 할 필요가 있음
 
 [피그마 - 메인 컴포넌트](https://www.figma.com/file/v8qBijnIsIbPMszFFpyHJY/D203-%EA%B3%B5%ED%86%B5-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B8%B0%ED%9A%8D-%2F-%EC%84%A4%EA%B3%84?type=design&node-id=97-2&mode=design&t=Bg1RpnLPTiOwcygL-0)
 [노션 - 명세서](https://www.notion.so/50f64ce1013e458aa26b51ec58425cc7)
