@@ -57,3 +57,35 @@
 
 [피그마 - 메인 컴포넌트](https://www.figma.com/file/v8qBijnIsIbPMszFFpyHJY/D203-%EA%B3%B5%ED%86%B5-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B8%B0%ED%9A%8D-%2F-%EC%84%A4%EA%B3%84?type=design&node-id=97-2&mode=design&t=Bg1RpnLPTiOwcygL-0)
 [노션 - 명세서](https://www.notion.so/50f64ce1013e458aa26b51ec58425cc7)
+
+
+## 2023.07.24
+- 메인페이지 제작
+    - 기능 위주로 제작
+        - 배너
+        - 카테고리별 공연 출력
+        - live, reserved 상태에 따라 출력
+- NavBar 제작
+    - 모양과 버튼만 입력
+
+## 2023.07.25
+- NavBar 로그인, 회원가입 제작
+    - 모달 생성
+    - 인풋박스, 버튼 생성
+    - 색상 및 디자인 변경
+- router
+    - 페이지 별로 router 주소 제작
+
+## 2023.07.26
+- 마이페이지 기능 위주로 제작
+- 공연 카드 컴포넌트 제작
+- 공연 리스트 컴포넌트 제작
+- 채널 카드 컴포넌트 제작
+- redux 공부 및 생성
+
+## 2023.07.27
+- 공연 정보 컴포넌트 제작
+- CSS 모듈화
+- 마이페이지 탭 제작
+
+
