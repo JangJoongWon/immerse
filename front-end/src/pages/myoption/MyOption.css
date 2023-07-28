@@ -1,0 +1,66 @@
+.maintitle {
+    color: white;
+    text-shadow: 0 0 1rem rgba(255, 255, 255, 0.5);
+    text-align: center;
+
+}
+
+.background {
+    background:#121212;
+    padding: 5rem;
+
+}
+
+
+.head-title {
+    color: #FFF;
+    text-align: center;
+    font-family: Mulish;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.04rem;
+}
+
+.passwordchang-background {
+    width: 75rem;
+    height: 25rem;
+    flex-shrink: 0;
+
+    border-radius: 0.5rem;
+    border: 1px solid #FFF;
+    background: #000;
+    box-shadow: 0 0 1rem rgba(255, 255, 255, 0.5); 
+    margin: 5rem;
+}
+
+.nicknamechange-background {
+    width: 75rem;
+    height: 8rem;
+    flex-shrink: 0;
+
+    border-radius: 0.5rem;
+    border: 1px solid #FFF;
+    background: #121212;
+    box-shadow: 0 0 1rem rgba(255, 255, 255, 0.5); 
+    margin: 5rem;
+}
+
+.input-bar {
+    width: 30rem;
+    height: 4rem;
+    flex-shrink: 0;
+
+    
+    border-radius: 0.5rem;
+    border: 1px solid #FFF;
+    background: #121212;
+    margin: 2rem;
+    color : white;
+}
+
+input::placeholder{
+    color: rgba(255, 255, 255, 0.60);
+}
+

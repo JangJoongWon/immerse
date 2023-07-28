@@ -1,0 +1,47 @@
+.poster {
+    width: 300px;
+    height: 360px;
+    border-radius: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  .stage-card-component {
+    position: relative;
+    overflow: hidden;
+    /* Add other styles for your card component */
+  }
+  
+  
+  .hover-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Black overlay */
+    padding: 10px;
+    opacity: 0;
+    transform: translateY(100%); /* Move the content out of view initially */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  .stage-card-component:hover .poster {
+    transform: scale(1.5); /* Scale the image when hovered */
+  }
+  
+  .stage-card-component:hover .hover-content {
+    opacity: 1;
+    transform: translateY(0); /* Move the content back into view when hovered */
+  }
+  
+  .hover-content h3 {
+    color: white;
+    font-size: 18px;
+  }
+  
+  .hover-content button {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  
