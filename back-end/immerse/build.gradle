@@ -35,6 +35,9 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.12'
+
+    // OpenVidu
+    implementation 'io.openvidu:openvidu-java-client:2.23.0'
 }
 
 tasks.named('test') {
