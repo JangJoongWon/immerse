@@ -1,39 +1,84 @@
 // import { useState } from 'react';
-import './MyPage.css';
+import { Row, Col } from 'react-bootstrap';
+import styles from './MyPage.module.css';
 import MypageTabbox from "../../components/mypagetapbox/MyPageTabBox"
 
 function MyPage() {
 
   return (
-    <div className='mypage-container'>
-      {/* Mypage Banner */}
-      <div className='mypage-banner'>
-        <img className='mypage-banner-img' src="../public/icons/travel.jpg" alt="" />
-      </div>
-
-      {/* User Info Section */}
-      <div className='user-info'>
-        <div className="mypage-user-left">
-          <img className="mypage-user-img" src="../public/icons/totoro2.jpg" alt="" />
+      <div className={styles.container}>
+        {/* Mypage Banner */}
+        <div className={styles.banner}>
+          <img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="" />
         </div>
-
-        <div className='mypage-user-center'>
-          <div className="mypage-user-text">
-            <h1></h1>
-            <h3></h3>
-            <div className='mypage-user-box'>
-              <p>집에 가고 싶어요. 집에 가고 싶어요.
-                 집에 가고 싶어요</p>
+        {/* User Info Section */}
+        <Row>
+          <div className={styles.userinfo}>
+            <Col sm={1}>
+            </Col>
+            <Col sm={3}>
+              <div className={styles.userleft}>
+                <div 
+                className='m-3'>
+                  <img className={styles.userimg} src="../public/icons/totoro2.jpg" alt="" />
+                </div>
+              </div>
+            </Col>
+            <Col sm={3}
+              className={styles.usercenter}>
+              <div>
+                <Row sm={1}
+                className={styles.outline}>
+                  <div
+                  className={styles.username}
+                  >
+                    유저아이디
+                  </div>
+                  <div
+                  className={styles.email}
+                  >
+                    이메일
+                  </div>
+                </Row>
+                <Row sm={1}
+                className={styles.outline}>
+                  <div>
+                    <div className="mypage-user-text">
+                      <h1></h1>
+                      <h3></h3>
+                      <div className={styles.userbox}>
+                        <p 
+                        className='m-2'
+                        >집에 가고 싶어요. 집에 가고 싶어요.
+                          집에 가고 싶어요 집에 가고 싶어요
+                          집에 가고 싶어요
+                          집에 가고 싶어요
+                          집에 가고 싶어요
+                          집에 가고 싶어요
+                          집에 가고 싶어요
+                          집에 가고 싶어요</p>
+                      </div>
+                    </div>
+                  </div>
+                </Row>
+              </div>
+            </Col>
+            <Col sm={2}>
+            </Col>
+            <Col sm={3}>
+            <div className={styles.userright}>
+              <button 
+              className={styles.scribe}
+              >구독</button>
             </div>
-          </div>
-        </div>
+            </Col>
 
-        <div className='mypage-user-right'>
-          <button>구독</button>
-        </div>
+          </div>
+        </Row>
+        <Row >
+          <MypageTabbox />
+        </Row>
       </div>
-      <MypageTabbox />
-    </div>
   );
 }
 

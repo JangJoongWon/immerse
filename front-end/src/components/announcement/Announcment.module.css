@@ -1,0 +1,47 @@
+.container{
+    background-color: #121212;
+    border: red 2px solid;
+}
+
+.box {
+    background-color: #31363B;
+    box-shadow: 0 0 1rem rgba(255,255,255,00.5rem);
+    margin: 1%;
+    color:white;
+    /* border : 0.1rem solid white; */
+    border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+    width: 60%;
+    margin-left: 5%;
+    border: 2px white solid ;
+
+}
+
+.nickname{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 1rem white;
+    border: 2px solid blue;
+}
+
+.title{
+}
+
+.content{
+    border: 2px solid blueviolet;
+}
+
+.middle{
+    border: 2px solid yellow;
+}
+
+.left{
+    border: 2px solid violet;
+}
+
+.profile_img {
+    width: 65%;
+    border-radius: 60%;
+    margin: 10%;
+    max-width: 100%;
+    border: 2px solid green;
+}

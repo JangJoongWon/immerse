@@ -1,9 +1,14 @@
 // import React from 'react'
-import './Stage.css'
+import styles from './Stage.module.css'
+import StageInfo from "../../components/cards/StageInfo"
 
 function Stage() {
   return (
-    <div>Stage</div>
+    <div className={styles.container}>
+      <div>
+        <StageInfo />
+      </div>
+    </div>
   )
 }
 

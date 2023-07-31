@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import './stagecard.css'
+import styles from './stagecard.module.css'
+import { Button } from 'react-bootstrap'
 
 
 // import React from 'react'
@@ -17,19 +18,21 @@ function StageCard({ data }) {
   
     return (
       <div
-        className='stage-card-component'
+        className={styles.component}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <img
-          className="poster"
+          className={styles.poster}
           src={`https://image.tmdb.org/t/p/original/${data.fields.poster_path}`}
           alt="None"
         />
         {hovered && (
-          <div className="hover-content">
+          <div className={styles.content}>
             <h3>{data.fields.title}</h3>
-            <button>버튼</button>
+            <div className={styles.button}>
+              <Button variant="light">버튼</Button>
+            </div>
           </div>
         )}
       </div>
