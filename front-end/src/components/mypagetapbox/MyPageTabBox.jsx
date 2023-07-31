@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import ChannelCard from '../cards/ChannelCard'
-
-
+import Announcement from '../announcement/Announcement';
+import GuestBook from '../guestbook/GuestBook';
+import PerformanceRecord from '../performance record/PerformanceRecord';
 function MyPageTabBox() {
   
   const [selectTab, setSelectTab] = useState('home');
@@ -34,6 +35,7 @@ function MyPageTabBox() {
           {selectTab === 'record' && (
             <div className='mypage-tap-stage-record'>
               <h1>공연기록</h1>
+              <PerformanceRecord user_id={1}/>
             </div>
           )}
           {selectTab === 'plan' && (
@@ -44,6 +46,7 @@ function MyPageTabBox() {
           {selectTab === 'review' && (
             <div className='mypage-tap-review'>
               <h1>방명록</h1>
+              <GuestBook user_id={1} />
             </div>
           )}
           {selectTab === 'sub' && (
@@ -55,6 +58,7 @@ function MyPageTabBox() {
           {selectTab === 'ann' && (
             <div className='mypage-tap-announcement'>
               <h1>공지사항</h1>
+              <Announcement user_id={1} nickname={"집에가고싶은토토로"}/>
             </div>
           )}
         </div>

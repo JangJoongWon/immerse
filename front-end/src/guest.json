@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "nickname": "토토로",
+      "email": "ssafy@ssafy.com",
+      "content": "오늘은 콘서트 멋졌어요"
+    },
+    {
+      "nickname": "무닌",
+      "email": "ssafy@ssafy.com",
+      "content": "즐거웠어요"
+    },
+    {
+      "nickname": "사다함",
+      "email": "ssafy@ssafy.com",
+      "content": "다음 공연이 기다려져요"
+    },
+    {
+      "nickname": "너구리",
+      "email": "ssafy@ssafy.com",
+      "content": "행복해요"
+    }
+  ]
+}
