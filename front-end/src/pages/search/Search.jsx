@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TagSearchButton from '../../components/button/TagSearchButton';
 import SearchHistoryButton from '../../components/button/SearchHistoryButton';
+import SearchList from '../../components/searchlist/SearchList'
 // import { Button } from 'react-bootstrap';
 
 function Search() {
@@ -47,6 +48,9 @@ function Search() {
       ))} */}
       <SearchHistoryButton user_id={1} updateSearchInput={updateSearchInput} searchInput={searchInput} />
       <TagSearchButton user_id={1} updateSearchFilters={updateSearchFilters} searchInput={searchInput} />
+      <div>
+        <SearchList/>
+      </div>
     </div>
   );
 }
