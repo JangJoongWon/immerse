@@ -1,0 +1,11 @@
+.container {
+    background-color: black;
+}
+
+.banner {
+    width: 100%;
+}
+
+.list {
+    border: 1px solid red;
+}

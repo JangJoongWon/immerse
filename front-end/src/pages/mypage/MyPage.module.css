@@ -1,0 +1,75 @@
+.container {
+    background-color: #121212;
+
+}
+
+.bannerimg {
+    width: 100%;
+    height: 300px;
+}
+
+.userimg {
+    width: 90%;
+    border-radius: 100%;
+}
+
+.username {
+    color: #FFF;
+    text-shadow: 0 0 0.5rem #FFF;
+    font-size: 1.5rem;
+}
+
+.email {
+    color: #FFF;
+}
+
+
+.userinfo {
+    display: flex;
+    border-radius: 5px;
+    color: #FFF;
+    border: 1px solid white;
+}
+
+.userbox {
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.userleft {
+    /* border: 1px solid red; */
+}
+
+.usercenter {
+    text-align: start;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    /* border: 1px solid blue; */
+  }
+
+  .userright {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid yellow; */
+    height: 100%;
+  }
+
+  .mypage-tap-all {
+    /* border: 1px solid white; */
+  }
+
+  .mypage-outline {
+    /* border: 1px solid violet; */
+  }
+
+  .scribe{
+    border: 1rem solid white;
+    box-shadow: 0 0 1rem white;
+    border-radius: 20%;
+    color : black;
+    background: white;
+
+
+  }

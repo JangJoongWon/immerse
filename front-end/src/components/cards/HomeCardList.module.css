@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.box {
+    width: 100%;
+    border: 1px solid white;
+}
+
+.boxcover {
+    width: 90%;
+    border: 1px solid blue;
+}
+
+.totalbox {
+    width : 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.stagelist {
+    width: 90%;
+}
