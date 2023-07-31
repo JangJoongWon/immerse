@@ -32,7 +32,7 @@ function SignUp() {
     const isGenderValid = (selectedGender) => {
       // 여기에 성별 유효성 검사 로직을 구현합니다.
       // 예시: 남성 또는 여성 중 하나를 선택해야 유효하다고 가정합니다.
-      return selectedGender === '남' || selectedGender === '여';
+      return selectedGender === 'M' || selectedGender === 'F';
     };
 
     const isNameValid = (name) => {
@@ -92,13 +92,13 @@ function SignUp() {
         setBirth(e.target.value);
       };
 
-      const data = {email: email,
-                    password: password1,
-                    name: name,
-                    gender: gender,
-                    nickname: nickname,
-                    phoneNumber: phone,
-                    birthday: birth}
+      const data = {"email": email,
+                    "password": password1,
+                    "name": name,
+                    "gender": gender,
+                    "nickname": nickname,
+                    "phoneNumber": phone,
+                    "birthday": birth}
 
       const onSubmitHandler = async (event) => {
         // 버튼만 누르면 리로드 되는것을 막아줌
@@ -174,8 +174,8 @@ function SignUp() {
                                   <Form.Select
                                   onChange={handleGenderChange}>
                                     <option>Select Gender</option>
-                                    <option value="남">남</option>
-                                    <option value="여">여</option>
+                                    <option value="M">남</option>
+                                    <option value="F">여</option>
                                   </Form.Select>
                                   {!isGenderValid(gender) && <div className={styles.error}>성별을 선택해 주세요.</div>}
                                 </Form.Group>
