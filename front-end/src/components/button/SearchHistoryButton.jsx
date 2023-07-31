@@ -4,7 +4,7 @@ import styles from './SearchHistoryButton.module.css';
 
 function SearchHistoryButton(props) {
   const { user_id, updateSearchInput } = props;
-  const selected_search_histories = search_histories.data.filter((history) => user_id == history.user_id);
+  const selected_search_histories = search_histories.data.filter((history) => user_id === history.user_id);
 
   return (
     <div style={{ border: "2px solid red" }} className={styles.container}>
