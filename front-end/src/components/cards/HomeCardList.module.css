@@ -20,5 +20,19 @@
 }
 
 .stagelist {
-    width: 90%;
+    width: 100%;
+    border: 1px solid green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
+
+.carousel {
+    width: 90%;
+    margin-bottom: 30px;
+  }
+
+  .selectbutton {
+    
+  }

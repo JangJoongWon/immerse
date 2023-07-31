@@ -45,14 +45,24 @@ function cardList({genre}) {
           <div className="bar">
             <h1 >{genre}</h1>
             <div className="stage-button">
-                <Button onClick={handleLiveButtonClick}>Live</Button>
-                <Button onClick={handleReserveButtonClick}>Reserve</Button>
+                <Button 
+                  onClick={handleLiveButtonClick}
+                  variant="outline-light"
+                  className={styles.selectbutton}>
+                    Live
+                  </Button>
+                <Button 
+                  onClick={handleReserveButtonClick}
+                  variant="outline-light"
+                  className={styles.selectbutton}>
+                    Reserve
+                  </Button>
             </div>
           </div>
 
           <div className={styles.totalbox}>
               <div className={styles.stagelist}>
-                <Slider {...settings}>
+                <Slider {...settings} className={styles.carousel}>
                   {liveData.map((item) => {
                     if (item.fields.genre === genre) {
                       return (
