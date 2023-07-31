@@ -4,24 +4,31 @@ import com.sandcastle.immerse.model.dto.user.UserSigninRequest;
 import com.sandcastle.immerse.model.dto.user.UserSignupRequest;
 import com.sandcastle.immerse.model.entity.UserEntity;
 import com.sandcastle.immerse.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final BCryptPasswordEncoder encoder;
 
     @Transactional
     public UserSignupRequest signupUser(UserSignupRequest user) {
-        UserEntity userEntity = user.toEntity();
+        UserEntity userEntity = UserEntity.builder()
+                .email(user.getEmail())
+                .password(encoder.encode(user.getPassword()))
+                .name(user.getName())
+                .gender(user.getGender())
+                .nickname(user.getNickname())
+                .birthday(user.getBirthday())
+                .phoneNumber(user.getPhoneNumber())
+                .build();
         userRepository.save(userEntity);
         return user;
     }
@@ -40,4 +47,5 @@ public class UserService {
 
         return userEntity.updateStatusWithdrawal();
     }
+
 }

@@ -92,7 +92,7 @@ function SignUp() {
 
         try {
           // 서버로 회원가입 데이터 전송
-          const response = await axios.post('API주소', data);
+          const response = await axios.post('http://localhost:8080/user/signup', data);
     
           // 서버로부터 응답 받은 데이터 처리
           console.log('Signup success:', response.data);
