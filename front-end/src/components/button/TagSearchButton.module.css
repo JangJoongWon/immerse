@@ -1,17 +1,18 @@
 .container {
     border: 2px solid red;
-    /* 다른 스타일들 */
   }
   
   .buttonContainer {
     display: flex;
-    flex-wrap: wrap; /* 버튼들을 자동으로 줄 바꿈합니다. */
-    justify-content: center; /* 가로 방향으로 버튼들을 가운데로 정렬합니다. */
-    gap: 10px; /* 버튼들 사이의 간격을 조정합니다. */
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 10px; 
   }
-  
   .button {
     border: 2px solid black;
-    /* 다른 버튼 스타일들 */
+  
   }
   
+  .active {
+    background-color: red; 
+  }
