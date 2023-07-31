@@ -121,6 +121,7 @@ function SignUp() {
       isEmailValid &&
       isPasswordValid &&
       isPassword2Valid &&
+      isNickValid &&
       isNameValid &&
       isPhoneValid &&
       isBirthValid;
@@ -223,7 +224,7 @@ function SignUp() {
                                 </Form.Group>
                             </div>
                         </div>
-                        {!isSubmitButtonActive ? (
+                        {isSubmitButtonActive ? (
                           <div className={styles.submitbutton}>
                             <Button type="submit">회원가입</Button>
                           </div>
