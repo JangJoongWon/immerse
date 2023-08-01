@@ -25,8 +25,9 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
-                .antMatchers("/user/signup", "/user/signin").permitAll()    // signup, signin은 언제나 가능
-                .anyRequest().authenticated()       // 위의 요청을 제외한 모든 요청은 인증 필요
+                .antMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
+                .antMatchers("/user/signup", "/user/signin").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt를 사용하는 경우
