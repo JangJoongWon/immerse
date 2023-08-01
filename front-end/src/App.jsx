@@ -21,23 +21,26 @@ function App() {
 
 
   return (
-        <div>
-          <Header />
-          <Router>
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path="/login" element={<SignIn />} />
-              {/* <Route path="/logout" element={<SignOut />} /> */}
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/stage" element={<Stage />} />
-              <Route path="/mypage" element={<Mypage />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/checkpassword" element={<Checkpassword />} />
-              <Route path="/*" element={<NotFound />} />
-              <Route path="/test" element={<Test />} />
-            </Routes>
-          </Router>
-        </div>
+    <Provider store={store}>
+      <div>
+        <Header />
+        <Router>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            {/* <Route path="/stage" element={<Stage />} /> */}
+            <Route path="/stage/:id" element={<Stage />} />
+
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/checkpassword" element={<Checkpassword />} />
+            <Route path="/*" element={<NotFound />} />
+            <Route path="/test" element={<Test />} />
+          </Routes>
+        </Router>
+      </div>
+    </Provider>
   )
 }
 
