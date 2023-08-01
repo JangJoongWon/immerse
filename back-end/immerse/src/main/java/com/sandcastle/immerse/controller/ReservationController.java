@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/reservation")
 @RequiredArgsConstructor
 public class ReservationController {
-    private final ReservationService;
+    private final ReservationService reservationService;
 
 //    @GetMapping("")
 
