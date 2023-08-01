@@ -6,6 +6,7 @@ import com.sandcastle.immerse.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,8 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signupUser(@RequestBody UserSignupRequest userSignupRequest) throws Exception {
-        return ResponseEntity.ok().body(userService.signupUser(userSignupRequest));
+        UserSignupRequest userSignupResponse = userService.signupUser(userSignupRequest);
+        return ResponseEntity.ok().body(userSignupResponse);
     }
 
     @PostMapping("/signin")
@@ -27,7 +29,6 @@ public class UserController {
 
     @PutMapping("/withdrawal/{userId}")
     public ResponseEntity<?> withdrawalUser(@PathVariable Long userId) {
-        System.out.println("userId : " + userId);
         return new ResponseEntity<Integer>(userService.withdrawal(userId), HttpStatus.OK);
     }
 
