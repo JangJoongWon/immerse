@@ -21,7 +21,6 @@ function App() {
 
 
   return (
-    <Provider store={store}>
       <div>
         <Header />
         <Router>
@@ -40,7 +39,6 @@ function App() {
           </Routes>
         </Router>
       </div>
-    </Provider>
   )
 }
 
