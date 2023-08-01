@@ -2,7 +2,7 @@
 import { Button, Row, Col } from "react-bootstrap";
 import styles from "./StageInfo.module.css"
 
-function StageInfo() {
+function StageInfo(props) {
   return (
     <div className={styles.container}>
         <div className={styles.box}>
@@ -17,13 +17,11 @@ function StageInfo() {
                 <Col xs={6}>
                     <div className={styles.right}>
                         <div className={styles.texts}>    
-                            <h1>info</h1>
-                            <h1>info</h1>
-                            <h1>info</h1>
-                            <h1>info</h1>
-                            <h1>info</h1>
-                            <h1>info</h1>
-                            <Button>입장하기</Button>
+                            <h1>{props.id} 의 공연</h1>
+                            <p>info</p>
+                            <Button
+                            onClick={props.joinSession}
+                            >입장하기</Button>
                         </div>
                     </div>
                 </Col>
