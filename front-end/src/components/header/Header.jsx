@@ -69,27 +69,31 @@ function Header() {
                     <HiOutlineSearch />
                 </Button>
               </Form>
-                
-                <Nav.Link href="/login" 
-                className='m-2'
-                style={{ color:"white" }}>
-                  LogIn
-                </Nav.Link>
 
-                <Nav.Link href="/signup"
-                className='m-2' 
-                style={{ color:"white" }}>
-                  SignUp
-                </Nav.Link>
+              {user ? (
+                <>
+                  <Nav.Link
+                    className='m-2'
+                    style={{ color: 'white', cursor: 'pointer' }}
+                    onClick={() => {dispatch(logOut());}}
+                  >
+                    LogOut
+                  </Nav.Link>
+                  <Nav.Link className='m-2' style={{ color: "white" }}>
+                    Profile
+                  </Nav.Link>
+                </>
+              ) : (
+                <>
+                  <Nav.Link href="/login" className='m-2' style={{ color: "white" }}>
+                    LogIn
+                  </Nav.Link>
+                  <Nav.Link href="/signup" className='m-2' style={{ color: "white" }}>
+                    SignUp
+                  </Nav.Link>
+                </>
+              )}
 
-                <Nav.Link
-                  className='m-2'
-                  style={{ color: 'white', cursor: 'pointer' }}
-                  onClick={() => {dispatch(logOut());}}>
-                  LogOut
-                </Nav.Link>
-
-                <p>{user}</p>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
