@@ -9,6 +9,10 @@ import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * @Entity 에 @builder 를 사용하는 것을 권장하지 않는 이유
+ * ID 는 생성자로 사용하지 안기 위해서
+ */
 @Entity
 @Getter
 @NoArgsConstructor

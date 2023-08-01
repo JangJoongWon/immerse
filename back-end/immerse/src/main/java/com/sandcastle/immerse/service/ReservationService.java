@@ -1,11 +1,14 @@
 package com.sandcastle.immerse.service;
 
+import com.sandcastle.immerse.model.entity.ReservationEntity;
 import com.sandcastle.immerse.repository.ReservationRepository;
 import com.sandcastle.immerse.repository.ShowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Service 클래스는 비즈니스 로직을 수행하는 클래스이다.
@@ -29,6 +32,18 @@ public class ReservationService {
      * readOnly : 트랜잭션을 읽기 전용으로 설정합니다. // default : false
      * timeout : 트랜잭션의 타임아웃을 지정합니다. // default : -1
      */
+    @Transactional
+    public List<ReservationEntity> findALLReservation() {
+        return reservationRepository.findAll();
+    }
+    //public List<CategoryEntity> findCategories() {
+    //		return categoryRepository.findAll();
+    //	}
+
+    @Transactional
+    public Optional<ReservationEntity> findByIdReservation(Long id){
+        return reservationRepository.findById(id);
+    }
 
 
 
