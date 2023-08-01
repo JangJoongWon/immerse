@@ -28,13 +28,14 @@ const Stage = () => {
     
     const user = useSelector((state) => state.user.token);
 
-    const getToken = async () => {
+    const getToken = async (isAuthor) => {
         try {
-            const sessionId = await createSession(id);
+            const sessionId = await (isAuthor ? createSession(id) : fetchSession(id));
             return await createToken(sessionId);
         }
         catch (e) {
             console.log(e);
+            throw e;
         }
     }
 
@@ -42,7 +43,27 @@ const Stage = () => {
         try {
             console.log('token: ' + user);
             const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/', {
-                 customSessionId: sessionId
+                    customSessionId: sessionId
+                }, {
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': 'Bearer ' + user
+                },
+            });
+            console.log(response.data);
+            return response.data; // The sessionId
+        }
+        catch (e) {
+            console.log(e);
+            throw e;
+        }
+    }
+
+    const fetchSession = async (sessionId) => {
+        try {
+            console.log('token: ' + user);
+            const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/' + sessionId + '/fetch', {
+                    customSessionId: sessionId
                 }, {
                 headers: { 
                     'Content-Type': 'application/json', 
@@ -60,7 +81,10 @@ const Stage = () => {
     const createToken = async (sessionId) => {
         try {
             const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/' + sessionId + '/connect', {}, {
-                headers: { 'Content-Type': 'application/json', },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + user
+                },
             });
             console.log(response.data);
             return response.data; // The token
@@ -75,16 +99,13 @@ const Stage = () => {
         let index = ls.indexOf(streamManager, 0);
         if (index > -1) {
             ls.splice(index, 1);
-            setSubscribers(ls);
+            setSubscribers([...ls]);
         }
     }
 
-    const joinSession = () => {
+    const joinSession = (isAuthor) => {
         const newOV = new OpenVidu();
         const newSession = newOV.initSession();
-
-        setOv(newOV);
-        setSession(newSession);
 
         // On every new Stream received...
         newSession.on('streamCreated', (event) => {
@@ -92,8 +113,10 @@ const Stage = () => {
             // so OpenVidu doesn't create an HTML video by its own
             let subscriber = newSession.subscribe(event.stream, undefined);
             let ls = subscribers;
+            console.log('-------stream created--------');
+            console.log(ls);
             ls.push(subscriber);
-            setSubscribers(ls);
+            setSubscribers([...ls]);
         });
 
         
@@ -109,9 +132,12 @@ const Stage = () => {
             console.warn(exception);
         });
 
-        getToken().then((token) => {
+        getToken(isAuthor).then((token) => {
             // First param is the token got from the OpenVidu deployment. Second param can be retrieved by every user on event
             // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
+            
+            console.log(token);
+
             newSession
             .connect(token, { clientData: 'test' })
             .then(async () => {
@@ -140,6 +166,9 @@ const Stage = () => {
                 setMainStreamManager(newPublisher);
                 setPublisher(newPublisher);
                 
+                setOv(newOV);
+                setSession(newSession);
+                
                 // Set the main video in the page to display our webcam and store our Publisher
                 // this.setState({
                 //     currentVideoDevice: currentVideoDevice,
@@ -154,9 +183,23 @@ const Stage = () => {
     }
 
     const leaveSession = async () => {
+        if (session) {
+            session.disconnect();
+        }
+
+        // Empty all properties...
+        setOv(null);
+        setSession(undefined);
+        setSubscribers([]);
+        setMainStreamManager(undefined);
+        setPublisher(undefined);
+        
         try {
             const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/' + id + '/disconnect', {}, {
-                headers: { 'Content-Type': 'application/json', },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + user
+                },
             });
             console.log(response.data);
             return response.data; // NO CONTENT
@@ -177,7 +220,6 @@ const Stage = () => {
     const switchCamera = () => {
 
     }
-
 
     return (
         <div className={styles.container}>

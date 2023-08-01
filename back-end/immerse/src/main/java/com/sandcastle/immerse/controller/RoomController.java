@@ -1,5 +1,6 @@
 package com.sandcastle.immerse.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -50,6 +51,14 @@ public class RoomController {
 		this.rooms = new ConcurrentHashMap<>();
 	}
 
+	/**
+	 * 방을 처음 만들 때 호출하는 함수
+	 * 공연자가 방에 connect 하기 전 호출함
+	 * @param params
+	 * @return
+	 * @throws OpenViduJavaClientException
+	 * @throws OpenViduHttpException
+	 */
 	@PostMapping("/")
 	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
 		throws OpenViduJavaClientException, OpenViduHttpException {
@@ -61,7 +70,30 @@ public class RoomController {
 		SessionProperties properties = SessionProperties.fromJson(params).build();
 		Session session = ov.createSession(properties);
 
-		rooms.put(sessionId, Room.builder().artist("anonymous").build());
+		rooms.put(sessionId, Room.builder()
+				.artist("anonymous")
+				.connections(0)
+				.build());
+
+		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
+	}
+
+	/**
+	 * 방의 정보를 fetch함
+	 * 관객이 방에 connect 하기 전 호출하여 정보를 갱신
+	 * @param sessionId
+	 * @param params
+	 * @return
+	 * @throws OpenViduJavaClientException
+	 * @throws OpenViduHttpException
+	 */
+	@PostMapping("/{sessionId}/fetch")
+	public ResponseEntity<String> fetchSession(@PathVariable("sessionId") String sessionId,
+			@RequestBody(required = false) Map<String, Object> params)
+			throws OpenViduJavaClientException, OpenViduHttpException {
+
+		SessionProperties properties = SessionProperties.fromJson(params).build();
+		Session session = ov.createSession(properties);
 
 		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
 	}
@@ -76,9 +108,14 @@ public class RoomController {
 		@RequestBody(required = false) Map<String, Object> params)
 		throws OpenViduJavaClientException, OpenViduHttpException {
 		Session session = ov.getActiveSession(sessionId);
+		System.out.println("session = " + session);
 		if (session == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		if (rooms.containsKey(sessionId)) {
+			rooms.get(sessionId).increaseConnection();
+		}
+
 		ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
 		Connection connection = session.createConnection(properties);
 		return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
@@ -113,6 +150,8 @@ public class RoomController {
 		@RequestBody(required = false) Map<String, Object> params)
 		throws OpenViduJavaClientException, OpenViduHttpException {
 		Session session = ov.getActiveSession(sessionId);
+		System.out.println(session);
+		System.out.println("---------disconnect---------");
 		if (session == null) {
 			System.out.println(sessionId + " terminated");
 			if (rooms.containsKey(sessionId)) {
@@ -120,9 +159,14 @@ public class RoomController {
 			}
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		session.fetch();
-		if (session.getActiveConnections().size() == 0) {
-			rooms.remove(sessionId);
+		// session.fetch();
+		// List<Connection> connections = session.getActiveConnections();
+		// System.out.println(connections.size());
+		// if (session.getActiveConnections().size() == 0)
+		if (rooms.containsKey(sessionId)) {
+			rooms.get(sessionId).decreaseConnection();
+			if (rooms.get(sessionId).getConnections() == 0)
+				rooms.remove(sessionId);
 		}
 
 		return new ResponseEntity<>("disconnected", HttpStatus.NO_CONTENT);
