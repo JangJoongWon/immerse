@@ -5,7 +5,7 @@ import GuestBook from '../guestbook/GuestBook';
 import PerformanceRecord from '../performancerecord/PerformanceRecord';
 import ReservationSchedule from '../reservationschedule/ReservationSchedule';
 import MyPageHome from '../mypagehome/MyPageHome';
-
+import styles from './MyPageTabBox.module.css'
 
 function MyPageTabBox() {
   
@@ -20,12 +20,37 @@ function MyPageTabBox() {
         {/* Tab Buttons */}
       <div className='mypage-tap-all'>
         <div className="mypage-tap-button-all">
-          <button onClick={() => changeSelectTab('home')}>홈</button>
-          <button onClick={() => changeSelectTab('record')}>공연 기록</button>
-          <button onClick={() => changeSelectTab('plan')}>공연 일정</button>
-          <button onClick={() => changeSelectTab('review')}>방명록</button>
-          <button onClick={() => changeSelectTab('sub')}>구독 정보</button>
-          <button onClick={() => changeSelectTab('ann')}>공지사항</button>
+          <span
+            className={`${styles.button} ${selectTab === 'home' ? styles.selectedButton : ''}`}
+            onClick={() => changeSelectTab('home')}
+          >
+            홈
+          </span>
+          <span 
+            className={`${styles.button} ${selectTab === 'record' ? styles.selectedButton : ''}`} 
+            onClick={() => changeSelectTab('record')}>
+            공연 기록
+          </span>
+          <span 
+            className={`${styles.button} ${selectTab === 'plan' ? styles.selectedButton : ''}`} 
+            onClick={() => changeSelectTab('plan')}>
+            공연 일정
+          </span>
+          <span 
+            className={`${styles.button} ${selectTab === 'review' ? styles.selectedButton : ''}`} 
+            onClick={() => changeSelectTab('review')}>
+              방명록
+          </span>
+          <span 
+            className={`${styles.button} ${selectTab === 'sub' ? styles.selectedButton : ''}`} 
+            onClick={() => changeSelectTab('sub')}>
+              구독 정보
+          </span>
+          <span 
+            className={`${styles.button} ${selectTab === 'ann' ? styles.selectedButton : ''}`} 
+            onClick={() => changeSelectTab('ann')}>
+              공지사항
+          </span>
         </div>
 
         {/* Tab Content */}

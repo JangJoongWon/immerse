@@ -6,25 +6,79 @@ function ReservationTicket({ data }) {
   return (
         <Row
             className={styles.box}>
-          <Col sm={9} className={styles.left}>
+          <Col sm={9} 
+            style={{
+              backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'top',
+            }}
+            className={styles.left}>
             <div
-              style={{
-                height: 0,
-                paddingBottom: '50%', /* 2:1 비율로 설정 (높이를 너비의 절반으로) */
-                backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`,
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-              }}
             >
-            <h4>
-                {data.fields.title}   
-            </h4>
+            <Row >
+              <Col sm={6}
+              className={`${styles.leftfont} ${styles.title}`}
+              >
+                {data.fields.title}
+              </Col>
+              <Col
+                style={{textAlign:"end"}} 
+                className={`${styles.leftfont} ${styles.logoname}`}
+                sm={6}>
+                <h5>Immerse</h5>
+              </Col>
+            </Row>
+            <Row >
+              <Col 
+                sm={6}
+                style={{alignItems:"end"}} 
+                >
+                <div
+                className={`${styles.leftfont} ${styles.date}`}
+                >  
+                  {data.fields.date.slice(6,10)}
+                </div>
+                <div
+                className={`${styles.leftfont} ${styles.time}`}>
+                  {data.fields.time}
+                </div>
+              </Col>
+              <Col sm={6}>
+
+              </Col>
+            </Row>
             </div>
           </Col>
           <Col sm={3} className={styles.right}>
             <div>
-              <h2>Free</h2>
+              <Row sm={3}>    
+                <h2
+                style={{color:"gold"}}
+                >Free
+                </h2>
+              </Row>
+              <Row>
+                <div
+                className={`${styles.rightfont} ${styles.date}`}
+                >  
+                  {data.fields.date.slice(6,10)}
+                </div>
+              </Row>
+              <Row>
+                <div
+                className={`${styles.rightfont} ${styles.time}`}>
+                  {data.fields.time}
+                </div>
+              </Row>
+              <Row sm={3}>
+                <div
+                className={styles.bacodebox}>
+                  <img 
+                  className={styles.bacode}
+                  src="../public/img/bacode.png" alt="bacode" />
+                </div>
+              </Row>
             </div>
           </Col>
         </Row>
