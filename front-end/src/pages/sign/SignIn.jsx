@@ -3,10 +3,12 @@ import { Form, Button } from 'react-bootstrap'
 import styles from './SignIn.module.css'
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../redux/userSlice'; // setToken 액션을 가져옴
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function SignIn() {
 
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,17 +32,12 @@ function SignIn() {
     try {
       // 서버로 이메일과 비밀번호를 전송하여 토큰 받기
       const response = await axios.post('http://i9d203.p.ssafy.io:8080/user/signin', data);
-      // console.log(data)
       console.log('Signin Info: ', response.config.data, 'Signin Token: ', response.data)
-      // console.log('Signin success:', response.data)
-
       const token = response.data; // 서버로부터 받은 토큰 값
-
-      // 토큰이 유효한 경우, 로그인 상태를 처리
       if (token) {
         dispatch(setToken(token)); // 토큰 값을 Redux 스토어에 저장하는 액션을 디스패치
         console.log('Login success! Token:', token);
-        
+        navigate('/',{replace:true});
       } else {
         console.log('Login failed: Invalid token');
       }
