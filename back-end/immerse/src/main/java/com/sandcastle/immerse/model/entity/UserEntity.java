@@ -16,7 +16,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
     private Long userId;
 
-    @Column(length = 20, unique = true)
+    @Column(length = 30, unique = true)
     private String email;
 
     @NotNull

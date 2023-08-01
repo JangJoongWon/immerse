@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sandcastle.immerse.model.dto.ShowListResponse;
-import com.sandcastle.immerse.model.dto.ShowRequest;
-import com.sandcastle.immerse.model.dto.ShowResponse;
+import com.sandcastle.immerse.model.dto.show.ShowListResponse;
+import com.sandcastle.immerse.model.dto.show.ShowRequest;
+import com.sandcastle.immerse.model.dto.show.ShowResponse;
 import com.sandcastle.immerse.model.entity.ShowEntity;
 import com.sandcastle.immerse.model.enums.ShowProgress;
 import com.sandcastle.immerse.repository.ShowRepository;
