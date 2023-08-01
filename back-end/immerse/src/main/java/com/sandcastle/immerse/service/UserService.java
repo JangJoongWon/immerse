@@ -53,7 +53,7 @@ public class UserService {
             throw new AppException(ErrorCode.INVALID_PASSWORD, "패스워드를 잘못 입력 했습니다.");
         }
 
-        String token = JwtUtil.createToken(selectedUser.getEmail(), key, expireTimeMs);
+        String token = JwtUtil.createToken(selectedUser.getUserId(), key, expireTimeMs);
 
         return token;
     }
