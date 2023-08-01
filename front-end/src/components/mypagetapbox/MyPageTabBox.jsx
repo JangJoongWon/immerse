@@ -2,7 +2,9 @@ import { useState } from 'react'
 import ChannelCard from '../cards/ChannelCard'
 import Announcement from '../announcement/Announcement';
 import GuestBook from '../guestbook/GuestBook';
-import PerformanceRecord from '../performance record/PerformanceRecord';
+import PerformanceRecord from '../performancerecord/PerformanceRecord';
+import ReservationSchedule from '../reservationschedule/ReservationSchedule';
+
 function MyPageTabBox() {
   
   const [selectTab, setSelectTab] = useState('home');
@@ -41,6 +43,7 @@ function MyPageTabBox() {
           {selectTab === 'plan' && (
             <div className='mypage-tap-stage-plan'>
               <h1>공연일정</h1>
+              <ReservationSchedule user_id={1}/>
             </div>
           )}
           {selectTab === 'review' && (
