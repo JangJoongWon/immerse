@@ -114,6 +114,7 @@ public class RoomController {
 		throws OpenViduJavaClientException, OpenViduHttpException {
 		Session session = ov.getActiveSession(sessionId);
 		if (session == null) {
+			System.out.println(sessionId + " terminated");
 			if (rooms.containsKey(sessionId)) {
 				rooms.remove(sessionId);
 			}

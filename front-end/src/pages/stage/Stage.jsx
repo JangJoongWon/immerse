@@ -10,6 +10,7 @@ import { Component } from 'react';
 import UserVideoComponent from '../../components/video/UserVideoComponent';
 import VideoMap from '../../components/video/VideoMap';
 import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 
 // const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://demos.openvidu.io/';
 // const APPLICATION_SERVER_URL = 'http://localhost:5000/';
@@ -24,6 +25,8 @@ const Stage = () => {
     const [subscribers, setSubscribers] = useState([]);
     const [publisher, setPublisher] = useState(undefined);
     const [mainStreamManager, setMainStreamManager] = useState(undefined);
+    
+    const user = useSelector((state) => state.user.token);
 
     const getToken = async () => {
         try {
@@ -32,13 +35,19 @@ const Stage = () => {
         }
         catch (e) {
             console.log(e);
-        };
+        }
     }
 
     const createSession = async (sessionId) => {
         try {
-            const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/', { customSessionId: sessionId }, {
-                headers: { 'Content-Type': 'application/json', },
+            console.log('token: ' + user);
+            const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/', {
+                 customSessionId: sessionId
+                }, {
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': 'Bearer ' + user
+                },
             });
             console.log(response.data);
             return response.data; // The sessionId
