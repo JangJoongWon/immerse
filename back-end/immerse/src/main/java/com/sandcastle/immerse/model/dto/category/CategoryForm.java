@@ -1,4 +1,4 @@
-package com.sandcastle.immerse.model.dto;
+package com.sandcastle.immerse.model.dto.category;
 
 import lombok.Getter;
 

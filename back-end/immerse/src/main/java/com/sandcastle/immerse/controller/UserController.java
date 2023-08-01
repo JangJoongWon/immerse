@@ -2,15 +2,11 @@ package com.sandcastle.immerse.controller;
 
 import com.sandcastle.immerse.model.dto.user.UserSigninRequest;
 import com.sandcastle.immerse.model.dto.user.UserSignupRequest;
-import com.sandcastle.immerse.model.entity.UserEntity;
 import com.sandcastle.immerse.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -19,13 +15,14 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signupUser(@RequestBody UserSignupRequest user) throws Exception {
-        return new ResponseEntity<UserSignupRequest>(userService.signupUser(user), HttpStatus.OK);
+    public ResponseEntity<?> signupUser(@RequestBody UserSignupRequest userSignupRequest) throws Exception {
+        return ResponseEntity.ok().body(userService.signupUser(userSignupRequest));
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signinUser(@RequestBody UserSigninRequest userLoginInfo) {
-        return new ResponseEntity<Optional<UserEntity>>(userService.signinUser(userLoginInfo), HttpStatus.OK);
+    public ResponseEntity<?> signinUser(@RequestBody UserSigninRequest userSigninRequest) {
+        String token = userService.signinUser(userSigninRequest);
+        return ResponseEntity.ok().body(token);
     }
 
     @PutMapping("/withdrawal/{userId}")
