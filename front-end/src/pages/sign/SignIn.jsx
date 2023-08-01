@@ -40,6 +40,7 @@ function SignIn() {
       if (token) {
         dispatch(setToken(token)); // 토큰 값을 Redux 스토어에 저장하는 액션을 디스패치
         console.log('Login success! Token:', token);
+        
       } else {
         console.log('Login failed: Invalid token');
       }
