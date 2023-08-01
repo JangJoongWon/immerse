@@ -42,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        // email token에서 꺼내기
+        // email을 token에서 꺼내기
         String email = JwtUtil.getEmail(token, secretKey);
 
         // 권한 부여

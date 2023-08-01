@@ -28,7 +28,10 @@ public class UserController {
     }
 
     @PutMapping("/withdrawal/{userId}")
-    public ResponseEntity<?> withdrawalUser(@PathVariable Long userId) {
+    public ResponseEntity<?> withdrawalUser(@PathVariable Long userId, Authentication authentication) {
+        System.out.println("111111111111111111111111111111111111111111111");
+        System.out.println("userId : " + authentication.getName());
+        System.out.println("222222222222222222222222222222222222222222222");
         return new ResponseEntity<Integer>(userService.withdrawal(userId), HttpStatus.OK);
     }
 
