@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sandcastle.immerse.model.dto.ShowListResponse;
-import com.sandcastle.immerse.model.dto.ShowRequest;
-import com.sandcastle.immerse.model.dto.ShowResponse;
+import com.sandcastle.immerse.model.dto.show.ShowListResponse;
+import com.sandcastle.immerse.model.dto.show.ShowRequest;
+import com.sandcastle.immerse.model.dto.show.ShowResponse;
 import com.sandcastle.immerse.service.ShowService;
 
 import lombok.RequiredArgsConstructor;
