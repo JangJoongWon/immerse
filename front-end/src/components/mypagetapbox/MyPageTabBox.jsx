@@ -4,6 +4,8 @@ import Announcement from '../announcement/Announcement';
 import GuestBook from '../guestbook/GuestBook';
 import PerformanceRecord from '../performancerecord/PerformanceRecord';
 import ReservationSchedule from '../reservationschedule/ReservationSchedule';
+import MyPageHome from '../mypagehome/MyPageHome';
+
 
 function MyPageTabBox() {
   
@@ -32,6 +34,9 @@ function MyPageTabBox() {
           {selectTab === 'home' && (
             <div className='mypage-tap-home'>
               <h1>홈</h1>
+              
+              <MyPageHome user_id={1}/>
+
             </div>
           )}
           {selectTab === 'record' && (

@@ -1,15 +1,28 @@
 import { useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import styles from './SignUp.module.css'
 import axios from "axios"
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../redux/userSlice'; // setToken 액션을 가져옴
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 function SignUp() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate();
+
+  const passwordRule = (
+    <Tooltip id="tooltip">
+      <strong>비밀번호 규칙</strong> 숫자, 영문자, 특수문자('!@#$%') 포함
+    </Tooltip>
+  )
+  
+  const phoneNumberRule = (
+    <Tooltip id="tooltip">
+      <strong>전화번호 규칙</strong> 하이픈('-') 없이 숫자만 입력
+    </Tooltip>
+  )
 
     const [email, setEmail] = useState('');
     const [password1, setPassword1] = useState('');
@@ -167,15 +180,12 @@ function SignUp() {
                             <div className={styles.leftside}>
                                 <Form.Group className={styles.inputform}>
                                   {/* {!isEmailValid(email) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
-                                  {isEmailValid(email) ? (
-                                    <div className={styles.error} style={{ color: 'blue' }}>
-                                      email
-                                    </div>
-                                  ) : (
-                                    <div className={styles.error} style={{ color: 'red' }}>
-                                      email
-                                    </div>
-                                  )}
+                                  <div
+                                    className={styles.error}
+                                    style={{ color: isEmailValid(email) ? 'blue' : 'red' }}
+                                  >
+                                    Email
+                                  </div>
                                   <Form.Control
                                   className={styles.inputbox}
                                   type="email"
@@ -185,16 +195,17 @@ function SignUp() {
                                   />
                                 </Form.Group>
                                 <Form.Group className={styles.inputform}>
-                                  {/* {!isPasswordValid(password1) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
-                                  {isPasswordValid(password1) ? (
-                                    <div className={styles.error} style={{ color: 'blue' }}>
-                                      password
-                                    </div>
-                                  ) : (
-                                    <div className={styles.error} style={{ color: 'red' }}>
-                                      password
-                                    </div>
-                                  )}
+                                  <div
+                                    className={styles.error}
+                                    style={{ color: isPasswordValid(password1) ? 'blue' : 'red' }}
+                                  >
+                                    Password 
+                                    <OverlayTrigger placement="top" overlay={passwordRule}>
+                                      <span>
+                                        <AiOutlineQuestionCircle bsStyle="default" style={{color: 'white'}}/>
+                                      </span>                            
+                                    </OverlayTrigger>
+                                  </div>
                                   <Form.Control
                                   className={styles.inputbox}
                                   type="password"
@@ -204,16 +215,12 @@ function SignUp() {
                                   />
                                 </Form.Group>
                                 <Form.Group className={styles.inputform}>
-                                  {/* {!isPassword2Valid(password2) && <div className={styles.error}>입력한 비밀번호가 다릅니다.</div>} */}
-                                  {isPassword2Valid(password2) ? (
-                                    <div className={styles.error} style={{ color: 'blue' }}>
-                                      password
-                                    </div>
-                                  ) : (
-                                    <div className={styles.error} style={{ color: 'red' }}>
-                                      password
-                                    </div>
-                                  )}
+                                  <div
+                                    className={styles.error}
+                                    style={{ color: isPassword2Valid(password2) ? 'blue' : 'red' }}
+                                  >
+                                    Password
+                                  </div>
                                   <Form.Control
                                   className={styles.inputbox}
                                   type="password"
@@ -224,15 +231,12 @@ function SignUp() {
                                 </Form.Group>
                                 <Form.Group>
                                   {/* {!isGenderValid(gender) && <div className={styles.error}>성별을 선택해 주세요.</div>} */}
-                                  {isGenderValid(gender) ? (
-                                    <div className={styles.error} style={{ color: 'blue' }}>
-                                      성별
-                                    </div>
-                                  ) : (
-                                    <div className={styles.error} style={{ color: 'red' }}>
-                                      성별
-                                    </div>
-                                  )}
+                                  <div
+                                    className={styles.error}
+                                    style={{ color: isGenderValid(gender) ? 'blue' : 'red' }}
+                                  >
+                                    Gender
+                                  </div>
                                   <Form.Select
                                   onChange={handleGenderChange}>
                                     <option>Select Gender</option>
@@ -244,15 +248,12 @@ function SignUp() {
                             <div className={styles.rightside}>
                                 <Form.Group className={styles.inputform}>
                                   {/* {!isNameValid(name) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
-                                  {isNameValid(name) ? (
-                                    <div className={styles.error} style={{ color: 'blue' }}>
-                                      Name
-                                    </div>
-                                  ) : (
-                                    <div className={styles.error} style={{ color: 'red' }}>
-                                      Name
-                                    </div>
-                                  )}
+                                  <div
+                                    className={styles.error}
+                                    style={{ color: isNameValid(name) ? 'blue' : 'red' }}
+                                  >
+                                    Name
+                                  </div>
                                   <Form.Control
                                   className={styles.inputbox}
                                   type="text"
@@ -263,15 +264,12 @@ function SignUp() {
                                 </Form.Group>
                                 <Form.Group className={styles.inputform}>
                                   {/* {!isNickValid(nickname) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
-                                  {isNickValid(nickname) ? (
-                                    <div className={styles.error} style={{ color: 'blue' }}>
-                                      NickName
-                                    </div>
-                                  ) : (
-                                    <div className={styles.error} style={{ color: 'red' }}>
-                                      NickName
-                                    </div>
-                                  )}
+                                  <div
+                                    className={styles.error}
+                                    style={{ color: isNickValid(nickname) ? 'blue' : 'red' }}
+                                  >
+                                    NickName
+                                  </div>
                                   <Form.Control
                                   className={styles.inputbox}
                                   type="text"
@@ -282,15 +280,17 @@ function SignUp() {
                                 </Form.Group>
                                 <Form.Group className={styles.inputform}>
                                   {/* {!isPhoneValid(phone) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
-                                  {isPhoneValid(phone) ? (
-                                    <div className={styles.error} style={{ color: 'blue' }}>
-                                      PhoneNumber
-                                    </div>
-                                  ) : (
-                                    <div className={styles.error} style={{ color: 'red' }}>
-                                      PhoneNumber
-                                    </div>
-                                  )}
+                                  <div
+                                    className={styles.error}
+                                    style={{ color: isPhoneValid(phone) ? 'blue' : 'red' }}
+                                  >
+                                    PhoneNumber
+                                    <OverlayTrigger placement="top" overlay={phoneNumberRule}>
+                                      <span>
+                                        <AiOutlineQuestionCircle bsStyle="default" style={{color: 'white'}}/>
+                                      </span>                            
+                                    </OverlayTrigger>
+                                  </div>
                                   <Form.Control
                                   className={styles.inputbox}
                                   type="text"
@@ -301,15 +301,12 @@ function SignUp() {
                                 </Form.Group>
                                 <Form.Group className={styles.inputform}>
                                   {/* {!isBirthValid(birth) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
-                                  {isBirthValid(birth) ? (
-                                    <div className={styles.error} style={{ color: 'blue' }}>
-                                      Birth
-                                    </div>
-                                  ) : (
-                                    <div className={styles.error} style={{ color: 'red' }}>
-                                      Birth
-                                    </div>
-                                  )}
+                                  <div
+                                    className={styles.error}
+                                    style={{ color: isBirthValid(birth) ? 'blue' : 'red' }}
+                                  >
+                                    Birth
+                                  </div>
                                   <Form.Control
                                     className={styles.inputbox}
                                     type="date"
