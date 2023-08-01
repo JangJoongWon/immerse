@@ -18,7 +18,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
     private String key = "testKey";
-    private Long expireTimeMs = 1000 * 60 * 60l; // 1시간
+    private Long expireTimeMs = 1000 * 60 * 60l * 3; // 토큰 만료시간 : 3시간
 
     @Transactional
     public UserSignupRequest signupUser(UserSignupRequest userSignupRequest) {
