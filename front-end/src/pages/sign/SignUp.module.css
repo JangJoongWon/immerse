@@ -14,6 +14,10 @@
     align-items: center;
 }
 
+.rightside {
+    margin-left: 5%;
+}
+
 .boxcontent {
     border : 3px solid blue;
     flex: 0.8;
@@ -36,6 +40,7 @@
 .signupform {
     width: 80%;
     border: 1px solid red;
+    margin-top: 5%;
 }
 
 .signupformbox {
@@ -45,7 +50,7 @@
 
 .inputbox {
     border: 1px solid green;
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .submitbutton {

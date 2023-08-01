@@ -5,11 +5,13 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { useSelector } from 'react-redux'
 
 import { HiOutlineSearch } from "react-icons/hi";
 
 function Header() {
   const [expand, setExpand] = useState(null);
+  const user = useSelector((state) => state.user.token)
 
   useEffect(() => {
     const handleResize = () => {
@@ -76,6 +78,8 @@ function Header() {
                 style={{ color:"white" }}>
                   Sign Up
                 </Nav.Link>
+
+                <p>{user}</p>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
