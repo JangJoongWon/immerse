@@ -1,0 +1,33 @@
+.container{
+    outline: 2px solid red;
+}
+
+.review{
+    margin:1%;
+    border-radius: 0.5rem;
+    background-color: white;
+    outline: 2px solid blue;
+}
+
+.title{
+    color:white;
+    margin:1rem;
+    outline: 2px solid violet;
+}
+
+.bottom{
+    outline: 2px solid green;
+}
+
+.up{
+    outline: 2px solid firebrick;
+}
+
+
+.card{
+    outline: 2px solid skyblue;
+}
+
+.homeguestbook{
+    outline: 2px solid snow;
+}
