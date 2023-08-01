@@ -6,12 +6,15 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../redux/userSlice';
 
 import { HiOutlineSearch } from "react-icons/hi";
 
 function Header() {
   const [expand, setExpand] = useState(null);
   const user = useSelector((state) => state.user.token)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const handleResize = () => {
@@ -76,7 +79,14 @@ function Header() {
                 <Nav.Link href="/signup"
                 className='m-2' 
                 style={{ color:"white" }}>
-                  Sign Up
+                  SignUp
+                </Nav.Link>
+
+                <Nav.Link
+                  className='m-2'
+                  style={{ color: 'white', cursor: 'pointer' }}
+                  onClick={() => {dispatch(logOut());}}>
+                  LogOut
                 </Nav.Link>
 
                 <p>{user}</p>
