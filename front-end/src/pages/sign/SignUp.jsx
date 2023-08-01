@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import styles from './SignUp.module.css'
 import axios from "axios"
 import { useDispatch } from 'react-redux';
@@ -11,6 +11,18 @@ function SignUp() {
 
   const dispatch = useDispatch()
   const navigate = useNavigate();
+
+  const passwordRule = (
+    <Tooltip id="tooltip">
+      <strong>비밀번호 규칙</strong> 숫자, 영문자, 특수문자('!@#$%') 포함
+    </Tooltip>
+  )
+  
+  const phoneNumberRule = (
+    <Tooltip id="tooltip">
+      <strong>전화번호 규칙</strong> 하이픈('-') 없이 숫자만 입력
+    </Tooltip>
+  )
 
     const [email, setEmail] = useState('');
     const [password1, setPassword1] = useState('');
@@ -187,7 +199,12 @@ function SignUp() {
                                     className={styles.error}
                                     style={{ color: isPasswordValid(password1) ? 'blue' : 'red' }}
                                   >
-                                    Password<AiOutlineQuestionCircle className={styles.simptip} data-tooltip="I'm a tooltip with movable effect" style={{color: 'white'}}/>
+                                    Password 
+                                    <OverlayTrigger placement="top" overlay={passwordRule}>
+                                      <span>
+                                        <AiOutlineQuestionCircle bsStyle="default" style={{color: 'white'}}/>
+                                      </span>                            
+                                    </OverlayTrigger>
                                   </div>
                                   <Form.Control
                                   className={styles.inputbox}
@@ -267,7 +284,12 @@ function SignUp() {
                                     className={styles.error}
                                     style={{ color: isPhoneValid(phone) ? 'blue' : 'red' }}
                                   >
-                                    Phone
+                                    PhoneNumber
+                                    <OverlayTrigger placement="top" overlay={phoneNumberRule}>
+                                      <span>
+                                        <AiOutlineQuestionCircle bsStyle="default" style={{color: 'white'}}/>
+                                      </span>                            
+                                    </OverlayTrigger>
                                   </div>
                                   <Form.Control
                                   className={styles.inputbox}

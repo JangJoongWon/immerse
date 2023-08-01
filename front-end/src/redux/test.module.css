@@ -1,0 +1,30 @@
+.container {
+    background-color: black;
+    width: 100%;
+  }
+
+  .contentbox {
+    border: 2px dashed gray;
+    border-radius: 30px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .imgbox {
+    width: 90%;
+  }
+
+  .imagefile {
+    width: 100%;
+  }
+
+  .container.active {
+    border-color: green;
+  }
+  
