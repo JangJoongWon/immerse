@@ -1,6 +1,6 @@
 // import React from 'react'; // JSX 문법을 사용하기 위해 React를 임포트합니다.
 import styles from "./Announcment.module.css"
-import anouncements_data from "../../anouncements_data.json";
+import anouncements_data from "../../../anouncements_data.json";
 import {Row,Col} from "react-bootstrap"
 
 

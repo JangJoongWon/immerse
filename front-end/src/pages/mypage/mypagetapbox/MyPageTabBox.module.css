@@ -1,0 +1,13 @@
+.button{
+    background-color: black;
+    color: white;
+    margin: 1rem;
+    font-size: x-large;
+    cursor: pointer;
+}
+
+.selectedButton {
+    padding-bottom: 2px;
+    border-bottom: 3px solid white;
+ 
+  }
