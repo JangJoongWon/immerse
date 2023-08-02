@@ -27,7 +27,7 @@ import java.util.Optional;
  * consumes : HTTP 요청의 본문을 소비하는 미디어 타입 지정 // {application/json} 이면, json 미디어 타입의 요청만 처이
  * procedure : HTTP 응답의 본문을 생성하는 미디어 타입 지정 // consumes 과 같은 형식으로 작성
  * @RequiredArgsConstructor 는 private final로 지정한 객체들을 자동으로 @Autowired 애노테이션 적용
- * 
+ *
  */
 @RestController
 @RequestMapping("/reservation")
@@ -114,6 +114,7 @@ public class ReservationController {
      * 특정 공연의 예약을 한 예약의 개수 조회
      * 이 공연이 매진 되었는지, 최대 인원에 맞는지 확인하기 위해 사용하는 기능
      */
+    
 
     @GetMapping("/show/{showId}/count")
     public Integer findLengthReservationByShowId(@PathVariable Long showId){
