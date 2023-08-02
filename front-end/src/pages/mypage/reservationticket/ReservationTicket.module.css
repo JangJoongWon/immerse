@@ -1,0 +1,83 @@
+.container{
+    background-color: #121212;
+    outline: red 2px solid;
+}
+
+.box {
+    background-color: #31363B;
+    box-shadow: 0 0 1rem rgba(255,255,255,00.5rem);
+    margin: 5%;
+    color:white;
+    width: 80%;
+    margin-left: 5%;
+    outline: 2px red solid ;
+
+}
+
+
+.content{
+    outline: 2px solid blueviolet;
+}
+
+.right{
+    border-bottom-left-radius: 5%;
+    border-top-left-radius: 5%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: first baseline;
+    outline: 2px solid yellow;
+}
+
+.left{
+    border-bottom-right-radius: 5%;
+    border-top-right-radius: 5%;
+    outline: 2px solid violet;
+}
+
+.poster {
+    margin: 10%;
+    max-width: 100%;
+    outline: 2px solid green;
+}
+
+
+.bacodebox{
+    width: 100%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    outline: 2px solid palevioletred;
+}
+  
+.bacode{
+    width: 100%;
+}
+
+.leftfont {
+    font-family: sans-serif;
+    text-shadow: 0 1px #121212;
+}
+
+.rightfont {
+    font-family: sans-serif;
+    text-shadow: 0 1px #BDBDBD;
+    color: #121212;
+}
+
+  
+.title {
+    text-align: start;
+    outline: 2px solid black;
+}
+
+.date {
+    outline: 2px solid brown;
+}
+
+.time {
+    outline: 2px solid green;
+}
+
+.logoname {
+    outline: 2px solid blue;
+}

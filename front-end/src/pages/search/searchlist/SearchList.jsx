@@ -1,9 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import styles from "./SearchList.module.css";
-import StageCard from "../cards/stagecard"
-import ChannelCard from "../cards/ChannelCard"
+import StageCard from "../../../components/cards/stagecard"
+import ChannelCard from "../../../components/cards/ChannelCard"
 import { Button } from "react-bootstrap";
-import data from '../../stage_data.json';
+import data from '../../../stage_data.json';
 
 function SearchList() {
   const listRef = useRef(null); // 리스트 컨테이너를 참조할 useRef

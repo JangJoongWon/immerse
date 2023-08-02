@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### log ###
+ssafy-web.log
+ssafy-web.log.*.gz
