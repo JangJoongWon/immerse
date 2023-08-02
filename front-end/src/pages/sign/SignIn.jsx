@@ -31,7 +31,7 @@ function SignIn() {
     event.preventDefault();
     try {
       // 서버로 이메일과 비밀번호를 전송하여 토큰 받기
-      const response = await axios.post('http://i9d203.p.ssafy.io:8080/user/signin', data);
+      const response = await axios.post('https://i9d203.p.ssafy.io/api/user/signin', data);
       console.log('Signin Info: ', response.config.data, 'Signin Token: ', response.data)
       const token = response.data; // 서버로부터 받은 토큰 값
       if (token) {
