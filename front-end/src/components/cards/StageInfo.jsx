@@ -20,8 +20,12 @@ function StageInfo(props) {
                             <h1>{props.id} 의 공연</h1>
                             <p>info</p>
                             <Button
-                            onClick={props.joinSession}
+                            onClick={() => props.joinSession(false)}
                             >입장하기</Button>
+
+                            <Button
+                            onClick={() => props.joinSession(true)}
+                            >시작하기</Button>
                         </div>
                     </div>
                 </Col>
