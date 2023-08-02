@@ -1,7 +1,7 @@
 // import { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import styles from './MyPage.module.css';
-import MypageTabbox from "../../components/mypagetapbox/MyPageTabBox"
+import MypageTabbox from "./mypagetapbox/MyPageTabBox"
 
 function MyPage() {
 

@@ -1,5 +1,5 @@
 import { Button } from 'react-bootstrap';
-import search_histories from '../../search_histrories.json';
+import search_histories from '../../../search_histrories.json';
 import styles from './SearchHistoryButton.module.css';
 
 function SearchHistoryButton(props) {
