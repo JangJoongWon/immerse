@@ -1,6 +1,6 @@
 // import React, { useState } from 'react'
 import Header from './components/header/Header'
-import './App.module.css'
+import styles from './App.module.css'
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Home from "./pages/home/Home";
@@ -22,7 +22,7 @@ function App() {
 
   return (
       <div>
-        <Header />
+        <Header className={styles.header}/>
         <Router>
           <Routes>
             <Route path='/' element={<Home />} />
