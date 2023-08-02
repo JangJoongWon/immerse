@@ -7,12 +7,11 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-public class reservaionDto {
+public class ReservaionDto {
 
-    private Long reservationId;
+//    private Long reservationId;
     private LocalDate reservationDate;
     private Long showId;
     private Long userId;
-
 
 }
