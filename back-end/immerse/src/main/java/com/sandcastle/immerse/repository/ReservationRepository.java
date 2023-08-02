@@ -66,6 +66,15 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    * : {value_name} 을 sql 문 안에 삽입하여 사용 할 수 있다.
    * 인터페이스의 인자 값에는 @Param("value_name") 을 사용하여 삽입할 수 있다.
    * 이 때는 Repository 안에 있는 주어진 메서드 명이 아닌 새로운 메서드 명을 작성할 수 있다.
+   * @Query 의 속성
+   * name: 쿼리의 이름입니다.
+   * nativeQuery: 쿼리가 JPQL이 아닌 SQL이면 true로 설정합니다.
+   * resultClass: 쿼리의 결과 클래스입니다.
+   * resultSetMapping: 쿼리의 결과 세트 매핑입니다.
+   * flushAutomatically: 쿼리 실행 후 데이터베이스를 자동으로 플러시합니다.
+   * timeout: 쿼리 실행 시간 제한입니다.
+   * fetchSize: 쿼리 결과를 한 번에 가져오는 개수입니다.
+   * hints: 쿼리에 대한 힌트입니다.
    */
 
   /**
@@ -73,7 +82,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    * @param userId : 해당 유저의 아이디
    * @return 이 유저를 포함하고 있는 모든 예약들을 리스트로 조회
    */
-  @Query(value = "SELECT s FROM reservations s WHERE s.user_id = :userID ")
+  @Query(value = "SELECT s FROM reservations s WHERE s.user_id = ?userID " , nativeQuery = true)
   List<ReservationEntity> findListReservationByUserId(@Param("userID") Long userId);
 
   /**
@@ -81,7 +90,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    * @param showId : 해당 공연의 아이디
    * @return 이 공연에 예약을 하고 잇는 예약 정보들을 리스트로 조회
    */
-  @Query(value = "SELECT s FROM reservations s WHERE s.show_id = :showID ")
+  @Query(value = "SELECT s FROM reservations s WHERE s.show_id = :showID ", nativeQuery = true)
   List<ReservationEntity> findListReservationByShowId(@Param("showID") Long showId);
 
   /**
@@ -89,7 +98,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    * @param reservationId : 예약 번호의 고유번호
    * retrun 값은 void 로 사용하게 된다.
    */
-  @Query(value = "DELETE s FROM reservations s WHERE s.reservation_id = :reservationID ")
+  @Query(value = "DELETE FROM reservations s WHERE s.reservation_id = :reservationID ", nativeQuery = true)
   void deleteReservationByReservationId(@Param("reservationID") Long reservationId);
 
 

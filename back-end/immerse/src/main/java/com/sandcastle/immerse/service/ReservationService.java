@@ -23,7 +23,7 @@ import java.util.Optional;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final ShowRepository showRepository;
+//    private final ShowRepository showRepository;
     /**
      * Tanssactional 은 트랜잭션을 적용하는데 사용됨
      * 하나의 작업 단위를 나타내며, 이 어노테이션에 사용할 수 있는 속성은 다음과 같다.
