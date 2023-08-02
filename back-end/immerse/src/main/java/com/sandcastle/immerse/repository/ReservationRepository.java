@@ -2,6 +2,7 @@ package com.sandcastle.immerse.repository;
 
 import com.sandcastle.immerse.model.entity.ReservationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -81,8 +82,10 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    * 유저 ID 를 통하여 해당 유저가 예약한 예약 현황 조회
    * @param userId : 해당 유저의 아이디
    * @return 이 유저를 포함하고 있는 모든 예약들을 리스트로 조회
+   * @Modifying : 이 쿼리문을 데이터베이스의 트랙잭션을 수행할 수 있다는 어노테이션
    */
-  @Query(value = "SELECT s FROM reservations s WHERE s.user_id = ?userID " , nativeQuery = true)
+  @Modifying
+  @Query(value = "SELECT * FROM reservations WHERE user_id = :userID " , nativeQuery = true)
   List<ReservationEntity> findListReservationByUserId(@Param("userID") Long userId);
 
   /**
@@ -90,7 +93,8 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    * @param showId : 해당 공연의 아이디
    * @return 이 공연에 예약을 하고 잇는 예약 정보들을 리스트로 조회
    */
-  @Query(value = "SELECT s FROM reservations s WHERE s.show_id = :showID ", nativeQuery = true)
+  @Modifying
+  @Query(value = "SELECT * FROM reservations WHERE show_id = :showID ", nativeQuery = true)
   List<ReservationEntity> findListReservationByShowId(@Param("showID") Long showId);
 
   /**
@@ -98,8 +102,8 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    * @param reservationId : 예약 번호의 고유번호
    * retrun 값은 void 로 사용하게 된다.
    */
-  @Query(value = "DELETE FROM reservations s WHERE s.reservation_id = :reservationID ", nativeQuery = true)
-  void deleteReservationByReservationId(@Param("reservationID") Long reservationId);
-
-
+  // Native SQL query to delete a reservation by reservation_id
+  @Modifying
+  @Query(value = "DELETE FROM reservations WHERE reservation_id = :reservationId", nativeQuery = true)
+  void deleteReservationByReservationId(@Param("reservationId") Long reservationId);
 }
