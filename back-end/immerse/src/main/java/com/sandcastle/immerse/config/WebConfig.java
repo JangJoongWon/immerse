@@ -12,6 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 		registry.addMapping("/**")
 			.allowedOrigins("http://localhost:3000",
-				"http://i9d203.p.ssafy.io:3000");
+				"http://i9d203.p.ssafy.io:3000",
+				"https://i9d203.p.ssafy.io");
 	}
 }
