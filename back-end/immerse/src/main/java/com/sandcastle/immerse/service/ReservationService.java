@@ -1,10 +1,11 @@
 package com.sandcastle.immerse.service;
 
+import com.sandcastle.immerse.model.dto.ReservationRequest;
 import com.sandcastle.immerse.model.entity.ReservationEntity;
 import com.sandcastle.immerse.repository.ReservationRepository;
-import com.sandcastle.immerse.repository.ShowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.sandcastle.immerse.model.dto.ReservaionDto;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -102,5 +103,15 @@ public class ReservationService {
      * 예약 하는 방 만들기
      *
      */
+    @Transactional
+    public Long postReservation(ReservationRequest request){
+
+        ReservationEntity reservation = ReservationEntity.builder()
+                .reservationDate(request.getDate())
+                .showId(request.getShowId())
+                .userId(request.getUserId())
+                .build();
+        return reservationRepository.save(reservation).getReservationID();
+    }
 
 }
