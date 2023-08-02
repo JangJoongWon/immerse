@@ -1,11 +1,13 @@
-package com.sandcastle.immerse.model.dto.user;
+package com.sandcastle.immerse.model.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class UserSignupRequest {
+@Builder
+public class UserDto {
 
     private String email;
     private String password;
@@ -14,5 +16,9 @@ public class UserSignupRequest {
     private String nickname;
     private LocalDate birthday;
     private String phoneNumber;
+    private String profilePicture;
+    private int point;
+    private int status;
+    private String selfDescription;
 
 }

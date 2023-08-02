@@ -1,5 +1,6 @@
 package com.sandcastle.immerse.model.entity;
 
+import com.sandcastle.immerse.model.dto.UserDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,7 +32,7 @@ public class UserEntity {
     private String gender;
 
     @NotNull
-    @Column(length = 15)
+    @Column(length = 15, unique = true)
     private String nickname;
 
     @NotNull
@@ -63,17 +64,28 @@ public class UserEntity {
         this.phoneNumber = phoneNumber;
     }
 
-//    public UserSignupRequest toDto() {
-//        return UserSignupRequest.builder()
-//                .email(email)
-//                .password(password)
-//                .name(name)
-//                .gender(gender)
-//                .nickname(nickname)
-//                .birthday(birthday)
-//                .phoneNumber(phoneNumber)
-//                .build();
-//    }
+    public UserDto toDto() {
+        return UserDto.builder()
+                .email(email)
+                .name(name)
+                .gender(gender)
+                .nickname(nickname)
+                .birthday(birthday)
+                .phoneNumber(phoneNumber)
+                .profilePicture(profilePicture)
+                .point(point)
+                .status(status)
+                .selfDescription(selfDescription)
+                .build();
+    }
+
+    public void updateUser(UserDto userDto) {
+        this.name = userDto.getName();
+        this.nickname = userDto.getNickname();
+        this.phoneNumber = userDto.getPhoneNumber();
+        this.profilePicture = userDto.getProfilePicture();
+        this.selfDescription = userDto.getSelfDescription();
+    }
 
     public int updateStatusWithdrawal() {
         this.status = 0;

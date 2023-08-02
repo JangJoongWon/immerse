@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import search_histories from '../../search_histrories.json';
+import search_histories from '../../../search_histrories.json';
 import styles from './TagSearchButton.module.css';
 
 function TagSearchButton(props) {

@@ -1,5 +1,5 @@
-import data from '../../stage_data.json';
-import StageCard from '../cards/stagecard';
+import data from '../../../stage_data.json';
+import StageCard from '../../../components/cards/stagecard';
 import {Row,Col} from 'react-bootstrap'
 import styles from "./PerformanceRecord.module.css"
 

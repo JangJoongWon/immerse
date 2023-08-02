@@ -7,8 +7,12 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @Getter
 public enum ErrorCode {
-    USEREMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, ""),
-    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "");
+    EMAIL_DUPLICATED(HttpStatus.CONFLICT, ""),
+    NICKNAME_DUPLICATED(HttpStatus.CONFLICT, ""),
+    EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, ""),
+    INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, ""),
+    WITHDRAWAL_SIGNIN(HttpStatus.UNAUTHORIZED, ""),
+    NICKNAME_NOT_FOUND(HttpStatus.NOT_FOUND, "");
 
     private HttpStatus httpStatus;
     private String message;

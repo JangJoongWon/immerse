@@ -1,9 +1,9 @@
 // 공연기록에서 가장 앞에 있는 포스터를 좌측 상단
 // 방명록내용에서 4개를 우측 상단
 // 이전 공연기록을 하단에 출력
-import data from '../../stage_data.json';
-import guest from '../../guest.json';
-import StageCard from '../cards/stagecard';
+import data from '../../../stage_data.json';
+import guest from '../../../guest.json';
+import StageCard from '../../../components/cards/stagecard';
 import { Row, Col } from 'react-bootstrap';
 import styles from './MyPageHome.module.css';
 

@@ -1,6 +1,6 @@
 import styles from './GuestBook.module.css'
 // import React from 'react';
-import guest from '../../guest.json';
+import guest from '../../../guest.json';
 import {Col, Row, Form} from 'react-bootstrap'
 
 function GuestBook(props) {
