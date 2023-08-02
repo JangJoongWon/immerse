@@ -10,7 +10,7 @@ RUN mkdir /app
 WORKDIR /app
 
 # work dir 에 dist 폴더 생성 /app/dist
-RUN mkdir ./build
+RUN mkdir ./dist
 
 # host pc의 현재경로의 dist 폴더를 workdir 의 dist 폴더로 복사
 ADD ./dist ./dist
