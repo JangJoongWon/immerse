@@ -114,6 +114,7 @@ public class ReservationController {
      * 특정 공연의 예약을 한 예약의 개수 조회
      * 이 공연이 매진 되었는지, 최대 인원에 맞는지 확인하기 위해 사용하는 기능
      */
+    
 
     @GetMapping("/show/{showId}/count")
     public Integer findLengthReservationByShowId(@PathVariable Long showId){
