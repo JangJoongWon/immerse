@@ -9,7 +9,7 @@ group = 'com.sandcastle'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '1.8'
+    sourceCompatibility = '11'
 }
 
 configurations {
@@ -38,7 +38,7 @@ dependencies {
 
     // OpenVidu
     implementation 'io.openvidu:openvidu-java-client:2.23.0'
-    
+
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 }
 
