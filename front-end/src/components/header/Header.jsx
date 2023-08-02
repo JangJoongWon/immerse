@@ -6,12 +6,15 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../redux/userSlice';
 
 import { HiOutlineSearch } from "react-icons/hi";
 
 function Header() {
   const [expand, setExpand] = useState(null);
   const user = useSelector((state) => state.user.token)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const handleResize = () => {
@@ -66,20 +69,31 @@ function Header() {
                     <HiOutlineSearch />
                 </Button>
               </Form>
-                
-                <Nav.Link href="/login" 
-                className='m-2'
-                style={{ color:"white" }}>
-                  LogIn
-                </Nav.Link>
 
-                <Nav.Link href="/signup"
-                className='m-2' 
-                style={{ color:"white" }}>
-                  Sign Up
-                </Nav.Link>
+              {user ? (
+                <>
+                  <Nav.Link
+                    className='m-2'
+                    style={{ color: 'white', cursor: 'pointer' }}
+                    onClick={() => {dispatch(logOut());}}
+                  >
+                    LogOut
+                  </Nav.Link>
+                  <Nav.Link className='m-2' style={{ color: "white" }}>
+                    Profile
+                  </Nav.Link>
+                </>
+              ) : (
+                <>
+                  <Nav.Link href="/login" className='m-2' style={{ color: "white" }}>
+                    LogIn
+                  </Nav.Link>
+                  <Nav.Link href="/signup" className='m-2' style={{ color: "white" }}>
+                    SignUp
+                  </Nav.Link>
+                </>
+              )}
 
-                <p>{user}</p>
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

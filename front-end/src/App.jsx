@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import Home from "./pages/home/Home";
 import SignIn from "./pages/sign/SignIn";
+// import SignOut from "./pages/sign/SignOut";
 import SignUp from "./pages/sign/SignUp";
 import Stage from "./pages/stage/Stage";
 import Mypage from "./pages/mypage/MyPage";
@@ -13,13 +14,13 @@ import Checkpassword from "./pages/checkpassword/CheckPassword"
 import NotFound from "./pages/notfound/NotFound";
 import Test from "./redux/test";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Provider } from 'react-redux';
-import store from './redux/store';
+
 
 
 function App() {
+
+
   return (
-    <Provider store={store}>
       <div>
         <Header />
         <Router>
@@ -37,7 +38,6 @@ function App() {
           </Routes>
         </Router>
       </div>
-    </Provider>
   )
 }
 

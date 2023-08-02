@@ -10,8 +10,11 @@ const userSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload; // 토큰 값을 업데이트하는 액션 추가
     },
+    logOut: (state) => {
+      state.token = null
+    }
   },
 });
 
-export const { up, setToken } = userSlice.actions;
-export default userSlice.reducer;
+export const { up, setToken, logOut } = userSlice.actions;
+export default userSlice;

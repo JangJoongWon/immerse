@@ -1,24 +1,41 @@
-import {Provider, useSelector, useDispatch} from 'react-redux';
-import store from './store'
-import {up} from './userSlice';
+import React, { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import styles from './test.module.css';
 
-function Counter() {
-    const dispatch = useDispatch();
-    const count = useSelector(state=>{
-        return state.counter.value;
-    });
-    return <div>
-        <button onClick={()=>{
-            dispatch(up(2));
-        }}>+</button> {count}
+function Test() {
+  const [uploadedImage, setUploadedImage] = useState(null);
+
+  const onDrop = useCallback(acceptedFiles => {
+    // Do something with the file
+    if (acceptedFiles.length > 0) {
+      const imageFile = acceptedFiles[0];
+      setUploadedImage(URL.createObjectURL(imageFile));
+    } else {
+      console.log('Please upload only one image.');
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: 'image/jpeg, image/png, image/gif',
+    maxFiles: 1,
+  });
+
+  return (
+    <div className={styles.container}>
+      <div {...getRootProps()} className={`${styles.contentbox} ${isDragActive ? styles.active : ''}`}>
+        <input {...getInputProps()} />
+        {uploadedImage ? (
+          <div className={styles.imgbox}>
+            {/* <h2>Uploaded Image:</h2> */}
+            <img src={uploadedImage} alt="Uploaded" className={styles.imagefile} />
+          </div>
+        ) : (
+          <p>Drag drop an image here, or click to select an image</p>
+        )}
+      </div>
     </div>
+  );
 }
-export default function App() {
-    return (
-        <Provider store={store}>
-            <div>
-                <Counter></Counter>
-            </div>
-        </Provider>
-    )
-}
+
+export default Test;
