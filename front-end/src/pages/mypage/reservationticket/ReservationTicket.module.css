@@ -1,6 +1,6 @@
 .container{
     background-color: #121212;
-    outline: red 2px solid;
+    /* outline: red 2px solid; */
 }
 
 .box {
@@ -10,13 +10,13 @@
     color:white;
     width: 90%;
     margin-left: 5%;
-    outline: 2px red solid ;
+    /* outline: 2px red solid ; */
 
 }
 
 
 .content{
-    outline: 2px solid blueviolet;
+    /* outline: 2px solid blueviolet; */
 }
 
 .right{
@@ -26,19 +26,19 @@
     display: flex;
     justify-content: center;
     align-items: first baseline;
-    outline: 2px solid yellow;
+    /* outline: 2px solid yellow; */
 }
 
 .left{
     border-bottom-right-radius: 5%;
     border-top-right-radius: 5%;
-    outline: 2px solid violet;
+    /* outline: 2px solid violet; */
 }
 
 .poster {
     margin: 10%;
     max-width: 100%;
-    outline: 2px solid green;
+    /* outline: 2px solid green; */
 }
 
 
@@ -46,7 +46,7 @@
     width: 100%;
     margin-top: 10%;
     margin-bottom: 10%;
-    outline: 2px solid palevioletred;
+    /* outline: 2px solid palevioletred; */
 }
   
 .bacode{
@@ -55,7 +55,7 @@
 
 .leftfont {
     font-family: sans-serif;
-    text-shadow: 0 1px #121212;
+    /* text-shadow: 0 1px #121212; */
 }
 
 .rightfont {
@@ -67,17 +67,18 @@
   
 .title {
     text-align: start;
-    outline: 2px solid black;
+    /* outline: 2px solid black; */
 }
 
 .date {
-    outline: 2px solid brown;
+    /* outline: 2px solid brown; */
 }
 
 .time {
-    outline: 2px solid green;
+    /* outline: 2px solid green; */
 }
 
 .logoname {
-    outline: 2px solid blue;
+    /* outline: 2px solid blue; */
 }
+

@@ -4,7 +4,6 @@
 import data from '../../../stage_data.json';
 import guest from '../../../guest.json';
 import MyPageCard from '../mypagecard/MyPageCard';
-import BigMyPageCard from '../mypagecard/BigMyPageCard';
 import { Row, Col } from 'react-bootstrap';
 import styles from './MyPageHome.module.css';
 
@@ -19,15 +18,18 @@ function MyPageHome(props) {
 
   return (
     <div
-    style={{justifyContent:'center'}}
+    style={{justifyContent:'start'}}
     className={styles.container}>
       <Row
       className={styles.up}>
         <Col
+        style={{padding:'0'}}
         >
           <div 
           className={styles.title}>
-              <th>최근 공연</th>
+              <h5>
+                <th>최근 공연</th>
+              </h5>
               <hr style={{color:"white"}}/>
           </div>
           <div
@@ -45,7 +47,9 @@ function MyPageHome(props) {
         <Col>
           <div 
           className={styles.title}>
-              <th>방명록</th>
+              <h5>
+               <th>방명록</th>
+              </h5>
               <hr style={{color:"white"}}/>
           </div>
           <div
@@ -56,7 +60,7 @@ function MyPageHome(props) {
               className={styles.homeguestbook}>
               {guest.data.map((review) => (
                 <div 
-                  style={{margin:'4%',border:"1rem solid white"}}
+                  style={{margin:'4%',border:"0.9rem solid white"}}
                   className={styles.review} key={review.id}>
                   {review.content}
                 </div>
@@ -69,19 +73,22 @@ function MyPageHome(props) {
         style={{marginTop:'4%', marginBottom:'8%'}}>
         <div 
         className={styles.title}>
+            <h5>
             <th>이전공연기록</th>
+            </h5>
             <hr style={{color:"white"}}/>
         </div>
             
         {/* Display previous stage records */}
         <div
         className={styles.bottom}>
-            <Row>
+            <Row
+            className={styles.cardbox}>
             {stage_list.slice(1).map((stage) => (
                   <MyPageCard 
                   key={stage.id}
-                  className={styles.component} data={stage} />
-
+                  className={styles.card} 
+                  data={stage} />
             ))}
             </Row>
         </div>

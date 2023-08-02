@@ -15,17 +15,11 @@ function MyPageCard({ data }) {
 
   return (
     <div
-      className={styles.component}
+      className={styles.container}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
 
-      
-{/* <div
-  style={{
-    backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`
-  }}
-></div> */}
       <div
       style={{
         borderRadius:'10%',
@@ -61,12 +55,6 @@ function MyPageCard({ data }) {
         </div>)}
       </div>
 
-
-      {/* <img
-        className={styles.poster}
-        src={`https://image.tmdb.org/t/p/original/${data.fields.poster_path}`}
-        alt="None"
-      /> */}
 
       {hovered && (
         <div className={styles.content}>

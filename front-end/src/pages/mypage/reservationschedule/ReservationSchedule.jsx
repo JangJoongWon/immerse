@@ -1,14 +1,17 @@
-import React from 'react'; // React import를 추가하세요
+import {useState} from 'react'; // React import를 추가하세요
 import { Col, Row } from 'react-bootstrap'; // react-bootstrap의 Col, Row를 import합니다.
 
 import styles from './ReservationSchedule.module.css';
 import data from '../../../stage_data.json';
 import ReservationTicket from '../reservationticket/ReservationTicket';
 
+
 function ReservationSchedule() {
-  console.log(data);
+
   return (
     <div>
+
+
       <div className={styles.reservationSchedule}>
         <Row 
         className="justify-content-start"

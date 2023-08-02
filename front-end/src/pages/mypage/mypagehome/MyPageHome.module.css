@@ -32,7 +32,10 @@
     /* outline: 2px solid snow; */
 }
 
-.component {
+
+.cardbox {
+    overflow: hidden;
+    margin: 0 auto;
     /* outline: 2px solid white; */
 }
 
@@ -41,5 +44,7 @@
 }
 
 .posterbox{
+    margin: 0 auto;
     /* outline: 2px solid greenyellow; */
 }
+
