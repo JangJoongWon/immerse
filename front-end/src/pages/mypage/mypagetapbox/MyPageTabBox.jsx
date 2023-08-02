@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ChannelCard from '../cards/ChannelCard'
+import ChannelCard from '../../../components/cards/ChannelCard'
 import Announcement from '../announcement/Announcement';
 import GuestBook from '../guestbook/GuestBook';
 import PerformanceRecord from '../performancerecord/PerformanceRecord';

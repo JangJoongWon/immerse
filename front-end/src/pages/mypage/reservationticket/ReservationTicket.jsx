@@ -17,22 +17,20 @@ function ReservationTicket({ data }) {
             <div
             >
             <Row >
-              <Col sm={6}
+              <Col
               className={`${styles.leftfont} ${styles.title}`}
               >
                 {data.fields.title}
               </Col>
               <Col
                 style={{textAlign:"end"}} 
-                className={`${styles.leftfont} ${styles.logoname}`}
-                sm={6}>
+                className={`${styles.leftfont} ${styles.logoname}`}>
                 <h5>Immerse</h5>
               </Col>
             </Row>
             <Row >
               <Col 
-                sm={6}
-                style={{alignItems:"end"}} 
+                style={{alignItems:"end",marginTop:"10%"}} 
                 >
                 <div
                 className={`${styles.leftfont} ${styles.date}`}
@@ -43,9 +41,10 @@ function ReservationTicket({ data }) {
                 className={`${styles.leftfont} ${styles.time}`}>
                   {data.fields.time}
                 </div>
-              </Col>
-              <Col sm={6}>
-
+                <div
+                  className={`${styles.leftfont} ${styles.time}`}>
+                    {data.fields.genre}
+                </div>
               </Col>
             </Row>
             </div>
