@@ -1,11 +1,10 @@
 package com.sandcastle.immerse.controller;
 
-import com.sandcastle.immerse.model.dto.user.UserSigninRequest;
-import com.sandcastle.immerse.model.dto.user.UserSignupRequest;
+import com.sandcastle.immerse.model.dto.UserDto;
 import com.sandcastle.immerse.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,20 +14,37 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signupUser(@RequestBody UserSignupRequest userSignupRequest) throws Exception {
-        UserSignupRequest userSignupResponse = userService.signupUser(userSignupRequest);
-        return ResponseEntity.ok().body(userSignupResponse);
+    public ResponseEntity<?> signup(@RequestBody UserDto userDtoRequest) throws Exception {
+        UserDto userDtoResponse = userService.signup(userDtoRequest);
+        return ResponseEntity.ok().body(userDtoResponse);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signinUser(@RequestBody UserSigninRequest userSigninRequest) {
-        String token = userService.signinUser(userSigninRequest);
+    public ResponseEntity<?> signin(@RequestBody UserDto userDtoRequest) throws Exception {
+        String token = userService.signin(userDtoRequest);
         return ResponseEntity.ok().body(token);
     }
 
-    @PutMapping("/withdrawal/{userId}")
-    public ResponseEntity<?> withdrawalUser(@PathVariable Long userId) {
-        return new ResponseEntity<Integer>(userService.withdrawal(userId), HttpStatus.OK);
+    @GetMapping("/{nickname}")
+    public ResponseEntity<?> getUser(@PathVariable String nickname) throws Exception {
+        UserDto userDtoResponse = userService.getUser(nickname);
+        return ResponseEntity.ok().body(userDtoResponse);
     }
+
+    @PutMapping("/update/info")
+    public ResponseEntity<?> updateUser(@RequestBody UserDto userDtoRequest, Authentication authentication) throws Exception {
+        Long userId = Long.valueOf(authentication.getName());
+        userService.updateUser(userDtoRequest, userId);
+        return ResponseEntity.ok().body("유저정보 수정완료");
+    }
+
+    @DeleteMapping("/withdrawal")
+    public ResponseEntity<?> withdrawal(Authentication authentication) throws Exception {
+        Long userId = Long.valueOf(authentication.getName());
+        int changedStatus = userService.withdrawal(userId);
+        return ResponseEntity.ok().body(changedStatus);
+    }
+
+
 
 }
