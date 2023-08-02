@@ -1,5 +1,5 @@
 import data from '../../../stage_data.json';
-import StageCard from '../../../components/cards/stagecard';
+import MyPageCard from '../mypagecard/MyPageCard';
 import {Row,Col} from 'react-bootstrap'
 import styles from "./PerformanceRecord.module.css"
 
@@ -11,11 +11,12 @@ function PerformanceRecord(props) {
 
   return (
         <div
-        className='m-3'>
+        className={styles.container}>
             <div
-            className={styles.container}>
+            className={styles.box}
+            style={{margin:'1rem'}}>
                 {stage_list.map((stage) => (
-                        <StageCard
+                        <MyPageCard
                         className={styles.component}
                         key={stage.pk} data={stage} />
                 ))}

@@ -1,15 +1,21 @@
-.container {
-  margin: 5%;
+.box {
+  margin: 10%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
-  border: 2px solid white;
+  border-top: 3rem solid #121212;
+  border-bottom: 3rem solid #121212;
+  outline: 2px solid white;
 
 }
 
 .component {
   width: calc(15%); 
-  border: 2px solid white;
+  outline: 2px solid white;
 
+}
+
+.container {
+  outline: 2px solid red;
 }

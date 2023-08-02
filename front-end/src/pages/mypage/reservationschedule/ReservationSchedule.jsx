@@ -10,7 +10,9 @@ function ReservationSchedule() {
   return (
     <div>
       <div className={styles.reservationSchedule}>
-        <Row>
+        <Row 
+        className="justify-content-start"
+        >
           {/* data.map 메소드를 사용하여 ReservationTicket 컴포넌트들을 그리드 형태로 배치 */}
           {data.map((data) => (
             <Col sm={4} key={data.id}>
