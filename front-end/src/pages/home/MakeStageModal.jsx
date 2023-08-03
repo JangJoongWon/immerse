@@ -3,6 +3,8 @@ import styles from './MakeStageModal.module.css'
 import { useDropzone } from 'react-dropzone';
 import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
 import axios from 'axios';
+import { API_BASE_URL } from '../../constants';
+import { useSelector } from 'react-redux';
 
 function MakeStageModal({ show, onHide }) {
 
@@ -17,6 +19,8 @@ function MakeStageModal({ show, onHide }) {
   const [date, setDate] = useState('')
   const [start, setStart] = useState('')
   const [end, setEnd] = useState('')
+
+  const user = useSelector(state => state.user.token);
 
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -58,39 +62,56 @@ function MakeStageModal({ show, onHide }) {
     }
   }, []);
 
-  const mustInput = () => {
-    return title.trim() !== '' && parseFloat(price) >= 0;
-  };
-
-  const makeStage = async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('genre', genre);
-    formData.append('rank', rank);
-    formData.append('expla', expla);
-    formData.append('price', price);
-    formData.append('max', max);
-    formData.append('date', date);
-    formData.append('start', start);
-    formData.append('end', end);
-    formData.append('image', uploadedImage);
-
+  const scheduleStage = async () => {
+    const payload = {
+      title,
+      startTime: "2023-08-03T13:23:00.370Z",
+      endTime: "2023-08-03T13:23:30.370Z",
+      date,
+      description: expla,
+      thumbnail: "/",
+      price: 0,
+      attendanceLimit: max,
+      categoryId: 0,
+      userId: -1 // 임의로 에러가 나도록 함
+    };
+    const headers = { 
+      'Content-Type': 'application/json', 
+      'Authorization': 'Bearer ' + user
+    };
+    
     try {
-      const response = await axios.post('your-backend-url', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', // Set the content type for FormData
-        },
-      });
-
-      if (response.status === 200) {
-        console.log('Stage created successfully');
-      }
-    } catch (error) {
-      console.error('Error creating stage:', error);
+      console.log(API_BASE_URL);
+      const res = await axios.post(`${API_BASE_URL}/shows/`, payload, { headers });
+      console.log(res.data);
+      return res.data;
     }
-  };
+    catch (e) {
+      console.log(e);
+      throw e;
+    } 
+  }
+
+  const reserveStage = async () => {
+    try {
+      const res = await scheduleStage();
+      alert("예약되었습니다!");
+      return res;
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+  const startStageImmediately = async () => {
+    try {
+      const res = await scheduleStage();
+      // redirection 필요
+      return res;
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -202,9 +223,12 @@ function MakeStageModal({ show, onHide }) {
             </Modal.Body>
           {/* <div
           className={styles.bottom}>
-          <Button variant="info" type="button" className="m-3">
-            Live
-          </Button>
+          {liveState ?
+            <Button variant="info" type="button" className="m-3" 
+            as="input" value="Live" onClick={startStageImmediately} /> : 
+            <Button variant="info" type="button" className="m-3" 
+            as="input" value="Add" onClick={reserveStage} />
+          }
           <Button variant="danger" type="button" className="m-3" onClick={onHide}>
             exit
           </Button>
