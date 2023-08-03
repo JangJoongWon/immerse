@@ -1,0 +1,51 @@
+.container {
+    background-color: #1a1b1e;
+    width: 100%;
+  }
+
+.contents {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.middle {
+  width: 80%;
+  border: 1px solid blue;
+  padding-top: 50px;
+
+}
+
+.tags {
+    /* display: flex;
+    justify-content: center; */
+    color: white;
+    border: 3px solid red;
+}
+
+
+.searchresult {
+    display: flex;
+    justify-content: center;
+    color: white;
+    border: 3px solid orange;
+}
+
+.resultbox{
+  width: 100%;
+}
+
+.selectedTags {
+  display: flex;
+
+}
+
+.genreTags {
+  display: flex;
+
+}
+
+.selectedGenreButtons {
+  display: flex;
+  justify-content: center;
+}
