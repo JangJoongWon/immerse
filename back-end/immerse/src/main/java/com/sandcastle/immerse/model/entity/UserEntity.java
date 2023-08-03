@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Table(name = "users")
 public class UserEntity {
+
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
