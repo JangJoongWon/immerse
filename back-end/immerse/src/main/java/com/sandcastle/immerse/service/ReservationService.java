@@ -26,6 +26,6 @@ public interface ReservationService {
     @Transactional
     List<ReservationEntity> findListReservationByShowId(Long showId);
 
-//    @Transactional
-//    void deleteByReservationId(Long id);
+    @Transactional
+    void deleteByReservationId(Long id);
 }
