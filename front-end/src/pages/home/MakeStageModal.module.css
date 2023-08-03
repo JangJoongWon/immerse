@@ -2,3 +2,33 @@
     display: flex;
     justify-content: end;
 } 
+
+
+.picturebox {
+    width: 100%;
+  }
+
+  .photobox {
+    border: 2px dashed black;
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .imgbox {
+    border-radius: 20px;
+  }
+
+  .imagefile {
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  .picturebox .active {
+    border-color: green;
+  }
+  
