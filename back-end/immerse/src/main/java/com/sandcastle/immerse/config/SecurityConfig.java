@@ -1,6 +1,6 @@
 package com.sandcastle.immerse.config;
 
-import com.sandcastle.immerse.service.UserService;
+import com.sandcastle.immerse.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private String secretKey = "testKey";
 
     @Bean
@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt를 사용하는 경우
                 .and()
-                .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(userServiceImpl, secretKey), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

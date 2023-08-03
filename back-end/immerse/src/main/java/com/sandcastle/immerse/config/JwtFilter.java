@@ -1,6 +1,6 @@
 package com.sandcastle.immerse.config;
 
-import com.sandcastle.immerse.service.UserService;
+import com.sandcastle.immerse.service.UserServiceImpl;
 import com.sandcastle.immerse.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final String secretKey;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
