@@ -110,7 +110,7 @@ public class ShowService {
 	 */
 	@Transactional
 	public List<ShowListResponse> getShowsOrderByReservation(){
-		List<ShowEntity> shows = showRepository.findAllShowsOrderByReservation();
+		List<ShowEntity> shows = showRepository.getShowsOrderByReservation();
 		return shows.stream().map(ShowListResponse::new).collect(Collectors.toList());
 	}
 	

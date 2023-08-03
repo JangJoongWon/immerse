@@ -105,7 +105,6 @@ public class ReservationController {
      * 이 공연이 매진 되었는지, 최대 인원에 맞는지 확인하기 위해 사용하는 기능
      */
 
-
     @GetMapping("/show/{showId}/count")
     public Integer findLengthReservationByShowId(@PathVariable Long showId){
         return reservationService.findListReservationByShowId(showId).size();
@@ -114,15 +113,15 @@ public class ReservationController {
     /**
      * 예약 고유 번호를 인자값으로 하여 특정 예약 정보를 테이블에서 지우는 기능
      */
-//    @DeleteMapping("/{reservationId}")
-//    public void deleteReservationById(@PathVariable Long reservationId){
-//        Optional<?> result = reservationService.findByIdReservation(reservationId);
-//        if(result.isPresent()){
-//            reservationService.deleteByReservationId(reservationId);
-//            System.out.println("Reservation Delete Complete");
-//        } else {
-//            System.out.println("Reservation not Found");
-//        }
-//        return ;
-//    }
+    @DeleteMapping("/{reservationId}")
+    public void deleteByReservationId(@PathVariable Long reservationId){
+        Optional<?> result = reservationService.findByIdReservation(reservationId);
+        if(result.isPresent()){
+            reservationService.deleteByReservationId(reservationId);
+            System.out.println("Reservation Delete Complete");
+        } else {
+            System.out.println("Reservation not Found");
+        }
+        return ;
+    }
 }
