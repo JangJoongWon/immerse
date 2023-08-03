@@ -1,0 +1,42 @@
+.categories {
+    width: 100%;
+    border: 1px solid orange;
+  }
+  
+  .gridMove {
+    display: grid;
+    gap: 16px;
+  }
+  
+  @media (min-width: 401px) and (max-width: 799px) {
+    .gridMove {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 800px) and (max-width: 1199px) {
+    .gridMove {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .gridMove {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  
+  .card {
+    position: relative;
+    padding-bottom: 100%; /* 1:1 가로 세로 비율을 위한 padding-bottom 설정 */
+    overflow: hidden;
+  }
+
+  .statebutton a {
+    color: white;
+    font-size: 20px;
+    font-weight: 900;
+    text-decoration: none;
+    margin-right: 10%;
+  }

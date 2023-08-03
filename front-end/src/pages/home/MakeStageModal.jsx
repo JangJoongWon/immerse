@@ -83,10 +83,10 @@ function MakeStageModal({ show, onHide }) {
           </Modal.Body>
           <div
           className={styles.bottom}>
-          <Button block variant="info" type="button" className="m-3">
+          <Button variant="info" type="button" className="m-3">
             Live
           </Button>
-          <Button block variant="danger" type="button" className="m-3" onClick={onHide}>
+          <Button variant="danger" type="button" className="m-3" onClick={onHide}>
             exit
           </Button>
           </div>
