@@ -1,13 +1,18 @@
 .button{
-    background-color: black;
+    /* background-color: ; */
     color: white;
     margin: 1rem;
     font-size: x-large;
     cursor: pointer;
+    display: inline-block;
+    width: 9%;
+    overflow: hidden;
+    padding-bottom: 9px;
+    border-bottom: 3px solid transparent;
 }
 
 .selectedButton {
-    padding-bottom: 2px;
+    padding-bottom: 9px;
     border-bottom: 3px solid white;
  
   }

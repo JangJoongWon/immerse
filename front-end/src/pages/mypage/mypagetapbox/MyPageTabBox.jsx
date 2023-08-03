@@ -59,11 +59,11 @@ function MyPageTabBox() {
 
         {/* Tab Content */}
         <div className='mypage-tap-box'
-          style={{margin:"0 auto",width:'90%'}}>
+          style={{margin:"0 auto",width:'80%'}}>
           {/* Conditional Rendering based on the selected tab */}
           {selectTab === 'home' && (
             <div className='mypage-tap-home'>
-              <h1>홈</h1>
+              {/* <h1>홈</h1> */}
               
               <MyPageHome user_id={1}/>
 
