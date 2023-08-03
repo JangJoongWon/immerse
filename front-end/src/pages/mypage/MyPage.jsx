@@ -3,7 +3,13 @@ import { Row, Col } from 'react-bootstrap';
 import styles from './MyPage.module.css';
 import MypageTabbox from "./mypagetapbox/MyPageTabBox"
 import { Button } from 'react-bootstrap'
+// import { useState, useEffect } from 'react';
+// import { useDispatch} from 'react-redux'
+
+
 function MyPage() {
+
+  // const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
