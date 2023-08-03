@@ -29,7 +29,7 @@ public class SearchEntity {
     private String searchContent;
 
     // 단방향 ManyToOne
-    @ManyToOne(targetEntity = UserEntity.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 

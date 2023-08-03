@@ -1,6 +1,6 @@
 package com.sandcastle.immerse.config;
 
-import com.sandcastle.immerse.service.UserServiceImpl;
+import com.sandcastle.immerse.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userServiceImpl;
     private String secretKey = "testKey";
 
     @Bean
