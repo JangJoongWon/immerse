@@ -93,4 +93,26 @@ public class ShowService {
 			.build();
 		return showRepository.save(show).getShowId();
 	}
+
+	/**
+	 * 공연중인 것중 인기순 20개 조회
+	 * @return
+	 */
+	@Transactional
+	public List<ShowListResponse> getShowsOrderByProgress(){
+		List<ShowEntity> shows = showRepository.findAllShowsOrderByProgress();
+		return shows.stream().map(ShowListResponse::new).collect(Collectors.toList());
+	}
+
+	/**
+	 * 예약중인 공연 중 인기순 20개 조회
+	 * @return
+	 */
+	@Transactional
+	public List<ShowListResponse> getShowsOrderByReservation(){
+		List<ShowEntity> shows = showRepository.findAllShowsOrderByReservation();
+		return shows.stream().map(ShowListResponse::new).collect(Collectors.toList());
+	}
+	
+	
 }

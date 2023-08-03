@@ -84,7 +84,6 @@ public class ShowEntity {
 	/**
 	 * 공연의 카테고리
 	 */
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	private CategoryEntity category;
