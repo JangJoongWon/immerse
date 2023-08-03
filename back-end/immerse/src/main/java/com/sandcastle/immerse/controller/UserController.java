@@ -25,16 +25,29 @@ public class UserController {
         return ResponseEntity.ok().body(token);
     }
 
+    @GetMapping("")
+    public ResponseEntity<?> getMyUser(Authentication authentication) throws Exception {
+        Long userId = Long.valueOf(authentication.getName());
+        UserDto userDtoResponse = userService.getMyUser(userId);
+        return ResponseEntity.ok().body(userDtoResponse);
+    }
+
     @GetMapping("/{nickname}")
     public ResponseEntity<?> getUser(@PathVariable String nickname) throws Exception {
         UserDto userDtoResponse = userService.getUser(nickname);
         return ResponseEntity.ok().body(userDtoResponse);
     }
 
+    @GetMapping("/check/{nickname}")
+    public ResponseEntity<?> existsByNickname(@PathVariable String nickname) throws Exception {
+        boolean check = userService.existsByNickname(nickname);
+        return ResponseEntity.ok().body(check);
+    }
+
     @PutMapping("/update/info")
     public ResponseEntity<?> updateUser(@RequestBody UserDto userDtoRequest, Authentication authentication) throws Exception {
         Long userId = Long.valueOf(authentication.getName());
-        userService.updateUser(userDtoRequest, userId);
+        userService.updateUser(userId, userDtoRequest);
         return ResponseEntity.ok().body("유저정보 수정완료");
     }
 
@@ -44,7 +57,5 @@ public class UserController {
         int changedStatus = userService.withdrawal(userId);
         return ResponseEntity.ok().body(changedStatus);
     }
-
-
 
 }

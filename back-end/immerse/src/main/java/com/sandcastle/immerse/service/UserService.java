@@ -79,6 +79,17 @@ public class UserService {
     }
 
     @Transactional
+    public UserDto getMyUser(Long userId) {
+
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> {
+                    return new IllegalArgumentException("유저정보 조회실패");
+                });
+
+        return userEntity.toDto();
+    }
+
+    @Transactional
     public UserDto getUser(String nickname) {
 
         UserEntity userEntity = userRepository.findByNickname(nickname)
@@ -90,7 +101,12 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(UserDto userDtoRequest, Long userId) {
+    public boolean existsByNickname(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
+
+    @Transactional
+    public void updateUser(Long userId, UserDto userDtoRequest) {
 
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> {
