@@ -46,6 +46,8 @@ public class ShowRequest {
 
 	private Long categoryId;
 
+	private Long userId;
+
 	/**
 	 * 작성자: 주재홍
 	 * ISSUE: categoryId 외래 키를 갖고 있는 경우 외부 service 참조 없이
