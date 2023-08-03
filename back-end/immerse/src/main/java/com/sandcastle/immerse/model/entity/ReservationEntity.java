@@ -53,15 +53,15 @@ public class ReservationEntity {
     /**
      * 공연 고유번호
      */
-    @NotNull
-    @Column(name = "show_id")
+    @ManyToOne(targetEntity = ShowEntity.class , fetch = FetchType.LAZY)
+    @JoinColumn(name = "show_id")
     private Long showId;
 
     /**
      * 예약한 유저의 고유번호
      */
-    @NotNull
-    @Column(name = "user_id")
+    @ManyToOne(targetEntity = UserEntity.class , fetch = FetchType.LAZY)
+    @JoinColumn(name ="user_id")
     private Long userId;
 
     /**
