@@ -103,16 +103,16 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.findListReservationByShowId(showId);
     }
 
-//    /**
-//     * 예약 취소 : 예약 고유 번호를 통하여 예약 정보를 삭제할 수 있는 기능
-//     * @id : 예약 고유 번호
-//     * reservationRepository 안에 있는 쿼리문을 불러와서 테이블을 삭제한다.
-//     */
-//    @Override
-//    @Transactional
-//    public void deleteByReservationId(Long id){
-//        reservationRepository.deleteReservationByReservationId(id);
-//    }
+    /**
+     * 예약 취소 : 예약 고유 번호를 통하여 예약 정보를 삭제할 수 있는 기능
+     * @id : 예약 고유 번호
+     * reservationRepository 안에 있는 쿼리문을 불러와서 테이블을 삭제한다.
+     */
+    @Override
+    @Transactional
+    public void deleteByReservationId(Long id){
+        reservationRepository.deleteByReservationId(id);
+    }
 
 
 }

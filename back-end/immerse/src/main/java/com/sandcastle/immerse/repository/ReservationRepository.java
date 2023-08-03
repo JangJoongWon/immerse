@@ -102,7 +102,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    * retrun 값은 void 로 사용하게 된다.
    */
   // Native SQL query to delete a reservation by reservation_id
-//  @Modifying
-//  @Query(value = "DELETE FROM reservations WHERE reservation_id = :reservationId", nativeQuery = true)
-//  void deleteReservationByReservationId(@Param("reservationId") Long reservationId);
+  @Modifying
+  @Query(value = "DELETE FROM reservations WHERE reservation_id = :reservationId", nativeQuery = true)
+  void deleteByReservationId(@Param("reservationId") Long reservationId);
 }

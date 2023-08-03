@@ -29,6 +29,6 @@ public interface ShowRepository extends JpaRepository<ShowEntity, Long> {
 	 */
 	@Modifying
 	@Query(value = "select * from shows where show_progress =0 order by max_attendance desc limit 20", nativeQuery = true)
-	List<ShowEntity> findAllShowsOrderByReservation();
+	List<ShowEntity> getShowsOrderByReservation();
 
 }
