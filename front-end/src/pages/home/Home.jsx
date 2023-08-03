@@ -4,15 +4,14 @@ import { Button } from "react-bootstrap";
 import MakeStage from "./MakeStageModal";
 import CastList from './CastList';
 import axios from 'axios'
-import { useSelector } from 'react-redux';
-// import { Dispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
 function Home() {
 
   const [MakeStageOn, setMakeStageOn] = useState(false);
   const API_URL = 'https://i9d203.p.ssafy.io/api'
 
-  // const dispatch = Dispatch()
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -29,6 +28,15 @@ function Home() {
         console.log('reservation axios success', response2);
       } catch (error) {
         console.log('reservation axios error:', error.message);
+      }
+
+      try {
+        const categories = await axios.get(`${API_URL}/categories`);
+        console.log(categories);
+        dispatch
+      }
+      catch (e) {
+        console.log(e);
       }
     };
         fetchData();
