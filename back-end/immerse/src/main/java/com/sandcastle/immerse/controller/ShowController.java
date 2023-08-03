@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,5 +59,22 @@ public class ShowController {
 	@PutMapping("/{show_id}")
 	public Long putShow(@PathVariable Long show_id, @RequestBody ShowRequest form) {
 		return showService.putShow(show_id, form);
+	}
+
+	/**
+	 * 공연중인 것중 인기 순 20개 가지고 오는 기능
+	 */
+	@ResponseBody
+	@GetMapping("/popular/progress")
+	public List<ShowListResponse> getShowOrderByProgress(){
+		return showService.getShowsOrderByProgress();
+	}
+	/**
+	 * 예약준인 공연중 인기 순 20개 가지고 오는 기능
+	 */
+	@ResponseBody
+	@GetMapping("/popular/reservation")
+	public List<ShowListResponse> getShowOrderByReservation(){
+		return showService.getShowsOrderByReservation();
 	}
 }
