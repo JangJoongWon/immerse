@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 .header {
     position: sticky;
     top: 0;
     z-index: 999; /* 다른 컨텐츠 위에 떠 있도록 설정 */
     background-color: #f1f1f1;
   }
-=======
->>>>>>> 2efec69e3333e79fa2a9bdb11385e22964801823

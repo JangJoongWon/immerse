@@ -5,6 +5,7 @@ import MypageTabbox from "./mypagetapbox/MyPageTabBox"
 import { Button } from 'react-bootstrap'
 // import { useState, useEffect } from 'react';
 // import { useDispatch} from 'react-redux'
+import { Link } from 'react-router-dom';
 
 
 function MyPage() {
@@ -73,10 +74,9 @@ function MyPage() {
           </Col>
           <Col sm={3}>
             <Row>
-              <Button
-                style={{ backgroud: "#121212" }}>
+              <Link to="/checkpassword">
                 Setting
-              </Button>
+              </Link>
             </Row>
             <div className={styles.userright}>
               <button

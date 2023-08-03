@@ -1,8 +1,6 @@
 import React from 'react'
 import {Col,Row} from 'react-bootstrap'
 import styles from "./Announcment.module.css"
-import { useSelector } from 'react-redux';
-import axios from 'axios';
 
 function Announcement(props) {
   var {data, nickname} = props  

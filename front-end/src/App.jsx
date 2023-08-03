@@ -12,23 +12,19 @@ import Mypage from "./pages/mypage/MyPage";
 import Search from "./pages/search/Search";
 import Checkpassword from "./pages/checkpassword/CheckPassword"
 import NotFound from "./pages/notfound/NotFound";
+import MyOption from './pages/myoption/MyOption';
 import Test from "./components/inputpicture/test";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CameraTest from "./pages/cameratest/CameraTest";
-import styles from './App.module.css'
 
 
 function App() {
 
   return (
       <div>
-<<<<<<< HEAD
         <div className={styles.header}>
           <Header/>
         </div>
-=======
-        <Header className={styles.header}/>
->>>>>>> 2efec69e3333e79fa2a9bdb11385e22964801823
         <Router>
           <Routes>
             <Route path='/' element={<Home />} />
@@ -39,6 +35,7 @@ function App() {
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/search" element={<Search />} />
             <Route path="/checkpassword" element={<Checkpassword />} />
+            <Route path="/myoption" element={<MyOption />} />
             <Route path="/cameratest" element={<CameraTest />} />
             <Route path="/*" element={<NotFound />} />
             <Route path="/test" element={<Test />} />
