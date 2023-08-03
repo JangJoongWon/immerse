@@ -2,7 +2,6 @@
 import styles from './MakeStageModal.module.css'
 import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
 
-
 function MakeStageModal({ show, onHide }) {
   return (
     <div>

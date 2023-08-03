@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import styles from './BroadCast.module.css';
+import StageInfo from './StageInfoModal';
 
 function Card({ data }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [stageInfoOn, setStageInfoOn] = useState(false);
 
   return (
     <div
@@ -10,7 +12,8 @@ function Card({ data }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className={styles.content}>
+      <div className={styles.content}
+      onClick={() => setStageInfoOn(true)}>
         <div className={styles.thumbnail}>
           <div className={styles.posterContainer}>
             <img
@@ -25,13 +28,17 @@ function Card({ data }) {
           <div>주재홍</div>
           <div className={styles.info}>{data.fields.description}</div>
         </header>
+      </div>
         <footer>
           <a 
           href="/search" 
           className={styles.tagbutton}>#{data.fields.genre}</a>
           {/* {isHovered && <button className={styles.footerButton}>버튼</button>} */}
         </footer>
-      </div>
+      <StageInfo
+        show={stageInfoOn}
+        onHide={() => setStageInfoOn(false)}
+      />
     </div>
   );
 }
