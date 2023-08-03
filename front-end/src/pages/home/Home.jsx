@@ -4,27 +4,42 @@ import { Button } from "react-bootstrap";
 import MakeStage from "./MakeStageModal";
 import CastList from './CastList';
 import axios from 'axios'
+import { useSelector } from 'react-redux';
 
 function Home() {
 
   const [MakeStageOn, setMakeStageOn] = useState(false);
   const API_URL = 'https://i9d203.p.ssafy.io/api'
+  // const token = useSelector((state) => state.user.token)
+  
 
-  // useEffect(() => {
-  //   try {
-  //     const response1 = axios.get(`${API_URL}/shows/popular/progress`)
-  //     console.log('progress axios success', response1)
-  //   } catch (error) {
-  //     console.log('progress axios error : ', error.message)
+  // const config = {
+  //   headers: {
+  //     Authorization: token
   //   }
+  // };
 
-  //   try {
-  //     const response2 = axios.get(`${API_URL}/shows/popular/reservation`)
-  //     console.log('reservation axios success', response2)
-  //   } catch (error) {
-  //     console.log('reservation axios error : ', error.message)
-  //   }
-  // })
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response1 = await axios.get(`${API_URL}/shows/popular/progress`);
+        console.log('progress axios success', response1);
+      } catch (error) {
+        console.log('progress axios error:', error.message);
+      }
+  
+      try {
+        const response2 = await axios.get(`${API_URL}/shows/popular/reservation`);
+        console.log('reservation axios success', response2);
+      } catch (error) {
+        console.log('reservation axios error:', error.message);
+      }
+    };
+        fetchData();
+      }, []);
+  
 
   return (
     <div className="App">
