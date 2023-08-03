@@ -5,14 +5,14 @@ import MakeStage from "./MakeStageModal";
 import CastList from './CastList';
 import axios from 'axios'
 import { useSelector } from 'react-redux';
-import { Dispatch } from 'react-redux'
+// import { Dispatch } from 'react-redux'
 
 function Home() {
 
   const [MakeStageOn, setMakeStageOn] = useState(false);
   const API_URL = 'https://i9d203.p.ssafy.io/api'
 
-  const dispatch = Dispatch()
+  // const dispatch = Dispatch()
 
 
   useEffect(() => {
