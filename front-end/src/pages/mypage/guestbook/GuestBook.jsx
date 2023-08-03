@@ -25,7 +25,8 @@ function GuestBook(props) {
             </div>
             ))}
             </div>
-            <div>
+            <div
+            className={styles.down}>
                 <Row>
                     <Col
                      className={styles.input_bar}>

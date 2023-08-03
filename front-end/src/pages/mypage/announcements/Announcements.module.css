@@ -1,19 +1,19 @@
 .container{
     background-color: #121212;
-    border: red 2px solid;
     margin-bottom: 10%;
+    /* outline: red 2px solid; */
 }
 
 .box {
     background-color: #31363B;
     box-shadow: 0 0 1rem rgba(255,255,255,00.5rem);
-    margin: 1%;
+    margin: 5% 0;
     color:white;
     /* border : 0.1rem solid white; */
     border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
     width: 80%;
     margin-left: 5%;
-    border: 2px white solid ;
+    /* outline: 2px white solid ; */
 
 }
 
@@ -21,22 +21,28 @@
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     text-shadow: 0 0 1rem white;
-    border: 2px solid blue;
+    /* outline: 2px solid blue; */
 }
 
 .title{
 }
 
 .content{
-    border: 2px solid blueviolet;
+    overflow: scroll; 
+    height: 40rem;
+    /* outline: 2px solid blueviolet; */
+}
+
+.content::-webkit-scrollbar{
+    display: none;
 }
 
 .middle{
-    border: 2px solid yellow;
+    /* outline: 2px solid yellow; */
 }
 
 .left{
-    border: 2px solid violet;
+    /* outline: 2px solid violet; */
 }
 
 .profile_img {
@@ -44,7 +50,7 @@
     border-radius: 60%;
     margin: 10%;
     max-width: 100%;
-    border: 2px solid green;
+    /* outline: 2px solid green; */
 }
 
 .createbutton {

@@ -2,7 +2,7 @@
     margin-left: 5%;
     width: 90%;
     background-color: #121212;
-    border: 2px solid red;
+    /* outline: 2px solid red; */
 }
 
 
@@ -13,9 +13,9 @@
     background-color: white;
     box-shadow: 0 0 1rem rgba(255,255,255,00.5rem);
     color:black;
-    /* border : 0.5rem solid white; */
-    border-radius: 0.2rem;
-    border: 2px solid gold;
+    border : 0.5rem solid white;
+    border-radius: 0.5rem;
+    /* outline: 2px solid gold; */
 }
 
 .nickname{
@@ -24,16 +24,16 @@
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     text-shadow: 0 0 1rem white;
-    border: 2px solid greenyellow;
+    /* outline: 2px solid greenyellow; */
     
 }
 
 .content {
-    border: 2px solid peru;
+    /* outline: 2px solid peru; */
 }
 
 .img_container {
-    border: 2px solid salmon;
+    /* outline: 2px solid salmon; */
 }
 
 .profile_img {
@@ -41,17 +41,17 @@
     border-radius: 60%;
     margin: 10%;
     /* max-width: 100%; */
-    border: 2px solid blue;
+    /* outline: 2px solid blue; */
 }
 
 .input_bar{
     width: 100%;
     margin: 1%;
-    border: 2px solid aqua;
+    /* outline: 2px solid aqua; */
 }
 
 .send_img{
     width: 100%;
     margin: 1%;
-    border: 2px solid orange;
+    /* outline: 2px solid orange; */
 }

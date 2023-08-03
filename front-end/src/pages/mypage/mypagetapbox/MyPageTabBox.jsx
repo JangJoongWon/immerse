@@ -71,31 +71,31 @@ function MyPageTabBox() {
           )}
           {selectTab === 'record' && (
             <div className='mypage-tap-stage-record'>
-              <h1>공연기록</h1>
+              {/* <h1>공연기록</h1> */}
               <PerformanceRecord user_id={1}/>
             </div>
           )}
           {selectTab === 'plan' && (
             <div className='mypage-tap-stage-plan'>
-              <h1>공연일정</h1>
+              {/* <h1>공연일정</h1> */}
               <ReservationSchedule user_id={1}/>
             </div>
           )}
           {selectTab === 'review' && (
             <div className='mypage-tap-review'>
-              <h1>방명록</h1>
+              {/* <h1>방명록</h1> */}
               <GuestBook user_id={1} />
             </div>
           )}
           {selectTab === 'sub' && (
             <div className='mypage-tap-subscribe'>
-              <h1>구독 정보</h1>
+              {/* <h1>구독 정보</h1> */}
               <ChannelCard />
             </div>
           )}
           {selectTab === 'ann' && (
             <div className='mypage-tap-announcement'>
-              <h1>공지사항</h1>
+              {/* <h1>공지사항</h1> */}
               <Announcements user_id={1} nickname={"집에가고싶은토토로"}/>
             </div>
           )}
