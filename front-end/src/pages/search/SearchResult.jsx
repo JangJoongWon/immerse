@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styles from './SearchResult.module.css'
 import BroadCast from '../home/BroadCast'
 import datas from '../../stage_data.json'

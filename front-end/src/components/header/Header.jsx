@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/userSlice';
 import axios from 'axios'
@@ -17,6 +17,7 @@ function Header() {
   const [expand, setExpand] = useState(null);
   const user = useSelector((state) => state.user.token)
   const dispatch = useDispatch()
+  const API_URL = 'https://i9d203.p.ssafy.io/api'
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,8 +42,13 @@ function Header() {
 
   const deleteAccount = async (event) => {
     event.preventDefault();
+    const config = {
+      headers: {
+        Authorization: user
+      }
+    };
     try {
-      const response = await axios.delete('https://i9d203.p.ssafy.io/api/users/withdrawal', {"token" : user});
+      const response = await axios.delete(`${API_URL}/users/withdrawal`, config);
       dispatch(logOut())
       console.log('Check success:', response);
 
