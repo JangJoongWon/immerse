@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react'
 import styles from './MakeStageModal.module.css'
 import { useDropzone } from 'react-dropzone';
 import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
+import axios from 'axios';
 
 function MakeStageModal({ show, onHide }) {
 
@@ -11,9 +12,11 @@ function MakeStageModal({ show, onHide }) {
   const [genre, setGenre] = useState('')
   const [rank, setRank] = useState('')
   const [expla, setExpla] = useState('')
+  const [price, setPrice] = useState('')
   const [max, setMax] = useState('')
   const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
+  const [start, setStart] = useState('')
+  const [end, setEnd] = useState('')
 
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -27,27 +30,67 @@ function MakeStageModal({ show, onHide }) {
   const explaChange = (e) => {
     setExpla(e.target.value);
   }
+  const priceChange = (e) => {
+    setPrice(e.target.value);
+  }
   const maxChange = (e) => {
     setMax(e.target.value);
   }
   const dateChange = (e) => {
     setDate(e.target.value);
   }
-  const timeChange = (e) => {
-    setTime(e.target.value);
+  const startChange = (e) => {
+    setStart(e.target.value);
+  }
+  const endChange = (e) => {
+    setEnd(e.target.value);
   }
 
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const onDrop = useCallback(acceptedFiles => {
-    // Do something with the file
     if (acceptedFiles.length > 0) {
       const imageFile = acceptedFiles[0];
-      setUploadedImage(URL.createObjectURL(imageFile));
+      setUploadedImage(imageFile);
+      // setUploadedImage(URL.createObjectURL(imageFile));
     } else {
       console.log('Please upload only one image.');
     }
   }, []);
+
+  const mustInput = () => {
+    return title.trim() !== '' && parseFloat(price) >= 0;
+  };
+
+  const makeStage = async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('genre', genre);
+    formData.append('rank', rank);
+    formData.append('expla', expla);
+    formData.append('price', price);
+    formData.append('max', max);
+    formData.append('date', date);
+    formData.append('start', start);
+    formData.append('end', end);
+    formData.append('image', uploadedImage);
+
+    try {
+      const response = await axios.post('your-backend-url', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set the content type for FormData
+        },
+      });
+
+      if (response.status === 200) {
+        console.log('Stage created successfully');
+      }
+    } catch (error) {
+      console.error('Error creating stage:', error);
+    }
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -63,6 +106,7 @@ function MakeStageModal({ show, onHide }) {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
+          onSubmit={makeStage}
         >
           <Container>
             <Modal.Header closeButton>
@@ -102,6 +146,11 @@ function MakeStageModal({ show, onHide }) {
                     <Form.Label>공연 설명</Form.Label>
                     <Form.Control as="textarea" rows={5} placeholder="Enter detail"  value={expla} onChange={explaChange}/>
                   </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>가격</Form.Label>
+                    <Form.Control type="number"  min="0"  value={price} onChange={priceChange}/>
+                  </Form.Group>
                 </Col>
 
                 <Col sm="6">
@@ -114,7 +163,7 @@ function MakeStageModal({ show, onHide }) {
                       {uploadedImage ? (
                         <div className={styles.imgbox}>
                           {/* <h2>Uploaded Image:</h2> */}
-                          <img src={uploadedImage} alt="Uploaded" className={styles.imagefile} />
+                          <img src={URL.createObjectURL(uploadedImage)} alt="Uploaded" className={styles.imagefile} />
                         </div>
                       ) : (
                         <p>Drag drop an image or click here</p>
@@ -140,16 +189,18 @@ function MakeStageModal({ show, onHide }) {
 
                     <Form.Group>
                       <Form.Label>공연 시간</Form.Label>
-                      <Form.Control type="email" placeholder="Enter time"  value={time} onChange={timeChange}/>
+                      <Form.Control type="datetime-local" placeholder="Enter start time"  value={start} onChange={startChange}/>
+                      <Form.Control type="datetime-local" placeholder="Enter end time"  value={end} onChange={endChange}/>
                     </Form.Group>
                   </>
                   )}
 
                   </Col>
                 </Row>
+                <Button type='button' onClick={makeStage} disabled={!mustInput()}>submit</Button>
               </Form>
             </Modal.Body>
-          <div
+          {/* <div
           className={styles.bottom}>
           <Button variant="info" type="button" className="m-3">
             Live
@@ -157,7 +208,7 @@ function MakeStageModal({ show, onHide }) {
           <Button variant="danger" type="button" className="m-3" onClick={onHide}>
             exit
           </Button>
-          </div>
+          </div> */}
           </Container>
         </Modal>
       </div>
