@@ -1,0 +1,62 @@
+.container {
+  width: 15%;
+  position: relative;
+  margin: 0 auto;
+  /* overflow: hidden; */
+  /* Add other styles for your card component */
+}
+
+.poster {
+    width: 100%;
+    border-radius: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  
+  .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  /* .component:hover .poster {
+    transform: scale(1.5);
+  } */
+  
+  .component:hover .content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .content h3 {
+    color: white;
+    font-size: 18px;
+  }
+  
+  .content Button {
+    /* width: 40%; */
+    /* border: 1px solid blue; */
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  .content .button {
+    display: flex;
+    justify-content: right;
+  }
+  
+  .title{
+    align-self: start;
+    text-shadow: 0 1px #BDBDBD;
+  }
+
+  .font {
+    /* text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white; */
+  }
+

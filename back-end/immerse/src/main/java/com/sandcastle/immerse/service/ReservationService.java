@@ -21,7 +21,7 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
-public class ReservationService {
+public class ReservationService implements ReservationServiceImpl {
 
     private final ReservationRepository reservationRepository;
 //    private final ShowRepository showRepository;
@@ -39,6 +39,7 @@ public class ReservationService {
      * 지금 존재하는 모든 예약 테이블 조회
      * @return 모든 예약 엔티티로 이루어진 리스트로 반환
      */
+    @Override
     @Transactional
     public List<ReservationEntity> findALLReservation() {
         return reservationRepository.findAll();
@@ -52,6 +53,7 @@ public class ReservationService {
      * @param id : Reservation_id
      * @return : ReservationEntity
      */
+    @Override
     @Transactional
     public Optional<ReservationEntity> findByIdReservation(Long id){
         return reservationRepository.findById(id);
@@ -67,6 +69,7 @@ public class ReservationService {
      * @id : 예약 고유 번호
      * reservationRepository 안에 있는 쿼리문을 불러와서 테이블을 삭제한다.
      */
+    @Override
     @Transactional
     public void deleteByReservationId(Long id){
         reservationRepository.deleteReservationByReservationId(id);
@@ -76,6 +79,7 @@ public class ReservationService {
      * 특정 유저의 예약 리스트 조회 : 특정 유저의 ID 를 통하여 예약정보 리스트를 조회할 수 있는 기능
      * @param userId : 특정 유저의 고유 번호
      */
+    @Override
     @Transactional
     public List<ReservationEntity> findListReservationByUserId(Long userId){
         return reservationRepository.findListReservationByUserId(userId);
@@ -85,6 +89,7 @@ public class ReservationService {
      * 특정 공연의 예약 리스트 조회 : 특정 공연 ID 를 통하여 예약정보 리스트를 조회할 수 있는 기능
      * @param showId : 특정 공연의 고유 ID
      */
+    @Override
     @Transactional
     public List<ReservationEntity> findListReservationByShowId(Long showId){
         return reservationRepository.findListReservationByShowId(showId);
@@ -94,6 +99,7 @@ public class ReservationService {
      * 특정 공연의 예약 수 : 특정 공연의 예약 리스트 를 조회 한 후 리스트의 길이를 계산한다.
      * @param showId : 특정 공연의 고유 ID
      */
+    @Override
     @Transactional
     public Integer findLengthReservationByShowId(Long showId){
         return reservationRepository.findListReservationByShowId(showId).size();
