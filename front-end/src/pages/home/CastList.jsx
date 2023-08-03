@@ -20,7 +20,7 @@ function CardList() { // 컴포넌트 이름을 대문자로 변경
     const handleReserveButtonClick = () => {
       setLiveState(false);
     };
-    
+  
 
   return (
     <div className={styles.container}>

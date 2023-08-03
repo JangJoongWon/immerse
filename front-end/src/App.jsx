@@ -12,7 +12,7 @@ import Mypage from "./pages/mypage/MyPage";
 import Search from "./pages/search/Search";
 import Checkpassword from "./pages/checkpassword/CheckPassword"
 import NotFound from "./pages/notfound/NotFound";
-import Test from "./redux/test";
+import Test from "./components/inputpicture/test";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 

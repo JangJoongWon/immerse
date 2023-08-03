@@ -1,0 +1,43 @@
+.container {
+    padding: 5%;
+    border: 1px solid white;
+}
+
+.box {
+    border: 1px solid white;
+}
+
+.left {
+    border: 1px solid red;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.poster {
+    width: 90%;
+    height: 90%;
+}
+
+.posterimg {
+    width: 100%;
+    height: 100%;
+}
+
+
+.right {
+    border: 1px solid blue;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.texts{
+    border: 1px solid green;
+    width: 90%;
+    height: 90%;
+}
