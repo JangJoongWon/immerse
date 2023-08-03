@@ -6,9 +6,11 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 import userSlice from './userSlice';
+import categorySlice from './categorySlice';
 
 const reducers = combineReducers({
-    user: userSlice.reducer
+    user: userSlice.reducer,
+    category: categorySlice.reducer
 })
 
 const persistConfig = {
