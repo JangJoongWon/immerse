@@ -9,7 +9,7 @@ import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 function SignUp() {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const passwordRule = (

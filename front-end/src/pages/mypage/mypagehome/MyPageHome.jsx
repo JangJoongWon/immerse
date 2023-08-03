@@ -58,7 +58,7 @@ function MyPageHome(props) {
             <div
               style={{width:'100%',height:'80%'}}
               className={styles.homeguestbook}>
-              {guest.data.map((review) => (
+              {guest.data.slice(0,5).map((review) => (
                 <div 
                   style={{margin:'4%',border:"0.9rem solid white"}}
                   className={styles.review} key={review.id}>
@@ -84,7 +84,7 @@ function MyPageHome(props) {
         className={styles.bottom}>
             <Row
             className={styles.cardbox}>
-            {stage_list.slice(1).map((stage) => (
+            {stage_list.slice(1,6).map((stage) => (
                   <MyPageCard 
                   key={stage.id}
                   className={styles.card} 

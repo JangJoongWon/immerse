@@ -13,8 +13,8 @@
     background-color: white;
     box-shadow: 0 0 1rem rgba(255,255,255,00.5rem);
     color:black;
-    /* border : 0.5rem solid white; */
-    border-radius: 0.2rem;
+    border : 0.5rem solid white;
+    border-radius: 0.5rem;
     /* outline: 2px solid gold; */
 }
 
@@ -44,21 +44,6 @@
     /* outline: 2px solid blue; */
 }
 
-.up {
-
-    position: sticky;
-    top: 0;
-    width: calc(100% - 16px); /* 스크롤바 너비만큼 오른쪽 여백을 빼줍니다. (여기서는 16px로 가정) */
-    height: 40rem;
-    border-top: 0.1rem solid white;
-    border-bottom: 0.1rem solid white;
-    overflow-y: auto;
-}
-
-.up::-webkit-scrollbar {
-    display: none;
-}
-
 .input_bar{
     width: 100%;
     margin: 1%;
@@ -69,16 +54,4 @@
     width: 100%;
     margin: 1%;
     /* outline: 2px solid orange; */
-}
-
-.send_img:hover {
-    cursor: pointer;
-}
-
-.messagebox {
-    margin: 2% 0;
-}
-
-.down {
-
 }
