@@ -14,7 +14,8 @@ import Checkpassword from "./pages/checkpassword/CheckPassword"
 import NotFound from "./pages/notfound/NotFound";
 import Test from "./redux/test";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
+import CameraTest from "./pages/cameratest/CameraTest";
+import styles from './App.module.css'
 
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
 
   return (
       <div>
-        <Header />
+        <div className={styles.header}>
+          <Header/>
+        </div>
         <Router>
           <Routes>
             <Route path='/' element={<Home />} />
@@ -33,8 +36,11 @@ function App() {
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/search" element={<Search />} />
             <Route path="/checkpassword" element={<Checkpassword />} />
+            <Route path="/cameratest" element={<CameraTest />} />
             <Route path="/*" element={<NotFound />} />
             <Route path="/test" element={<Test />} />
+            
+
           </Routes>
         </Router>
       </div>

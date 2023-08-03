@@ -8,6 +8,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/userSlice';
+import styles from './Header.css'
 
 import { HiOutlineSearch } from "react-icons/hi";
 
@@ -39,7 +40,8 @@ function Header() {
 
   return (
     <>
-      <Navbar style={{ background: "#31363B", color: "white"}} expand={expand}>
+      <Navbar 
+      style={{ background: "#31363B", color: "white"}} expand={expand}>
         <Container fluid>
           <Navbar.Brand href="/" style={{ color: "white", fontWeight: "bold", fontSize: "2rem" }}>
             Immerse

@@ -73,3 +73,7 @@
 .send_img:hover {
     cursor: pointer;
 }
+
+.messagebox {
+    margin: 2% 0;
+}
