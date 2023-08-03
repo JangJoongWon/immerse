@@ -23,6 +23,7 @@ function ReservationTicket({ data }) {
                 {data.fields.title}
               </Col>
               <Col
+                md={4}
                 style={{textAlign:"end"}} 
                 className={`${styles.leftfont} ${styles.logoname}`}>
                 <h5>Immerse</h5>
@@ -30,7 +31,7 @@ function ReservationTicket({ data }) {
             </Row>
             <Row >
               <Col 
-                style={{alignItems:"end",marginTop:"10%"}} 
+                style={{alignItems:"end",marginTop:"15%"}} 
                 >
                 <div
                 className={`${styles.leftfont} ${styles.date}`}
@@ -49,9 +50,12 @@ function ReservationTicket({ data }) {
             </Row>
             </div>
           </Col>
-          <Col sm={3} className={styles.right}>
+          <Col sm={3} 
+              className={styles.right}>
             <div>
-              <Row sm={3}>    
+              <Row
+                style={{margin:"0 auto"}}
+                sm={3}>    
                 <h2
                 style={{color:"gold"}}
                 >Free

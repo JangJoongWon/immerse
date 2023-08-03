@@ -1,33 +1,50 @@
 .container{
-    outline: 2px solid red;
+    /* outline: 2px solid red; */
 }
 
 .review{
     margin:1%;
     border-radius: 0.5rem;
     background-color: white;
-    outline: 2px solid blue;
+    /* outline: 2px solid blue; */
 }
 
 .title{
     color:white;
     margin:1rem;
-    outline: 2px solid violet;
+    /* outline: 2px solid violet; */
 }
 
 .bottom{
-    outline: 2px solid green;
+    /* outline: 2px solid green; */
 }
 
 .up{
-    outline: 2px solid firebrick;
+    /* outline: 2px solid firebrick; */
 }
 
 
 .card{
-    outline: 2px solid skyblue;
+    /* outline: 2px solid skyblue; */
 }
 
 .homeguestbook{
-    outline: 2px solid snow;
+    /* outline: 2px solid snow; */
 }
+
+
+.cardbox {
+    overflow: hidden;
+    margin: 0 auto;
+    /* outline: 2px solid white; */
+}
+
+.poster{
+    /* outline: 2px solid blue; */
+}
+
+.posterbox{
+    margin: 0 auto;
+    /* outline: 2px solid greenyellow; */
+}
+
