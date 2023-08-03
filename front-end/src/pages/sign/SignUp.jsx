@@ -30,6 +30,7 @@ function SignUp() {
     const [gender, setGender] = useState('');
     const [name, setName] = useState('');
     const [nickname, setNickName] = useState('');
+    const [nickCheck, setNickCheck] = useState(false);
     const [phone, setPhone] = useState('');
     const [birth, setBirth] = useState('');
 
@@ -46,48 +47,38 @@ function SignUp() {
     const isPassword2Valid = (password) => {
         return password === password1;
     };
-
+    
     const isGenderValid = (selectedGender) => {
       return selectedGender === 'M' || selectedGender === 'F';
     };
-
+    
     const isNameValid = (name) => {
-        const englishPattern = /^[a-zA-Z]{2,15}$/;
-        const koreanPattern = /^[가-힣]{2,15}$/;
-        
-        return (englishPattern.test(name) || koreanPattern.test(name));
-      };
-
-    const isNickValid = (nick) => {
-        const nickPattern = /^[a-zA-Z가-힣\s]{2,15}$/;
-        return nickPattern.test(nick);
-      };
+      const englishPattern = /^[a-zA-Z]{2,15}$/;
+      const koreanPattern = /^[가-힣]{2,15}$/;
+      
+      return (englishPattern.test(name) || koreanPattern.test(name));
+    };
 
     const isPhoneValid = (phone) => {
         const phonePattern = /^[0-9-]{10,13}$/;
         return phonePattern.test(phone);
       };
 
-    // const isBirthValid = (birth) => {
-    //   return !!birth;
-    // };
     const isBirthValid = (birth) => {
       if (!birth) {
         return false; // 생일 값이 비어있는지 확인
       }
     
       const dateObject = new Date(birth);
-      const isValidDate = !isNaN(dateObject.getTime()); // 유효한 날짜인지 확인
+      const isValidDate = !isNaN(dateObject.getTime());
     
       if (!isValidDate) {
-        return false; // 유효하지 않은 날짜이면 유효하지 않음
+        return false;
       }
     
-      // Form.Control에서 설정한 min과 max 값 가져오기
       const minDate = new Date("1900-01-01");
       const maxDate = new Date("2023-07-31");
     
-      // 입력된 날짜가 min과 max 사이에 있는지 확인
       return dateObject >= minDate && dateObject <= maxDate;
     };
     
@@ -109,6 +100,7 @@ function SignUp() {
       };
       const handleNickNameChange = (e) => {
         setNickName(e.target.value);
+        setNickCheck(false);
       };
       const handlePhoneChange = (e) => {
         setPhone(e.target.value);
@@ -127,7 +119,6 @@ function SignUp() {
 
       const onSubmitHandler = async (event) => {
         event.preventDefault();
-        // console.log(data)
 
         try {
           const response = await axios.post('https://i9d203.p.ssafy.io/api/user/signup', data);
@@ -137,9 +128,9 @@ function SignUp() {
             // 서버로 이메일과 비밀번호를 전송하여 토큰 받기
             const response = await axios.post('https://i9d203.p.ssafy.io/api/user/signin', data);
             console.log('Signin Info: ', response.config.data, 'Signin Token: ', response.data)
-            const token = response.data; // 서버로부터 받은 토큰 값
+            const token = response.data;
             if (token) {
-              dispatch(setToken(token)); // 토큰 값을 Redux 스토어에 저장하는 액션을 디스패치
+              dispatch(setToken(token));
               console.log('Login success! Token:', token);
               navigate('/',{replace:true});
             } else {
@@ -154,11 +145,26 @@ function SignUp() {
         }
       };
 
+
+      const datanick = {"nickname" : nickname}
+      const nickNameCheck = async (event) => {
+        event.preventDefault();
+        try {
+          const response = await axios.get(`http://i9d203.p.ssafy.io/api/user/check/${nickname}`, datanick);
+          console.log('Check success:', response.data);
+          setNickCheck(!response.data);
+        } catch (error) {
+          console.log('Check error', error);
+          console.log(datanick);
+        }
+      };
+      
+
       const isSubmitButtonActive =
       isEmailValid(email) &&
       isPasswordValid(password1) &&
       isPassword2Valid(password2) &&
-      isNickValid(nickname) &&
+      nickCheck &&
       isNameValid(name) &&
       isGenderValid(gender) &&
       isPhoneValid(phone) &&
@@ -179,7 +185,6 @@ function SignUp() {
                         <div className={styles.body}>
                             <div className={styles.leftside}>
                                 <Form.Group className={styles.inputform}>
-                                  {/* {!isEmailValid(email) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
                                   <div
                                     className={styles.error}
                                     style={{ color: isEmailValid(email) ? 'blue' : 'red' }}
@@ -202,8 +207,8 @@ function SignUp() {
                                     Password 
                                     <OverlayTrigger placement="top" overlay={passwordRule}>
                                       <span>
-                                        <AiOutlineQuestionCircle bsStyle="default" style={{color: 'white'}}/>
-                                      </span>                            
+                                        <AiOutlineQuestionCircle style={{ color: 'white' }} />
+                                      </span>
                                     </OverlayTrigger>
                                   </div>
                                   <Form.Control
@@ -229,8 +234,7 @@ function SignUp() {
                                   onChange={handlePasswordChange2}
                                   />
                                 </Form.Group>
-                                <Form.Group>
-                                  {/* {!isGenderValid(gender) && <div className={styles.error}>성별을 선택해 주세요.</div>} */}
+                                <Form.Group  className={styles.inputform}>
                                   <div
                                     className={styles.error}
                                     style={{ color: isGenderValid(gender) ? 'blue' : 'red' }}
@@ -238,6 +242,7 @@ function SignUp() {
                                     Gender
                                   </div>
                                   <Form.Select
+                                  className={styles.inputbox}
                                   onChange={handleGenderChange}>
                                     <option>Select Gender</option>
                                     <option value="M">남</option>
@@ -247,10 +252,9 @@ function SignUp() {
                             </div>
                             <div className={styles.rightside}>
                                 <Form.Group className={styles.inputform}>
-                                  {/* {!isNameValid(name) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
                                   <div
                                     className={styles.error}
-                                    style={{ color: isNameValid(name) ? 'blue' : 'red' }}
+                                    style={{ color: isNameValid ? 'blue' : 'red' }}
                                   >
                                     Name
                                   </div>
@@ -263,23 +267,26 @@ function SignUp() {
                                   />
                                 </Form.Group>
                                 <Form.Group className={styles.inputform}>
-                                  {/* {!isNickValid(nickname) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
                                   <div
                                     className={styles.error}
-                                    style={{ color: isNickValid(nickname) ? 'blue' : 'red' }}
+                                    style={{ color: nickCheck ? 'blue' : 'red' }}
                                   >
                                     NickName
                                   </div>
-                                  <Form.Control
-                                  className={styles.inputbox}
-                                  type="text"
-                                  placeholder="Enter nick"
-                                  value={nickname}
-                                  onChange={handleNickNameChange}
-                                  />
+                                  <div
+                                  className={styles.nickCheck}
+                                  >
+                                    <Form.Control
+                                    className={styles.inputbox}
+                                    type="text"
+                                    placeholder="Enter nick"
+                                    value={nickname}
+                                    onChange={handleNickNameChange}
+                                    />
+                                    <Button onClick={nickNameCheck}>확인</Button>
+                                  </div>
                                 </Form.Group>
                                 <Form.Group className={styles.inputform}>
-                                  {/* {!isPhoneValid(phone) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
                                   <div
                                     className={styles.error}
                                     style={{ color: isPhoneValid(phone) ? 'blue' : 'red' }}
@@ -287,7 +294,7 @@ function SignUp() {
                                     PhoneNumber
                                     <OverlayTrigger placement="top" overlay={phoneNumberRule}>
                                       <span>
-                                        <AiOutlineQuestionCircle bsStyle="default" style={{color: 'white'}}/>
+                                        <AiOutlineQuestionCircle style={{color: 'white'}}/>
                                       </span>                            
                                     </OverlayTrigger>
                                   </div>
@@ -300,7 +307,6 @@ function SignUp() {
                                   />
                                 </Form.Group>
                                 <Form.Group className={styles.inputform}>
-                                  {/* {!isBirthValid(birth) && <div className={styles.error}>올바른 형식이 아닙니다.</div>} */}
                                   <div
                                     className={styles.error}
                                     style={{ color: isBirthValid(birth) ? 'blue' : 'red' }}
@@ -317,16 +323,18 @@ function SignUp() {
                                   />
                                 </Form.Group>
                             </div>
+
+                          {isSubmitButtonActive ? (
+                            <div className={styles.submitbutton}>
+                              <Button type="submit">회원가입</Button>
+                            </div>
+                          ) : (
+                            <div className={styles.submitbutton}>
+                              <Button type="submit" disabled>회원가입</Button>
+                            </div>
+                          )}
+
                         </div>
-                        {isSubmitButtonActive ? (
-                          <div className={styles.submitbutton}>
-                            <Button type="submit">회원가입</Button>
-                          </div>
-                        ) : (
-                          <div className={styles.submitbutton}>
-                            <Button type="submit" disabled>회원가입</Button>
-                          </div>
-                        )}
                     </Form>
                 </div>
             </div>

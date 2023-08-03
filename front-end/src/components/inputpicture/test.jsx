@@ -22,8 +22,8 @@ function Test() {
   });
 
   return (
-    <div className={styles.container}>
-      <div {...getRootProps()} className={`${styles.contentbox} ${isDragActive ? styles.active : ''}`}>
+    <div className={styles.picturebox}>
+      <div {...getRootProps()} className={`${styles.phothbox} ${isDragActive ? styles.active : ''}`}>
         <input {...getInputProps()} />
         {uploadedImage ? (
           <div className={styles.imgbox}>

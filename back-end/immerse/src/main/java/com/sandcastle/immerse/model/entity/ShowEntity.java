@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sandcastle.immerse.model.enums.ShowProgress;
 
 import lombok.AllArgsConstructor;
@@ -84,12 +83,23 @@ public class ShowEntity {
 	/**
 	 * 공연의 카테고리
 	 */
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = CategoryEntity.class)
 	@JoinColumn(name = "category_id")
 	private CategoryEntity category;
 
 	public void setCategory(CategoryEntity category) {
 		this.category = category;
 	}
+
+	/**
+	 * 공연자
+	 */
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
+	@JoinColumn(name = "user_id")
+	private UserEntity user;
+
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
+
 }

@@ -1,6 +1,6 @@
 // import React, { useState } from 'react'
 import Header from './components/header/Header'
-import './App.module.css'
+import styles from './App.module.css'
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Home from "./pages/home/Home";
@@ -12,7 +12,7 @@ import Mypage from "./pages/mypage/MyPage";
 import Search from "./pages/search/Search";
 import Checkpassword from "./pages/checkpassword/CheckPassword"
 import NotFound from "./pages/notfound/NotFound";
-import Test from "./redux/test";
+import Test from "./components/inputpicture/test";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CameraTest from "./pages/cameratest/CameraTest";
 import styles from './App.module.css'
@@ -22,9 +22,13 @@ function App() {
 
   return (
       <div>
+<<<<<<< HEAD
         <div className={styles.header}>
           <Header/>
         </div>
+=======
+        <Header className={styles.header}/>
+>>>>>>> 2efec69e3333e79fa2a9bdb11385e22964801823
         <Router>
           <Routes>
             <Route path='/' element={<Home />} />

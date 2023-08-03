@@ -3,9 +3,13 @@ import styles from "./Announcements.module.css"
 import anouncements_data from "../../../anouncements_data.json";
 import Announcement from "./announcement/Announcement"
 import { Button } from "react-bootstrap";
+import MakeAnnouncementModal from './makeannouncement/MakeAnnouncementModal';
+
 
 function Announcements(props) {
+
   const { user_id, nickname } = props;
+  const [MakeAnnouncementOn, setAnnouncementOn] = useState(false);
   const initialVisibleAnnouncements = 10; // 초기에 보여질 공지사항 수
   const announcementsToLoad = 5; // 매번 로드할 공지사항 수
 
@@ -48,8 +52,15 @@ function Announcements(props) {
 
   return (
     <div className={styles.container}>
+      <MakeAnnouncementModal
+        show={MakeAnnouncementOn}
+        onHide={() => setAnnouncementOn(false)}
+        />
       <div className={styles.createbutton}>
-        <Button variant="outline-light">공지사항 만들기</Button>
+        <Button 
+        variant="outline-light"
+        onClick={() => setAnnouncementOn(true)}
+        >공지사항 만들기</Button>
       </div>
       <div 
       className={styles.content}>

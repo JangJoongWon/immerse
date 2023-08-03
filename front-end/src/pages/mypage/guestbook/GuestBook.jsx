@@ -2,26 +2,30 @@ import React, { useState, useRef } from 'react';
 import styles from './GuestBook.module.css';
 import guest from '../../../guest.json';
 import { Col, Row, Form } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import Review from './review/Review';
 import axios from 'axios';
 
 function GuestBook(props) {
   var user_id = props.user_id;
 
+  const token = useSelector((state) => state.user.token);
   const [content, setContent] = useState('');
   const handleContentChange = (input) => {
     setContent(input.target.value);
   };
 
+  
   // 임시 데이터
   const guest_list = guest.data;
 
 
   // Ref 생성
   const inputRef = useRef(null);
-  
+
   const context = {
     content: content,
+    Authorization: 'Bearer ' + token
   };
 
   const onSubmitHandler = async (event) => {

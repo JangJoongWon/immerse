@@ -53,16 +53,16 @@ public class ReservationEntity {
     /**
      * 공연 고유번호
      */
-    @NotNull
-    @Column(name = "show_id")
-    private Long showId;
+    @ManyToOne(targetEntity = ShowEntity.class , fetch = FetchType.LAZY)
+    @JoinColumn(name = "show_id")
+    private ShowEntity showEntity;
 
     /**
      * 예약한 유저의 고유번호
      */
-    @NotNull
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne(targetEntity = UserEntity.class , fetch = FetchType.LAZY)
+    @JoinColumn(name ="user_id")
+    private UserEntity userEntity;
 
     /**
      * @Setter 를 Entity 클래스에서 권장하지 않는다
@@ -85,11 +85,11 @@ public class ReservationEntity {
      * setterMethods : Setter 메서드의 이름을 설정할 수 있다. // default : null
      */
     @Builder
-    public ReservationEntity(Long reservationID, LocalDate reservationDate, Long showId, Long userId){
+    public ReservationEntity(Long reservationID, LocalDate reservationDate, ShowEntity showEntity, UserEntity userEntity){
         this.reservationID = reservationID;
         this.reservationDate = reservationDate;
-        this.showId = showId;
-        this.userId = userId;
+        this.showEntity = showEntity;
+        this.userEntity = userEntity;
     }
 
 

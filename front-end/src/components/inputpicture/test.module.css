@@ -1,9 +1,8 @@
-.container {
-    background-color: black;
+.picturebox {
     width: 100%;
   }
 
-  .contentbox {
+  .photobox {
     border: 2px dashed gray;
     border-radius: 30px;
     padding: 20px;
@@ -24,7 +23,7 @@
     width: 100%;
   }
 
-  .container.active {
+  .picturebox .active {
     border-color: green;
   }
   
