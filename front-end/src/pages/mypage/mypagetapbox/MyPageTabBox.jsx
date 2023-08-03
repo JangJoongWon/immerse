@@ -16,10 +16,14 @@ function MyPageTabBox() {
   }
 
   return (
-    <div>
+    <div
+    >
         {/* Tab Buttons */}
-      <div className='mypage-tap-all'>
-        <div className="mypage-tap-button-all">
+      <div 
+      className='mypage-tap-all'>
+        <div 
+        style={{textAlign:"center"}}
+        className="mypage-tap-button-all">
           <span
             className={`${styles.button} ${selectTab === 'home' ? styles.selectedButton : ''}`}
             onClick={() => changeSelectTab('home')}
@@ -54,7 +58,8 @@ function MyPageTabBox() {
         </div>
 
         {/* Tab Content */}
-        <div className='mypage-tap-box'>
+        <div className='mypage-tap-box'
+          style={{margin:"0 auto",width:'90%'}}>
           {/* Conditional Rendering based on the selected tab */}
           {selectTab === 'home' && (
             <div className='mypage-tap-home'>

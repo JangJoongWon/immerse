@@ -3,7 +3,7 @@
 // 이전 공연기록을 하단에 출력
 import data from '../../../stage_data.json';
 import guest from '../../../guest.json';
-import StageCard from '../../../components/cards/stagecard';
+import MyPageCard from '../mypagecard/MyPageCard';
 import { Row, Col } from 'react-bootstrap';
 import styles from './MyPageHome.module.css';
 
@@ -18,39 +18,77 @@ function MyPageHome(props) {
 
   return (
     <div
+    style={{justifyContent:'start'}}
     className={styles.container}>
       <Row
       className={styles.up}>
-        <Col>
-          <StageCard className={styles.component} data={stage_list[0]} />
-        </Col>
         <Col
-         className={styles.homeguestbook}>
-          {guest.data.map((review) => (
-            <div 
-            className={styles.review} key={review.id}>
-              {review.content}
+        style={{padding:'0'}}
+        >
+          <div 
+          className={styles.title}>
+              <h5>
+                <th>최근 공연</th>
+              </h5>
+              <hr style={{color:"white"}}/>
+          </div>
+          <div
+            className={styles.posterbox}
+            style={{width:'90%',height:'30rem'}}
+            >
+            <img
+              style={{width:'100%',height:'90%', padding: '5% 10%'}}
+              className={styles.poster}
+              src={`https://image.tmdb.org/t/p/original/${stage_list[0].fields.poster_path}`}
+              alt="None"
+            />
+          </div>
+        </Col>
+        <Col>
+          <div 
+          className={styles.title}>
+              <h5>
+               <th>방명록</th>
+              </h5>
+              <hr style={{color:"white"}}/>
+          </div>
+          <div
+          style={{width:'100%',height:'30rem', overflow:"hidden", paddingRight:'10%'}}
+          >  
+            <div
+              style={{width:'100%',height:'80%'}}
+              className={styles.homeguestbook}>
+              {guest.data.map((review) => (
+                <div 
+                  style={{margin:'4%',border:"0.9rem solid white"}}
+                  className={styles.review} key={review.id}>
+                  {review.content}
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </Col>
       </Row>
-      <Row>
+      <Row
+        style={{marginTop:'4%', marginBottom:'8%'}}>
         <div 
         className={styles.title}>
-            이전공연기록
+            <h5>
+            <th>이전공연기록</th>
+            </h5>
             <hr style={{color:"white"}}/>
         </div>
             
         {/* Display previous stage records */}
         <div
         className={styles.bottom}>
-            <Row>
+            <Row
+            className={styles.cardbox}>
             {stage_list.slice(1).map((stage) => (
-            <Col
-            className={styles.card} 
-            key={stage.id}>
-                <StageCard className={styles.component} data={stage} />
-            </Col>
+                  <MyPageCard 
+                  key={stage.id}
+                  className={styles.card} 
+                  data={stage} />
             ))}
             </Row>
         </div>
