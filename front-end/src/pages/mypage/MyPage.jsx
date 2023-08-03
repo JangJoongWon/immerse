@@ -2,83 +2,95 @@
 import { Row, Col } from 'react-bootstrap';
 import styles from './MyPage.module.css';
 import MypageTabbox from "./mypagetapbox/MyPageTabBox"
+import { Button } from 'react-bootstrap'
+// import { useState, useEffect } from 'react';
+// import { useDispatch} from 'react-redux'
+import { Link } from 'react-router-dom';
+
 
 function MyPage() {
 
+  // const dispatch = useDispatch();
+
   return (
-      <div className={styles.container}>
-        {/* Mypage Banner */}
-        <div className={styles.banner}>
-          <img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="" />
-        </div>
-        {/* User Info Section */}
-        <Row>
-          <div className={styles.userinfo}>
-            <Col sm={1}>
-            </Col>
-            <Col sm={3}>
-              <div className={styles.userleft}>
-                <div 
+    <div className={styles.container}>
+      {/* Mypage Banner */}
+      <div className={styles.banner}>
+        <img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="" />
+      </div>
+      {/* User Info Section */}
+      <Row>
+        <div className={styles.userinfo}>
+          <Col sm={1}>
+          </Col>
+          <Col sm={3}>
+            <div className={styles.userleft}>
+              <div
                 className='m-3'>
-                  <img className={styles.userimg} src="../public/icons/totoro2.jpg" alt="" />
-                </div>
+                <img className={styles.userimg} src="../public/icons/totoro2.jpg" alt="" />
               </div>
-            </Col>
-            <Col sm={3}
-              className={styles.usercenter}>
-              <div>
-                <Row sm={1}
+            </div>
+          </Col>
+          <Col sm={3}
+            className={styles.usercenter}>
+            <div>
+              <Row sm={1}
                 className={styles.outline}>
-                  <div
+                <div
                   className={styles.username}
-                  >
-                    유저아이디
-                  </div>
-                  <div
+                >
+                  유저아이디
+                </div>
+                <div
                   className={styles.email}
-                  >
-                    이메일
-                  </div>
-                </Row>
-                <Row sm={1}
+                >
+                  이메일
+                </div>
+              </Row>
+              <Row sm={1}
                 className={styles.outline}>
-                  <div>
-                    <div className="mypage-user-text">
-                      <h1></h1>
-                      <h3></h3>
-                      <div className={styles.userbox}>
-                        <p 
+                <div>
+                  <div className="mypage-user-text">
+                    <h1></h1>
+                    <h3></h3>
+                    <div className={styles.userbox}>
+                      <p
                         className='m-2'
-                        >집에 가고 싶어요. 집에 가고 싶어요.
-                          집에 가고 싶어요 집에 가고 싶어요
-                          집에 가고 싶어요
-                          집에 가고 싶어요
-                          집에 가고 싶어요
-                          집에 가고 싶어요
-                          집에 가고 싶어요
-                          집에 가고 싶어요</p>
-                      </div>
+                      >집에 가고 싶어요. 집에 가고 싶어요.
+                        집에 가고 싶어요 집에 가고 싶어요
+                        집에 가고 싶어요
+                        집에 가고 싶어요
+                        집에 가고 싶어요
+                        집에 가고 싶어요
+                        집에 가고 싶어요
+                        집에 가고 싶어요</p>
                     </div>
                   </div>
-                </Row>
-              </div>
-            </Col>
-            <Col sm={2}>
-            </Col>
-            <Col sm={3}>
+                </div>
+              </Row>
+            </div>
+          </Col>
+          <Col sm={2}>
+          </Col>
+          <Col sm={3}>
+            <Row>
+              <Link to="/checkpassword">
+                Setting
+              </Link>
+            </Row>
             <div className={styles.userright}>
-              <button 
-              className={styles.scribe}
+              <button
+                className={styles.scribe}
               >구독</button>
             </div>
-            </Col>
+          </Col>
 
-          </div>
-        </Row>
-        <Row >
-          <MypageTabbox />
-        </Row>
-      </div>
+        </div>
+      </Row>
+      <Row >
+        <MypageTabbox />
+      </Row>
+    </div>
   );
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styles from './ReservationTicket.module.css';
 
+
 function ReservationTicket({ data }) {
   return (
         <Row
@@ -24,7 +25,7 @@ function ReservationTicket({ data }) {
               </Col>
               <Col
                 md={4}
-                style={{textAlign:"end"}} 
+                style={{textAlign:"center"}} 
                 className={`${styles.leftfont} ${styles.logoname}`}>
                 <h5>Immerse</h5>
               </Col>
@@ -61,6 +62,9 @@ function ReservationTicket({ data }) {
                 >Free
                 </h2>
               </Row>
+              <Row sm={3}>
+                <div></div>
+              </Row>
               <Row>
                 <div
                 className={`${styles.rightfont} ${styles.date}`}
@@ -72,14 +76,6 @@ function ReservationTicket({ data }) {
                 <div
                 className={`${styles.rightfont} ${styles.time}`}>
                   {data.fields.time}
-                </div>
-              </Row>
-              <Row sm={3}>
-                <div
-                className={styles.bacodebox}>
-                  <img 
-                  className={styles.bacode}
-                  src="../public/img/bacode.png" alt="bacode" />
                 </div>
               </Row>
             </div>

@@ -8,7 +8,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/userSlice';
-import axios from 'axios'
+import styles from './Header.css'
 
 import { HiOutlineSearch } from "react-icons/hi";
 import './Header.css'
@@ -58,8 +58,9 @@ function Header() {
   };
 
   return (
-    <div className='navBar'>
-      <Navbar style={{ background: "#1a1b1e", color: "white"}} expand={expand}>
+    <div>
+      <Navbar 
+      style={{ background: "#31363B", color: "white"}} expand={expand}>
         <Container fluid>
           <Navbar.Brand href="/" style={{ color: "white", fontWeight: "bold", fontSize: "2rem" }}>
             Immerse
@@ -98,14 +99,11 @@ function Header() {
                   >
                     LogOut
                   </Nav.Link>
-                  <Nav.Link className='m-2' style={{ color: "white" }}>
+                  <Nav.Link href="/mypage" className='m-2' style={{ color: "white" }}>
                     Profile
                   </Nav.Link>
-                  <Nav.Link className='m-2' style={{ color: "white" }}
-                    onClick={deleteAccount}
-                  >
-                    DeleteAccount
-                  </Nav.Link>
+
+                  
                 </>
               ) : (
                 <>
@@ -115,6 +113,7 @@ function Header() {
                   <Nav.Link href="/signup" className='m-2' style={{ color: "white" }}>
                     SignUp
                   </Nav.Link>
+
                 </>
               )}
 
