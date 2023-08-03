@@ -31,7 +31,7 @@ function Home() {
       }
 
       try {
-        const categories = await axios.get(`${API_URL}/categories`);
+        const categories = await axios.get(`${API_URL}/categories/`);
         console.log(categories);
         dispatch
       }
