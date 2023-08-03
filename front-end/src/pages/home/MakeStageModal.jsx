@@ -2,6 +2,9 @@ import React, { useCallback, useState } from 'react'
 import styles from './MakeStageModal.module.css'
 import { useDropzone } from 'react-dropzone';
 import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
+import axios from 'axios';
+import { API_BASE_URL } from '../../constants';
+import { useSelector } from 'react-redux';
 
 function MakeStageModal({ show, onHide }) {
 
@@ -14,6 +17,8 @@ function MakeStageModal({ show, onHide }) {
   const [max, setMax] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
+
+  const user = useSelector(state => state.user.token);
 
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -48,6 +53,57 @@ function MakeStageModal({ show, onHide }) {
       console.log('Please upload only one image.');
     }
   }, []);
+
+  const scheduleStage = async () => {
+    const payload = {
+      title,
+      startTime: "2023-08-03T13:23:00.370Z",
+      endTime: "2023-08-03T13:23:30.370Z",
+      date,
+      description: expla,
+      thumbnail: "/",
+      price: 0,
+      attendanceLimit: max,
+      categoryId: 0,
+      userId: -1 // 임의로 에러가 나도록 함
+    };
+    const headers = { 
+      'Content-Type': 'application/json', 
+      'Authorization': 'Bearer ' + user
+    };
+    
+    try {
+      console.log(API_BASE_URL);
+      const res = await axios.post(`${API_BASE_URL}/shows/`, payload, { headers });
+      console.log(res.data);
+      return res.data;
+    }
+    catch (e) {
+      console.log(e);
+      throw e;
+    } 
+  }
+
+  const reserveStage = async () => {
+    try {
+      const res = await scheduleStage();
+      alert("예약되었습니다!");
+      return res;
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+  const startStageImmediately = async () => {
+    try {
+      const res = await scheduleStage();
+      // redirection 필요
+      return res;
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -151,9 +207,12 @@ function MakeStageModal({ show, onHide }) {
             </Modal.Body>
           <div
           className={styles.bottom}>
-          <Button variant="info" type="button" className="m-3">
-            Live
-          </Button>
+          {liveState ?
+            <Button variant="info" type="button" className="m-3" 
+            as="input" value="Live" onClick={startStageImmediately} /> : 
+            <Button variant="info" type="button" className="m-3" 
+            as="input" value="Add" onClick={reserveStage} />
+          }
           <Button variant="danger" type="button" className="m-3" onClick={onHide}>
             exit
           </Button>
