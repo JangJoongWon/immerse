@@ -62,6 +62,10 @@ function MakeStageModal({ show, onHide }) {
     }
   }, []);
 
+  const mustInput = () => {
+    return title.trim() !== '' && parseFloat(price) >= 0;
+  };
+
   const scheduleStage = async () => {
     const payload = {
       title,
@@ -118,6 +122,11 @@ function MakeStageModal({ show, onHide }) {
     accept: 'image/jpeg, image/png, image/gif',
     maxFiles: 1,
   });
+
+  const makeStage = async () => {
+    if (liveState) return await startStageImmediately();
+    else return await reserveStage();
+  }
 
   return (
     <div>
