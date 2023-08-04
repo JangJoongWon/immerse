@@ -13,7 +13,7 @@ function Audience(props) {
                       return (
                           <div key={index} className={`${styles.bigGridItem} ${styles.bigGrid}`}>
                               {/* <h1>{[1].join(', ')}</h1> */}
-                              {props.publisher !== undefined ? (
+                              {props.mainStreamManager !== undefined ? (
                                     <div 
                                     // className="stream-container col-md-6 col-xs-6" 
                                     className={styles.streamcontainer}
@@ -31,8 +31,18 @@ function Audience(props) {
 
                   return (
                       <div key={index} className={styles.gridItem}>
-                          <h1>{index}</h1>
+                          {/* <h1>{index}</h1> */}
                           {/* Your grid content */}
+                          {index < props.subscribers.length ? (
+                            <div 
+                            // className="stream-container col-md-6 col-xs-6" 
+                            className={styles.streamcontainer}
+                            // onClick={() => props.handleMainVideoStream(props.publisher)}
+                            >
+                                <UserVideoComponent
+                                    streamManager={props.subscribers[index]} />
+                            </div>
+                          ) : null}
                       </div>
                   );
               })}
