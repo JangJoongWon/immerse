@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './BroadCast.module.css';
 import StageInfo from './StageInfoModal';
+import { useSelector } from 'react-redux';
 
 function Card({ data }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -17,22 +18,22 @@ function Card({ data }) {
         <div className={styles.thumbnail}>
           <div className={styles.posterContainer}>
             <img
-              src={`https://image.tmdb.org/t/p/original/${data.fields.poster_path}`}
+              src={`https://image.tmdb.org/t/p/original/${data.thumbnail}`}
               className={styles.poster}
               alt="Movie Poster"
             />
           </div>
         </div>
         <header>
-          <div>{data.fields.title}</div>
+          <div>{data.title}</div>
           <div>주재홍</div>
-          <div className={styles.info}>{data.fields.description}</div>
+          <div className={styles.info}>{data.showProgress}</div>
         </header>
       </div>
         <footer>
           <a 
           href="/search" 
-          className={styles.tagbutton}>#{data.fields.genre}</a>
+          className={styles.tagbutton}>#{data.category_id}</a>
           {/* {isHovered && <button className={styles.footerButton}>버튼</button>} */}
         </footer>
       <StageInfo
