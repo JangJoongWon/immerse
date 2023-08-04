@@ -13,13 +13,12 @@ import axios from 'axios'
 
 import { HiOutlineSearch } from "react-icons/hi";
 import './Header.css'
+import { API_BASE_URL } from '../../constants';
 
 function Header() {
   const [expand, setExpand] = useState(null);
   const user = useSelector((state) => state.user.token)
-  const dispatch = useDispatch()
-  const API_URL = 'https://i9d203.p.ssafy.io/api'
-
+  const dispatch = useDispatch();
 
   const [word, setWord] = useState('');
   const wordChange = (e) => {
@@ -67,11 +66,12 @@ function Header() {
     event.preventDefault();
     const config = {
       headers: {
-        Authorization: `Token ${user}`
+        'Content-Type': 'application/json', 
+        'Authorization': `Bearer ${user}`
       }
     };
     try {
-      const response = await axios.delete(`${API_URL}/users/withdrawal`, config);
+      const response = await axios.delete(`${API_BASE_URL}/user/withdrawal`, config);
       dispatch(logOut())
       console.log('Check success:', response);
 
@@ -127,8 +127,11 @@ function Header() {
                   <Nav.Link href="/mypage" className='m-2' style={{ color: "white" }}>
                     Profile
                   </Nav.Link>
-
-                  
+                  <Nav.Link className='m-2' style={{ color: "white" }}
+                    onClick={deleteAccount}
+                  >
+                    DeleteAccount
+                  </Nav.Link>
                 </>
               ) : (
                 <>
