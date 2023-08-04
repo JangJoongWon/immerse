@@ -77,6 +77,7 @@ public class ShowServiceImpl implements ShowService {
 			.attendanceLimit(req.getAttendanceLimit())
 			.showProgress(ShowProgress.SCHEDULED)
 			.category(categoryRepository.getReferenceById(req.getCategoryId()))
+			.user(userRepository.getReferenceById(req.getUserId()))
 			.build();
 		return showRepository.save(show).getShowId();
 	}
