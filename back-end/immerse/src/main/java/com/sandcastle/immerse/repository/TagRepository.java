@@ -19,9 +19,6 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
 
     Optional<TagEntity> findById(Long id);
 
-    @Modifying
-    @Query(value = "UPDATE tags SET tag_name = ")
-    TagEntity update(Long id, TagDto tagDto);
+    void deleteById(Long id);
 
-//    void delete(TagDto tagDto);
 }
