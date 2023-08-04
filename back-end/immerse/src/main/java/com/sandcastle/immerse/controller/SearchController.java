@@ -2,8 +2,8 @@ package com.sandcastle.immerse.controller;
 
 import com.sandcastle.immerse.model.dto.SearchDto;
 import com.sandcastle.immerse.model.dto.UserDto;
+import com.sandcastle.immerse.model.dto.show.ShowListResponse;
 import com.sandcastle.immerse.service.SearchService;
-import com.sandcastle.immerse.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,15 +25,27 @@ public class SearchController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> findAllMySearch(Authentication authentication) {
+    public ResponseEntity<?> findAllMySearchHistories(Authentication authentication) {
         Long userId = Long.valueOf(authentication.getName());
-        List<SearchDto> searchDtoList= searchServiceImpl.findAllMySearch(userId);
+        List<SearchDto> searchDtoList= searchServiceImpl.findAllMySearchHistories(userId);
         return ResponseEntity.ok().body(searchDtoList);
     }
 
-    @GetMapping("/user/{nickname}")
-    public ResponseEntity<?> findAllUserContainNickname(@PathVariable String nickname) {
-        List<UserDto> userDtoList = searchServiceImpl.findAllUserContainContent(nickname);
+    @GetMapping("/user/{content}")
+    public ResponseEntity<?> findAllUsersContainContent(@PathVariable String content) {
+        List<UserDto> userDtoList = searchServiceImpl.findAllUsersContainContent(content);
         return ResponseEntity.ok().body(userDtoList);
+    }
+
+    @GetMapping("/show/{content}")
+    public ResponseEntity<?> findAllShowsContainContent(@PathVariable String content) {
+        List<ShowListResponse> showDtoList = searchServiceImpl.findAllShowsContainContent(content);
+        return ResponseEntity.ok().body(showDtoList);
+    }
+
+    @GetMapping("/tag/{content}")
+    public ResponseEntity<?> findAllShowsContainTag(@PathVariable String tag) {
+        List<ShowListResponse> showDtoList = searchServiceImpl.findAllShowsContainTag(tag);
+        return ResponseEntity.ok().body(showDtoList);
     }
 }
