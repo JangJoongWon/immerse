@@ -2,6 +2,9 @@ import React, { useCallback, useState } from 'react'
 import styles from './MakeStageModal.module.css'
 import { useDropzone } from 'react-dropzone';
 import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
+import axios from 'axios';
+import { API_BASE_URL } from '../../constants';
+import { useSelector } from 'react-redux';
 
 function MakeStageModal({ show, onHide }) {
 
@@ -11,9 +14,13 @@ function MakeStageModal({ show, onHide }) {
   const [genre, setGenre] = useState('')
   const [rank, setRank] = useState('')
   const [expla, setExpla] = useState('')
+  const [price, setPrice] = useState('')
   const [max, setMax] = useState('')
   const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
+  const [start, setStart] = useState('')
+  const [end, setEnd] = useState('')
+
+  const user = useSelector(state => state.user.token);
 
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -27,33 +34,99 @@ function MakeStageModal({ show, onHide }) {
   const explaChange = (e) => {
     setExpla(e.target.value);
   }
+  const priceChange = (e) => {
+    setPrice(e.target.value);
+  }
   const maxChange = (e) => {
     setMax(e.target.value);
   }
   const dateChange = (e) => {
     setDate(e.target.value);
   }
-  const timeChange = (e) => {
-    setTime(e.target.value);
+  const startChange = (e) => {
+    setStart(e.target.value);
+  }
+  const endChange = (e) => {
+    setEnd(e.target.value);
   }
 
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const onDrop = useCallback(acceptedFiles => {
-    // Do something with the file
     if (acceptedFiles.length > 0) {
       const imageFile = acceptedFiles[0];
-      setUploadedImage(URL.createObjectURL(imageFile));
+      setUploadedImage(imageFile);
+      // setUploadedImage(URL.createObjectURL(imageFile));
     } else {
       console.log('Please upload only one image.');
     }
   }, []);
+
+  const mustInput = () => {
+    return title.trim() !== '' && parseFloat(price) >= 0;
+  };
+
+  const scheduleStage = async () => {
+    const payload = {
+      title,
+      startTime: "2023-08-03T13:23:00.370Z",
+      endTime: "2023-08-03T13:23:30.370Z",
+      date,
+      description: expla,
+      thumbnail: "/",
+      price: 0,
+      attendanceLimit: max,
+      categoryId: 0,
+      userId: -1 // 임의로 에러가 나도록 함
+    };
+    const headers = { 
+      'Content-Type': 'application/json', 
+      'Authorization': 'Bearer ' + user
+    };
+    
+    try {
+      console.log(API_BASE_URL);
+      const res = await axios.post(`${API_BASE_URL}/shows/`, payload, { headers });
+      console.log(res.data);
+      return res.data;
+    }
+    catch (e) {
+      console.log(e);
+      throw e;
+    } 
+  }
+
+  const reserveStage = async () => {
+    try {
+      const res = await scheduleStage();
+      alert("예약되었습니다!");
+      return res;
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+  const startStageImmediately = async () => {
+    try {
+      const res = await scheduleStage();
+      // redirection 필요
+      return res;
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: 'image/jpeg, image/png, image/gif',
     maxFiles: 1,
   });
+
+  const makeStage = async () => {
+    if (liveState) return await startStageImmediately();
+    else return await reserveStage();
+  }
 
   return (
     <div>
@@ -63,6 +136,7 @@ function MakeStageModal({ show, onHide }) {
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
           centered
+          onSubmit={makeStage}
         >
           <Container>
             <Modal.Header closeButton>
@@ -102,6 +176,11 @@ function MakeStageModal({ show, onHide }) {
                     <Form.Label>공연 설명</Form.Label>
                     <Form.Control as="textarea" rows={5} placeholder="Enter detail"  value={expla} onChange={explaChange}/>
                   </Form.Group>
+
+                  <Form.Group>
+                    <Form.Label>가격</Form.Label>
+                    <Form.Control type="number"  min="0"  value={price} onChange={priceChange}/>
+                  </Form.Group>
                 </Col>
 
                 <Col sm="6">
@@ -114,7 +193,7 @@ function MakeStageModal({ show, onHide }) {
                       {uploadedImage ? (
                         <div className={styles.imgbox}>
                           {/* <h2>Uploaded Image:</h2> */}
-                          <img src={uploadedImage} alt="Uploaded" className={styles.imagefile} />
+                          <img src={URL.createObjectURL(uploadedImage)} alt="Uploaded" className={styles.imagefile} />
                         </div>
                       ) : (
                         <p>Drag drop an image or click here</p>
@@ -140,24 +219,29 @@ function MakeStageModal({ show, onHide }) {
 
                     <Form.Group>
                       <Form.Label>공연 시간</Form.Label>
-                      <Form.Control type="email" placeholder="Enter time"  value={time} onChange={timeChange}/>
+                      <Form.Control type="datetime-local" placeholder="Enter start time"  value={start} onChange={startChange}/>
+                      <Form.Control type="datetime-local" placeholder="Enter end time"  value={end} onChange={endChange}/>
                     </Form.Group>
                   </>
                   )}
 
                   </Col>
                 </Row>
+                <Button type='button' onClick={makeStage} disabled={!mustInput()}>submit</Button>
               </Form>
             </Modal.Body>
-          <div
+          {/* <div
           className={styles.bottom}>
-          <Button variant="info" type="button" className="m-3">
-            Live
-          </Button>
+          {liveState ?
+            <Button variant="info" type="button" className="m-3" 
+            as="input" value="Live" onClick={startStageImmediately} /> : 
+            <Button variant="info" type="button" className="m-3" 
+            as="input" value="Add" onClick={reserveStage} />
+          }
           <Button variant="danger" type="button" className="m-3" onClick={onHide}>
             exit
           </Button>
-          </div>
+          </div> */}
           </Container>
         </Modal>
       </div>

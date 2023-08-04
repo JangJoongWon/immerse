@@ -1,5 +1,4 @@
 package com.sandcastle.immerse.config;
-
 import com.sandcastle.immerse.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
