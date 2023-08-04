@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './SignIn.module.css'
 import { useDispatch } from 'react-redux';
-import { setToken } from '../../redux/userSlice'; // setToken 액션을 가져옴
+import { setToken, setUser } from '../../redux/userSlice'; // setToken 액션을 가져옴
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../../constants';
 
 function SignIn() {
 
@@ -31,12 +32,21 @@ function SignIn() {
     event.preventDefault();
     try {
       // 서버로 이메일과 비밀번호를 전송하여 토큰 받기
-      const response = await axios.post('https://i9d203.p.ssafy.io/api/user/signin', data);
+      const response = await axios.post(`${API_BASE_URL}/user/signin`, data);
       console.log('Signin Info: ', response.config.data, 'Signin Token: ', response.data)
       const token = response.data; // 서버로부터 받은 토큰 값
       if (token) {
         dispatch(setToken(token)); // 토큰 값을 Redux 스토어에 저장하는 액션을 디스패치
         console.log('Login success! Token:', token);
+        const res2 = await axios.get(`${API_BASE_URL}/user/mypage`, {
+          headers: {
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + token
+          }
+        });
+        dispatch(setUser(res2.data));
+        console.log(res2.data);
+        console.log()
         navigate('/',{replace:true});
       } else {
         console.log('Login failed: Invalid token');

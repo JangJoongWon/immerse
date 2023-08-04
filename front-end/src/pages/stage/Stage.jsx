@@ -7,10 +7,11 @@ import { OpenVidu } from 'openvidu-browser';
 
 import axios from 'axios';
 import { Component } from 'react';
-import UserVideoComponent from '../../components/video/UserVideoComponent';
-import VideoMap from '../../components/video/VideoMap';
+import { VideoMap } from './video';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
+import { API_BASE_URL } from '../../constants';
+import Audience from './Audience';
 
 // const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://demos.openvidu.io/';
 // const APPLICATION_SERVER_URL = 'http://localhost:5000/';
@@ -27,7 +28,10 @@ const Stage = () => {
     const [publisher, setPublisher] = useState(undefined);
     const [mainStreamManager, setMainStreamManager] = useState(undefined);
     
-    const user = useSelector((state) => state.user.token);
+    const userToken = useSelector((state) => state.user.token);
+    const user = useSelector(state => state.user.user);
+
+    const isAuthor = () => user.nickname === id; // session id는 공연자의 id로 설정
 
     const getToken = async (isAuthor) => {
         try {
@@ -42,13 +46,13 @@ const Stage = () => {
 
     const createSession = async (sessionId) => {
         try {
-            console.log('token: ' + user);
+            console.log('token: ' + userToken);
             const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/', {
                     customSessionId: sessionId
                 }, {
                 headers: { 
                     'Content-Type': 'application/json', 
-                    'Authorization': 'Bearer ' + user
+                    'Authorization': 'Bearer ' + userToken
                 },
             });
             console.log(response.data);
@@ -62,13 +66,13 @@ const Stage = () => {
 
     const fetchSession = async (sessionId) => {
         try {
-            console.log('token: ' + user);
+            console.log('token: ' + userToken);
             const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/' + sessionId + '/fetch', {
                     customSessionId: sessionId
                 }, {
                 headers: { 
                     'Content-Type': 'application/json', 
-                    'Authorization': 'Bearer ' + user
+                    'Authorization': 'Bearer ' + userToken
                 },
             });
             console.log(response.data);
@@ -84,7 +88,7 @@ const Stage = () => {
             const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/' + sessionId + '/connect', {}, {
                 headers: { 
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + user
+                    'Authorization': 'Bearer ' + userToken
                 },
             });
             console.log(response.data);
@@ -95,12 +99,34 @@ const Stage = () => {
         }
     }
 
-    const deleteSubscriber = (streamManager) => {
-        let ls = subscribers;
-        let index = ls.indexOf(streamManager, 0);
-        if (index > -1) {
-            ls.splice(index, 1);
+    const addSubscriber = (streamManager) => {
+        const clientName = JSON.parse(streamManager.stream.connection.data).clientData;
+            
+        if (clientName === id) { // mainStream
+            setMainStreamManager(streamManager);
+        }
+        else {
+            let ls = subscribers;
+            console.log(ls);
+            
+            ls.push(streamManager);
             setSubscribers([...ls]);
+        }
+    }
+
+    const deleteSubscriber = (streamManager) => {
+        const clientName = JSON.parse(streamManager.stream.connection.data).clientData;
+        
+        if (clientName === id) {
+            setMainStreamManager(undefined);
+        }
+        else {
+            let ls = subscribers;
+            let index = ls.indexOf(streamManager, 0);
+            if (index > -1) {
+                ls.splice(index, 1);
+                setSubscribers([...ls]);
+            }
         }
     }
 
@@ -113,14 +139,14 @@ const Stage = () => {
             // Subscribe to the Stream to receive it. Second parameter is undefined
             // so OpenVidu doesn't create an HTML video by its own
             let subscriber = newSession.subscribe(event.stream, undefined);
-            let ls = subscribers;
+            
             console.log('-------stream created--------');
-            console.log(ls);
-            ls.push(subscriber);
-            setSubscribers([...ls]);
+            if (subscriber) addSubscriber(subscriber.stream.streamManager);
+            // console.log(event.stream);
+            // console.log(subscriber);
+            // console.log(subscriber.stream);
         });
 
-        
         // On every Stream destroyed...
         newSession.on('streamDestroyed', (event) => {
 
@@ -140,7 +166,7 @@ const Stage = () => {
             console.log(token);
 
             newSession
-            .connect(token, { clientData: 'test' })
+            .connect(token, { clientData: user.nickname })
             .then(async () => {
 
                 // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
@@ -164,7 +190,8 @@ const Stage = () => {
                 var currentVideoDeviceId = newPublisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
                 var currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
 
-                setMainStreamManager(newPublisher);
+                if (user.nickname === id)
+                    setMainStreamManager(newPublisher);
                 setPublisher(newPublisher);
                 
                 setOv(newOV);
@@ -199,7 +226,7 @@ const Stage = () => {
             const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/' + id + '/disconnect', {}, {
                 headers: { 
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + user
+                    'Authorization': 'Bearer ' + userToken
                 },
             });
             console.log(response.data);
@@ -232,17 +259,26 @@ const Stage = () => {
                     />
                 </div>
             ) : null}
-            {session !== undefined ? (
-                <VideoMap 
-                id={id}
-                mainStreamManager={mainStreamManager}
-                publisher={publisher}
-                subscribers={subscribers}
-                leaveSession={leaveSession}
-                switchCamera={switchCamera}
-                handleMainVideoStream={handleMainVideoStream}
-                />
-            ) : null}
+            {session !== undefined ?
+                // isAuthor() ? 
+                //     (
+                //         <VideoMap 
+                //         id={id}
+                //         mainStreamManager={mainStreamManager}
+                //         publisher={publisher}
+                //         subscribers={subscribers}
+                //         leaveSession={leaveSession}
+                //         switchCamera={switchCamera}
+                //         handleMainVideoStream={handleMainVideoStream}
+                //         />
+                //     ) 
+                //     : (
+                        <Audience 
+                        publisher={publisher}
+                        mainStreamManager={mainStreamManager}
+                        />
+                 // )
+            : null}
         </div>
     );
 }
