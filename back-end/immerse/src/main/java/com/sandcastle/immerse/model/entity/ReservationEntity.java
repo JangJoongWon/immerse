@@ -28,7 +28,7 @@ public class ReservationEntity {
      * strategy = "IDENTITY" -> AUTO_INCREMENT
      */
     @Id
-    @Column(name = "reservation_id")
+    @Column(name = "reservation_id" , nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
     private  Long reservationID;
 
@@ -47,7 +47,7 @@ public class ReservationEntity {
      * columnDefinition : 테이블의 열을 지정하는 DDL // default : null, ex) columnDefinition = "VARCHAR(255)"
      */
     @NotNull
-    @Column(name = "reservation_date")
+    @Column(name = "reservation_date" , nullable = false)
     private LocalDate reservationDate;
 
     /**

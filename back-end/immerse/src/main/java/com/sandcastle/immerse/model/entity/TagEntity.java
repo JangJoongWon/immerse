@@ -14,10 +14,10 @@ public class TagEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "tag_id")
+    @JoinColumn(name = "tag_id" , nullable = false)
     private Long tagId;
 
-    @Column(name = "tag_name" , length = 30, unique = true)
+    @Column(name = "tag_name" , length = 30, unique = true , nullable = false)
     private String tagName;
 
     @Builder
