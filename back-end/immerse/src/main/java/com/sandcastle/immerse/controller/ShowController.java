@@ -53,6 +53,7 @@ public class ShowController {
 	@PostMapping("/")
 	public Long postShow(@RequestBody ShowRequest form, Authentication auth) {
 		Long userId = Long.valueOf(auth.getName());
+		System.out.println("userId = " + userId);
 		form.setUserId(userId);
 		return showService.postShow(form);
 	}
