@@ -12,7 +12,7 @@ public enum ErrorCode {
     EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, ""),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, ""),
     WITHDRAWAL_SIGNIN(HttpStatus.UNAUTHORIZED, ""),
-    NICKNAME_NOT_FOUND(HttpStatus.NOT_FOUND, "");
+    USERID_NOT_FOUND(HttpStatus.NOT_FOUND, "");
 
     private HttpStatus httpStatus;
     private String message;

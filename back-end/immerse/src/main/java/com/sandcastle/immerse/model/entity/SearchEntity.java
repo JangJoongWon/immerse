@@ -21,11 +21,11 @@ public class SearchEntity {
     private Long searchId;
 
     @NotNull
-    @Column(name = "search_time")
+    @Column(name = "search_time", nullable = false)
     private LocalDateTime searchTime;
 
     @NotNull
-    @Column(name = "search_content")
+    @Column(name = "search_content", nullable = false)
     private String searchContent;
 
     // 단방향 ManyToOne

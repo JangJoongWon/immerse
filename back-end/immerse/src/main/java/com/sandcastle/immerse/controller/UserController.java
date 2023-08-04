@@ -14,28 +14,28 @@ public class UserController {
     private final UserService userServiceImpl;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody UserDto userDtoRequest) throws Exception {
-        UserDto userDtoResponse = userServiceImpl.signup(userDtoRequest);
-        return ResponseEntity.ok().body(userDtoResponse);
+    public ResponseEntity<?> signup(@RequestBody UserDto userDto) throws Exception {
+        userServiceImpl.signup(userDto);
+        return ResponseEntity.ok().body("회원가입이 완료되었습니다.");
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@RequestBody UserDto userDtoRequest) throws Exception {
-        String token = userServiceImpl.signin(userDtoRequest);
+    public ResponseEntity<?> signin(@RequestBody UserDto userDto) throws Exception {
+        String token = userServiceImpl.signin(userDto);
         return ResponseEntity.ok().body(token);
     }
 
-    @GetMapping("")
+    @GetMapping("/mypage")
     public ResponseEntity<?> getMyUser(Authentication authentication) throws Exception {
         Long userId = Long.valueOf(authentication.getName());
-        UserDto userDtoResponse = userServiceImpl.getMyUser(userId);
-        return ResponseEntity.ok().body(userDtoResponse);
+        UserDto userDto = userServiceImpl.getMyUser(userId);
+        return ResponseEntity.ok().body(userDto);
     }
 
-    @GetMapping("/{nickname}")
-    public ResponseEntity<?> getUser(@PathVariable String nickname) throws Exception {
-        UserDto userDtoResponse = userServiceImpl.getUser(nickname);
-        return ResponseEntity.ok().body(userDtoResponse);
+    @GetMapping("/mypage/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable Long userId) throws Exception {
+        UserDto userDto = userServiceImpl.getUser(userId);
+        return ResponseEntity.ok().body(userDto);
     }
 
     @GetMapping("/check/{nickname}")
@@ -45,10 +45,10 @@ public class UserController {
     }
 
     @PutMapping("/update/info")
-    public ResponseEntity<?> updateUser(@RequestBody UserDto userDtoRequest, Authentication authentication) throws Exception {
+    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, Authentication authentication) throws Exception {
         Long userId = Long.valueOf(authentication.getName());
-        userServiceImpl.updateUser(userId, userDtoRequest);
-        return ResponseEntity.ok().body("유저정보 수정완료");
+        userServiceImpl.updateUser(userId, userDto);
+        return ResponseEntity.ok().body("회원정보가 수정되었습니다.");
     }
 
     @DeleteMapping("/withdrawal")

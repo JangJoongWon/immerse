@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto signup(UserDto userDto) {
+    public void signup(UserDto userDto) {
 
         String email = userDto.getEmail();
         String nickname = userDto.getNickname();
@@ -49,8 +49,6 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         userRepository.save(userEntity);
-
-        return userRepository.findByEmail(email).orElseThrow().toDto();
     }
 
     @Override
@@ -62,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
         // email이 없음
         UserEntity selectedUser = userRepository.findByEmail(email)
-                .orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND, email + "은 존재하지 않는 아이디입니다."));
+                .orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND, email + " 은(는) 존재하지 않는 아이디입니다."));
 
         // password 틀림
         if(!encoder.matches(password, selectedUser.getPassword())) {
@@ -86,22 +84,41 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> {
-                    return new IllegalArgumentException("유저정보 조회실패");
+                    return new AppException(ErrorCode.USERID_NOT_FOUND, userId + "은(는) 존재하지 않는 고유번호 입니다.");
                 });
 
-        return userEntity.toDto();
+        return UserDto.builder()
+                .email(userEntity.getEmail())
+                .name(userEntity.getName())
+                .gender(userEntity.getGender())
+                .nickname(userEntity.getNickname())
+                .birthday(userEntity.getBirthday())
+                .profilePicture(userEntity.getProfilePicture())
+                .bannerPicture(userEntity.getBannerPicture())
+                .point(userEntity.getPoint())
+                .selfDescription(userEntity.getSelfDescription())
+                .build();
     }
 
     @Override
     @Transactional
-    public UserDto getUser(String nickname) {
+    public UserDto getUser(Long userId) {
 
-        UserEntity userEntity = userRepository.findByNickname(nickname)
+        UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> {
-                    return new AppException(ErrorCode.NICKNAME_NOT_FOUND, nickname + "은 존재하지 않는 닉네임입니다.");
+                    return new AppException(ErrorCode.USERID_NOT_FOUND, userId + "은(는) 존재하지 않는 고유번호 입니다.");
                 });
 
-        return userEntity.toDto();
+        return UserDto.builder()
+                .email(userEntity.getEmail())
+                .name(userEntity.getName())
+                .gender(userEntity.getGender())
+                .nickname(userEntity.getNickname())
+                .birthday(userEntity.getBirthday())
+                .profilePicture(userEntity.getProfilePicture())
+                .bannerPicture(userEntity.getBannerPicture())
+                .selfDescription(userEntity.getSelfDescription())
+                .build();
     }
 
     @Override
@@ -116,7 +133,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> {
-                    return new IllegalArgumentException("유저정보 수정실패");
+                    return new AppException(ErrorCode.USERID_NOT_FOUND, userId + "은(는) 존재하지 않는 고유번호 입니다.");
                 });
 
         // nickname 중복 검사
@@ -124,6 +141,14 @@ public class UserServiceImpl implements UserService {
                 .ifPresent(user -> {
                     throw new AppException(ErrorCode.NICKNAME_DUPLICATED, "이미 사용중인 닉네임입니다.");
                 });
+
+        /**
+         * 더티체킹으로 변경시 entity에 @NotNull이 설정되어있어도 값이 null로 수정 되어버린다.
+         *
+         * 원인 : @NotNull이 JPA에서 Entity 생성자에만 관여하고 DB에서는 nullable = true로 남아있다.
+         *
+         * 해결 : DB의 nullable = false로 설정한다.(JPA의 @Column속성에서도 가능)
+         */
 
         userEntity.updateUser(userDto);
     }
@@ -134,7 +159,7 @@ public class UserServiceImpl implements UserService {
 
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(() -> {
-                    return new IllegalArgumentException("회원탈퇴 실패");
+                    return new AppException(ErrorCode.USERID_NOT_FOUND, userId + "은(는) 존재하지 않는 고유번호 입니다.");
                 });
 
         return userEntity.updateStatusWithdrawal();
