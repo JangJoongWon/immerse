@@ -5,18 +5,41 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/userSlice';
+// import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 import { HiOutlineSearch } from "react-icons/hi";
 import './Header.css'
+import { API_BASE_URL } from '../../constants';
 
 function Header() {
   const [expand, setExpand] = useState(null);
   const user = useSelector((state) => state.user.token)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const [word, setWord] = useState('');
+  const wordChange = (e) => {
+    setWord(e.target.value);
+  }
+  
+  // const navigate = useNavigate();
+
+  const searchWord = async (event) => {
+    event.preventDefault();
+    console.log(word)
+    // try {
+    //   // const response = await axios.get(`${API_URL}/search/${word}`);
+    //   // console.log(response)
+    //   navigate(`/search/${word}`,{replace:true});
+
+    // } catch (error) {
+    //   console.log(error)
+    // }
+  }
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,8 +64,14 @@ function Header() {
 
   const deleteAccount = async (event) => {
     event.preventDefault();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': `Bearer ${user}`
+      }
+    };
     try {
-      const response = await axios.delete('https://i9d203.p.ssafy.io/api/users/withdrawal', {"token" : user});
+      const response = await axios.delete(`${API_BASE_URL}/user/withdrawal`, config);
       dispatch(logOut())
       console.log('Check success:', response);
 
@@ -52,8 +81,9 @@ function Header() {
   };
 
   return (
-    <div className='navBar'>
-      <Navbar style={{ background: "#1a1b1e", color: "white"}} expand={expand}>
+    <div>
+      <Navbar 
+      style={{ background: "#31363B", color: "white"}} expand={expand}>
         <Container fluid>
           <Navbar.Brand href="/" style={{ color: "white", fontWeight: "bold", fontSize: "2rem" }}>
             Immerse
@@ -72,14 +102,16 @@ function Header() {
               
               <Nav className="justify-content-end flex-grow-1 pe-3" style={{ whiteSpace: "nowrap" }}>
                 
-              <Form className="d-flex m-2">
+              <Form className="d-flex m-2" onSubmit={searchWord}>
                 <Form.Control
                   type="search"
                   placeholder="Search"
                   className="me-2"
                   aria-label="Search"
+                  value={word}
+                  onChange={wordChange}
                 />
-                <Button variant="outline-light">
+                <Button variant="outline-light" type='button' onClick={searchWord}>
                     <HiOutlineSearch />
                 </Button>
               </Form>
@@ -92,7 +124,7 @@ function Header() {
                   >
                     LogOut
                   </Nav.Link>
-                  <Nav.Link className='m-2' style={{ color: "white" }}>
+                  <Nav.Link href="/mypage" className='m-2' style={{ color: "white" }}>
                     Profile
                   </Nav.Link>
                   <Nav.Link className='m-2' style={{ color: "white" }}
@@ -109,6 +141,7 @@ function Header() {
                   <Nav.Link href="/signup" className='m-2' style={{ color: "white" }}>
                     SignUp
                   </Nav.Link>
+
                 </>
               )}
 

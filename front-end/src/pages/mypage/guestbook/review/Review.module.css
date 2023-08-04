@@ -1,0 +1,57 @@
+.container{
+    margin-left: 5%;
+    width: 90%;
+    background-color: #121212;
+    /* outline: 2px solid red; */
+}
+
+
+
+.box {
+    min-width: 1rem;
+    max-width: 30rem;
+    background-color: white;
+    box-shadow: 0 0 1rem rgba(255,255,255,00.5rem);
+    color:black;
+    border : 0.5rem solid white;
+    border-radius: 0.5rem;
+    /* outline: 2px solid gold; */
+}
+
+.nickname{
+    
+    color: white;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 1rem white;
+    /* outline: 2px solid greenyellow; */
+    
+}
+
+.content {
+    /* outline: 2px solid peru; */
+}
+
+.img_container {
+    /* outline: 2px solid salmon; */
+}
+
+.profile_img {
+    width: 80%;
+    border-radius: 60%;
+    margin: 10%;
+    /* max-width: 100%; */
+    /* outline: 2px solid blue; */
+}
+
+.input_bar{
+    width: 100%;
+    margin: 1%;
+    /* outline: 2px solid aqua; */
+}
+
+.send_img{
+    width: 100%;
+    margin: 1%;
+    /* outline: 2px solid orange; */
+}
