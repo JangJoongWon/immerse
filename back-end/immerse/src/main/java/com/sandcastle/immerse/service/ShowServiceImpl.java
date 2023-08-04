@@ -11,6 +11,7 @@ import com.sandcastle.immerse.model.dto.show.ShowListResponse;
 import com.sandcastle.immerse.model.dto.show.ShowRequest;
 import com.sandcastle.immerse.model.dto.show.ShowResponse;
 import com.sandcastle.immerse.model.entity.ShowEntity;
+import com.sandcastle.immerse.model.entity.UserEntity;
 import com.sandcastle.immerse.model.enums.ShowProgress;
 import com.sandcastle.immerse.repository.CategoryRepository;
 import com.sandcastle.immerse.repository.ShowRepository;
@@ -66,6 +67,9 @@ public class ShowServiceImpl implements ShowService {
 	@Transactional
 	public Long postShow(ShowRequest req) {
 
+		UserEntity user = userRepository.findById(req.getUserId())
+			.orElseThrow(() -> new IllegalArgumentException("does not exist!"));
+
 		ShowEntity show = ShowEntity.builder()
 			.title(req.getTitle())
 			.startTime(req.getStartTime())
@@ -77,7 +81,7 @@ public class ShowServiceImpl implements ShowService {
 			.attendanceLimit(req.getAttendanceLimit())
 			.showProgress(ShowProgress.SCHEDULED)
 			.category(categoryRepository.getReferenceById(req.getCategoryId()))
-			.user(userRepository.getReferenceById(req.getUserId()))
+			.user(user)
 			.build();
 		return showRepository.save(show).getShowId();
 	}
