@@ -30,7 +30,7 @@ public class SearchEntity {
 
     // 단방향 ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userEntity;
 
     @Builder
