@@ -78,7 +78,6 @@ function MakeStageModal({ show, onHide }) {
       'price': price,
       'attendanceLimit': max,
       'categoryId': genre,
-      'userId': 2 // 임의로 에러가 나도록 함
     };
     console.log(payload)
     const headers = { 

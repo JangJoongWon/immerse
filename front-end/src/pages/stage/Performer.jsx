@@ -12,7 +12,7 @@ function Performer() {
                 </div>
                 </div>
                 <div className={styles.rightside}>
-                    {Array.from({ length: 8 }, (_, index) => (
+                    {Array.from({ length: 11 }, (_, index) => (
                     <div key={index} className={styles.gridItem}>
                         <h1>{index}</h1>
                     </div>
