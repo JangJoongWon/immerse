@@ -3,6 +3,7 @@ package com.sandcastle.immerse.controller;
 import com.sandcastle.immerse.model.dto.SearchDto;
 import com.sandcastle.immerse.model.dto.UserDto;
 import com.sandcastle.immerse.service.SearchService;
+import com.sandcastle.immerse.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
