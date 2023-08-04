@@ -59,4 +59,9 @@ public class ShowResponse {
 	 * 공연의 카테고리
 	 */
 	private Long category_id;
+
+	/**
+	 * 공연자
+	 */
+	private Long user_id;
 }

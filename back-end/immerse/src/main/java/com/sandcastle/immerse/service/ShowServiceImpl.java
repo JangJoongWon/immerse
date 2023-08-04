@@ -58,6 +58,7 @@ public class ShowServiceImpl implements ShowService {
 			.maxAttendance(show.getMaxAttendance())
 			.showProgress(show.getShowProgress())
 			.category_id(show.getCategory().getCategoryId())
+			.user_id(show.getUser().getUserId())
 			.build();
 		return Optional.of(res);
 	}
