@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Builder
 public class UserDto {
 
+    private Long userId;
     private String email;
     private String password;
     private String name;
@@ -17,6 +18,7 @@ public class UserDto {
     private LocalDate birthday;
     private String phoneNumber;
     private String profilePicture;
+    private String bannerPicture;
     private int point;
     private int status;
     private String selfDescription;
