@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ProfileImageServiceImpl implements ProfileImagesService{
+public class ProfileImageServiceImpl implements ProfileImageService {
 
     private final ProfileImageRepository profileImageRepository;
     private final UserRepository userRepository;

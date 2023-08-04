@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface ProfileImagesService {
+public interface ProfileImageService {
 
     @Transactional
     List<ProfileImageDto> findAllProfileImages();
