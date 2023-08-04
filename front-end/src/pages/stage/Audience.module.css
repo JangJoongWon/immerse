@@ -43,3 +43,8 @@ h1 {
     grid-column: span 2;
     grid-row: span 2;
 }
+
+.streamcontainer {
+    width: 100%;
+    height: 100%;
+}

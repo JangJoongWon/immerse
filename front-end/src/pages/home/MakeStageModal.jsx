@@ -20,7 +20,8 @@ function MakeStageModal({ show, onHide }) {
   const [start, setStart] = useState('')
   const [end, setEnd] = useState('')
 
-  const user = useSelector(state => state.user.token);
+  const token = useSelector(state => state.user.token);
+  const user = useSelector(state => state.user.user);
 
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -77,11 +78,11 @@ function MakeStageModal({ show, onHide }) {
       price: 0,
       attendanceLimit: max,
       categoryId: 0,
-      userId: -1 // 임의로 에러가 나도록 함
+      userId: user.id
     };
     const headers = { 
       'Content-Type': 'application/json', 
-      'Authorization': 'Bearer ' + user
+      'Authorization': 'Bearer ' + token
     };
     
     try {

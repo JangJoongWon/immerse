@@ -1,7 +1,8 @@
 // import React from 'react'
 import styles from './Audience.module.css'
+import { UserVideoComponent } from './video';
 
-function Audience() {
+function Audience(props) {
   return (
     <div className={styles.container}>
         <div className={styles.totalbox}>
@@ -11,9 +12,20 @@ function Audience() {
                   if (index === 1) {
                       return (
                           <div key={index} className={`${styles.bigGridItem} ${styles.bigGrid}`}>
-                              <h1>{[1].join(', ')}</h1>
-                              {/* Your big grid content */}
+                              {/* <h1>{[1].join(', ')}</h1> */}
+                              {props.publisher !== undefined ? (
+                                    <div 
+                                    // className="stream-container col-md-6 col-xs-6" 
+                                    className={styles.streamcontainer}
+                                    // onClick={() => props.handleMainVideoStream(props.publisher)}
+                                    >
+                                    
+                                        <UserVideoComponent
+                                            streamManager={props.mainStreamManager} />
+                                    </div>
+                                ) : null}
                           </div>
+                        
                       );
                   }
 
