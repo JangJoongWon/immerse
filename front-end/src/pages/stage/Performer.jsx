@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import styles from './Performer.module.css'
 
 function Performer() {
@@ -7,12 +7,14 @@ function Performer() {
         <div className={styles.totalbox}>
             <div className={styles.contentbox}>
                 <div className={styles.leftside}>
-
+                <div className={styles.gridItem}>
+                    {/* Your grid content */}
+                </div>
                 </div>
                 <div className={styles.rightside}>
-                    {Array.from({ length: 9 }, (_, index) => (
+                    {Array.from({ length: 8 }, (_, index) => (
                     <div key={index} className={styles.gridItem}>
-                        {/* Your grid content */}
+                        <h1>{index}</h1>
                     </div>
                     ))}
                 </div>
