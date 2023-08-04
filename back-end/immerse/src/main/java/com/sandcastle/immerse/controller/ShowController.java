@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,7 +51,9 @@ public class ShowController {
 
 	@ResponseBody
 	@PostMapping("/")
-	public Long postShow(@RequestBody ShowRequest form) {
+	public Long postShow(@RequestBody ShowRequest form, Authentication auth) {
+		Long userId = Long.valueOf(auth.getName());
+		form.setUserId(userId);
 		return showService.postShow(form);
 	}
 
@@ -66,15 +68,16 @@ public class ShowController {
 	 */
 	@ResponseBody
 	@GetMapping("/popular/progress")
-	public List<ShowListResponse> getShowOrderByProgress(){
+	public List<ShowListResponse> getShowOrderByProgress() {
 		return showService.getShowsOrderByProgress();
 	}
+
 	/**
 	 * 예약준인 공연중 인기 순 20개 가지고 오는 기능
 	 */
 	@ResponseBody
 	@GetMapping("/popular/reservation")
-	public List<ShowListResponse> getShowOrderByReservation(){
+	public List<ShowListResponse> getShowOrderByReservation() {
 		return showService.getShowsOrderByReservation();
 	}
 }
