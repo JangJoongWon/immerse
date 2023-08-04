@@ -4,6 +4,10 @@
     color: white;
     position: relative;
   }
+
+  .container:hover {
+    cursor: pointer;
+  }
   
   .content {
     width: 100%;

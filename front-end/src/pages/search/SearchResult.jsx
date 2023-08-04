@@ -3,12 +3,14 @@ import styles from './SearchResult.module.css'
 import BroadCast from '../home/BroadCast'
 import datas from '../../stage_data.json'
 
-function SearchResult() {
+function SearchResult({selectedGenres}) {
 
     const [liveState, setLiveState] = useState(true);
     
     const handleLiveButtonClick = () => {
       setLiveState(true);
+      console.log(datas)
+      console.log(selectedGenres)
     };
     
     const handleChannelButtonClick = () => {
@@ -51,7 +53,7 @@ function SearchResult() {
             </ul>
         </div>
 
-        <div className={styles.result}>
+        {/* <div className={styles.result}>
             <div className={`${styles.categories} ${styles.gridMove}`}>
                 {!liveState ? (
                 datas.map((item) => (
@@ -63,7 +65,21 @@ function SearchResult() {
                 ))
                 )}
             </div>
+        </div> */}
+        <div className={styles.result}>
+          <div className={`${styles.categories} ${styles.gridMove}`}>
+            {!liveState ? (
+                datas.map((item) => (
+                  <BroadCast key={item.pk} data={item} className={styles.card} />
+                ))
+              ) : (
+                datas.map((item) => (
+                  <BroadCast key={item.pk} data={item} className={styles.card} />
+                ))
+            )}
+          </div>
         </div>
+
 
 
     </div>
