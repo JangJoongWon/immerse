@@ -14,12 +14,16 @@ function Home() {
 
   const dispatch = useDispatch();
 
+  const [LiveStage, setLiveStage] = useState([])
+  const [ReserveStage, setReserveStage] = useState([])
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response1 = await axios.get(`${API_BASE_URL}/shows/popular/progress`);
         console.log('progress axios success', response1);
+        setLiveStage(response1.data)
       } catch (error) {
         console.log('progress axios error:', error.message);
       }
@@ -27,6 +31,7 @@ function Home() {
       try {
         const response2 = await axios.get(`${API_BASE_URL}/shows/popular/reservation`);
         console.log('reservation axios success', response2);
+        setReserveStage(response2.data)
       } catch (error) {
         console.log('reservation axios error:', error.message);
       }
@@ -43,7 +48,6 @@ function Home() {
     };
         fetchData();
       }, []);
-  
 
   return (
     <div className="App">
@@ -65,7 +69,7 @@ function Home() {
               방만들기
             </Button>
 
-            <CastList />
+            <CastList Live={LiveStage} Reserve={ReserveStage}/>
 
           </div>
         </div>
