@@ -17,12 +17,12 @@
   color: #FFF;
   text-shadow: 0 0 0.5rem #FFF;
   font-size: 1.5rem;
-  outline: 2px solid #FF0000; /* 빨간색 아웃라인 */
+  /* outline: 2px solid #FF0000;  */
 }
 
 .email {
   color: #FFF;
-  outline: 2px solid #00FF00; /* 초록색 아웃라인 */
+  /* outline: 2px solid #00FF00;  */
 }
 
 .userinfo {
@@ -30,16 +30,16 @@
   border-radius: 5px;
   color: #FFF;
   border: 2px solid white;
-  outline: 2px solid #0000FF; /* 파란색 아웃라인 */
+  /* outline: 2px solid #0000FF;  */
 }
 
 .userbox {
   border-radius: 5px;
-  outline: 2px solid aquamarine;
+  /* outline: 2px solid aquamarine; */
 }
 
 .userleft {
-  outline: 2px solid red;
+  /* outline: 2px solid red; */
 }
 
 .usercenter {
@@ -47,7 +47,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  outline: 2px solid blue;
+  /* outline: 2px solid blue; */
 }
 
 .userright {
@@ -55,15 +55,15 @@
   justify-content: center;
   align-items: center;
   height: 100%;
-  outline: 2px solid yellow;
+  /* outline: 2px solid yellow; */
 }
 
 .mypage-tap-all {
-  outline: 2px solid brown;
+  /* outline: 2px solid brown; */
 }
 
 .mypage-outline {
-  outline: 2px solid violet;
+  /* outline: 2px solid violet; */
 }
 
 .scribe {

@@ -1,19 +1,14 @@
 package com.sandcastle.immerse.controller;
 
-import com.sandcastle.immerse.model.dto.ReservationRequest;
-import com.sandcastle.immerse.model.dto.show.ShowRequest;
-import com.sandcastle.immerse.service.ReservationService;
+import com.sandcastle.immerse.model.dto.ReservationDto;
+import com.sandcastle.immerse.service.ReservationServiceImpl;
 import com.sandcastle.immerse.service.ShowService;
-import com.sandcastle.immerse.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.Authenticator;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -40,8 +35,18 @@ import java.util.Optional;
 @RequestMapping("/reservation")
 @RequiredArgsConstructor
 public class ReservationController {
-    private final ReservationService reservationService;
+    private final ReservationServiceImpl reservationService;
     private final ShowService showService;
+
+    /**
+     * 예약 등록하기
+     * 이건 공연 페이지의 공연 만들기 또한 같이 포함하여야 한다.
+     */
+    @ResponseBody
+    @PostMapping("/{showId}")
+    public Long postShow(@RequestBody ReservationDto request ,@PathVariable Long showId , Authentication authentication) throws Exception {
+        return reservationService.postReservation(request, showId , authentication);
+    }
 
     /**
      * 모든 예약 리스트 조회하기
@@ -61,13 +66,6 @@ public class ReservationController {
     }
 
     /**
-     * 예약 등록하기
-     * 이건 공연 페이지의 공연 만들기 또한 같이 포함하여야 한다.
-     */
-//    @PostMapping("")
-
-
-    /**
      * 예약 고유번호를 이용하여 예약 정보를 조회하는 기능
      *
      * @return
@@ -84,22 +82,6 @@ public class ReservationController {
             return null;
         }
     }
-
-    /**
-     * 예약 고유 번호를 인자값으로 하여 특정 예약 정보를 테이블에서 지우는 기능
-     */
-    @DeleteMapping("/{reservationId}")
-    public void deleteReservationById(@PathVariable Long reservationId){
-        Optional<?> result = reservationService.findByIdReservation(reservationId);
-        if(result.isPresent()){
-            reservationService.deleteByReservationId(reservationId);
-            System.out.println("Reservation Delete Complete");
-        } else {
-            System.out.println("Reservation not Found");
-        }
-        return ;
-    }
-
     /**
      * 특정 유저의 예약 리스트 조회
      */
@@ -122,23 +104,24 @@ public class ReservationController {
      * 특정 공연의 예약을 한 예약의 개수 조회
      * 이 공연이 매진 되었는지, 최대 인원에 맞는지 확인하기 위해 사용하는 기능
      */
-    @ResponseBody
-    @PostMapping("/{showId}")
-    public Long postShow(@PathVariable Long showId , @RequestBody ReservationRequest form , Authentication authentication) throws Exception {
-
-        form.setShowId(showId);
-
-        Long userId = Long.valueOf(authentication.getName());
-
-        form.setUserId(userId);
-        return reservationService.postReservation(form);
-    }
 
     @GetMapping("/show/{showId}/count")
     public Integer findLengthReservationByShowId(@PathVariable Long showId){
-        int response = reservationService.findLengthReservationByShowId(showId);
-        System.out.println("show count : " + response);
-        return response;
+        return reservationService.findListReservationByShowId(showId).size();
     }
 
+    /**
+     * 예약 고유 번호를 인자값으로 하여 특정 예약 정보를 테이블에서 지우는 기능
+     */
+    @DeleteMapping("/{reservationId}")
+    public void deleteByReservationId(@PathVariable Long reservationId){
+        Optional<?> result = reservationService.findByIdReservation(reservationId);
+        if(result.isPresent()){
+            reservationService.deleteByReservationId(reservationId);
+            System.out.println("Reservation Delete Complete");
+        } else {
+            System.out.println("Reservation not Found");
+        }
+        return ;
+    }
 }

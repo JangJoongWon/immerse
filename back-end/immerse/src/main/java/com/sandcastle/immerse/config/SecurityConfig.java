@@ -18,23 +18,26 @@ public class SecurityConfig {
     private final UserService userServiceImpl;
     private String secretKey = "testKey";
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .httpBasic().disable()
-                .csrf().disable()
-                .cors().and()
-                .authorizeRequests()
-                .antMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
-                .antMatchers("/user/signup", "/user/signin").permitAll()
-                .antMatchers("/user/check/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt를 사용하는 경우
-                .and()
-                .addFilterBefore(new JwtFilter(userServiceImpl, secretKey), UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+		return httpSecurity
+			.httpBasic().disable()
+			.csrf().disable()
+			.cors().and()
+			.authorizeRequests()
+			.antMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
+			.antMatchers("/user/signup", "/user/signin").permitAll()
+			.antMatchers("/search/user/**").permitAll()
+			.antMatchers("/categories/").permitAll()
+			.antMatchers("/user/check/**").permitAll()
+			.antMatchers("/shows/popular/**").permitAll()
+			.anyRequest().authenticated()
+			.and()
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt를 사용하는 경우
+			.and()
+			.addFilterBefore(new JwtFilter(userServiceImpl, secretKey), UsernamePasswordAuthenticationFilter.class)
+			.build();
+	}
 
 }

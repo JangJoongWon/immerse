@@ -9,7 +9,7 @@ import { AiOutlineQuestionCircle } from "react-icons/ai";
 
 function SignUp() {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const passwordRule = (
@@ -30,6 +30,7 @@ function SignUp() {
     const [gender, setGender] = useState('');
     const [name, setName] = useState('');
     const [nickname, setNickName] = useState('');
+    const [nickCheck, setNickCheck] = useState(false);
     const [phone, setPhone] = useState('');
     const [birth, setBirth] = useState('');
 
@@ -46,22 +47,17 @@ function SignUp() {
     const isPassword2Valid = (password) => {
         return password === password1;
     };
-
+    
     const isGenderValid = (selectedGender) => {
       return selectedGender === 'M' || selectedGender === 'F';
     };
-
+    
     const isNameValid = (name) => {
-        const englishPattern = /^[a-zA-Z]{2,15}$/;
-        const koreanPattern = /^[가-힣]{2,15}$/;
-        
-        return (englishPattern.test(name) || koreanPattern.test(name));
-      };
-
-    const isNickValid = (nick) => {
-        const nickPattern = /^[a-zA-Z가-힣\s]{2,15}$/;
-        return nickPattern.test(nick);
-      };
+      const englishPattern = /^[a-zA-Z]{2,15}$/;
+      const koreanPattern = /^[가-힣]{2,15}$/;
+      
+      return (englishPattern.test(name) || koreanPattern.test(name));
+    };
 
     const isPhoneValid = (phone) => {
         const phonePattern = /^[0-9-]{10,13}$/;
@@ -104,6 +100,7 @@ function SignUp() {
       };
       const handleNickNameChange = (e) => {
         setNickName(e.target.value);
+        setNickCheck(false);
       };
       const handlePhoneChange = (e) => {
         setPhone(e.target.value);
@@ -153,20 +150,21 @@ function SignUp() {
       const nickNameCheck = async (event) => {
         event.preventDefault();
         try {
-          const response = await axios.get(`http://i9d203.p.ssafy.io:8080/user/${nickname}`, datanick);
-          console.log('Check success:', response);
-          
+          const response = await axios.get(`http://i9d203.p.ssafy.io/api/user/check/${nickname}`, datanick);
+          console.log('Check success:', response.data);
+          setNickCheck(!response.data);
         } catch (error) {
           console.log('Check error', error);
-          console.log(datanick)
+          console.log(datanick);
         }
       };
+      
 
       const isSubmitButtonActive =
       isEmailValid(email) &&
       isPasswordValid(password1) &&
       isPassword2Valid(password2) &&
-      isNickValid(nickname) &&
+      nickCheck &&
       isNameValid(name) &&
       isGenderValid(gender) &&
       isPhoneValid(phone) &&
@@ -209,8 +207,8 @@ function SignUp() {
                                     Password 
                                     <OverlayTrigger placement="top" overlay={passwordRule}>
                                       <span>
-                                        <AiOutlineQuestionCircle bsStyle="default" style={{color: 'white'}}/>
-                                      </span>                            
+                                        <AiOutlineQuestionCircle style={{ color: 'white' }} />
+                                      </span>
                                     </OverlayTrigger>
                                   </div>
                                   <Form.Control
@@ -256,7 +254,7 @@ function SignUp() {
                                 <Form.Group className={styles.inputform}>
                                   <div
                                     className={styles.error}
-                                    style={{ color: isNameValid(name) ? 'blue' : 'red' }}
+                                    style={{ color: isNameValid ? 'blue' : 'red' }}
                                   >
                                     Name
                                   </div>
@@ -271,7 +269,7 @@ function SignUp() {
                                 <Form.Group className={styles.inputform}>
                                   <div
                                     className={styles.error}
-                                    style={{ color: isNickValid(nickname) ? 'blue' : 'red' }}
+                                    style={{ color: nickCheck ? 'blue' : 'red' }}
                                   >
                                     NickName
                                   </div>
@@ -296,7 +294,7 @@ function SignUp() {
                                     PhoneNumber
                                     <OverlayTrigger placement="top" overlay={phoneNumberRule}>
                                       <span>
-                                        <AiOutlineQuestionCircle bsStyle="default" style={{color: 'white'}}/>
+                                        <AiOutlineQuestionCircle style={{color: 'white'}}/>
                                       </span>                            
                                     </OverlayTrigger>
                                   </div>

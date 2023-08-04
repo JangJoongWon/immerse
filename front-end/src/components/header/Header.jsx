@@ -5,10 +5,10 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/userSlice';
-import axios from 'axios'
+import styles from './Header.css'
 
 import { HiOutlineSearch } from "react-icons/hi";
 import './Header.css'
@@ -17,6 +17,7 @@ function Header() {
   const [expand, setExpand] = useState(null);
   const user = useSelector((state) => state.user.token)
   const dispatch = useDispatch()
+  const API_URL = 'https://i9d203.p.ssafy.io/api'
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,8 +42,13 @@ function Header() {
 
   const deleteAccount = async (event) => {
     event.preventDefault();
+    const config = {
+      headers: {
+        Authorization: user
+      }
+    };
     try {
-      const response = await axios.delete('https://i9d203.p.ssafy.io/api/users/withdrawal', {"token" : user});
+      const response = await axios.delete(`${API_URL}/users/withdrawal`, config);
       dispatch(logOut())
       console.log('Check success:', response);
 
@@ -52,8 +58,9 @@ function Header() {
   };
 
   return (
-    <div className='navBar'>
-      <Navbar style={{ background: "#1a1b1e", color: "white"}} expand={expand}>
+    <div>
+      <Navbar 
+      style={{ background: "#31363B", color: "white"}} expand={expand}>
         <Container fluid>
           <Navbar.Brand href="/" style={{ color: "white", fontWeight: "bold", fontSize: "2rem" }}>
             Immerse
@@ -92,14 +99,11 @@ function Header() {
                   >
                     LogOut
                   </Nav.Link>
-                  <Nav.Link className='m-2' style={{ color: "white" }}>
+                  <Nav.Link href="/mypage" className='m-2' style={{ color: "white" }}>
                     Profile
                   </Nav.Link>
-                  <Nav.Link className='m-2' style={{ color: "white" }}
-                    onClick={deleteAccount}
-                  >
-                    DeleteAccount
-                  </Nav.Link>
+
+                  
                 </>
               ) : (
                 <>
@@ -109,6 +113,7 @@ function Header() {
                   <Nav.Link href="/signup" className='m-2' style={{ color: "white" }}>
                     SignUp
                   </Nav.Link>
+
                 </>
               )}
 

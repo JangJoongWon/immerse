@@ -44,7 +44,7 @@
 }
 
 .body {
-    width: 100%;
+    width: 80%;
     border: 1px solid yellow;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .inputform {
-    width: 80%;
+    width: 100%;
     border: 1px solid white;
 }
 
@@ -90,12 +90,12 @@
 }
 
 .nickCheck Button{
-    width: 20%;
+    width: 30%;
     height: 40px;
 }
 
-@media (max-width: 930px) {
+@media (max-width: 950px) {
     .nickCheck Button {
-      font-size: 5px;
+      font-size: 7px;
     }
   }

@@ -2,7 +2,7 @@
     margin-left: 5%;
     width: 90%;
     background-color: #121212;
-    border: 2px solid red;
+    /* outline: 2px solid red; */
 }
 
 
@@ -15,7 +15,7 @@
     color:black;
     /* border : 0.5rem solid white; */
     border-radius: 0.2rem;
-    border: 2px solid gold;
+    /* outline: 2px solid gold; */
 }
 
 .nickname{
@@ -24,16 +24,16 @@
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     text-shadow: 0 0 1rem white;
-    border: 2px solid greenyellow;
+    /* outline: 2px solid greenyellow; */
     
 }
 
 .content {
-    border: 2px solid peru;
+    /* outline: 2px solid peru; */
 }
 
 .img_container {
-    border: 2px solid salmon;
+    /* outline: 2px solid salmon; */
 }
 
 .profile_img {
@@ -41,27 +41,44 @@
     border-radius: 60%;
     margin: 10%;
     /* max-width: 100%; */
-    border: 2px solid blue;
+    /* outline: 2px solid blue; */
 }
 
 .up {
-    border-top:0.1rem solid white;
+
+    position: sticky;
+    top: 0;
+    width: calc(100% - 16px); /* 스크롤바 너비만큼 오른쪽 여백을 빼줍니다. (여기서는 16px로 가정) */
+    height: 40rem;
+    border-top: 0.1rem solid white;
     border-bottom: 0.1rem solid white;
-    border: 2px solid violet;
+    overflow-y: auto;
+}
+
+.up::-webkit-scrollbar {
+    display: none;
 }
 
 .input_bar{
     width: 100%;
     margin: 1%;
-    border: 2px solid aqua;
+    /* outline: 2px solid aqua; */
 }
 
 .send_img{
     width: 100%;
     margin: 1%;
-    border: 2px solid orange;
+    /* outline: 2px solid orange; */
 }
 
 .send_img:hover {
     cursor: pointer;
+}
+
+.messagebox {
+    margin: 2% 0;
+}
+
+.down {
+
 }
