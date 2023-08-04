@@ -26,7 +26,7 @@ public class SecurityConfig {
 			.authorizeRequests()
 			.antMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
 			.antMatchers("/user/signup", "/user/signin", "/user/mypage/**", "/user/check/**").permitAll()
-			.antMatchers("/search/user/**").permitAll()
+			.antMatchers("/search/user/**", "/search/show/**").permitAll()
 			.antMatchers("/categories/").permitAll()
 			.antMatchers("/shows/popular/**").permitAll()
 			.anyRequest().authenticated()
