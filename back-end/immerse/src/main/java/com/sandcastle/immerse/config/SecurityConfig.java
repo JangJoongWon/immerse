@@ -1,5 +1,4 @@
 package com.sandcastle.immerse.config;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,8 +16,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	private final UserServiceImpl userServiceImpl;
-	private String secretKey = "testKey";
+    private final UserService userServiceImpl;
+    private String secretKey = "testKey";
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
