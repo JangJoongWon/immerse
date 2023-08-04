@@ -8,7 +8,7 @@ function Audience(props) {
         <div className={styles.totalbox}>
           
           <div className={styles.contentbox}>
-              {Array.from({ length: 9 }, (_, index) => {
+              {Array.from({ length: 12 }, (_, index) => {
                   if (index === 1) {
                       return (
                           <div key={index} className={`${styles.bigGridItem} ${styles.bigGrid}`}>
