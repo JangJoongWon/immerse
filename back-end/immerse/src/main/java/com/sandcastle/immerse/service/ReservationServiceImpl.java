@@ -41,7 +41,6 @@ public class ReservationServiceImpl implements ReservationService {
      * Reservation Entity 을 builder 로 구성하여 이를 테이블에 저장하는 기능
      */
     @Override
-    @Transactional
     public Long postReservation(ReservationDto request , Long showId, Authentication authentication){
         Long userId = Long.valueOf(authentication.getName());
 
@@ -64,7 +63,6 @@ public class ReservationServiceImpl implements ReservationService {
      * @return 모든 예약 엔티티로 이루어진 리스트로 반환
      */
     @Override
-    @Transactional
     public List<ReservationEntity> findALLReservation() {
         return reservationRepository.findAll();
     }
@@ -76,7 +74,6 @@ public class ReservationServiceImpl implements ReservationService {
      * @return : ReservationEntity
      */
     @Override
-    @Transactional
     public Optional<ReservationEntity> findByIdReservation(Long id){
         return reservationRepository.findById(id);
     }
@@ -88,7 +85,6 @@ public class ReservationServiceImpl implements ReservationService {
      * @param userId : 특정 유저의 고유 번호
      */
     @Override
-    @Transactional
     public List<ReservationEntity> findListReservationByUserId(Long userId){
         return reservationRepository.findListReservationByUserId(userId);
     }
@@ -98,7 +94,6 @@ public class ReservationServiceImpl implements ReservationService {
      * @param showId : 특정 공연의 고유 ID
      */
     @Override
-    @Transactional
     public List<ReservationEntity> findListReservationByShowId(Long showId){
         return reservationRepository.findListReservationByShowId(showId);
     }
@@ -109,7 +104,6 @@ public class ReservationServiceImpl implements ReservationService {
      * reservationRepository 안에 있는 쿼리문을 불러와서 테이블을 삭제한다.
      */
     @Override
-    @Transactional
     public void deleteByReservationId(Long id){
         reservationRepository.deleteByReservationId(id);
     }
