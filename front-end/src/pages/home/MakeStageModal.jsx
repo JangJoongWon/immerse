@@ -20,7 +20,8 @@ function MakeStageModal({ show, onHide }) {
   const [start, setStart] = useState('')
   const [end, setEnd] = useState('')
 
-  const user = useSelector(state => state.user.token);
+  const token = useSelector(state => state.user.token);
+  const genres = useSelector(state => state.category.categories)
 
   const titleChange = (e) => {
     setTitle(e.target.value);
@@ -68,27 +69,29 @@ function MakeStageModal({ show, onHide }) {
 
   const scheduleStage = async () => {
     const payload = {
-      title,
-      startTime: "2023-08-03T13:23:00.370Z",
-      endTime: "2023-08-03T13:23:30.370Z",
-      date,
-      description: expla,
-      thumbnail: "/",
-      price: 0,
-      attendanceLimit: max,
-      categoryId: 0,
-      userId: -1 // 임의로 에러가 나도록 함
+      'title' : title,
+      'startTime': start,
+      'endTime': end,
+      'date': date,
+      'description': expla,
+      'thumbnail': "aaaa",
+      'price': price,
+      'attendanceLimit': max,
+      'categoryId': genre,
+      'userId': 2 // 임의로 에러가 나도록 함
     };
+    console.log(payload)
     const headers = { 
       'Content-Type': 'application/json', 
-      'Authorization': 'Bearer ' + user
+      'Authorization': 'Bearer ' + token
     };
     
     try {
-      console.log(API_BASE_URL);
+      // console.log(API_BASE_URL);
       const res = await axios.post(`${API_BASE_URL}/shows/`, payload, { headers });
       console.log(res.data);
-      return res.data;
+      onHide();
+      // return res.data;
     }
     catch (e) {
       console.log(e);
@@ -157,9 +160,10 @@ function MakeStageModal({ show, onHide }) {
                   <Form.Group>
                     <Form.Label>공연 장르</Form.Label>
                     <Form.Select  value={genre} onChange={genreChange}>
-                      <option>버스킹</option>
-                      <option>스탠딩 코미디</option>
-                      <option>마술</option>
+                      {genres.map((genre) => (
+                        <option value={genre.categoryId}>{genre.categoryName}</option>
+                      ))}
+
                     </Form.Select>
                   </Form.Group>
 
@@ -214,7 +218,7 @@ function MakeStageModal({ show, onHide }) {
                   <>
                     <Form.Group>
                       <Form.Label>공연 날짜</Form.Label>
-                      <Form.Control type="email" placeholder="Enter date"  value={date} onChange={dateChange} />
+                      <Form.Control type="date" placeholder="Enter date"  value={date} onChange={dateChange} />
                     </Form.Group>
 
                     <Form.Group>

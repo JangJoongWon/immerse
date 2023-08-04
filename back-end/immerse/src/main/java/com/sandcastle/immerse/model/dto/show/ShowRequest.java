@@ -6,11 +6,9 @@ import java.time.LocalDateTime;
 import com.sandcastle.immerse.model.entity.ShowEntity;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
-@Getter
 @NoArgsConstructor
 public class ShowRequest {
 

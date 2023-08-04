@@ -6,33 +6,38 @@ import CastList from './CastList';
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategories } from '../../redux/categorySlice';
+import { API_BASE_URL } from '../../constants';
 
 function Home() {
 
   const [MakeStageOn, setMakeStageOn] = useState(false);
-  const API_URL = 'https://i9d203.p.ssafy.io/api'
 
   const dispatch = useDispatch();
+
+  const [LiveStage, setLiveStage] = useState([])
+  const [ReserveStage, setReserveStage] = useState([])
 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await axios.get(`${API_URL}/shows/popular/progress`);
+        const response1 = await axios.get(`${API_BASE_URL}/shows/popular/progress`);
         console.log('progress axios success', response1);
+        setLiveStage(response1.data)
       } catch (error) {
         console.log('progress axios error:', error.message);
       }
   
       try {
-        const response2 = await axios.get(`${API_URL}/shows/popular/reservation`);
+        const response2 = await axios.get(`${API_BASE_URL}/shows/popular/reservation`);
         console.log('reservation axios success', response2);
+        setReserveStage(response2.data)
       } catch (error) {
         console.log('reservation axios error:', error.message);
       }
 
       try {
-        const categoriesResponse = await axios.get(`${API_URL}/categories/`);
+        const categoriesResponse = await axios.get(`${API_BASE_URL}/categories/`);
         console.log(categoriesResponse);
         const categories = categoriesResponse.data;
         dispatch(setCategories([...categories]));
@@ -43,7 +48,6 @@ function Home() {
     };
         fetchData();
       }, []);
-  
 
   return (
     <div className="App">
@@ -65,7 +69,7 @@ function Home() {
               방만들기
             </Button>
 
-            <CastList />
+            <CastList Live={LiveStage} Reserve={ReserveStage}/>
 
           </div>
         </div>

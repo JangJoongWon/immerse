@@ -254,7 +254,7 @@ function SignUp() {
                                 <Form.Group className={styles.inputform}>
                                   <div
                                     className={styles.error}
-                                    style={{ color: isNameValid ? 'blue' : 'red' }}
+                                    style={{ color: isNameValid(name) ? 'blue' : 'red' }}
                                   >
                                     Name
                                   </div>

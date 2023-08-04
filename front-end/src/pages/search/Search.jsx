@@ -3,16 +3,18 @@ import styles from './Search.module.css';
 import GenreButton from './GenreButton';
 import React, { useState } from 'react';
 import Result from './SearchResult'
+import { useSelector } from 'react-redux';
 
 function Search() {
-  const genres = ['버스킹', '마술', '스탠딩코미디', '샌드아트', '차력'];
+  // const genres = ['버스킹', '마술', '스탠딩코미디', '샌드아트', '차력'];
+  const genres = useSelector((state) => state.category.categories)
   const [selectedGenres, setSelectedGenres] = useState([]);
 
   const handleGenreClick = (genre) => {
-    if (selectedGenres.includes(genre)) {
-      setSelectedGenres(selectedGenres.filter((selectedGenre) => selectedGenre !== genre));
+    if (selectedGenres.includes(genre.categoryName)) {
+      setSelectedGenres(selectedGenres.filter((selectedGenre) => selectedGenre !== genre.categoryName));
     } else {
-      setSelectedGenres([...selectedGenres, genre]);
+      setSelectedGenres([...selectedGenres, genre.categoryName]);
     }
   };
 
@@ -41,8 +43,8 @@ function Search() {
                 <div className={styles.selectedGenreButtons}>
                   {genres.map((genre) => (
                     <GenreButton
-                      data={genre}
-                      key={genre}
+                      data={genre.categoryName}
+                      key={genre.categoryId}
                       genreSelected={selectedGenres.includes(genre)}
                       handleGenreClick={() => handleGenreClick(genre)}
                     />
@@ -54,7 +56,7 @@ function Search() {
             <div className={styles.searchresult}>
               <div className={styles.resultbox}>
                 <h2>search result</h2>
-                <Result />
+                <Result selectedGenres={selectedGenres}/>
               </div>
             </div>
           </div>
