@@ -16,7 +16,6 @@ import Audience from './Audience';
 // const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://demos.openvidu.io/';
 // const APPLICATION_SERVER_URL = 'http://localhost:5000/';
 // const APPLICATION_SERVER_URL = 'http://localhost:8080/';
-const APPLICATION_SERVER_URL = 'https://i9d203.p.ssafy.io/api/';
 
 const Stage = () => {
     const { id } = useParams();
@@ -47,7 +46,7 @@ const Stage = () => {
     const createSession = async (sessionId) => {
         try {
             console.log('token: ' + userToken);
-            const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/', {
+            const response = await axios.post(API_BASE_URL + '/rooms/', {
                     customSessionId: sessionId
                 }, {
                 headers: { 
@@ -67,7 +66,7 @@ const Stage = () => {
     const fetchSession = async (sessionId) => {
         try {
             console.log('token: ' + userToken);
-            const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/' + sessionId + '/fetch', {
+            const response = await axios.post(API_BASE_URL + '/rooms/' + sessionId + '/fetch', {
                     customSessionId: sessionId
                 }, {
                 headers: { 
@@ -85,7 +84,7 @@ const Stage = () => {
 
     const createToken = async (sessionId) => {
         try {
-            const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/' + sessionId + '/connect', {}, {
+            const response = await axios.post(API_BASE_URL + '/rooms/' + sessionId + '/connect', {}, {
                 headers: { 
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + userToken
@@ -102,6 +101,7 @@ const Stage = () => {
     const addSubscriber = (streamManager) => {
         const clientName = JSON.parse(streamManager.stream.connection.data).clientData;
             
+        console.log("add subscriber: ", clientName);
         if (clientName === id) { // mainStream
             setMainStreamManager(streamManager);
         }
@@ -190,9 +190,11 @@ const Stage = () => {
                 var currentVideoDeviceId = newPublisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
                 var currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
 
-                if (user.nickname === id)
-                    setMainStreamManager(newPublisher);
-                setPublisher(newPublisher);
+                console.log(newPublisher);
+                // if (user.nickname === id)
+                //     setMainStreamManager(newPublisher);
+                // setPublisher(newPublisher);
+                addSubscriber(newPublisher);
                 
                 setOv(newOV);
                 setSession(newSession);
@@ -223,7 +225,7 @@ const Stage = () => {
         setPublisher(undefined);
         
         try {
-            const response = await axios.post(APPLICATION_SERVER_URL + 'rooms/' + id + '/disconnect', {}, {
+            const response = await axios.post(API_BASE_URL + 'rooms/' + id + '/disconnect', {}, {
                 headers: { 
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + userToken
@@ -276,6 +278,7 @@ const Stage = () => {
                         <Audience 
                         publisher={publisher}
                         mainStreamManager={mainStreamManager}
+                        subscribers={subscribers}
                         />
                  // )
             : null}
