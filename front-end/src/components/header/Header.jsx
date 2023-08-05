@@ -8,7 +8,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/userSlice';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 import { HiOutlineSearch } from "react-icons/hi";
@@ -25,19 +25,23 @@ function Header() {
     setWord(e.target.value);
   }
   
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
+
+  const toggleOffcanvas = () => {
+    setIsOffcanvasOpen(prev => !prev);
+  };
 
   const searchWord = async (event) => {
     event.preventDefault();
     console.log(word)
-    // try {
-    //   // const response = await axios.get(`${API_URL}/search/${word}`);
-    //   // console.log(response)
-    //   navigate(`/search/${word}`,{replace:true});
-
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    try {
+      setIsOffcanvasOpen(false)
+      navigate(`/search/${word}`, {replace:true});
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -83,18 +87,29 @@ function Header() {
   return (
     <div>
       <Navbar 
-      style={{ background: "#31363B", color: "white"}} expand={expand}>
-        <Container fluid>
-          <Navbar.Brand href="/" style={{ color: "white", fontWeight: "bold", fontSize: "2rem" }}>
-            Immerse
-          </Navbar.Brand>
-          <Navbar.Toggle style={{ color: "white", background:"white"}} aria-controls="offcanvasNavbar" />
-          <Navbar.Offcanvas
-            style={{ color: "white", background:"#31363B"}}
-            id="offcanvasNavbar"
-            aria-labelledby="offcanvasNavbarLabel"
-            placement="end"
-          >
+      style={{ background: "#31363B", color: "white"}} 
+      expand={expand}
+    >
+      <Container fluid>
+        <Navbar.Brand 
+          href="/" 
+          style={{ color: "white", fontWeight: "bold", fontSize: "2rem" }}
+        >
+          Immerse
+        </Navbar.Brand>
+        <Navbar.Toggle 
+          style={{ color: "white", background:"white"}} 
+          aria-controls="offcanvasNavbar" 
+          onClick={toggleOffcanvas}
+        />
+        <Navbar.Offcanvas
+          show={isOffcanvasOpen}
+          onHide={toggleOffcanvas}
+          style={{ color: "white", background:"#31363B"}}
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+          placement="end"
+        >
             <Offcanvas.Header closeButton style={{ color: "#31363B", background:"#31363B"}}>
               <Offcanvas.Title style={{ color: "white", fontWeight: "bold", fontSize: "2rem" }} id="offcanvasNavbarLabel">Immerse</Offcanvas.Title>
             </Offcanvas.Header>

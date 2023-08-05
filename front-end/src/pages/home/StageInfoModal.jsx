@@ -1,10 +1,8 @@
 import React from 'react';
 import { Button, Modal, Row, Col } from 'react-bootstrap';
 import styles from './StageInfoModal.module.css';
-import datas from '../../stage_data.json';
 
-function StageInfoModal({ show, onHide }) {
-  const data = datas[1];
+function StageInfoModal({ show, onHide, data }) {
 
   return (
     <div>
@@ -23,7 +21,7 @@ function StageInfoModal({ show, onHide }) {
                 <div className={styles.poster}>
                   <img
                     className={styles.posterimg}
-                    src={`https://image.tmdb.org/t/p/original/${data.fields.poster_path}`}
+                    src={data.thumbnail}
                     alt="Poster"
                   />
                 </div>
@@ -31,15 +29,22 @@ function StageInfoModal({ show, onHide }) {
             </Col>
             <Col xs={6}>
               <div className={styles.right}>
-                <div className={styles.texts}>
-                  <h1>{data.fields.title}</h1>
-                  <h3>{data.fields.genre}</h3>
-                  <h3>공연자</h3>
-                  <p>{data.fields.description}</p>
+                <div className={styles.text}>
+                  <h1>{data.title}</h1>
+                  <p>{data.startTime}~{data.endTime}</p>
+                  <p>{data.date}</p>
+                  <p>{data.description}</p>
+                  <p>{data.price}</p>
+                  <p>{data.attendancLimit}</p>
+                  <p>{data.maxAttendance}</p>
+                  <p>{data.category_id}</p>
 
-                  <Button>입장하기</Button>
+                  {data.showProgress == 'SCHEDULED'?(
+                    <Button>예약하기</Button>
+                  ):(
+                    <Button>입장하기</Button>
+                  )}
 
-                  <Button>시작하기</Button>
                 </div>
               </div>
             </Col>
