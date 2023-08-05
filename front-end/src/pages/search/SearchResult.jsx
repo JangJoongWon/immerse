@@ -1,11 +1,44 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './SearchResult.module.css'
 import BroadCast from '../home/BroadCast'
-import datas from '../../stage_data.json'
+import {useParams} from 'react-router-dom';
+import { API_BASE_URL } from '../../constants';
+import axios from 'axios';
 
 function SearchResult({selectedGenres}) {
 
     const [liveState, setLiveState] = useState(true);
+    const { word } = useParams();
+    const [searchShow, setSearchShow] = useState([]);
+    const [searchUser, setSearchUser] = useState([]);
+    const [showCount, setShowCount] = useState([]);
+    const [userCount, setUserCount] = useState([]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        console.log('word:', word)
+        try {
+          const response = await axios.get(`${API_BASE_URL}/search/show/${word}`);
+          console.log('show:', response)
+          setSearchShow(response.data);
+          setShowCount(response.data.length);
+          // console.log(response.data.length)
+        } catch (error) {
+          console.error('Error fetching search results:', error);
+        }
+        try {
+          const response = await axios.get(`${API_BASE_URL}/search/user/${word}`);
+          console.log('user:', response)
+          setSearchUser(response.data);
+          setUserCount(response.data.length);
+          // console.log(response.data.length)
+        } catch (error) {
+          console.error('Error fetching search results:', error);
+        }
+      };
+  
+      fetchData();
+    }, [word]); // word가 변경될 때마다 API 요청을 다시 보냄
     
     const handleLiveButtonClick = () => {
       setLiveState(true);
@@ -16,22 +49,6 @@ function SearchResult({selectedGenres}) {
     const handleChannelButtonClick = () => {
       setLiveState(false);
     };
-
-//   useEffect(() => {
-//     try {
-//       const response1 = axios.get(`${API_URL}/shows/popular/progress`)
-//       console.log('progress axios success', response1)
-//     } catch (error) {
-//       console.log('progress axios error : ', error.message)
-//     }
-
-//     try {
-//       const response2 = axios.get(`${API_URL}/shows/popular/reservation`)
-//       console.log('reservation axios success', response2)
-//     } catch (error) {
-//       console.log('reservation axios error : ', error.message)
-//     }
-//   })
 
   return (
     <div className={styles.container}>
@@ -53,30 +70,19 @@ function SearchResult({selectedGenres}) {
             </ul>
         </div>
 
-        {/* <div className={styles.result}>
-            <div className={`${styles.categories} ${styles.gridMove}`}>
-                {!liveState ? (
-                datas.map((item) => (
-                    <BroadCast key={item.pk} data={item} className={styles.card} />
-                ))
-                ) : (
-                datas.map((item) => (
-                    <BroadCast key={item.pk} data={item} className={styles.card} />
-                ))
-                )}
-            </div>
-        </div> */}
         <div className={styles.result}>
+          <h3>{showCount}개의 {liveState ? '공연' : '채널'}</h3>
           <div className={`${styles.categories} ${styles.gridMove}`}>
-            {!liveState ? (
-                datas.map((item) => (
-                  <BroadCast key={item.pk} data={item} className={styles.card} />
-                ))
-              ) : (
-                datas.map((item) => (
-                  <BroadCast key={item.pk} data={item} className={styles.card} />
-                ))
-            )}
+
+          {liveState ? (
+            searchShow.map((item) => (
+              <BroadCast key={item.pk} data={item} className={styles.card} />
+            ))
+          ) : (
+            searchUser.map((item) => (
+              <BroadCast key={item.pk} data={item} className={styles.card} />
+            ))
+          )}
           </div>
         </div>
 

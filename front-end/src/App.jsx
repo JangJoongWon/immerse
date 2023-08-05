@@ -20,15 +20,14 @@ import Test from "./components/inputpicture/test";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CameraTest from "./pages/cameratest/CameraTest";
 
-
 function App() {
 
   return (
-      <div>
-        <div className={styles.header}>
-          <Header/>
-        </div>
-        <Router>
+      <Router>
+        <div>
+          <div className={styles.header}>
+            <Header/>
+          </div>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path="/login" element={<SignIn />} />
@@ -38,7 +37,8 @@ function App() {
             <Route path="/performer" element={<Performer />} />
             <Route path="/stage/:id" element={<Stage />} />
             <Route path="/mypage" element={<Mypage />} />
-            <Route path="/search" element={<Search />} />
+            {/* <Route path="/search" element={<Search />} /> */}
+            <Route path="/search/:word" element={<Search />} />
             <Route path="/checkpassword" element={<Checkpassword />} />
             <Route path="/myoption" element={<MyOption />} />
             <Route path="/cameratest" element={<CameraTest />} />
@@ -47,8 +47,8 @@ function App() {
             
 
           </Routes>
-        </Router>
-      </div>
+        </div>
+      </Router>
   )
 }
 

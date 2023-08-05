@@ -2,10 +2,31 @@ import { useState } from 'react';
 import styles from './BroadCast.module.css';
 import StageInfo from './StageInfoModal';
 import { useSelector } from 'react-redux';
+import { API_BASE_URL } from '../../constants';
+import axios from 'axios'
 
 function Card({ data }) {
   const [isHovered, setIsHovered] = useState(false);
   const [stageInfoOn, setStageInfoOn] = useState(false);
+
+  const [cardInfo, setCardInfo] = useState({})
+
+  const openStageInfo = async (event) => {
+    event.preventDefault();
+    
+    try {
+      const response = await axios.get(`${API_BASE_URL}/shows/${data.showId}`);
+      console.log('Get success:', response.data);
+      setCardInfo(response.data);
+      setStageInfoOn(true)
+      console.log(cardInfo)
+
+    } catch (error) {
+      console.log('Get error', error);
+      // setStageInfoOn(true)
+    }
+  };
+
 
   return (
     <div
@@ -14,7 +35,7 @@ function Card({ data }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className={styles.content}
-      onClick={() => setStageInfoOn(true)}>
+      onClick={openStageInfo}>
         <div className={styles.thumbnail}>
           <div className={styles.posterContainer}>
             <img
@@ -39,6 +60,7 @@ function Card({ data }) {
       <StageInfo
         show={stageInfoOn}
         onHide={() => setStageInfoOn(false)}
+        data={cardInfo}
       />
     </div>
   );

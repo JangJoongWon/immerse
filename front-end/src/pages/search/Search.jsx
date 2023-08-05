@@ -6,7 +6,6 @@ import Result from './SearchResult'
 import { useSelector } from 'react-redux';
 
 function Search() {
-  // const genres = ['버스킹', '마술', '스탠딩코미디', '샌드아트', '차력'];
   const genres = useSelector((state) => state.category.categories)
   const [selectedGenres, setSelectedGenres] = useState([]);
 
@@ -17,6 +16,7 @@ function Search() {
       setSelectedGenres([...selectedGenres, genre.categoryName]);
     }
   };
+
 
   return (
     <div className={styles.container}>
