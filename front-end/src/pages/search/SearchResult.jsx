@@ -4,6 +4,7 @@ import BroadCast from '../home/BroadCast'
 import {useParams} from 'react-router-dom';
 import { API_BASE_URL } from '../../constants';
 import axios from 'axios';
+import ChannelCard from '../../components/cards/SearchChannel'
 
 function SearchResult({selectedGenres}) {
 
@@ -71,16 +72,17 @@ function SearchResult({selectedGenres}) {
         </div>
 
         <div className={styles.result}>
-          <h3>{showCount}개의 {liveState ? '공연' : '채널'}</h3>
-          <div className={`${styles.categories} ${styles.gridMove}`}>
+          {liveState ? (
+            <h3>{showCount}개의 공연</h3>) : (<h3>{userCount}개의 채널</h3>)}
 
+          <div className={`${styles.categories} ${styles.gridItem}`}>
           {liveState ? (
             searchShow.map((item) => (
               <BroadCast key={item.pk} data={item} className={styles.card} />
             ))
           ) : (
             searchUser.map((item) => (
-              <BroadCast key={item.pk} data={item} className={styles.card} />
+              <ChannelCard key={item.userId} data={item} className={styles.channelcard} />
             ))
           )}
           </div>
