@@ -27,6 +27,7 @@ public class SecurityConfig {
 			.antMatchers("/swagger-ui/**", "/api-docs/**").permitAll()
 			.antMatchers("/user/signup", "/user/signin", "/user/mypage/**", "/user/check/**").permitAll()
 			.antMatchers("/search/user/**", "/search/show/**").permitAll()
+			.antMatchers("/subscribe/follower/**", "/subscribe/following/**").permitAll()
 			.antMatchers("/categories/").permitAll()
 			.antMatchers("/shows/**").permitAll()
 			.antMatchers("/shows/popular/**").permitAll()
