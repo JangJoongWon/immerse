@@ -60,6 +60,7 @@ public class ShowServiceImpl implements ShowService {
 			.showProgress(show.getShowProgress())
 			.category_id(show.getCategory().getCategoryId())
 			.user_id(show.getUser().getUserId())
+			.nickname((show.getUser().getNickname()))
 			.build();
 		return Optional.of(res);
 	}
