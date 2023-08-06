@@ -1,3 +1,8 @@
+.container {
+    overflow: hidden;
+    height: 80%;
+  }
+
 .maintitle {
     color: white;
     text-shadow: 0 0 1rem rgba(255, 255, 255, 0.5);
@@ -6,77 +11,50 @@
 }
 
 .background {
+    /* display: flex;
+    justify-content:center;
+    align-items:  center; */
     background:#121212;
-    padding: 5rem;
+    height: 45rem;
 
 }
 
-
-.head-title {
-    color: #FFF;
-    text-align: center;
-    font-family: Mulish;
-    font-size: 2rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: -0.04rem;
-}
-
-.password {
-    width: 75rem;
-    height: 25rem;
-    flex-shrink: 0;
-
-    border-radius: 0.5rem;
-    border: 1px solid #FFF;
-    background: #000;
-    box-shadow: 0 0 1rem rgba(255, 255, 255, 0.5); 
-    margin: 5rem;
-}
-
-.nickname {
-    width: 75rem;
-    height: 8rem;
-    flex-shrink: 0;
-
-    border-radius: 0.5rem;
-    border: 1px solid #FFF;
-    background: #121212;
-    box-shadow: 0 0 1rem rgba(255, 255, 255, 0.5); 
-    margin: 5rem;
-}
 
 .input {
     width: 30rem;
     height: 4rem;
     flex-shrink: 0;
 
-    
     border-radius: 0.5rem;
     border: 1px solid #FFF;
-    background: #121212;
+    background: whitesmoke;
     margin: 2rem;
     color : white;
 }
 
-input::placeholder{
-    color: rgba(255, 255, 255, 0.60);
-}
-
-.container {
-    background-color: #121212;
+  input::placeholder{
+      color: rgba(255, 255, 255, 0.60);
   }
+
   
+  .imgbox{
+    outline: 2px dashed snow;
+  }
+
+  .inputimg{
+    width: 100%;
+    height: 300px;
+  }
+
   .bannerimg {
     width: 100%;
     height: 300px;
   }
-  
+
   .userimg {
-    margin-left: 10%;
-    height: 80%;
-    width: 80%;
+    width: 100%;
+    height: 300px;
+    outline: 2px dashed snow;
   }
   
   .username {
@@ -117,7 +95,7 @@ input::placeholder{
   }
   
   .userright {
-    display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -133,3 +111,8 @@ input::placeholder{
     background: white;
   }
   
+  .button{
+    display: flex;
+    min-width: 10rem;
+    font-size: small;
+  }

@@ -1,8 +1,28 @@
 // import React from 'react'
 import styles from './Audience.module.css'
 import { UserVideoComponent } from './video';
-
+// import {useState} from 'react'
 function Audience(props) {
+    
+//   console.log(props.subscribers[0])  
+// const {publisher, subscribers, mainStreamManager} = props;
+
+// subscribers[1].subscribeToVideo(false);
+//   const {audioEnabled,setAudioEnabled} = useState(false);
+//   const {videoEnabled,setVideoEnavled} = useState(false);
+
+//   const AudioClickHandler = ()=>{
+//     setAudioEnabled(!audioEnabled)
+//     subscriber.subscribeToAudio(audioEnabled)
+//   };
+
+//   const VideoClickHandler = ()=>{
+//     setVideoEnavled(!videoEnabled)
+//   };
+
+
+
+  
   return (
     <div className={styles.container}>
         <div className={styles.totalbox}>
@@ -57,3 +77,28 @@ function Audience(props) {
 }
 
 export default Audience
+
+
+// const [videoEnabled, setVideoEnabled] = useState(true);
+// const [audioEnabled, setAudioEnabled] = useState(true);
+
+// const toggleVideo = () => {
+//   if (publisher) {
+//     publisher.publishVideo(!videoEnabled);
+//     setVideoEnabled(!videoEnabled);
+//   }
+// };
+
+// const toggleAudio = () => {
+//   if (publisher) {
+//     publisher.publishAudio(!audioEnabled);
+//     setAudioEnabled(!audioEnabled);
+//   }
+// };
+
+// <div className={styles.sidebar}>
+// <div>
+//   <button onClick={toggleVideo}>{videoEnabled ? 'Turn Video Off' : 'Turn Video On'}</button>
+//   <button onClick={toggleAudio}>{audioEnabled ? 'Mute Audio' : 'Unmute Audio'}</button>
+// </div>
+// </div>

@@ -33,7 +33,7 @@ function MakeStageModal({ show, onHide }) {
     try {
       titleRef.current.value = ''; 
       contentRef.current.value = '';
-      await axios.put('https://192.168.0.6:8080/api/review', context);
+      await axios.put('hhttps://i9d203.p.ssafy.io/api/review', context);
     } catch (error) {
       console.log('create review failed:', error.response.data);
     }

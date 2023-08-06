@@ -10,7 +10,7 @@ function ReservationTicket({ data }) {
           <Col sm={9} 
             style={{
               backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`,
-              backgroundSize: 'cover',
+              backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'top',
             }}
@@ -18,7 +18,7 @@ function ReservationTicket({ data }) {
             <div
             >
             <Row >
-              <Col
+              {/* <Col
               className={`${styles.leftfont} ${styles.title}`}
               >
                 {data.fields.title}
@@ -28,10 +28,10 @@ function ReservationTicket({ data }) {
                 style={{textAlign:"center"}} 
                 className={`${styles.leftfont} ${styles.logoname}`}>
                 <h5>Immerse</h5>
-              </Col>
+              </Col> */}
             </Row>
             <Row >
-              <Col 
+              {/* <Col 
                 style={{alignItems:"end",marginTop:"15%"}} 
                 >
                 <div
@@ -47,13 +47,13 @@ function ReservationTicket({ data }) {
                   className={`${styles.leftfont} ${styles.time}`}>
                     {data.fields.genre}
                 </div>
-              </Col>
+              </Col> */}
             </Row>
             </div>
           </Col>
           <Col sm={3} 
               className={styles.right}>
-            <div>
+            {/* <div>
               <Row
                 style={{margin:"0 auto"}}
                 sm={3}>    
@@ -78,7 +78,7 @@ function ReservationTicket({ data }) {
                   {data.fields.time}
                 </div>
               </Row>
-            </div>
+            </div> */}
           </Col>
         </Row>
   );

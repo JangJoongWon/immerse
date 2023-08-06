@@ -1,6 +1,6 @@
 .container {
   justify-content: start;
-  outline: 2px solid red;
+  /* outline: 2px solid red; */
 }
 
 .box {
@@ -10,7 +10,7 @@
   gap: 2rem;
   border-top: 3rem solid #121212;
   border-bottom: 3rem solid #121212;
-  outline: 2px solid white;
+  /* outline: 2px solid white; */
   /* justify-content:flex-start; */
 
 }
