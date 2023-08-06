@@ -31,6 +31,7 @@ function StageInfoModal({ show, onHide, data }) {
               <div className={styles.right}>
                 <div className={styles.text}>
                   <h1>{data.title}</h1>
+                  <p>{data.nickname}</p>
                   <p>{data.startTime}~{data.endTime}</p>
                   <p>{data.date}</p>
                   <p>{data.description}</p>
