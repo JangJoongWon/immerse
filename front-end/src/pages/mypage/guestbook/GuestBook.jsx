@@ -32,7 +32,7 @@ function GuestBook(props) {
     event.preventDefault();
     try {
       inputRef.current.value = ''; // 입력창을 직접 참조하여 초기화
-      await axios.put('https://192.168.0.6:8080/api/review', context);
+      await axios.put('https://i9d203.p.ssafy.io/api/review', context);
     } catch (error) {
       console.log('create review failed:', error.response.data);
     }

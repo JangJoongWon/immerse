@@ -25,7 +25,7 @@ function MyPageCard({ data }) {
         borderRadius:'10%',
         height:'15rem',
         backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`,
-        backgroundSize: 'cover',
+        backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'top',
       }}>

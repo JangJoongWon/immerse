@@ -84,7 +84,7 @@ function MyPageHome(props) {
         className={styles.bottom}>
             <Row
             className={styles.cardbox}>
-            {stage_list.slice(1,6).map((stage) => (
+            {stage_list.slice(1,4).map((stage) => (
                   <MyPageCard 
                   key={stage.id}
                   className={styles.card} 
