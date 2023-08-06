@@ -5,7 +5,7 @@ import MakeStage from "./MakeStageModal";
 import CastList from './CastList';
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategories } from '../../redux/categorySlice';
+import { setCategories, setCagoryMap } from '../../redux/categorySlice';
 import { API_BASE_URL } from '../../constants';
 
 function Home() {
@@ -40,7 +40,16 @@ function Home() {
         const categoriesResponse = await axios.get(`${API_BASE_URL}/categories/`);
         console.log(categoriesResponse);
         const categories = categoriesResponse.data;
+        const cagoryMap = {};
+        for (const e of categories) {
+          const { categoryId, categoryName } = e;
+          cagoryMap[categoryId] = { 
+            categoryName
+          };
+        }
+        console.log(cagoryMap);
         dispatch(setCategories([...categories]));
+        dispatch(setCagoryMap(cagoryMap));
       }
       catch (e) {
         console.log(e);

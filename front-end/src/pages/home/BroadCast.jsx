@@ -11,6 +11,8 @@ function Card({ data }) {
 
   const [cardInfo, setCardInfo] = useState({})
 
+  const categoryMap = useSelector(state => state.category.categoryMap);
+
   const openStageInfo = async (event) => {
     event.preventDefault();
     
@@ -47,6 +49,7 @@ function Card({ data }) {
         </div>
         <header>
           <div>{data.title}</div>
+          {/* 공연자의 별명을 어떻게 넣을 것인가? */}
           <div>주재홍</div>
           <div className={styles.info}>{data.showProgress}</div>
         </header>
@@ -54,7 +57,10 @@ function Card({ data }) {
         <footer>
           <a 
           href="/search" 
-          className={styles.tagbutton}>#{data.category_id}</a>
+          className={styles.tagbutton}>  
+            {/* #{data.category_id} */}
+            #{categoryMap[data.category_id].categoryName}
+          </a>
           {/* {isHovered && <button className={styles.footerButton}>버튼</button>} */}
         </footer>
       <StageInfo

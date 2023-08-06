@@ -46,6 +46,11 @@ public class ShowListResponse {
 	 */
 	private Long user_id;
 
+	/**
+	 * 공연자 별명
+	 */
+	private String nickname;
+	
 	public ShowListResponse(ShowEntity show) {
 		showId = show.getShowId();
 		title = show.getTitle();
@@ -54,5 +59,6 @@ public class ShowListResponse {
 		showProgress = show.getShowProgress();
 		category_id = show.getCategory().getCategoryId();
 		user_id = show.getUser().getUserId();
+		nickname = show.getUser().getNickname();
 	}
 }
