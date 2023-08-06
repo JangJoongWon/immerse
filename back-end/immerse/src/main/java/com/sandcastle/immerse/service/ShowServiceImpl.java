@@ -124,7 +124,8 @@ public class ShowServiceImpl implements ShowService {
 
 	@Override
 	public Long finishShow(Long showId, Long userId) throws IllegalStateException, IllegalArgumentException {
-		ShowEntity show = showRepository.findById(showId).get();
+		ShowEntity show = showRepository.findById(showId)
+				.orElseThrow(() -> new IllegalArgumentException("No show!"));
 		if (userId != show.getUser().getUserId()) { // 공연자 자신이 아니라면
 			throw new IllegalArgumentException("User is not the Artist of the show!");
 		}
