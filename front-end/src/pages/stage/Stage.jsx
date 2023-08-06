@@ -31,7 +31,7 @@ const Stage = () => {
     const userToken = useSelector((state) => state.user.token);
     const user = useSelector(state => state.user.user);
 
-    const isAuthor = () => user.id === showData.user_id; // session id는 공연자의 id로 설정
+    const isAuthor = () => user.nickname === showData.nickname; // session id는 공연자의 id로 설정
 
     const getToken = async (isAuthor) => {
         try {
@@ -102,10 +102,10 @@ const Stage = () => {
     const addSubscriber = (streamManager) => {
         console.log('-------------------client data----------------')
         console.log(JSON.parse(streamManager.stream.connection.data).clientData);
-        const user_id = JSON.parse(JSON.parse(streamManager.stream.connection.data).clientData).user_id;
+        const nickname = JSON.parse(streamManager.stream.connection.data).clientData;
             
-        console.log("add subscriber: ", user_id);
-        if (user_id === showData.user_id) { // mainStream
+        console.log("add subscriber: ", nickname);
+        if (nickname === showData.nickname) { // mainStream
             setMainStreamManager(streamManager);
         }
         else {
@@ -118,9 +118,9 @@ const Stage = () => {
     }
 
     const deleteSubscriber = (streamManager) => {
-        const user_id = JSON.parse(JSON.parse(streamManager.stream.connection.data).clientData).user_id;
+        const nickname = JSON.parse(streamManager.stream.connection.data).clientData;
          
-        if (user_id === showData.user_id) {
+        if (nickname === showData.nickname) {
             setMainStreamManager(undefined);
         }
         else {
@@ -169,12 +169,7 @@ const Stage = () => {
             console.log(token);
 
             newSession
-            .connect(token, { clientData:
-                JSON.stringify({
-                    user_id: user.user_id,
-                    nickname: user.nickname 
-                }) 
-            })
+            .connect(token, { clientData: user.nickname })
             .then(async () => {
 
                 // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
