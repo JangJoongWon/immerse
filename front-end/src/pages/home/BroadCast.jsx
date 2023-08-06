@@ -50,7 +50,7 @@ function Card({ data }) {
         <header>
           <div>{data.title}</div>
           {/* 공연자의 별명을 어떻게 넣을 것인가? */}
-          <div>주재홍</div>
+          <div>{data.nickname}</div>
           <div className={styles.info}>{data.showProgress}</div>
         </header>
       </div>
