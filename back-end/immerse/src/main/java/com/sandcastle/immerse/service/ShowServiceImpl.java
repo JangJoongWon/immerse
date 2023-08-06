@@ -110,6 +110,29 @@ public class ShowServiceImpl implements ShowService {
 		return showRepository.save(show).getShowId();
 	}
 
+	@Override
+	@Transactional
+	public Long startShow(Long showId, Long userId) throws IllegalStateException, IllegalArgumentException {
+		ShowEntity show = showRepository.findById(showId).get();
+		if (userId != show.getUser().getUserId()) { // 공연자 자신이 아니라면
+			throw new IllegalArgumentException("User is not the Artist of the show!");
+		}
+		show.begin();
+
+		return show.getShowId();
+	}
+
+	@Override
+	public Long finishShow(Long showId, Long userId) throws IllegalStateException, IllegalArgumentException {
+		ShowEntity show = showRepository.findById(showId).get();
+		if (userId != show.getUser().getUserId()) { // 공연자 자신이 아니라면
+			throw new IllegalArgumentException("User is not the Artist of the show!");
+		}
+		show.end();
+
+		return show.getShowId();
+	}
+
 	/**
 	 * 공연중인 것중 인기순 20개 조회
 	 * @return
