@@ -89,7 +89,7 @@ public class ShowController {
 	 * 공연자 본인만 호출
 	 */
 	@ResponseBody
-	@PutMapping("/{showId}/start")
+	@PutMapping("/{show_id}/start")
 	public ResponseEntity<?> startShow(@PathVariable Long show_id, Authentication auth) {
 		Long user_id = Long.valueOf(auth.getName());
 		showService.startShow(show_id, user_id);
@@ -102,7 +102,7 @@ public class ShowController {
 	 * 공연자 본인만 호출
 	 */
 	@ResponseBody
-	@PutMapping("/{showId}/finish")
+	@PutMapping("/{show_id}/finish")
 	public ResponseEntity<?> finishShow(@PathVariable Long show_id, Authentication auth) {
 		Long user_id = Long.valueOf(auth.getName());
 		showService.finishShow(show_id, user_id);
