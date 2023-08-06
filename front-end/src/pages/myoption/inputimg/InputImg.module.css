@@ -1,0 +1,32 @@
+.picturebox {
+    width: 100%;
+  }
+
+  .photobox {
+    border: 2px dashed gray;
+    border-radius: 30px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .imgbox {
+    width: 90%;
+  }
+
+  .imagefile {
+    width: 100%;
+  }
+
+  .picturebox .active {
+    border-color: green;
+  }
+  
+  .imagdropbox{
+    border: 2px white dashed;
+  }

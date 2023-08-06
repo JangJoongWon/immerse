@@ -9,6 +9,7 @@
     margin: 5%;
     color:white;
     width: 90%;
+    height: 10rem;
     margin-left: 5%;
     /* outline: 2px red solid ; */
 
@@ -30,6 +31,7 @@
 }
 
 .left{
+    height: 10rem;
     border-bottom-right-radius: 5%;
     border-top-right-radius: 5%;
     /* outline: 2px solid violet; */

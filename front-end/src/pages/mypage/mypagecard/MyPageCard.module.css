@@ -1,5 +1,6 @@
 .container {
-  width: 15%;
+  width: 20rem;
+  height: 15rem;
   position: relative;
   margin: 0 auto;
   /* overflow: hidden; */

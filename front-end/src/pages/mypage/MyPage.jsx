@@ -3,31 +3,37 @@ import { Row, Col } from 'react-bootstrap';
 import styles from './MyPage.module.css';
 import MypageTabbox from "./mypagetapbox/MyPageTabBox"
 import { Button } from 'react-bootstrap'
-// import { useState, useEffect } from 'react';
-// import { useDispatch} from 'react-redux'
-import { Link } from 'react-router-dom';
-
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
+import { TEST_URL, API_BASE_URL } from '../../constants';
 
 function MyPage() {
+  // const { nickname } = useParams();
+  // const userToken = useSelector((state) => state.user.token);
+  const user = useSelector(state => state.user.user);
 
-  // const dispatch = useDispatch();
 
   return (
     <div className={styles.container}>
       {/* Mypage Banner */}
       <div className={styles.banner}>
-        <img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="" />
+        {user.bannerPicture?<img className={styles.bannerimg} src="user.bannerPicture" alt="bannerPicture" /> :<img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="bannerPicture" />}
       </div>
       {/* User Info Section */}
       <Row>
         <div className={styles.userinfo}>
           <Col sm={1}>
           </Col>
-          <Col sm={3}>
+          <Col 
+          className={styles.sm3}
+          // sm={3}
+          >
             <div className={styles.userleft}>
               <div
                 className='m-3'>
-                <img className={styles.userimg} src="../public/icons/totoro2.jpg" alt="" />
+                  {user.profilePicture? <img className={styles.userimg} src="user.profilePicture" alt="profilePicture" /> :<img className={styles.userimg} src="../public/img/profileimg.png" alt="profilePicture" />}
               </div>
             </div>
           </Col>
@@ -39,32 +45,26 @@ function MyPage() {
                 <div
                   className={styles.username}
                 >
-                  유저아이디
+                  {user.nickname}
+                  <Link to="/checkpassword">
+                <img 
+                src="../../../../public/icons/Setting.png" alt="setting" 
+                style={{width:"5%"}}
+                />
+            
+                  </Link>
                 </div>
                 <div
                   className={styles.email}
                 >
-                  이메일
+                  {user.email}
                 </div>
               </Row>
               <Row sm={1}
                 className={styles.outline}>
-                <div>
+                <div className={styles.userbox}>
                   <div className="mypage-user-text">
-                    <h1></h1>
-                    <h3></h3>
-                    <div className={styles.userbox}>
-                      <p
-                        className='m-2'
-                      >집에 가고 싶어요. 집에 가고 싶어요.
-                        집에 가고 싶어요 집에 가고 싶어요
-                        집에 가고 싶어요
-                        집에 가고 싶어요
-                        집에 가고 싶어요
-                        집에 가고 싶어요
-                        집에 가고 싶어요
-                        집에 가고 싶어요</p>
-                    </div>
+                      {user.selfDescription ?<div>{user.selfDescription}</div > :<div>자기 소개를 작성해주세요</div>}
                   </div>
                 </div>
               </Row>
@@ -74,9 +74,6 @@ function MyPage() {
           </Col>
           <Col sm={3}>
             <Row>
-              <Link to="/checkpassword">
-                Setting
-              </Link>
             </Row>
             <div className={styles.userright}>
               <button
