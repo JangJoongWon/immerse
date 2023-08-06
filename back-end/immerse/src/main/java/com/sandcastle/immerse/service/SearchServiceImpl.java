@@ -91,7 +91,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public List<ShowListResponse> findAllShowsContainTag(String tag) {
+    public List<ShowListResponse> findAllShowsContainTag(String content) {
 
         return null;
     }

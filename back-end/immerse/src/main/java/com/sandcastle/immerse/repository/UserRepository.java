@@ -18,4 +18,14 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     boolean existsByNickname(String nickname);
 
     List<UserEntity> findByNicknameContains(String content);
+
+    @Query("SELECT u FROM UserEntity u " +
+            "INNER JOIN SubscribeEntity s ON s.followingId = u.userId " +
+            "WHERE s.followerId.id = :followerId")
+    List<UserEntity> findFollowings(@Param("followerId") Long followerId);
+
+    @Query("SELECT u FROM UserEntity u " +
+            "INNER JOIN SubscribeEntity s ON s.followerId = u.userId " +
+            "WHERE s.followingId.id = :followingId")
+    List<UserEntity> findFollowers(@Param("followingId") Long followingId);
 }
