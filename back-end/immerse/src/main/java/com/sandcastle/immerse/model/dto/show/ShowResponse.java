@@ -64,4 +64,9 @@ public class ShowResponse {
 	 * 공연자
 	 */
 	private Long user_id;
+
+	/**
+	 * 공연자 별명
+	 */
+	private String nickname;
 }
