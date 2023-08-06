@@ -29,20 +29,38 @@ public class TagServiceImpl implements TagService {
     @Transactional
     public List<TagDto> findallTag() {
         List<TagEntity> tags = tagRepository.findAll();
-        return tags.stream().map(TagDto::new).collect(Collectors.toList());
+        return tags.stream().map(tagEntity -> TagDto.builder()
+                .tagId(tagEntity.getTagId())
+                .tagName(tagEntity.getTagName())
+                .build())
+                .collect(Collectors.toList());
     }
 
-    @Override
     public Optional<TagDto> findById(Long id) {
         Optional<TagEntity> tagEntity = tagRepository.findById(id);
         if(tagEntity.isPresent()){
-
+            TagDto tagDto = TagDto.builder()
+                    .tagId(tagEntity.get().getTagId())
+                    .tagName(tagEntity.get().getTagName())
+                    .build();
+            return Optional.of(tagDto);
+        } else {
+            return Optional.empty();
         }
-        return Optional.empty();
+
+
     }
 
-    @Override
     public Optional<TagDto> findByName(String name) {
+        Optional<TagEntity> tagEntity = tagRepository.findByName(name);
+
+        if(tagEntity.isPresent()){
+            TagDto tagDto = TagDto.builder()
+                    .tagId(tagEntity.get().getTagId())
+                    .tagName(tagEntity.get().getTagName())
+                    .build();
+            return Optional.of(tagDto);
+        }
         return Optional.empty();
     }
 }

@@ -19,11 +19,11 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
 
     List<TagEntity> findAll();
 
-    @Modifying
-    @Query(value = "SELECT * FROM tags WHERE tag_id = :id" , nativeQuery = true)
-    Optional<TagEntity> findById(@Param("id") Long id);
+//    @Modifying
+//    @Query(value = "SELECT * FROM tags WHERE tag_id = :id", nativeQuery = true)
+//    Optional<TagEntity> findById(@Param("id") Long id);
 
-    @Modifying
+//    @Modifying
     @Query(value = "SELECT * FROM tags WHERE tag_name = :name" , nativeQuery = true)
     Optional<TagEntity> findByName(@Param("name") String name);
 
