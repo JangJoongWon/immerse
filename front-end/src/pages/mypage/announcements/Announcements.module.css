@@ -33,9 +33,9 @@
     /* outline: 2px solid blueviolet; */
 }
 
-.content::-webkit-scrollbar{
+/* .content::-webkit-scrollbar{
     display: none;
-}
+} */
 
 .middle{
     /* outline: 2px solid yellow; */
