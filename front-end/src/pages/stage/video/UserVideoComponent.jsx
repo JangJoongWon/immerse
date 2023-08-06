@@ -32,7 +32,7 @@ const UserVideoComponent = (props) => {
 
     const getNicknameTag = () => {
         // Gets the nickName of the user
-        return JSON.parse(props.streamManager.stream.connection.data).clientData;
+        return JSON.parse(JSON.parse(props.streamManager.stream.connection.data).clientData).nickname;
     }
 
     return (
