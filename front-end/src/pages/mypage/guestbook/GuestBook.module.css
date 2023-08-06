@@ -45,8 +45,7 @@
 }
 
 .up {
-
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     width: calc(100% - 16px); /* 스크롤바 너비만큼 오른쪽 여백을 빼줍니다. (여기서는 16px로 가정) */
     height: 40rem;

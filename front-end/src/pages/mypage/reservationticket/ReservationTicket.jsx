@@ -10,7 +10,8 @@ function ReservationTicket({ data }) {
           <Col sm={9} 
             style={{
               backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`,
-              backgroundSize: '100% 100%',
+              backgroundSize: 'cover',
+              // backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'top',
             }}

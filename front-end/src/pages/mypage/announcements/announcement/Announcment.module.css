@@ -18,12 +18,13 @@
 
 .nickname{
     margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    /* margin-bottom: 0.5rem; */
     text-shadow: 0 0 1rem white;
     /* outline: 2px solid blue; */
 }
 
 .title{
+    font-size: small;
 }
 
 .content{
@@ -35,13 +36,14 @@
 }
 
 .left{
+    width: 100%;
     /* outline: 2px solid violet; */
 }
 
 .profile_img {
-    width: 65%;
+    width: 80%;
     border-radius: 60%;
-    margin: 10%;
+    margin: 25% 10%;
     max-width: 100%;
     /* outline: 2px solid green; */
 }
