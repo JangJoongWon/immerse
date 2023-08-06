@@ -1,8 +1,15 @@
 import React from 'react';
 import { Button, Modal, Row, Col } from 'react-bootstrap';
 import styles from './StageInfoModal.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function StageInfoModal({ show, onHide, data }) {
+
+  const navigate = useNavigate();
+
+  const attendStage = () => {
+    navigate(`/stage/${data.showId}`);
+  }
 
   return (
     <div>
@@ -43,7 +50,7 @@ function StageInfoModal({ show, onHide, data }) {
                   {data.showProgress == 'SCHEDULED'?(
                     <Button>예약하기</Button>
                   ):(
-                    <Button>입장하기</Button>
+                    <Button onClick={attendStage}>입장하기</Button>
                   )}
 
                 </div>

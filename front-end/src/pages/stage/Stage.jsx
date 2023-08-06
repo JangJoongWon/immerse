@@ -26,15 +26,16 @@ const Stage = () => {
     const [subscribers, setSubscribers] = useState([]);
     const [publisher, setPublisher] = useState(undefined);
     const [mainStreamManager, setMainStreamManager] = useState(undefined);
+    const [showData, setShowData] = useState({});
     
     const userToken = useSelector((state) => state.user.token);
     const user = useSelector(state => state.user.user);
 
-    const isAuthor = () => user.nickname === id; // session id는 공연자의 id로 설정
+    const isAuthor = () => user.id === showData.user_id; // session id는 공연자의 id로 설정
 
     const getToken = async (isAuthor) => {
         try {
-            const sessionId = await (isAuthor ? createSession(id) : fetchSession(id));
+            const sessionId = await (isAuthor ? createSession(showData.user_id + '') : fetchSession(showData.user_id + ''));
             return await createToken(sessionId);
         }
         catch (e) {
@@ -99,10 +100,12 @@ const Stage = () => {
     }
 
     const addSubscriber = (streamManager) => {
-        const clientName = JSON.parse(streamManager.stream.connection.data).clientData;
+        console.log('-------------------client data----------------')
+        console.log(JSON.parse(streamManager.stream.connection.data).clientData);
+        const user_id = JSON.parse(JSON.parse(streamManager.stream.connection.data).clientData).user_id;
             
-        console.log("add subscriber: ", clientName);
-        if (clientName === id) { // mainStream
+        console.log("add subscriber: ", user_id);
+        if (user_id === showData.user_id) { // mainStream
             setMainStreamManager(streamManager);
         }
         else {
@@ -115,9 +118,9 @@ const Stage = () => {
     }
 
     const deleteSubscriber = (streamManager) => {
-        const clientName = JSON.parse(streamManager.stream.connection.data).clientData;
-        
-        if (clientName === id) {
+        const user_id = JSON.parse(JSON.parse(streamManager.stream.connection.data).clientData).user_id;
+         
+        if (user_id === showData.user_id) {
             setMainStreamManager(undefined);
         }
         else {
@@ -166,7 +169,12 @@ const Stage = () => {
             console.log(token);
 
             newSession
-            .connect(token, { clientData: user.nickname })
+            .connect(token, { clientData:
+                JSON.stringify({
+                    user_id: user.user_id,
+                    nickname: user.nickname 
+                }) 
+            })
             .then(async () => {
 
                 // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
@@ -225,7 +233,7 @@ const Stage = () => {
         setPublisher(undefined);
         
         try {
-            const response = await axios.post(API_BASE_URL + 'rooms/' + id + '/disconnect', {}, {
+            const response = await axios.post(API_BASE_URL + 'rooms/' + showData.user_id + '/disconnect', {}, {
                 headers: { 
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + userToken
@@ -251,12 +259,26 @@ const Stage = () => {
 
     }
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await axios.get(`${API_BASE_URL}/shows/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + userToken
+                }
+            });
+            console.log(response.data);
+            setShowData(response.data);
+        }
+        fetchData();
+    }, []);
+
     return (
         <div className={styles.container}>
             {session === undefined ? (
                 <div id="join">
                     <StageInfo 
-                    id={id}
+                    showData={showData}
                     joinSession={joinSession}
                     />
                 </div>
