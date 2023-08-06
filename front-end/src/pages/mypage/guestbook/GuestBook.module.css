@@ -65,13 +65,18 @@
 }
 
 .send_img{
-    width: 10%;
+    width: 25%;
     margin: 1%;
     /* outline: 2px solid orange; */
 }
 
 .send_img:hover {
     cursor: pointer;
+}
+
+.sendImgBox{
+    display: flex;
+    align-items: center;
 }
 
 .messagebox {

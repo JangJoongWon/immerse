@@ -13,19 +13,14 @@ function Review({data}) {
                         className={styles.profile_img}
                         src="..\public\icons\totoro2.jpg" alt="profile_img" />
             </Col>
-            <Col>
+            <Col
+            className={styles.content}>
                 <div 
-                className={styles.content}
                 >
-                    <div
-                    className={styles.nickname}
-                    >
-                        {data.nickname}
-                    </div>
                     <div
                     className={styles.box}
                     >
-                        {data.content}
+                        <th>{data.nickname}</th> {data.content}
                     </div>
                 </div>
             </Col>
