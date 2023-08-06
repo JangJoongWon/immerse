@@ -83,4 +83,30 @@ public class ShowController {
 	public List<ShowListResponse> getShowOrderByReservation() {
 		return showService.getShowsOrderByReservation();
 	}
+
+	/**
+	 * 예약중인 공연을 진행중 상태로 바꾸는 API
+	 * 공연자 본인만 호출
+	 */
+	@ResponseBody
+	@PutMapping("/{showId}/start")
+	public ResponseEntity<?> startShow(@PathVariable Long show_id, Authentication auth) {
+		Long user_id = Long.valueOf(auth.getName());
+		showService.startShow(show_id, user_id);
+
+		return ResponseEntity.ok().body("show started successfully.");
+	}
+
+	/**
+	 * 진행중인 공연을 끝남 상태로 바꾸는 API
+	 * 공연자 본인만 호출
+	 */
+	@ResponseBody
+	@PutMapping("/{showId}/finish")
+	public ResponseEntity<?> finishShow(@PathVariable Long show_id, Authentication auth) {
+		Long user_id = Long.valueOf(auth.getName());
+		showService.finishShow(show_id, user_id);
+
+		return ResponseEntity.ok().body("show finished successfully.");
+	}
 }

@@ -102,4 +102,25 @@ public class ShowEntity {
 		this.user = user;
 	}
 
+	/**
+	 * 공연이 예약중일 때, 진행중으로 변경하는 메서드
+	 * 예약중 상태가 아니라면 예외 처리
+	 */
+	public void begin() throws IllegalStateException {
+		if (showProgress != ShowProgress.SCHEDULED) {
+			throw new IllegalStateException("The show trying to begin is not scheduled!");
+		}
+		showProgress = ShowProgress.IN_PROGRESS;
+	}
+
+	/**
+	 * 공연이 진행중일 때, 끝남으로 변경하는 메서드
+	 * 진행중 상태가 아니라면 예외 처리
+	 */
+	public void end() throws IllegalStateException {
+		if (showProgress != ShowProgress.OVER) {
+			throw new IllegalStateException("The show trying to end is not in progress!");
+		}
+		showProgress = ShowProgress.OVER;
+	}
 }
