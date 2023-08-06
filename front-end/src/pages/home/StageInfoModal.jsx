@@ -9,7 +9,7 @@ import { API_BASE_URL } from '../../constants';
 function StageInfoModal({ show, onHide, data }) {
 
   const navigate = useNavigate();
-  const user = useNavigate(state => state.user.user);
+  const user = useSelector(state => state.user.user);
   const token = useSelector(state => state.user.token);
 
   const attendStage = () => {
@@ -17,7 +17,8 @@ function StageInfoModal({ show, onHide, data }) {
   }
   const startStage = async () => {
     try {
-      const res = await axios.put(`${API_BASE_URL}/shows/${data.showId}/start`, {
+      console.log(token);
+      const res = await axios.put(`${API_BASE_URL}/shows/${data.showId}/start`, {}, {
         headers: {
           'Content-Type': 'application/json', 
           'Authorization': 'Bearer ' + token
@@ -68,7 +69,7 @@ function StageInfoModal({ show, onHide, data }) {
                   <p>{data.category_id}</p>
 
                   {data.showProgress === 'SCHEDULED'?
-                    (data.nickname === user.nickname ? (
+                    (data.nickname !== user.nickname ? (
                       <Button>예약하기</Button>
                     ) : (
                       <Button onClick={startStage}>시작하기</Button>

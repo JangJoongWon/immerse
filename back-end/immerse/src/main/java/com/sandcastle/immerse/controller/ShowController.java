@@ -92,10 +92,8 @@ public class ShowController {
 	 */
 	@ResponseBody
 	@PutMapping("/{show_id}/start")
-	public ResponseEntity<?> startShow(@PathVariable Long show_id, Authentication auth) {
-		log.debug("auth: " + auth);
-		log.trace(auth.toString());
-		Long user_id = Long.valueOf(auth.getName());
+	public ResponseEntity<?> startShow(@PathVariable Long show_id, Authentication authentication) {
+		Long user_id = Long.valueOf(authentication.getName());
 		log.trace("user: " + user_id);
 		log.trace("show: " + show_id);
 		showService.startShow(show_id, user_id);
