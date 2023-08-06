@@ -1,0 +1,100 @@
+.container {
+    width: 100%;
+    border: 1px solid green;
+    color: white;
+    position: relative;
+    border: 1px solid blue;
+    overflow: hidden; /* 내용을 넘치지 않도록 처리 */
+  }
+
+  .container:hover {
+    cursor: pointer;
+  }
+  
+  .content {
+    width: 100%;
+  }
+  
+  .thumbnail {
+    width: 100%;
+    border: 1px solid yellow;
+    border-radius: 20px;
+  }
+  
+  .posterContainer {
+    width: 100%;
+    padding-bottom: 66%;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    transform-origin: bottom center;
+    border-radius: 20px;
+  }
+  
+  .poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+  }
+
+  img {
+    width: 100%;
+  }
+  
+  .cardText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px; /* 텍스트의 여백을 위한 padding 설정 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .footerButton {
+    position: absolute;
+    bottom: 10px; /* 아래 여백 조절 */
+    right: 10px; /* 오른쪽 여백 조절 */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: opacity 0.3s ease; /* 투명도 변화에 트랜지션 적용 */
+  }
+
+
+.channelcard h1, .channelcard h2, .channelcard h3 {
+    overflow: hidden; /* 텍스트 넘치지 않도록 처리 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    text-overflow: ellipsis; /* 넘치는 텍스트 말줄임 표시 */
+}
+
+
+  .container:hover .footerButton {
+    opacity: 1; /* 호버 상태일 때 버튼이 나타나도록 투명도를 1로 설정 */
+  }
+
+  .container:hover .posterContainer {
+    transform: scale(1.1); /* 호버 시 포스터를 1.2배로 확대 */
+  }
+  
+  .tagbutton {
+    text-decoration: none;
+
+  }
+
+
+  .info {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
+  
