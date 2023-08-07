@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
-function CardList({Live, Reserve}) { // 컴포넌트 이름을 대문자로 변경
+function CardList({Live, Reserve}) {
 
     const [liveState, setLiveState] = useState(true);
     const categories = useSelector(state => state.category.categories);
@@ -31,7 +31,7 @@ function CardList({Live, Reserve}) { // 컴포넌트 이름을 대문자로 변�
   return (
     <div className={styles.container}>
 
-        <div className={styles.categoryTags}>
+        {/* <div className={styles.categoryTags}>
           <ul className={styles.categoryZip}>
             {categories.map((item) => (
               <div key={item.categoryId}>
@@ -43,7 +43,7 @@ function CardList({Live, Reserve}) { // 컴포넌트 이름을 대문자로 변�
               </div>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         <div className={styles.listResult}>
           <ul className={styles.statebutton}>

@@ -14,20 +14,25 @@ function Card({ data }) {
   const navigate = useNavigate()
 
   const categoryMap = useSelector(state => state.category.categoryMap);
+  const token = useSelector(state => state.user.token)
 
   const openStageInfo = async (event) => {
     event.preventDefault();
-    
+  
+    // if (!token) {
+    //   alert('로그인이 필요합니다.');
+    //   navigate('/login');
+    //   return;
+    // }
+  
     try {
       const response = await axios.get(`${API_BASE_URL}/shows/${data.showId}`);
       console.log('Get success:', response.data);
       setCardInfo(response.data);
-      setStageInfoOn(true)
-      console.log(cardInfo)
-
+      setStageInfoOn(true);
+      console.log(cardInfo);
     } catch (error) {
       console.log('Get error', error);
-      // setStageInfoOn(true)
     }
   };
 
@@ -69,10 +74,8 @@ function Card({ data }) {
             toCategory(data);
           }}
           className={styles.tagbutton}>  
-            {/* #{data.category_id} */}
             #{categoryMap[data.category_id].categoryName}
           </a>
-          {/* {isHovered && <button className={styles.footerButton}>버튼</button>} */}
         </footer>
       <StageInfo
         show={stageInfoOn}

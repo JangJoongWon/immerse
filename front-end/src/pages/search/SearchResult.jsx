@@ -3,7 +3,7 @@ import styles from './SearchResult.module.css'
 import BroadCast from '../home/BroadCast'
 import { API_BASE_URL } from '../../constants';
 import axios from 'axios';
-import ChannelCard from '../../components/cards/SearchChannel'
+import ChannelCard from './SearchChannel'
 
 function SearchResult({word}) {
 
