@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCategories, setCagoryMap } from '../../redux/categorySlice';
 import { setUser } from '../../redux/userSlice';
 import { API_BASE_URL } from '../../constants';
+import { mainBanner } from '/src/assets/images';
 
 function Home() {
 
@@ -86,7 +87,7 @@ function Home() {
             <div className={styles.bannerimgWrapper}>
               <img
                 className={styles.bannerimg}
-                src="/src/assets/images/mainBanner.jpg"
+                src={mainBanner}
                 alt=""
               />
               <div className={styles.buttonContainer}>
