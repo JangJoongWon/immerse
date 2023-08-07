@@ -18,6 +18,7 @@ import { API_BASE_URL } from '../../constants';
 function Header() {
   const [expand, setExpand] = useState(null);
   const user = useSelector((state) => state.user.token)
+  const userNick = useSelector((state) => state.user.user)
   const dispatch = useDispatch();
 
   const [word, setWord] = useState('');
@@ -32,6 +33,10 @@ function Header() {
   const toggleOffcanvas = () => {
     setIsOffcanvasOpen(prev => !prev);
   };
+
+  const toProfile = () => {
+    navigate(`/mypage/${userNick.nick}`)
+  }
 
   const searchWord = async (event) => {
     event.preventDefault();
@@ -139,7 +144,7 @@ function Header() {
                   >
                     LogOut
                   </Nav.Link>
-                  <Nav.Link href="/mypage" className='m-2' style={{ color: "white" }}>
+                  <Nav.Link className='m-2' style={{ color: "white" }} onClick={toProfile}>
                     Profile
                   </Nav.Link>
                   <Nav.Link className='m-2' style={{ color: "white" }}

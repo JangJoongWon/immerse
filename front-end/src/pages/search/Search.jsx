@@ -1,13 +1,16 @@
 // Search.jsx
 import styles from './Search.module.css';
 import GenreButton from './GenreButton';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Result from './SearchResult'
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 function Search() {
   const genres = useSelector((state) => state.category.categories)
   const [selectedGenres, setSelectedGenres] = useState([]);
+
+  const { word } = useParams();
 
   const handleGenreClick = (genre) => {
     if (selectedGenres.includes(genre.categoryName)) {
@@ -50,12 +53,12 @@ function Search() {
                     />
                   ))}
                 </div>
-                
               </div>
+
             </div>
             <div className={styles.searchresult}>
               <div className={styles.resultbox}>
-                <h2>search result</h2>
+                <h2>"{word}"로 검색한 결과</h2>
                 <Result selectedGenres={selectedGenres}/>
               </div>
             </div>
