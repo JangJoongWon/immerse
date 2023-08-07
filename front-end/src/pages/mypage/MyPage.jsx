@@ -1,4 +1,4 @@
-// import { useState } from 'react';
+import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import styles from './MyPage.module.css';
 import MypageTabbox from "./mypagetapbox/MyPageTabBox"
@@ -8,20 +8,34 @@ import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { TEST_URL, API_BASE_URL } from '../../constants';
+import context from 'react-bootstrap/esm/AccordionContext';
 
-function MyPage(props) {
-  // const { userId } = useParams();
+function MyPage() {
+  const { nickname } = useParams();
+  console.log(nickname)
   // const userToken = useSelector((state) => state.user.token);
-  const user = useSelector(state => state.user.user);
-  // const user = axios.post(API_BASE_URL+`/mypage/${userId}`)
+  // const user = useSelector(state => state.user.user);
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Axios를 사용하여 데이터를 불러옴
+    axios.get(API_BASE_URL + `/user/mypage/${nickname}`, { nickname : nickname})
+      .then(response => {
+        setUser(response.data); // 불러온 데이터를 상태(State)에 저장
+        console.log(response)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
   
-
-
   return (
     <div className={styles.container}>
       {/* Mypage Banner */}
       <div className={styles.banner}>
-        {user.bannerPicture?<img className={styles.bannerimg} src="user.bannerPicture" alt="bannerPicture" /> :<img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="bannerPicture" />}
+        {user != null?<img className={styles.bannerimg} src="user.bannerPicture" alt="bannerPicture" /> :<img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="bannerPicture" />}
       </div>
       {/* User Info Section */}
       <Row>
@@ -35,7 +49,7 @@ function MyPage(props) {
             <div className={styles.userleft}>
               <div
                 className='m-3'>
-                  {user.profilePicture? <img className={styles.userimg} src="user.profilePicture" alt="profilePicture" /> :<img className={styles.userimg} src="../public/img/profileimg.png" alt="profilePicture" />}
+                  {user != null? <img className={styles.userimg} src="user.profilePicture" alt="profilePicture" /> :<img className={styles.userimg} src="../public/img/profileimg.png" alt="profilePicture" />}
               </div>
             </div>
           </Col>
@@ -47,7 +61,7 @@ function MyPage(props) {
                 <div
                   className={styles.username}
                 >
-                  {user.nickname}
+                  {user == null ? <span>user nickname</span> : <span>{user.nickname}</span>}
                   <Link to="/checkpassword">
                 <img 
                 src="../../../../public/icons/Setting.png" alt="setting" 
@@ -59,14 +73,14 @@ function MyPage(props) {
                 <div
                   className={styles.email}
                 >
-                  {user.email}
+                  {user == null ? <div>user email</div> : <div>{user.email}</div>}
                 </div>
               </Row>
               <Row sm={1}
                 className={styles.outline}>
                 <div className={styles.userbox}>
                   <div className="mypage-user-text">
-                      {user.selfDescription ?<div>{user.selfDescription}</div > :<div>자기 소개를 작성해주세요</div>}
+                      {user != null ?<div>{user.selfDescription}</div > :<div>자기 소개를 작성해주세요</div>}
                   </div>
                 </div>
               </Row>
