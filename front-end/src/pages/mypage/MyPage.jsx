@@ -22,7 +22,7 @@ function MyPage() {
 
   useEffect(() => {
     // Axios를 사용하여 데이터를 불러옴
-    axios.get(TEST_URL + `/user/mypage/${nickname}`)
+    axios.get(API_BASE_URL + `/user/mypage/${nickname}`)
       .then(response => {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
         // console.log(response)
@@ -46,32 +46,7 @@ function MyPage() {
   };
 
   const subscribe = () => {
-    console.log(user.userId)
-    getsubscribe
-
-    // const context = {
-    //   userId: user.userId
-    // } 
-    
-    // console.log(user.userId)
-    // const headers =  {
-    //   'Content-Type': 'application/json', 
-    //   'Authorization': `Bearer ${userToken}`
-    // }
-    
-
-    // const response = await axios.post(API_BASE_URL + '/rooms/', {
-    //   customSessionId: sessionId
-    //   }, {
-    //   headers: { 
-    //       'Content-Type': 'application/json', 
-    //       'Authorization': 'Bearer ' + userToken
-    //   },
-    // });
-
-
-
-    axios.post(TEST_URL + '/subscribe', {userId : user.userId
+    axios.post(API_BASE_URL + '/subscribe', {userId : user.userId
     }, {
       headers: {
       'Content-Type': 'application/json', 
