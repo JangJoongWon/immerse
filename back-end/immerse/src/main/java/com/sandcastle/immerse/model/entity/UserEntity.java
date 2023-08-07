@@ -83,6 +83,12 @@ public class UserEntity {
 	@OneToMany(mappedBy = "user")
 	private List<ShowEntity> shows = new ArrayList<>();
 
+	@OneToMany(mappedBy = "followerId")
+	private List<SubscribeEntity> followers = new ArrayList<>();
+
+	@OneToMany(mappedBy = "followingId")
+	private List<SubscribeEntity> followings = new ArrayList<>();
+
 	@Builder
 	public UserEntity(String email, String password, String name, String gender, String nickname, LocalDate birthday,
 		String phoneNumber) {

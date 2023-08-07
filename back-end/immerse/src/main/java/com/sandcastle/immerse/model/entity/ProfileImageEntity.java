@@ -14,17 +14,11 @@ public class ProfileImageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(targetEntity = UserEntity.class , fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    @Column(name = "orginal_file_name")
+    private String orginalFileName;
 
+    @Column(name = "stored_file_name")
     private String fileName;
 
-    private String contentType;
 
-    private long size;
-
-    // 기타 필드들...
-
-    // Getter, Setter, 등등...
 }

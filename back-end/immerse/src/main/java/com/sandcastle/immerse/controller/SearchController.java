@@ -44,8 +44,8 @@ public class SearchController {
     }
 
     @GetMapping("/tag/{content}")
-    public ResponseEntity<?> findAllShowsContainTag(@PathVariable String tag) {
-        List<ShowListResponse> showDtoList = searchServiceImpl.findAllShowsContainTag(tag);
+    public ResponseEntity<?> findAllShowsContainTag(@PathVariable String content) {
+        List<ShowListResponse> showDtoList = searchServiceImpl.findAllShowsContainTag(content);
         return ResponseEntity.ok().body(showDtoList);
     }
 }

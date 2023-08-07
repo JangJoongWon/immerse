@@ -4,6 +4,7 @@ import java.net.Authenticator;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ import com.sandcastle.immerse.service.ShowService;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @RestController
 @RequestMapping("/shows")
 @RequiredArgsConstructor
@@ -82,5 +84,33 @@ public class ShowController {
 	@GetMapping("/popular/reservation")
 	public List<ShowListResponse> getShowOrderByReservation() {
 		return showService.getShowsOrderByReservation();
+	}
+
+	/**
+	 * 예약중인 공연을 진행중 상태로 바꾸는 API
+	 * 공연자 본인만 호출
+	 */
+	@ResponseBody
+	@PutMapping("/{show_id}/start")
+	public ResponseEntity<?> startShow(@PathVariable Long show_id, Authentication authentication) {
+		Long user_id = Long.valueOf(authentication.getName());
+		log.trace("user: " + user_id);
+		log.trace("show: " + show_id);
+		showService.startShow(show_id, user_id);
+
+		return ResponseEntity.ok().body("show started successfully.");
+	}
+
+	/**
+	 * 진행중인 공연을 끝남 상태로 바꾸는 API
+	 * 공연자 본인만 호출
+	 */
+	@ResponseBody
+	@PutMapping("/{show_id}/finish")
+	public ResponseEntity<?> finishShow(@PathVariable Long show_id, Authentication auth) {
+		Long user_id = Long.valueOf(auth.getName());
+		showService.finishShow(show_id, user_id);
+
+		return ResponseEntity.ok().body("show finished successfully.");
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import com.sandcastle.immerse.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -108,6 +110,34 @@ public class ShowServiceImpl implements ShowService {
 			.user(userRepository.getReferenceById(req.getUserId()))
 			.build();
 		return showRepository.save(show).getShowId();
+	}
+
+	@Override
+	@Transactional
+	public Long startShow(Long showId, Long userId) throws IllegalStateException, IllegalArgumentException {
+		ShowEntity show = showRepository.findById(showId)
+				.orElseThrow(() -> new IllegalArgumentException("No Show!"));
+
+		log.trace("show: " + show.getShowId());
+
+		if (userId != show.getUser().getUserId()) { // 공연자 자신이 아니라면
+			throw new IllegalArgumentException("User is not the Artist of the show!");
+		}
+		show.begin();
+
+		return show.getShowId();
+	}
+
+	@Override
+	public Long finishShow(Long showId, Long userId) throws IllegalStateException, IllegalArgumentException {
+		ShowEntity show = showRepository.findById(showId)
+				.orElseThrow(() -> new IllegalArgumentException("No show!"));
+		if (userId != show.getUser().getUserId()) { // 공연자 자신이 아니라면
+			throw new IllegalArgumentException("User is not the Artist of the show!");
+		}
+		show.end();
+
+		return show.getShowId();
 	}
 
 	/**
