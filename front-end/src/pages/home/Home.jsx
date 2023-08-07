@@ -9,6 +9,7 @@ import { setCategories, setCagoryMap } from '../../redux/categorySlice';
 import { setUser } from '../../redux/userSlice';
 import { API_BASE_URL } from '../../constants';
 import { mainBanner } from '/src/assets/images';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
 
@@ -18,6 +19,7 @@ function Home() {
   const [LiveStage, setLiveStage] = useState([])
   const [ReserveStage, setReserveStage] = useState([])
 
+  const navigate = useNavigate();
   const token = useSelector(state => state.user.token);
   const user = useSelector(state => state.user.user);
 
@@ -77,6 +79,19 @@ function Home() {
         fetchData();
       }, []);
 
+
+    const openMakeStage = async (event) => {
+      event.preventDefault();
+
+      if (!token) {
+        alert('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+
+      setMakeStageOn(true)
+    };
+
   return (
     <div className="App">
     <div className={styles.container}>
@@ -98,7 +113,7 @@ function Home() {
                 <Button
                   className='makeButton'
                   variant="primary"
-                  onClick={() => setMakeStageOn(true)}
+                  onClick={openMakeStage}
                 >
                   방만들기
                 </Button>
