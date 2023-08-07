@@ -14,5 +14,4 @@ public class FileDto {
 
     private MultipartFile file;
 
-    private int fileAttached;
 }
