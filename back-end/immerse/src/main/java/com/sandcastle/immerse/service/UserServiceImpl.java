@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService {
                 });
 
         return UserDto.builder()
+                .userId(userEntity.getUserId())
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
                 .gender(userEntity.getGender())
