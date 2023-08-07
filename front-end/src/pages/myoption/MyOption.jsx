@@ -189,6 +189,7 @@ function MyOption() {
                       className={styles.input}
                       placeholder="자기소개"
                       value={selfDescription}
+                      maxLength={300}
                       onChange={(e) => setSelfDescription(e.target.value)}
                     />
                   </div>
