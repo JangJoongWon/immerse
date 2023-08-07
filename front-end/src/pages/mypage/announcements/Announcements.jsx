@@ -10,7 +10,7 @@ function Announcements(props) {
 
   const { user_id, nickname } = props;
   const [MakeAnnouncementOn, setAnnouncementOn] = useState(false);
-  const initialVisibleAnnouncements = 10; // 초기에 보여질 공지사항 수
+  const initialVisibleAnnouncements = 5; // 초기에 보여질 공지사항 수
   const announcementsToLoad = 5; // 매번 로드할 공지사항 수
 
   const [visibleAnnouncements, setVisibleAnnouncements] = useState([]);
@@ -24,7 +24,7 @@ function Announcements(props) {
       const moreAnnouncements = anouncements_data.slice(visibleAnnouncements.length, endIndex);
       setVisibleAnnouncements((prevAnnouncements) => [...prevAnnouncements, ...moreAnnouncements]);
       setIsLoading(false);
-    }, 2000); // 원하는 딜레이로 수정 가능
+    }, 1000); // 원하는 딜레이로 수정 가능
   };
 
   // 컴포넌트가 마운트될 때 초기 공지사항을 로드하는 useEffect
@@ -43,7 +43,7 @@ function Announcements(props) {
 
   const handleScroll = () => {
     const scrolledToBottom =
-      window.innerHeight + 2*document.documentElement.scrollTop > document.documentElement.offsetHeight;
+      window.innerHeight + document.documentElement.scrollTop > document.documentElement.offsetHeight + 1;
     if (scrolledToBottom) {
       loadMoreAnnouncements();
     }
@@ -62,15 +62,15 @@ function Announcements(props) {
         onClick={() => setAnnouncementOn(true)}
         >공지사항 만들기</Button>
       </div>
-      <div 
-      className={styles.content}>
+
         {visibleAnnouncements.map((data) => (
           <div className={styles.box} key={data.id}>
             <Announcement data={data} nickname={nickname} />
           </div>
         ))}
-      </div>
-      {isLoading && <div>더 많은 공지사항 로딩 중...</div>}
+      {/* {isLoading && <div 
+      style={{color:'white'}}
+      >더 많은 공지사항 로딩 중...</div>} */}
     </div>
   );
 }

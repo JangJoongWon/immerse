@@ -6,34 +6,36 @@ import CastList from './CastList';
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategories, setCagoryMap } from '../../redux/categorySlice';
+import { setUser } from '../../redux/userSlice';
 import { API_BASE_URL } from '../../constants';
+import { mainBanner } from '/src/assets/images';
 
 function Home() {
 
-  const [MakeStageOn, setMakeStageOn] = useState(false);
-
   const dispatch = useDispatch();
 
+  const [MakeStageOn, setMakeStageOn] = useState(false);
   const [LiveStage, setLiveStage] = useState([])
   const [ReserveStage, setReserveStage] = useState([])
 
+  const token = useSelector(state => state.user.token);
+  const user = useSelector(state => state.user.user);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await axios.get(`${API_BASE_URL}/shows/popular/progress`);
-        console.log('progress axios success', response1);
-        setLiveStage(response1.data)
-      } catch (error) {
-        console.log('progress axios error:', error.message);
+        if (token && !user) {
+          const res = await axios.get(`${API_BASE_URL}/user/mypage`, {
+            headers: {
+              'Content-Type': 'application/json', 
+              'Authorization': 'Bearer ' + token
+            }
+          });
+          dispatch(setUser(res.data));
+        }
       }
-  
-      try {
-        const response2 = await axios.get(`${API_BASE_URL}/shows/popular/reservation`);
-        console.log('reservation axios success', response2);
-        setReserveStage(response2.data)
-      } catch (error) {
-        console.log('reservation axios error:', error.message);
+      catch (err) {
+        console.log(err);
       }
 
       try {
@@ -54,6 +56,23 @@ function Home() {
       catch (e) {
         console.log(e);
       }
+
+      try {
+        const response1 = await axios.get(`${API_BASE_URL}/shows/popular/progress`);
+        console.log('progress axios success', response1);
+        setLiveStage(response1.data)
+      } catch (error) {
+        console.log('progress axios error:', error.message);
+      }
+  
+      try {
+        const response2 = await axios.get(`${API_BASE_URL}/shows/popular/reservation`);
+        console.log('reservation axios success', response2);
+        setReserveStage(response2.data)
+      } catch (error) {
+        console.log('reservation axios error:', error.message);
+      }
+
     };
         fetchData();
       }, []);
@@ -63,24 +82,39 @@ function Home() {
     <div className={styles.container}>
       <div className={styles.body}>
         <div className={styles.contents}>
-          <div className={styles.middle}>
-            <div className={styles.banner}>
-              <img className={styles.banner} src="../public/icons/totoroposter.jpg" alt="" />
+
+          <div className={styles.banner}>
+            <div className={styles.bannerimgWrapper}>
+              <img
+                className={styles.bannerimg}
+                src={mainBanner}
+                alt=""
+              />
+              <div className={styles.buttonContainer}>
+                <MakeStage
+                  show={MakeStageOn}
+                  onHide={() => setMakeStageOn(false)}
+                />
+                <Button
+                  className='makeButton'
+                  variant="primary"
+                  onClick={() => setMakeStageOn(true)}
+                >
+                  방만들기
+                </Button>
+              </div>
             </div>
-            <MakeStage
-              show={MakeStageOn}
-              onHide={() => setMakeStageOn(false)}
-            />
-            <Button
-              variant="danger"
-              onClick={() => setMakeStageOn(true)}
-            >
-              방만들기
-            </Button>
-
-            <CastList Live={LiveStage} Reserve={ReserveStage}/>
-
           </div>
+
+          <div className={styles.lists}>
+            <div className={styles.middle}>
+
+
+              <CastList Live={LiveStage} Reserve={ReserveStage}/>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

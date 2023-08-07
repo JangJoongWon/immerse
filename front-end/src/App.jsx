@@ -13,6 +13,7 @@ import SignUp from "./pages/sign/SignUp";
 import Stage from "./pages/stage/Stage";
 import Mypage from "./pages/mypage/MyPage";
 import Search from "./pages/search/Search";
+import Category from "./pages/category/Category";
 import Checkpassword from "./pages/checkpassword/CheckPassword"
 import NotFound from "./pages/notfound/NotFound";
 import MyOption from './pages/myoption/MyOption';
@@ -36,16 +37,14 @@ function App() {
             <Route path="/Audience" element={<Audience />} />
             <Route path="/performer" element={<Performer />} />
             <Route path="/stage/:id" element={<Stage />} />
-            <Route path="/mypage" element={<Mypage />} />
-            {/* <Route path="/search" element={<Search />} /> */}
+            <Route path="/mypage/:nickname" element={<Mypage />} />
             <Route path="/search/:word" element={<Search />} />
+            <Route path="/category/:id" element={<Category />} />
             <Route path="/checkpassword" element={<Checkpassword />} />
             <Route path="/myoption" element={<MyOption />} />
             <Route path="/cameratest" element={<CameraTest />} />
             <Route path="/*" element={<NotFound />} />
             <Route path="/test" element={<Test />} />
-            
-
           </Routes>
         </div>
       </Router>

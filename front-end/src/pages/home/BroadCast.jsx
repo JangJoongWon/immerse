@@ -4,12 +4,14 @@ import StageInfo from './StageInfoModal';
 import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../constants';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 function Card({ data }) {
   const [isHovered, setIsHovered] = useState(false);
   const [stageInfoOn, setStageInfoOn] = useState(false);
-
   const [cardInfo, setCardInfo] = useState({})
+
+  const navigate = useNavigate()
 
   const categoryMap = useSelector(state => state.category.categoryMap);
 
@@ -29,6 +31,14 @@ function Card({ data }) {
     }
   };
 
+  const toProfile = () => {
+    navigate('/mypage/data.nickname')
+  }
+
+  const toCategory = (data) => {
+    console.log(data)
+    navigate(`/category/${data.category_id}`)
+  }
 
   return (
     <div
@@ -36,9 +46,8 @@ function Card({ data }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className={styles.content}
-      onClick={openStageInfo}>
-        <div className={styles.thumbnail}>
+      <div className={styles.content}>
+        <div className={styles.thumbnail} onClick={openStageInfo}>
           <div className={styles.posterContainer}>
             <img
               src={`https://image.tmdb.org/t/p/original/${data.thumbnail}`}
@@ -48,15 +57,17 @@ function Card({ data }) {
           </div>
         </div>
         <header>
-          <div>{data.title}</div>
-          {/* 공연자의 별명을 어떻게 넣을 것인가? */}
-          <div>{data.nickname}</div>
-          <div className={styles.info}>{data.showProgress}</div>
+          <div onClick={openStageInfo}><h4>{data.title}</h4></div>
+          <div onClick={toProfile}>{data.nickname}</div>
         </header>
       </div>
         <footer>
           <a 
-          href="/search" 
+          href="/" 
+          onClick={(event) => {
+            event.preventDefault();
+            toCategory(data);
+          }}
           className={styles.tagbutton}>  
             {/* #{data.category_id} */}
             #{categoryMap[data.category_id].categoryName}

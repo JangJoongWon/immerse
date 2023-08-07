@@ -1,21 +1,24 @@
 // Search.jsx
 import styles from './Search.module.css';
 import GenreButton from './GenreButton';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Result from './SearchResult'
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 function Search() {
-  const genres = useSelector((state) => state.category.categories)
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  // const genres = useSelector((state) => state.category.categories)
+  // const [selectedGenres, setSelectedGenres] = useState([]);
 
-  const handleGenreClick = (genre) => {
-    if (selectedGenres.includes(genre.categoryName)) {
-      setSelectedGenres(selectedGenres.filter((selectedGenre) => selectedGenre !== genre.categoryName));
-    } else {
-      setSelectedGenres([...selectedGenres, genre.categoryName]);
-    }
-  };
+  const { word } = useParams();
+
+  // const handleGenreClick = (genre) => {
+  //   if (selectedGenres.includes(genre.categoryName)) {
+  //     setSelectedGenres(selectedGenres.filter((selectedGenre) => selectedGenre !== genre.categoryName));
+  //   } else {
+  //     setSelectedGenres([...selectedGenres, genre.categoryName]);
+  //   }
+  // };
 
 
   return (
@@ -23,7 +26,8 @@ function Search() {
       <div className={styles.body}>
         <div className={styles.contents}>
           <div className={styles.middle}>
-            <div className={styles.tags}>
+
+            {/* <div className={styles.tags}>
               <div className={styles.selectedTags}>
                 <h1>Selected :</h1>
                 <div className={styles.selectedGenreButtons}>
@@ -50,13 +54,13 @@ function Search() {
                     />
                   ))}
                 </div>
-                
               </div>
-            </div>
+            </div> */}
+
             <div className={styles.searchresult}>
               <div className={styles.resultbox}>
-                <h2>search result</h2>
-                <Result selectedGenres={selectedGenres}/>
+                <h2>"{word}"로 검색한 결과</h2>
+                <Result word={word}/>
               </div>
             </div>
           </div>

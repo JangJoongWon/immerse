@@ -29,6 +29,8 @@
 }
 
 .content {
+    display: flex;
+    align-items: center;
     /* outline: 2px solid peru; */
 }
 
@@ -37,8 +39,8 @@
 }
 
 .profile_img {
-    width: 80%;
-    border-radius: 60%;
+    width: 90%;
+    border-radius: 10%;
     margin: 10%;
     /* max-width: 100%; */
     /* outline: 2px solid blue; */

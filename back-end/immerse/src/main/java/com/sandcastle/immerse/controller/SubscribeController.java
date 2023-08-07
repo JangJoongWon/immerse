@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/subscribe")
@@ -17,8 +18,9 @@ public class SubscribeController {
     private final SubscribeService subscribeServiceImpl;
 
     @PostMapping("")
-    public ResponseEntity<?> saveSubscribe(Authentication authentication, Long followingId) {
+    public ResponseEntity<?> saveSubscribe(Authentication authentication, @RequestBody Map<String, Object> body) {
         Long followerId = Long.valueOf(authentication.getName());
+        Long followingId = Long.valueOf(body.get("userId").toString());
         subscribeServiceImpl.saveSubscribe(followerId, followingId);
         return ResponseEntity.ok().body("구독정보 저장완료");
     }

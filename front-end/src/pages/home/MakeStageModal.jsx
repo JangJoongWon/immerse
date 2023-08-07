@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styles from './MakeStageModal.module.css'
 import { useDropzone } from 'react-dropzone';
 import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
@@ -8,10 +8,13 @@ import { useSelector } from 'react-redux';
 
 function MakeStageModal({ show, onHide }) {
 
+  const token = useSelector(state => state.user.token);
+  const genres = useSelector(state => state.category.categories);
+
   const [liveState, setLiveState] = useState(true)
 
   const [title, setTitle] = useState('')
-  const [genre, setGenre] = useState('')
+  const [genre, setGenre] = useState(genres[0].categoryId)
   const [rank, setRank] = useState('')
   const [expla, setExpla] = useState('')
   const [price, setPrice] = useState('')
@@ -20,8 +23,9 @@ function MakeStageModal({ show, onHide }) {
   const [start, setStart] = useState('')
   const [end, setEnd] = useState('')
 
-  const token = useSelector(state => state.user.token);
-  const genres = useSelector(state => state.category.categories)
+  // useEffect(() => {
+  //   setGenre(genres[0].categoryId);
+  // }, [genres]);
 
   const titleChange = (e) => {
     setTitle(e.target.value);
