@@ -37,6 +37,7 @@ function App() {
             <Route path="/performer" element={<Performer />} />
             <Route path="/stage/:id" element={<Stage />} />
             <Route path="/mypage" element={<Mypage />} />
+            <Route path="/mypage/:id" element={<Mypage />} />
             {/* <Route path="/search" element={<Search />} /> */}
             <Route path="/search/:word" element={<Search />} />
             <Route path="/checkpassword" element={<Checkpassword />} />

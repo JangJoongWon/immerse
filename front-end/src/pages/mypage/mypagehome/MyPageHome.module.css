@@ -41,9 +41,11 @@
 
 
 .cardbox {
-    /* display: flex;
-    flex-wrap: wrap; */
-    /* overflow: hidden; */
+    display: flex;
+    justify-content: center;
+    /* align-items: flex-start;
+    flex-wrap: wrap;
+    overflow: hidden; */
     margin: 0 auto;
     /* outline: 2px solid white; */
 }

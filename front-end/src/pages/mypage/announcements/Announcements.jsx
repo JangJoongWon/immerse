@@ -68,9 +68,9 @@ function Announcements(props) {
             <Announcement data={data} nickname={nickname} />
           </div>
         ))}
-      {isLoading && <div 
+      {/* {isLoading && <div 
       style={{color:'white'}}
-      >더 많은 공지사항 로딩 중...</div>}
+      >더 많은 공지사항 로딩 중...</div>} */}
     </div>
   );
 }
