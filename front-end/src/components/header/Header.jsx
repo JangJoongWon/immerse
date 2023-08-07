@@ -18,7 +18,8 @@ import { API_BASE_URL } from '../../constants';
 function Header() {
   const [expand, setExpand] = useState(null);
   const user = useSelector((state) => state.user.token)
-  const userNick = useSelector((state) => state.user.user)
+  const userData = useSelector((state) => state.user.user)
+
   const dispatch = useDispatch();
 
   const [word, setWord] = useState('');
@@ -144,7 +145,7 @@ function Header() {
                   >
                     LogOut
                   </Nav.Link>
-                  <Nav.Link className='m-2' style={{ color: "white" }} onClick={toProfile}>
+                  <Nav.Link href={`/mypage/${userData.nickname}`} className='m-2' style={{ color: "white" }}>
                     Profile
                   </Nav.Link>
                   <Nav.Link className='m-2' style={{ color: "white" }}
