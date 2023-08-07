@@ -164,7 +164,7 @@ function MakeStageModal({ show, onHide }) {
                     <Form.Label>공연 장르</Form.Label>
                     <Form.Select  value={genre} onChange={genreChange}>
                       {genres.map((genre) => (
-                        <option value={genre.categoryId}>{genre.categoryName}</option>
+                        <option value={genre.categoryId} key={genre.categoryId}>{genre.categoryName}</option>
                       ))}
 
                     </Form.Select>

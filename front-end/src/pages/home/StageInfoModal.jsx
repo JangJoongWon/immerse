@@ -13,8 +13,23 @@ function StageInfoModal({ show, onHide, data }) {
   const token = useSelector(state => state.user.token);
 
   const attendStage = () => {
+    if(!token){
+      alert('로그인 해주세요')
+      navigate('/login')
+      return;
+    }
     navigate(`/stage/${data.showId}`);
   }
+
+  const reserveStage = () => {
+    if(!token){
+      alert('로그인 해주세요')
+      navigate('/login')
+      return;
+    }
+    alert('예약하고 싶어여')
+  }
+
   const startStage = async () => {
     try {
       console.log(token);
@@ -68,13 +83,17 @@ function StageInfoModal({ show, onHide, data }) {
                   <p>{data.maxAttendance}</p>
                   <p>{data.category_id}</p>
 
-                  {data.showProgress === 'SCHEDULED'?
-                    (data.nickname !== user.nickname ? (
-                      <Button>예약하기</Button>
+                  {data.showProgress === 'SCHEDULED' ? (
+                    user && user.nickname ? (
+                      data.nickname !== user.nickname ? (
+                        <Button onClick={reserveStage}>예약하기</Button>
+                      ) : (
+                        <Button onClick={startStage}>시작하기</Button>
+                      )
                     ) : (
-                      <Button onClick={startStage}>시작하기</Button>
-                    ))
-                  :(
+                      <Button onClick={reserveStage}>예약하기</Button> // user 객체가 null인 경우 기본 동작
+                    )
+                  ) : (
                     <Button onClick={attendStage}>입장하기</Button>
                   )}
                 </div>

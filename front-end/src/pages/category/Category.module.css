@@ -13,15 +13,8 @@
   width: 80%;
   border: 1px solid blue;
   padding-top: 50px;
-
-}
-
-
-.searchresult {
-    display: flex;
-    justify-content: center;
-    color: white;
-    border: 3px solid orange;
+  display: flex;
+  justify-content: center;
 }
 
 .resultbox{

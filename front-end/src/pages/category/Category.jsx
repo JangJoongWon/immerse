@@ -10,25 +10,17 @@ function Category() {
 
   const categoryMap = useSelector(state => state.category.categoryMap);
 
-  const consoleLog = () => {
-    console.log(id)
-  }
 
   return (
     <div className={styles.container}>
-    <div className={styles.body}>
       <div className={styles.contents}>
         <div className={styles.middle}>
-          <div className={styles.searchresult}>
-            <div className={styles.resultbox}>
-              <h2 onClick={consoleLog}>{categoryMap[id].categoryName} 로 검색한 결과</h2>
-              <Result id={id}/>
-            </div>
+          <div className={styles.resultbox}>
+            <Result id={id}/>
           </div>
         </div>
       </div>
     </div>
-  </div>
   )
 }
 
