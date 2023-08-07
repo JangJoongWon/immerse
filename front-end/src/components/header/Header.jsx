@@ -143,7 +143,7 @@ function Header() {
                   >
                     LogOut
                   </Nav.Link>
-                  <Nav.Link href={`/mypage/${userData.nickname}`} className='m-2' style={{ color: "white" }}>
+                  <Nav.Link onClick={toProfile} className='m-2' style={{ color: "white" }}>
                     Profile
                   </Nav.Link>
                   <Nav.Link className='m-2' style={{ color: "white" }}
