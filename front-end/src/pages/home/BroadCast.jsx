@@ -35,6 +35,10 @@ function Card({ data }) {
     navigate('/mypage/data.nickname')
   }
 
+  const toCategory = (data) => {
+    console.log(data)
+    navigate(`/category/${data.category_id}`)
+  }
 
   return (
     <div
@@ -53,15 +57,17 @@ function Card({ data }) {
           </div>
         </div>
         <header>
-          <div onClick={openStageInfo}>{data.title}</div>
-          {/* 공연자의 별명을 어떻게 넣을 것인가? */}
+          <div onClick={openStageInfo}><h4>{data.title}</h4></div>
           <div onClick={toProfile}>{data.nickname}</div>
-          <div className={styles.info} onClick={openStageInfo}>{data.showProgress}</div>
         </header>
       </div>
         <footer>
           <a 
-          href="/search" 
+          href="/" 
+          onClick={(event) => {
+            event.preventDefault();
+            toCategory(data);
+          }}
           className={styles.tagbutton}>  
             {/* #{data.category_id} */}
             #{categoryMap[data.category_id].categoryName}
