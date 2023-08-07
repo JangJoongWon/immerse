@@ -29,11 +29,11 @@
     border: 1px solid #FFF;
     background: whitesmoke;
     margin: 2rem;
-    color : white;
+    color : black
 }
 
   input::placeholder{
-      color: rgba(255, 255, 255, 0.60);
+      color: rgba(0, 0, 0, 0.8);
   }
 
   

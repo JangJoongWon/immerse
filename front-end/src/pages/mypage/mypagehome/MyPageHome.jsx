@@ -61,7 +61,7 @@ function MyPageHome(props) {
               {/* data.map 메소드를 사용하여 ReservationTicket 컴포넌트들을 그리드 형태로 배치 */}
               {data.slice(0,3).map((data) => (
                 <Col sm={8} key={data.id}>
-                  <ReservationTicket data={data} />
+                  <ReservationTicket key={data.id} data={data} />
                 </Col>
               ))}
             </Row>

@@ -28,7 +28,7 @@ function SubscribeList(props) {
           list.map((channel) => (
             <Card 
             className ={styles.card}
-            key = {channel.email}
+            key = {channel.nickname}
             channel={channel}/>
           ))
        }

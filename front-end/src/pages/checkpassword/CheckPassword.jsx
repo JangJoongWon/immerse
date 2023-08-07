@@ -15,11 +15,11 @@ function MyOption() {
   };
   const passwordRef = useRef(null)
   
-  const navigate = useNavigate();
-  const context = {
-    password : password,
-    Authorization: 'Bearer ' + token
-  };
+  // const navigate = useNavigate();
+  // const context = {
+  //   password : password,
+  //   Authorization: 'Bearer ' + token
+  // };
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();

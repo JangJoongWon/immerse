@@ -4,7 +4,7 @@ import { Button, Col, Row } from "react-bootstrap";
 
 
 const ChannelCard = (props) => {
-  console.log(props)
+  // console.log(props)
   const {channel} = props
   return (
     <div className={styles.container}>

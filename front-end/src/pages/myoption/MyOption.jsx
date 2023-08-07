@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Form, Button } from 'react-bootstrap';
 import styles from './MyOption.module.css';
-import InputPImg from './inputimg/InputImg';
+// import InputPImg from './inputimg/InputImg';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { TEST_URL, API_BASE_URL } from '../../constants';
+import { setUser } from '../../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 function MyOption() {
+  
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
+
   const user = useSelector((state) => state.user.user);
   const userToken = useSelector((state) => state.user.token);
 
@@ -17,31 +24,46 @@ function MyOption() {
   };
 
   const [name, setName] = useState('');
-  const [bannerPicture, setBannerPicture] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [bannerPicture, setBannerPicture] = useState('string');
+  const [profilePicture, setProfilePicture] = useState('string');
+  const [phoneNumber, setPhoneNumber] = useState('string');
   const [nickname, setNickname] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
 
   
-  const context = {
-    name : name,
-    bannerPicture: bannerPicture,
-    profilePicture: profilePicture,
-    nickname: nickname,
-    phoneNumber: phoneNumber,
-    selfDescription: selfDescription,
-  };
- 
+
+  console.log(user)
+  console.log(user.phoneNumber)
   function onSubmitHandler(){
-    axios.post(TEST_URL + `/update/info`,context, {
+    console.log(nickname)
+    console.log(phoneNumber)
+    console.log(selfDescription)
+    const context = {
+      name : name,
+      bannerPicture: bannerPicture,
+      profilePicture: profilePicture,
+      nickname: nickname,
+      phoneNumber: phoneNumber,
+      selfDescription: selfDescription,
+    };
+    //유저정보 수정 요청
+    axios.put(TEST_URL + `/user/update/info`,context, {
       headers: { 
           'Content-Type': 'application/json', 
           'Authorization': 'Bearer ' + userToken
               },
             })
           .then(response => {
+            // 유저 정보 수정 후 Redux에 user 값을 갱신
           console.log(response.data)
+          const res2 = axios.get(`${API_BASE_URL}/user/mypage`, {
+            headers: {
+              'Content-Type': 'application/json', 
+              'Authorization': 'Bearer ' + userToken
+            }
+          });
+          dispatch(setUser(res2.data));
+          navigate('/myoption',{replace:true});
           })
           .catch(error => {
           console.error('Error fetching data:', error);
@@ -52,19 +74,31 @@ function MyOption() {
     setName(user.name)
     // setBannerPicture('string')
     // setProfilePicture('string')
-    setPhoneNumber(user.phoneNumber)
+    // setPhoneNumber(user.phoneNumber)
     setNickname(user.nickname)
     setSelfDescription(user.selfDescription)
   }, []);
 
-  function onBannerImgeUrlChangeHandler(BannerimageUrl) {
-    setBannerImgUrl(BannerimageUrl);
+  // function onBannerImgeUrlChangeHandler(BannerimageUrl) {
+  //   setBannerImgUrl(BannerimageUrl);
+  // }
+
+  // function onImgeUrlChangeHandler(imageUrl) {
+  //   setImageUrl(imageUrl);
+  // }
+
+  function onNickNameChangeHandler(nickname){
+    setNickname(nickname)
   }
 
-  function onImgeUrlChangeHandler(imageUrl) {
-    setImageUrl(imageUrl);
+  function onPhoneNumberChangeHandler(phoneNumber){
+    setPhoneNumber(phoneNumber)
   }
 
+  function onSelfDescription(selfDescription){
+    setSelfDescription(selfDescription)
+
+  }
   return (
     <div className={styles.background}>
       <div className={styles.container}>
@@ -108,17 +142,16 @@ function MyOption() {
             </Button>
         </Row>
         <Row>
-            <Form
-            onSubmit={onSubmitHandler}>
+            <Form>
               {(selectTab=='BannerImg') && (
                 <Form.Group className={styles.imgbox}>
-                  <InputPImg onChange={onBannerImgeUrlChangeHandler} className={styles.inputimg} />
+                  {/* <InputPImg className={styles.inputimg} /> */}
                 </Form.Group>
               )}
 
               {(selectTab=='ProgileImg') && (
                 <Form.Group className={styles.imgbox}>      
-                  <InputPImg onChange={onImgeUrlChangeHandler} className={styles.userimg} />
+                  {/* <InputPImg className={styles.userimg} /> */}
                 </Form.Group>
               )}
 
@@ -160,9 +193,9 @@ function MyOption() {
                     <Form.Control
                       type="text"
                       className={styles.input}
-                      placeholder=" 현재 닉네임"
+                      placeholder={nickname}
                       // value={nickname}
-                      // onChange={(e) => setNickname(e.target.value)}
+                      onChange={(e) => onNickNameChangeHandler(e.target.value)}
                     />
                   </div>
                 </Form.Group>
@@ -174,9 +207,9 @@ function MyOption() {
                     <Form.Control
                       type="text"
                       className={styles.input}
-                      placeholder="현재 전화번호"
+                      placeholder={phoneNumber}
                       // value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      onChange={(e) => onPhoneNumberChangeHandler(e.target.value)}
                     />
                   </div>
                 </Form.Group>
@@ -187,11 +220,11 @@ function MyOption() {
                   <div>
                     <Form.Control
                       type="text"
-                      style={{height:"100%",width:"50%"}}
+                      style={{height:"10rem",width:"20rem"}}
                       className={styles.input}
-                      placeholder="자기소개"
+                      placeholder={selfDescription}
                       // value={selfDescription}
-                      onChange={(e) => setSelfDescription(e.target.value)}
+                      onChange={(e) => onSelfDescription(e.target.value)}
                     />
                   </div>
                 </Form.Group>
@@ -200,7 +233,7 @@ function MyOption() {
 
         </Row>
         <Form.Group style={{ textAlign: "end" }}>
-                <Button type="submit" size="lg">
+                <Button onClick={onSubmitHandler} type="submit" size="lg">
                   변경
                 </Button>
         </Form.Group>
