@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -37,6 +38,11 @@ public class TagController {
     public Optional<TagDto> getTagByName(@PathVariable String tagName){
         Optional<TagDto> result = tagService.findByName(tagName);
         return result;
+    }
+
+    @GetMapping("/show/{showId}")
+    public List<TagDto> getTagsByShowId(@PathVariable Long showId){
+        return tagService.findByShowId(showId);
     }
 
 }
