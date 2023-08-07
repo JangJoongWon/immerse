@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react'
 import styles from './SearchResult.module.css'
 import BroadCast from '../home/BroadCast'
-import {useParams} from 'react-router-dom';
 import { API_BASE_URL } from '../../constants';
 import axios from 'axios';
 import ChannelCard from '../../components/cards/SearchChannel'
 
-function SearchResult({selectedGenres}) {
+function SearchResult({word}) {
 
     const [liveState, setLiveState] = useState(true);
-    const { word } = useParams();
     const [searchShow, setSearchShow] = useState([]);
     const [searchUser, setSearchUser] = useState([]);
     const [showCount, setShowCount] = useState([]);
@@ -44,7 +42,6 @@ function SearchResult({selectedGenres}) {
     const handleLiveButtonClick = () => {
       setLiveState(true);
       console.log(datas)
-      console.log(selectedGenres)
     };
     
     const handleChannelButtonClick = () => {

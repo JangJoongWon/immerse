@@ -17,39 +17,13 @@ import { API_BASE_URL } from '../../constants';
 
 function Header() {
   const [expand, setExpand] = useState(null);
-  const user = useSelector((state) => state.user.token)
-  const userData = useSelector((state) => state.user.user)
-
-  const dispatch = useDispatch();
-
+  const token = useSelector((state) => state.user.token)
+  const user = useSelector((state) => state.user.user)
   const [word, setWord] = useState('');
-  const wordChange = (e) => {
-    setWord(e.target.value);
-  }
-  
-  const navigate = useNavigate();
-
   const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
 
-  const toggleOffcanvas = () => {
-    setIsOffcanvasOpen(prev => !prev);
-  };
-
-  const toProfile = () => {
-    navigate(`/mypage/${userNick.nick}`)
-  }
-
-  const searchWord = async (event) => {
-    event.preventDefault();
-    console.log(word)
-    try {
-      setIsOffcanvasOpen(false)
-      navigate(`/search/${word}`, {replace:true});
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -77,7 +51,7 @@ function Header() {
     const config = {
       headers: {
         'Content-Type': 'application/json', 
-        'Authorization': `Bearer ${user}`
+        'Authorization': `Bearer ${token}`
       }
     };
     try {
@@ -89,11 +63,35 @@ function Header() {
       console.log('Check error', error);
     }
   };
+  
+  const wordChange = (e) => {
+    setWord(e.target.value);
+  }
+  
+  const toggleOffcanvas = () => {
+    setIsOffcanvasOpen(prev => !prev);
+  };
+
+  const toProfile = () => {
+    navigate(`/mypage/${user.nickname}`)
+  }
+
+  const searchWord = async (event) => {
+    event.preventDefault();
+    console.log(word)
+    try {
+      setIsOffcanvasOpen(false)
+      navigate(`/search/${word}`, {replace:true});
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   return (
     <div>
       <Navbar 
-      style={{ background: "#31363B", color: "white"}} 
+      style={{ background: "#1a1b1e", color: "white"}} 
       expand={expand}
     >
       <Container fluid>
@@ -111,12 +109,12 @@ function Header() {
         <Navbar.Offcanvas
           show={isOffcanvasOpen}
           onHide={toggleOffcanvas}
-          style={{ color: "white", background:"#31363B"}}
+          style={{ color: "white", background:"#1a1b1e"}}
           id="offcanvasNavbar"
           aria-labelledby="offcanvasNavbarLabel"
           placement="end"
         >
-            <Offcanvas.Header closeButton style={{ color: "#31363B", background:"#31363B"}}>
+            <Offcanvas.Header closeButton style={{ color: "#31363B", background:"#1a1b1e"}}>
               <Offcanvas.Title style={{ color: "white", fontWeight: "bold", fontSize: "2rem" }} id="offcanvasNavbarLabel">Immerse</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
@@ -137,7 +135,7 @@ function Header() {
                 </Button>
               </Form>
 
-              {user ? (
+              {token ? (
                 <>
                   <Nav.Link
                     className='m-2' style={{ color: 'white'}}
@@ -145,7 +143,7 @@ function Header() {
                   >
                     LogOut
                   </Nav.Link>
-                  <Nav.Link href={`/mypage/${userData.nickname}`} className='m-2' style={{ color: "white" }}>
+                  <Nav.Link onClick={toProfile} className='m-2' style={{ color: "white" }}>
                     Profile
                   </Nav.Link>
                   <Nav.Link className='m-2' style={{ color: "white" }}
@@ -162,10 +160,8 @@ function Header() {
                   <Nav.Link href="/signup" className='m-2' style={{ color: "white" }}>
                     SignUp
                   </Nav.Link>
-
                 </>
               )}
-
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>

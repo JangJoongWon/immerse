@@ -9,6 +9,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { TEST_URL, API_BASE_URL } from '../../constants';
 import context from 'react-bootstrap/esm/AccordionContext';
+import { settings } from '/src/assets/icons';
 
 function MyPage() {
   const { nickname } = useParams();
@@ -85,11 +86,11 @@ function MyPage() {
                 >
                   {user == null ? <span>user nickname</span> : <span>{user.nickname}</span>}
                   <Link to="/checkpassword">
-                    <img
-                      src="../../../../public/icons/Setting.png" alt="setting"
-                      style={{ width: "5%" }}
-                    />
-
+                <img 
+                src={settings} alt="setting" 
+                style={{width:"5%"}}
+                />
+            
                   </Link>
                 </div>
                 <div
