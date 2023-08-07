@@ -36,7 +36,7 @@ function App() {
             <Route path="/Audience" element={<Audience />} />
             <Route path="/performer" element={<Performer />} />
             <Route path="/stage/:id" element={<Stage />} />
-            <Route path="/mypage" element={<Mypage />} />
+            {/* <Route path="/mypage" element={<Mypage />} /> */}
             <Route path="/mypage/:nickname" element={<Mypage />} />
             {/* <Route path="/search" element={<Search />} /> */}
             <Route path="/search/:word" element={<Search />} />
@@ -45,8 +45,6 @@ function App() {
             <Route path="/cameratest" element={<CameraTest />} />
             <Route path="/*" element={<NotFound />} />
             <Route path="/test" element={<Test />} />
-            
-
           </Routes>
         </div>
       </Router>

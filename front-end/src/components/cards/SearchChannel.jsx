@@ -9,6 +9,8 @@ function Card({ data }) {
 
   const navigate = useNavigate();
   const goProfile = () => {
+    // console.log(data)
+    // navigate('/mypage')
     navigate(`/mypage/${data.nickname}`)
   }
 

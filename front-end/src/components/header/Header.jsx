@@ -35,6 +35,10 @@ function Header() {
     setIsOffcanvasOpen(prev => !prev);
   };
 
+  const toProfile = () => {
+    navigate(`/mypage/${userNick.nick}`)
+  }
+
   const searchWord = async (event) => {
     event.preventDefault();
     console.log(word)
