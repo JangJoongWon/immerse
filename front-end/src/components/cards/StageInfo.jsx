@@ -17,7 +17,7 @@ function StageInfo(props) {
                 <Col xs={6}>
                     <div className={styles.right}>
                         <div className={styles.texts}>    
-                            <h1>{props.showData.nickname} 의 공연</h1>
+                            <h1>{props.showData ? props.showData.nickname : null} 의 공연</h1>
                             <p>info</p>
                             <Button
                             onClick={() => props.joinSession(false)}

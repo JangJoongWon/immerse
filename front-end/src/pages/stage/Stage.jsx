@@ -1,35 +1,35 @@
 // import React from 'react'
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import styles from './Stage.module.css'
 import StageInfo from "../../components/cards/StageInfo"
 
 import { OpenVidu } from 'openvidu-browser';
 
 import axios from 'axios';
-import { Component } from 'react';
-import { VideoMap } from './video';
 import { useParams } from 'react-router';
-import { useNavigate, UNSAFE_NavigationContext } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSession, setShowData } from '../../redux/sessionSlice';
 import { API_BASE_URL } from '../../constants';
-import Audience from './Audience';
+import { Audience, Performer } from './components';
 import { Button } from 'react-bootstrap';
 
 const Stage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const navigation = useContext(UNSAFE_NavigationContext).navigator;
 
-    // const [ov, setOv] = useState(undefined);
     const [ov, setOv] = useState(undefined);
-    const [session, setSession] = useState(undefined);
     const [subscribers, setSubscribers] = useState([]);
     const [publisher, setPublisher] = useState(undefined);
     const [mainStreamManager, setMainStreamManager] = useState(undefined);
-    const [showData, setShowData] = useState({});
+    
+    const prevSession = useRef(undefined);
     
     const userToken = useSelector((state) => state.user.token);
     const user = useSelector(state => state.user.user);
+    const session = useSelector(state => state.session.session);
+    const showData = useSelector(state => state.session.showData);
+    const dispatch = useDispatch();
 
     const isAuthor = () => user.nickname === showData.nickname; // session id는 공연자의 id로 설정
 
@@ -100,11 +100,8 @@ const Stage = () => {
     }
 
     const addSubscriber = (streamManager) => {
-        console.log('-------------------client data----------------')
-        console.log(JSON.parse(streamManager.stream.connection.data).clientData);
         const nickname = JSON.parse(streamManager.stream.connection.data).clientData;
             
-        console.log("add subscriber: ", nickname);
         if (nickname === showData.nickname) { // mainStream
             setMainStreamManager(streamManager);
         }
@@ -200,7 +197,7 @@ const Stage = () => {
                 addSubscriber(newPublisher);
                 
                 setOv(newOV);
-                setSession(newSession);
+                dispatch(setSession(newSession));
                 
                 // Set the main video in the page to display our webcam and store our Publisher
                 // this.setState({
@@ -216,16 +213,18 @@ const Stage = () => {
     }
 
     const leaveSession = async () => {
+        console.log(session);
         if (session) {
             session.disconnect();
         }
 
         // Empty all properties...
         setOv(null);
-        setSession(undefined);
+        dispatch(setSession(undefined));
         setSubscribers([]);
         setMainStreamManager(undefined);
         setPublisher(undefined);
+        console.log("cleaned!")
         
         try {
             const response = await axios.post(API_BASE_URL + '/rooms/' + showData.user_id + '/disconnect', {}, {
@@ -235,6 +234,7 @@ const Stage = () => {
                 },
             });
             console.log(response.data);
+            dispatch(setShowData({}));
             return response.data; // NO CONTENT
         }
         catch (e) {
@@ -248,11 +248,46 @@ const Stage = () => {
     }
 
     const handleMainVideoStream = (stream) => {
-        
+        // if (this.state.mainStreamManager !== stream) {
+        //     this.setState({
+        //         mainStreamManager: stream
+        //     });
+        // }
     }
 
     const switchCamera = () => {
+        // try {
+        //     const devices = await this.OV.getDevices()
+        //     var videoDevices = devices.filter(device => device.kind === 'videoinput');
 
+        //     if (videoDevices && videoDevices.length > 1) {
+
+        //         var newVideoDevice = videoDevices.filter(device => device.deviceId !== this.state.currentVideoDevice.deviceId)
+
+        //         if (newVideoDevice.length > 0) {
+        //             // Creating a new publisher with specific videoSource
+        //             // In mobile devices the default and first camera is the front one
+        //             var newPublisher = this.OV.initPublisher(undefined, {
+        //                 videoSource: newVideoDevice[0].deviceId,
+        //                 publishAudio: true,
+        //                 publishVideo: true,
+        //                 mirror: true
+        //             });
+
+        //             //newPublisher.once("accessAllowed", () => {
+        //             await this.state.session.unpublish(this.state.mainStreamManager)
+
+        //             await this.state.session.publish(newPublisher)
+        //             this.setState({
+        //                 currentVideoDevice: newVideoDevice[0],
+        //                 mainStreamManager: newPublisher,
+        //                 publisher: newPublisher,
+        //             });
+        //         }
+        //     }
+        // } catch (e) {
+        //     console.error(e);
+        // }
     }
 
     useEffect(() => {
@@ -264,23 +299,37 @@ const Stage = () => {
                 }
             });
             console.log(response.data);
-            setShowData(response.data);
+            dispatch(setShowData(response.data));
         }
         if (!userToken) navigate('/login');
+        dispatch(setSession(undefined));
+        dispatch(setShowData({}));
         fetchData();
 
-        const unlisten = navigation.listen((locationListener) => {
-            if (locationListener.action === 'POP') {
-                onBeforeUnload();
-            }
-        });
-
-        window.addEventListener('beforeunload', onBeforeUnload);
+        // window.addEventListener('beforeunload', onBeforeUnload);
+        window.addEventListener('popstate', onBeforeUnload);
         return () => {
-            unlisten();
-            window.removeEventListener('beforeunload', onBeforeUnload); 
+            if (session) {
+                session.disconnect();
+            }
+            // window.removeEventListener('beforeunload', onBeforeUnload); 
+            // window.removeEventListener('popstate', onBeforeUnload);
         };
     }, []);
+
+    useEffect(() => {
+        console.log('------------session changed--------------')
+        console.log(prevSession.current);
+        if (prevSession.current) {
+            console.log('---------disconnect-----------');
+            prevSession.current.disconnect();
+        }
+
+        console.log(session);
+
+        prevSession.current = session;
+
+    }, [session]);
 
     return (
         <div className={styles.container}>
@@ -293,25 +342,21 @@ const Stage = () => {
                 </div>
             ) : null}
             {session !== undefined ?
-                // isAuthor() ? 
-                //     (
-                //         <VideoMap 
-                //         id={id}
-                //         mainStreamManager={mainStreamManager}
-                //         publisher={publisher}
-                //         subscribers={subscribers}
-                //         leaveSession={leaveSession}
-                //         switchCamera={switchCamera}
-                //         handleMainVideoStream={handleMainVideoStream}
-                //         />
-                //     ) 
-                //     : (
+                 isAuthor() ? 
+                     (
+                        <Performer
+                        publisher={publisher}
+                        mainStreamManager={mainStreamManager}
+                        subscribers={subscribers}
+                        />
+                    ) 
+                   : (
                         <Audience 
                         publisher={publisher}
                         mainStreamManager={mainStreamManager}
                         subscribers={subscribers}
                         />
-                 // )
+                )
             : null}
             <Button onClick={leaveSession}>Leave</Button>
         </div>
