@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import camOn from '../../../assets/images/VideoIcon.png'
 
 // import icon from '../../../../public/img/'
 function VideoHandler(props) {
@@ -28,7 +29,7 @@ function VideoHandler(props) {
             <div
             onClick={VideoClickHandler}>
                {/* <img src="../../../../public/img/VideoIcon.png" alt="VideoIcon" /> */}
-               <img src={`/public/img/VideoIcon.png`} alt="VideoIcon" />
+               <img src={camOn} alt="VideoIcon" />
             </div>
        :
             <div
