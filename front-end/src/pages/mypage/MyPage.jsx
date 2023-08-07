@@ -13,15 +13,30 @@ import { settings } from '/src/assets/icons';
 
 function MyPage() {
   const { nickname } = useParams();
-  console.log(nickname)
-  // const userToken = useSelector((state) => state.user.token);
+  // console.log(nickname)
+  const userToken = useSelector((state) => state.user.token);
   // const user = useSelector(state => state.user.user);
-
+  
   const [user, setUser] = useState(null);
+  const [scribe,setScribe] = useState(null);
+  const [userId, setUserId] = useState(10);
 
   useEffect(() => {
     // Axios를 사용하여 데이터를 불러옴
-    axios.get(API_BASE_URL + `/user/mypage/${nickname}`, { nickname : nickname})
+    axios.get(API_BASE_URL + `/user/mypage/${nickname}`)
+      .then(response => {
+        setUser(response.data); // 불러온 데이터를 상태(State)에 저장
+        // console.log(response)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  // console.log(userToken)
+  const getsubscribe = () => {
+    // Axios를 사용하여 데이터를 불러옴
+    axios.get(API_BASE_URL + `/subscribe/following/${userId}`, { userId : userId})
       .then(response => {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
         console.log(response)
@@ -29,9 +44,25 @@ function MyPage() {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  };
 
-  
+  const subscribe = () => {
+    axios.post(API_BASE_URL + '/subscribe', {userId : user.userId
+    }, {
+      headers: {
+      'Content-Type': 'application/json', 
+      'Authorization': `Bearer ${userToken}`
+    }},)
+      .then(response => {
+        setUser(response.data);
+        console.log(response)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
+
+
   return (
     <div className={styles.container}>
       {/* Mypage Banner */}
@@ -94,6 +125,7 @@ function MyPage() {
             </Row>
             <div className={styles.userright}>
               <button
+                onClick={subscribe}
                 className={styles.scribe}
               >구독</button>
             </div>
