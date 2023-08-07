@@ -4,3 +4,13 @@
 
 .ticket{
 }
+
+.schedulerbox{
+    border: 1rem solid #BDBDBD;
+    border-radius: 0.5rem;
+}
+
+.scheduler{
+    margin: 10%;
+ 
+}
