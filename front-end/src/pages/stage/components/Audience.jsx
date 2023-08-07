@@ -3,6 +3,8 @@ import styles from './Audience.module.css'
 import { UserVideoComponent } from './video';
 // import { Row, Col} from 'react-bootstrap'
 import {useState} from 'react'
+import { chatOn, optionOn, optionOff } from '/src/assets/icons'
+
 function Audience(props) {
     
   const [optionValue,setOptionValue] = useState(false)  
@@ -55,7 +57,7 @@ function Audience(props) {
                 })}
             </div>
             <div className={styles.sidebar}>
-                <img src="../../../public/icons/chatingOpenButton.png" alt="chatingOpenButton" />
+                <img src={chatOn} alt="chatingOpenButton" />
             </div>
             <div
             className={styles.option}>
@@ -69,14 +71,14 @@ function Audience(props) {
                     <div>
                         <img 
                         onClick={onClickChangeOption}
-                        src="../../../public/icons/OptionCloseButton.png" alt="OptionCloseButton" />
+                        src={optionOff} alt="OptionCloseButton" />
                     </div>
                     </div>
                 </div>
                 :
                 <img 
                 onClick={onClickChangeOption}
-                src="../../../public/icons/OptionOpenButton.png" alt="OptionOpenButton" />
+                src={optionOn} alt="OptionOpenButton" />
                 }
             </div>
         </div>
