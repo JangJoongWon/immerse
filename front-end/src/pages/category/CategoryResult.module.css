@@ -1,0 +1,39 @@
+.container {
+    width: 100%;
+    border: 2px solid green;
+}
+
+  .categories {
+    width: 100%;
+    border: 1px solid orange;
+  }
+
+  .gridItem {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+
+  .channelcard{
+    width: 100%;
+    border: 1px solid blue;
+  }
+
+
+  @media (min-width: 400px) and (max-width: 799px) {
+    .gridItem {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 800px) and (max-width: 1199px) {
+    .gridItem {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1200px) {
+    .gridItem {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }

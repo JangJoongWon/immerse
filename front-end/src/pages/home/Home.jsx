@@ -11,15 +11,14 @@ import { API_BASE_URL } from '../../constants';
 
 function Home() {
 
-  const [MakeStageOn, setMakeStageOn] = useState(false);
-
   const dispatch = useDispatch();
 
+  const [MakeStageOn, setMakeStageOn] = useState(false);
   const [LiveStage, setLiveStage] = useState([])
   const [ReserveStage, setReserveStage] = useState([])
 
   const token = useSelector(state => state.user.token);
-  const user = useSelector(state => state. user.user);
+  const user = useSelector(state => state.user.user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,24 +81,39 @@ function Home() {
     <div className={styles.container}>
       <div className={styles.body}>
         <div className={styles.contents}>
-          <div className={styles.middle}>
-            <div className={styles.banner}>
-              <img className={styles.banner} src="/public/icons/totoroposter.jpg" alt="" />
+
+          <div className={styles.banner}>
+            <div className={styles.bannerimgWrapper}>
+              <img
+                className={styles.bannerimg}
+                src="/src/assets/images/mainBanner.jpg"
+                alt=""
+              />
+              <div className={styles.buttonContainer}>
+                <MakeStage
+                  show={MakeStageOn}
+                  onHide={() => setMakeStageOn(false)}
+                />
+                <Button
+                  className='makeButton'
+                  variant="primary"
+                  onClick={() => setMakeStageOn(true)}
+                >
+                  방만들기
+                </Button>
+              </div>
             </div>
-            <MakeStage
-              show={MakeStageOn}
-              onHide={() => setMakeStageOn(false)}
-            />
-            <Button
-              variant="danger"
-              onClick={() => setMakeStageOn(true)}
-            >
-              방만들기
-            </Button>
-
-            <CastList Live={LiveStage} Reserve={ReserveStage}/>
-
           </div>
+
+          <div className={styles.lists}>
+            <div className={styles.middle}>
+
+
+              <CastList Live={LiveStage} Reserve={ReserveStage}/>
+
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
