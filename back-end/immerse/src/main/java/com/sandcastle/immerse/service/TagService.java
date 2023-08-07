@@ -15,4 +15,6 @@ public interface TagService{
 
     Optional<TagDto> findByName(String name);
 
+    List<TagDto> findByShowId(Long showId);
+
 }

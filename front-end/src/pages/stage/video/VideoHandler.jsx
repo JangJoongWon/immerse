@@ -1,60 +1,36 @@
 import React, { useState } from 'react'
-import camOn from '../../../assets/images/VideoIcon.png'
+import { camOn, camOff, micOff, micOn } from '/src/assets/icons'
 
-// import icon from '../../../../public/img/'
 function VideoHandler(props) {
   console.log(props)
-  const [audio, setAudio] = useState(true)
-  const [video, setVideo] = useState(true)
+  const [audio, setAudio] = useState(true);
+  const [video, setVideo] = useState(true);
 
   const {toggleAudio, toggleVideo} = props
   
-  const AudioClickHandler = ()=>{
-    toggleAudio()
-    setAudio(!audio)
-    console.log(audio)
+  const AudioClickHandler = () => {
+    toggleAudio();
+    setAudio(!audio);
   }
   
-  const VideoClickHandler = ()=>{
-    toggleVideo()
-    setVideo(!video)
+  const VideoClickHandler = () => {
+    toggleVideo();
+    setVideo(!video);
   }
 
   return (
     <div>
       <div style={{ margin:"1%",display:"flex",alignItems:"center",justifyContent:"center"}}>
-       { video 
-       
-       ?
-            <div
-            onClick={VideoClickHandler}>
-               {/* <img src="../../../../public/img/VideoIcon.png" alt="VideoIcon" /> */}
-               <img src={camOn} alt="VideoIcon" />
-            </div>
-       :
-            <div
-            onClick={VideoClickHandler}>
-              <img src="/public/img/VideoIconOff.png" alt="VideoIconOff" />
-            </div> 
-        }
+        <div onClick={VideoClickHandler}>
+          <img src={video ? camOn : camOff} alt="VideoIcon" />
+        </div>
       </div>
 
       <div style={{ margin:"1%",display:"flex",alignItems:"center",justifyContent:"center"}}>
-        { audio 
-          
-        ?
-          <div
-          onClick={AudioClickHandler}>
-            <img src="/public/img/MicIcon.png" alt="MicIcon" />
+        <div onClick={AudioClickHandler}>
+          <img src={audio ? micOn : micOff} alt="AudioIcon" />
         </div>
-        :
-          <div
-          onClick={AudioClickHandler}>
-          <img src="/public/img/MicIconOff.png" alt="MicIconOff" />
-        </div> 
-        }
       </div>
-    
     </div>
   )
 }
