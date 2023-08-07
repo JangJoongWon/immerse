@@ -1,0 +1,22 @@
+.container {
+    background-color: #1a1b1e;
+    width: 100%;
+  }
+
+.contents {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.middle {
+  width: 80%;
+  border: 1px solid blue;
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.resultbox{
+  width: 100%;
+}

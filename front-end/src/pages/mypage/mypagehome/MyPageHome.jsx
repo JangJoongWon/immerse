@@ -45,6 +45,29 @@ function MyPageHome(props) {
           </div>
         </Col>
         <Col>
+        
+          <div 
+          className={styles.schedule}>
+              <h5>
+              <th>예약한 공연</th>
+              </h5>
+              <hr style={{color:"white"}}/>
+          </div>      
+
+          <div>
+            <Row 
+            className={styles.ticketbox}
+            >
+              {/* data.map 메소드를 사용하여 ReservationTicket 컴포넌트들을 그리드 형태로 배치 */}
+              {data.slice(0,3).map((data) => (
+                <Col sm={8} key={data.id}>
+                  <ReservationTicket data={data} />
+                </Col>
+              ))}
+            </Row>
+          </div>
+        </Col>
+        {/* <Col>
           <div 
           className={styles.title}>
               <h5>
@@ -67,30 +90,9 @@ function MyPageHome(props) {
               ))}
             </div>
           </div>
-        </Col>
+        </Col> */}
       </Row>
-      <Row>
-        <div 
-        className={styles.schedule}>
-            <h5>
-            <th>예약한 공연</th>
-            </h5>
-            <hr style={{color:"white"}}/>
-        </div>      
 
-        <div>
-          <Row 
-          className="justify-content-start"
-          >
-            {/* data.map 메소드를 사용하여 ReservationTicket 컴포넌트들을 그리드 형태로 배치 */}
-            {data.slice(0,3).map((data) => (
-              <Col sm={4} key={data.id}>
-                <ReservationTicket data={data} />
-              </Col>
-            ))}
-          </Row>
-        </div>
-      </Row>
       <Row
         style={{marginTop:'4%' ,marginBottom:'8%'}}>
         <div 

@@ -4,9 +4,9 @@ import MyPageCard from '../mypagecard/MyPageCard';
 import styles from "./PerformanceRecord.module.css"
 
 function PerformanceRecord(props) {
-  var user_id = props.user_id;
+  var {userId} = props
   var stage_list = data.filter((stage) => {
-    return user_id === stage.fields.user_id;
+    return userId === stage.fields.user_id;
   });
 
   return (

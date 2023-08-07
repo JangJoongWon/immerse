@@ -14,20 +14,25 @@ function Card({ data }) {
   const navigate = useNavigate()
 
   const categoryMap = useSelector(state => state.category.categoryMap);
+  const token = useSelector(state => state.user.token)
 
   const openStageInfo = async (event) => {
     event.preventDefault();
-    
+  
+    // if (!token) {
+    //   alert('로그인이 필요합니다.');
+    //   navigate('/login');
+    //   return;
+    // }
+  
     try {
       const response = await axios.get(`${API_BASE_URL}/shows/${data.showId}`);
       console.log('Get success:', response.data);
       setCardInfo(response.data);
-      setStageInfoOn(true)
-      console.log(cardInfo)
-
+      setStageInfoOn(true);
+      console.log(cardInfo);
     } catch (error) {
       console.log('Get error', error);
-      // setStageInfoOn(true)
     }
   };
 
@@ -35,6 +40,10 @@ function Card({ data }) {
     navigate('/mypage/data.nickname')
   }
 
+  const toCategory = (data) => {
+    console.log(data)
+    navigate(`/category/${data.category_id}`)
+  }
 
   return (
     <div
@@ -53,20 +62,20 @@ function Card({ data }) {
           </div>
         </div>
         <header>
-          <div onClick={openStageInfo}>{data.title}</div>
-          {/* 공연자의 별명을 어떻게 넣을 것인가? */}
+          <div onClick={openStageInfo}><h4>{data.title}</h4></div>
           <div onClick={toProfile}>{data.nickname}</div>
-          <div className={styles.info} onClick={openStageInfo}>{data.showProgress}</div>
         </header>
       </div>
         <footer>
           <a 
-          href="/search" 
+          href="/" 
+          onClick={(event) => {
+            event.preventDefault();
+            toCategory(data);
+          }}
           className={styles.tagbutton}>  
-            {/* #{data.category_id} */}
             #{categoryMap[data.category_id].categoryName}
           </a>
-          {/* {isHovered && <button className={styles.footerButton}>버튼</button>} */}
         </footer>
       <StageInfo
         show={stageInfoOn}

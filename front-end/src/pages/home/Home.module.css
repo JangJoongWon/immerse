@@ -1,24 +1,55 @@
   .container {
+      /* padding-top: 10px; */
       background-color: #1a1b1e;
       width: 100%;
+      padding-bottom: 50px;
     }
   
   .contents {
     width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .middle {
-    width: 80%;
-    border: 1px solid blue;
-    padding-top: 50px;
   }
   
   .banner {
     width: 100%;
-    height: 300px;
-    margin-top: 20px;
     margin-bottom: 20px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
   }
+
+  .lists {
+    /* border: 1px solid white; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .middle {
+    width: 80%;
+    /* border: 1px solid blue; */
+    padding-top: 50px;
+  }
+  
+  .bannerimgWrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 30%;
+  }
+  
+  .bannerimg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .buttonContainer {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin-bottom: 40px;
+    margin-right: 50px;
+  }
+
+  
+  

@@ -31,4 +31,15 @@ public interface TagRepository extends JpaRepository<TagEntity, Long> {
     @Query(value = "DELETE FROM tags WHERE tag_id = :id" , nativeQuery = true)
     void deleteById(@Param("id") Long id);
 
+    @Query(value = "SELECT tag_id, tag_name " +
+            "FROM shows AS s " +
+            "JOIN (" +
+            "    SELECT st.show_id, t.tag_name, t.tag_id " +
+            "    FROM shows_tags AS st " +
+            "    JOIN tags t ON st.tag_id = t.tag_id" +
+            ") AS stt ON s.show_id = stt.show_id " +
+            "WHERE s.show_id = :showId",
+            nativeQuery = true)
+    List<TagEntity> findByShowId(@Param("showId") Long showId);
+
 }

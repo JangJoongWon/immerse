@@ -1,7 +1,37 @@
-.categories {
+  .container {
     width: 100%;
-    border: 1px solid orange;
+    display: flex;
+    justify-content: center;
   }
+
+  .categoryTags{
+    width: 20%;
+  }
+
+  .listResult{
+    width: 80%;
+  }
+
+  .categoryZip div {
+    font-size: 20px;
+    font-weight: 900;
+    margin-right: 10%;
+  }
+
+  .categoryZip div a {
+    color: white;
+    text-decoration: none;
+  }
+
+  .categoryZip div a:hover {
+    font-size: 23px;
+    color: #0d6efd;
+  }
+
+  .popularList {
+      width: 100%;
+      border: 1px solid orange;
+    }
   
   .gridMove {
     display: grid;

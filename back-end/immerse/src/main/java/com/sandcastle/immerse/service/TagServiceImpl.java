@@ -63,4 +63,14 @@ public class TagServiceImpl implements TagService {
         }
         return Optional.empty();
     }
+
+    @Override
+    public List<TagDto> findByShowId(Long showId) {
+        List<TagEntity> tags = tagRepository.findByShowId(showId);
+        return tags.stream().map(tagEntity -> TagDto.builder()
+                        .tagId(tagEntity.getTagId())
+                        .tagName(tagEntity.getTagName())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

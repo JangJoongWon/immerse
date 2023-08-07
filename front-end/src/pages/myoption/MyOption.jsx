@@ -4,10 +4,11 @@ import styles from './MyOption.module.css';
 import InputPImg from './inputimg/InputImg';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { TEST_URL, API_BASE_URL } from '../../constants';
 
 function MyOption() {
-
-  const token = useSelector((state) => state.user.token);
+  const user = useSelector((state) => state.user.user);
+  const userToken = useSelector((state) => state.user.token);
 
   const [selectTab, setSelectTab] = useState('BannerImg');
 
@@ -15,30 +16,45 @@ function MyOption() {
     setSelectTab(tab);
   };
 
-  const [bannerImgUrl, setBannerImgUrl] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
-  const [currentCallNumber, setcurrentCallNumber] = useState('');
-  const [currentNickname, setCurrentNickname] = useState('');
+  const [name, setName] = useState('');
+  const [bannerPicture, setBannerPicture] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [nickname, setNickname] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
-
 
   
   const context = {
-    baneerImgUrl: bannerImgUrl,
-    imageUrl: imageUrl,
-    nickname: currentNickname,
-    callNumber: currentCallNumber,
+    name : name,
+    bannerPicture: bannerPicture,
+    profilePicture: profilePicture,
+    nickname: nickname,
+    phoneNumber: phoneNumber,
     selfDescription: selfDescription,
-    Authorization: 'Bearer ' + token
   };
+ 
+  function onSubmitHandler(){
+    axios.post(TEST_URL + `/update/info`,context, {
+      headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': 'Bearer ' + userToken
+              },
+            })
+          .then(response => {
+          console.log(response.data)
+          })
+          .catch(error => {
+          console.error('Error fetching data:', error);
+          });
+  }
 
   useEffect(() => {
-    try {
-      const response = axios.post('https://localhost:8080/api/review', context);
-      console.log(response);
-    } catch (error) {
-      console.log('create review failed:', error.response.data);
-    }
+    setName(user.name)
+    // setBannerPicture('string')
+    // setProfilePicture('string')
+    setPhoneNumber(user.phoneNumber)
+    setNickname(user.nickname)
+    setSelfDescription(user.selfDescription)
   }, []);
 
   function onBannerImgeUrlChangeHandler(BannerimageUrl) {
@@ -47,21 +63,6 @@ function MyOption() {
 
   function onImgeUrlChangeHandler(imageUrl) {
     setImageUrl(imageUrl);
-  }
-
-  function NicknameChangeHandler() {
-    // 현재 닉네임을 이용하여 닉네임 변경 처리
-    console.log('Current Nickname:', currentNickname);
-  }
-
-  function CallNumberChangeHandler() {
-    // 현재 전화번호를 이용하여 전화번호 변경 처리
-    console.log('Current Call Number:', currentCallNumber);
-  }
-
-  function SelfDescriptionChangeHandler() {
-    // 자기소개 변경 처리
-    console.log('Self Description:', selfDescription);
   }
 
   return (
@@ -107,7 +108,8 @@ function MyOption() {
             </Button>
         </Row>
         <Row>
-            <Form>
+            <Form
+            onSubmit={onSubmitHandler}>
               {(selectTab=='BannerImg') && (
                 <Form.Group className={styles.imgbox}>
                   <InputPImg onChange={onBannerImgeUrlChangeHandler} className={styles.inputimg} />
@@ -156,11 +158,11 @@ function MyOption() {
                 <Form.Group className={styles.nickname}>
                   <div>
                     <Form.Control
-                      type="string"
+                      type="text"
                       className={styles.input}
                       placeholder=" 현재 닉네임"
-                      value={currentNickname}
-                      onChange={(e) => setCurrentNickname(e.target.value)}
+                      // value={nickname}
+                      // onChange={(e) => setNickname(e.target.value)}
                     />
                   </div>
                 </Form.Group>
@@ -170,11 +172,11 @@ function MyOption() {
                 <Form.Group className={styles.callNumber}>
                   <div>
                     <Form.Control
-                      type="string"
+                      type="text"
                       className={styles.input}
                       placeholder="현재 전화번호"
-                      value={currentCallNumber}
-                      onChange={(e) => setcurrentCallNumber(e.target.value)}
+                      // value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
                     />
                   </div>
                 </Form.Group>
@@ -184,11 +186,11 @@ function MyOption() {
                 <Form.Group className={styles.selfDescription}>
                   <div>
                     <Form.Control
-                      as="textarea"
+                      type="text"
                       style={{height:"100%",width:"50%"}}
                       className={styles.input}
                       placeholder="자기소개"
-                      value={selfDescription}
+                      // value={selfDescription}
                       onChange={(e) => setSelfDescription(e.target.value)}
                     />
                   </div>
