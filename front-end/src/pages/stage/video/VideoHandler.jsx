@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import camOn from '../../../assets/images/VideoIcon.png'
+
 // import icon from '../../../../public/img/'
 function VideoHandler(props) {
   console.log(props)
@@ -26,12 +28,13 @@ function VideoHandler(props) {
        ?
             <div
             onClick={VideoClickHandler}>
-               <img src="../../../../public/img/VideoIcon.png" alt="VideoIcon" />
+               {/* <img src="../../../../public/img/VideoIcon.png" alt="VideoIcon" /> */}
+               <img src={camOn} alt="VideoIcon" />
             </div>
        :
             <div
             onClick={VideoClickHandler}>
-              <img src="../../../../public/img/VideoIconOff.png" alt="VideoIconOff" />
+              <img src="/public/img/VideoIconOff.png" alt="VideoIconOff" />
             </div> 
         }
       </div>
@@ -42,12 +45,12 @@ function VideoHandler(props) {
         ?
           <div
           onClick={AudioClickHandler}>
-            <img src="../../../../public/img/MicIcon.png" alt="MicIcon" />
+            <img src="/public/img/MicIcon.png" alt="MicIcon" />
         </div>
         :
           <div
           onClick={AudioClickHandler}>
-          <img src="../../../../public/img/MicIconOff.png" alt="MicIconOff" />
+          <img src="/public/img/MicIconOff.png" alt="MicIconOff" />
         </div> 
         }
       </div>

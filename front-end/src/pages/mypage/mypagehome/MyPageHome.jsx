@@ -6,13 +6,13 @@ import guest from '../../../guest.json';
 import MyPageCard from '../mypagecard/MyPageCard';
 import { Row, Col } from 'react-bootstrap';
 import styles from './MyPageHome.module.css';
+import ReservationTicket from '../reservationticket/ReservationTicket';
 
 function MyPageHome(props) {
   var { user_id } = props;
   var stage_list = data.filter((stage) => {
     return user_id === stage.fields.user_id;
   });
-
   // Sort stage_list by date in descending order (most recent first)
   stage_list.sort((a, b) => new Date(b.fields.date) - new Date(a.fields.date));
 
@@ -69,8 +69,30 @@ function MyPageHome(props) {
           </div>
         </Col>
       </Row>
+      <Row>
+        <div 
+        className={styles.schedule}>
+            <h5>
+            <th>예약한 공연</th>
+            </h5>
+            <hr style={{color:"white"}}/>
+        </div>      
+
+        <div>
+          <Row 
+          className="justify-content-start"
+          >
+            {/* data.map 메소드를 사용하여 ReservationTicket 컴포넌트들을 그리드 형태로 배치 */}
+            {data.slice(0,3).map((data) => (
+              <Col sm={4} key={data.id}>
+                <ReservationTicket data={data} />
+              </Col>
+            ))}
+          </Row>
+        </div>
+      </Row>
       <Row
-        style={{marginTop:'4%', marginBottom:'8%'}}>
+        style={{marginTop:'4%' ,marginBottom:'8%'}}>
         <div 
         className={styles.title}>
             <h5>

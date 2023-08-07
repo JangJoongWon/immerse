@@ -6,6 +6,7 @@ import CastList from './CastList';
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategories, setCagoryMap } from '../../redux/categorySlice';
+import { setUser } from '../../redux/userSlice';
 import { API_BASE_URL } from '../../constants';
 
 function Home() {
@@ -17,23 +18,24 @@ function Home() {
   const [LiveStage, setLiveStage] = useState([])
   const [ReserveStage, setReserveStage] = useState([])
 
+  const token = useSelector(state => state.user.token);
+  const user = useSelector(state => state. user.user);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response1 = await axios.get(`${API_BASE_URL}/shows/popular/progress`);
-        console.log('progress axios success', response1);
-        setLiveStage(response1.data)
-      } catch (error) {
-        console.log('progress axios error:', error.message);
+        if (token && !user) {
+          const res = await axios.get(`${API_BASE_URL}/user/mypage`, {
+            headers: {
+              'Content-Type': 'application/json', 
+              'Authorization': 'Bearer ' + token
+            }
+          });
+          dispatch(setUser(res.data));
+        }
       }
-  
-      try {
-        const response2 = await axios.get(`${API_BASE_URL}/shows/popular/reservation`);
-        console.log('reservation axios success', response2);
-        setReserveStage(response2.data)
-      } catch (error) {
-        console.log('reservation axios error:', error.message);
+      catch (err) {
+        console.log(err);
       }
 
       try {
@@ -54,6 +56,23 @@ function Home() {
       catch (e) {
         console.log(e);
       }
+
+      try {
+        const response1 = await axios.get(`${API_BASE_URL}/shows/popular/progress`);
+        console.log('progress axios success', response1);
+        setLiveStage(response1.data)
+      } catch (error) {
+        console.log('progress axios error:', error.message);
+      }
+  
+      try {
+        const response2 = await axios.get(`${API_BASE_URL}/shows/popular/reservation`);
+        console.log('reservation axios success', response2);
+        setReserveStage(response2.data)
+      } catch (error) {
+        console.log('reservation axios error:', error.message);
+      }
+
     };
         fetchData();
       }, []);
@@ -65,7 +84,7 @@ function Home() {
         <div className={styles.contents}>
           <div className={styles.middle}>
             <div className={styles.banner}>
-              <img className={styles.banner} src="../public/icons/totoroposter.jpg" alt="" />
+              <img className={styles.banner} src="/public/icons/totoroposter.jpg" alt="" />
             </div>
             <MakeStage
               show={MakeStageOn}

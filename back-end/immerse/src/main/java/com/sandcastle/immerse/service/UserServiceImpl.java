@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService {
                 });
 
         return UserDto.builder()
+                .userId(userEntity.getUserId())
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
                 .gender(userEntity.getGender())
@@ -100,16 +101,38 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+//    @Override
+//    @Transactional
+//    public UserDto getUser(Long userId) {
+//
+//        UserEntity userEntity = userRepository.findById(userId)
+//                .orElseThrow(() -> {
+//                    return new AppException(ErrorCode.USERID_NOT_FOUND, userId + "은(는) 존재하지 않는 고유번호 입니다.");
+//                });
+//
+//        return UserDto.builder()
+//                .email(userEntity.getEmail())
+//                .name(userEntity.getName())
+//                .gender(userEntity.getGender())
+//                .nickname(userEntity.getNickname())
+//                .birthday(userEntity.getBirthday())
+//                .profilePicture(userEntity.getProfilePicture())
+//                .bannerPicture(userEntity.getBannerPicture())
+//                .selfDescription(userEntity.getSelfDescription())
+//                .build();
+//    }
+
     @Override
     @Transactional
-    public UserDto getUser(Long userId) {
+    public UserDto getUser(String nickname) {
 
-        UserEntity userEntity = userRepository.findById(userId)
+        UserEntity userEntity = userRepository.findByNickname(nickname)
                 .orElseThrow(() -> {
-                    return new AppException(ErrorCode.USERID_NOT_FOUND, userId + "은(는) 존재하지 않는 고유번호 입니다.");
+                    return new AppException(ErrorCode.NICKNAME_NOT_FOUND, nickname + "은(는) 존재하지 않는 닉네임 입니다.");
                 });
 
         return UserDto.builder()
+                .userId(userEntity.getUserId())
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
                 .gender(userEntity.getGender())

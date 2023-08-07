@@ -51,7 +51,8 @@ function GuestBook(props) {
       <div className={styles.down}>
         <Form onSubmit={onSubmitHandler}>
           <Row>
-            <Col className={styles.input_bar}>
+            <Col
+            className={styles.input_bar}>
               <Form.Control
                 ref={inputRef} // ref 연결
                 placeholder='방명록에 글쓰기'
@@ -60,7 +61,8 @@ function GuestBook(props) {
                 onChange={handleContentChange}
               />
             </Col>
-            <Col>
+            <Col sm={2}
+              className={styles.sendImgBox}>
               <div className={styles.send_img} onClick={onSubmitHandler}>
                 <img src='..\public\img\send.png' alt='send_img' />
               </div>

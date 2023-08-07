@@ -32,9 +32,15 @@ public class UserController {
         return ResponseEntity.ok().body(userDto);
     }
 
-    @GetMapping("/mypage/{userId}")
-    public ResponseEntity<?> getUser(@PathVariable Long userId) throws Exception {
-        UserDto userDto = userServiceImpl.getUser(userId);
+//    @GetMapping("/mypage/{userId}")
+//    public ResponseEntity<?> getUser(@PathVariable Long userId) throws Exception {
+//        UserDto userDto = userServiceImpl.getUser(userId);
+//        return ResponseEntity.ok().body(userDto);
+//    }
+
+    @GetMapping("/mypage/{nickname}")
+    public ResponseEntity<?> getUser(@PathVariable String nickname) throws Exception {
+        UserDto userDto = userServiceImpl.getUser(nickname);
         return ResponseEntity.ok().body(userDto);
     }
 
