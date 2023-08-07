@@ -14,5 +14,5 @@ public interface SearchService {
 
     List<ShowListResponse> findAllShowsContainContent(String content);
 
-    List<ShowListResponse> findAllShowsContainTag(String content);
+    List<ShowListResponse> findAllShowsContainTag(String tag);
 }
