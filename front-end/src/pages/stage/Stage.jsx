@@ -1,5 +1,5 @@
 // import React from 'react'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './Stage.module.css'
 import StageInfo from "../../components/cards/StageInfo"
 
@@ -9,16 +9,16 @@ import axios from 'axios';
 import { Component } from 'react';
 import { VideoMap } from './video';
 import { useParams } from 'react-router';
+import { useNavigate, UNSAFE_NavigationContext } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../constants';
 import Audience from './Audience';
-
-// const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://demos.openvidu.io/';
-// const APPLICATION_SERVER_URL = 'http://localhost:5000/';
-// const APPLICATION_SERVER_URL = 'http://localhost:8080/';
+import { Button } from 'react-bootstrap';
 
 const Stage = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
+    const navigation = useContext(UNSAFE_NavigationContext).navigator;
 
     // const [ov, setOv] = useState(undefined);
     const [ov, setOv] = useState(undefined);
@@ -228,7 +228,7 @@ const Stage = () => {
         setPublisher(undefined);
         
         try {
-            const response = await axios.post(API_BASE_URL + 'rooms/' + showData.user_id + '/disconnect', {}, {
+            const response = await axios.post(API_BASE_URL + '/rooms/' + showData.user_id + '/disconnect', {}, {
                 headers: { 
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + userToken
@@ -243,6 +243,7 @@ const Stage = () => {
     }
 
     const onBeforeUnload = () => {
+        console.log('------------clean up!------------');
         leaveSession();
     }
 
@@ -265,7 +266,20 @@ const Stage = () => {
             console.log(response.data);
             setShowData(response.data);
         }
+        if (!userToken) navigate('/login');
         fetchData();
+
+        const unlisten = navigation.listen((locationListener) => {
+            if (locationListener.action === 'POP') {
+                onBeforeUnload();
+            }
+        });
+
+        window.addEventListener('beforeunload', onBeforeUnload);
+        return () => {
+            unlisten();
+            window.removeEventListener('beforeunload', onBeforeUnload); 
+        };
     }, []);
 
     return (
@@ -299,6 +313,7 @@ const Stage = () => {
                         />
                  // )
             : null}
+            <Button onClick={leaveSession}>Leave</Button>
         </div>
     );
 }

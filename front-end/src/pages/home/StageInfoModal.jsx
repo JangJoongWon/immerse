@@ -69,14 +69,10 @@ function StageInfoModal({ show, onHide, data }) {
                   <p>{data.category_id}</p>
 
                   {data.showProgress === 'SCHEDULED'?
-                    (data.nickname !== user.nickname ? (
+                    (data.nickname !== user.nickname ?
                       <Button>예약하기</Button>
-                    ) : (
-                      <Button onClick={startStage}>시작하기</Button>
-                    ))
-                  :(
-                    <Button onClick={attendStage}>입장하기</Button>
-                  )}
+                     : <Button onClick={startStage}>시작하기</Button>)
+                    :(<Button onClick={attendStage}>입장하기</Button>)}
                 </div>
               </div>
             </Col>
