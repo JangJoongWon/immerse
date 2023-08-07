@@ -15,10 +15,10 @@ function MyPage() {
   // console.log(nickname)
   const userToken = useSelector((state) => state.user.token);
   // const user = useSelector(state => state.user.user);
-  
-  const [user, setUser] = useState(null);
-  const [scribe,setScribe] = useState(null);
-  const [userId, setUserId] = useState(10);
+
+  const [user, setUser] = useState({});
+  // const [scribe, setScribe] = useState(null);
+  // const [userId, setUserId] = useState(1);
 
   useEffect(() => {
     // Axios를 사용하여 데이터를 불러옴
@@ -32,26 +32,17 @@ function MyPage() {
       });
   }, []);
 
-  // console.log(userToken)
-  const getsubscribe = () => {
-    // Axios를 사용하여 데이터를 불러옴
-    axios.get(API_BASE_URL + `/subscribe/following/${userId}`, { userId : userId})
-      .then(response => {
-        setUser(response.data); // 불러온 데이터를 상태(State)에 저장
-        console.log(response)
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  };
+
 
   const subscribe = () => {
-    axios.post(API_BASE_URL + '/subscribe', {userId : user.userId
+    axios.post(API_BASE_URL + '/subscribe', {
+      userId: user.userId
     }, {
       headers: {
-      'Content-Type': 'application/json', 
-      'Authorization': `Bearer ${userToken}`
-    }},)
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+      }
+    },)
       .then(response => {
         setUser(response.data);
         console.log(response)
@@ -66,21 +57,21 @@ function MyPage() {
     <div className={styles.container}>
       {/* Mypage Banner */}
       <div className={styles.banner}>
-        {user != null?<img className={styles.bannerimg} src="user.bannerPicture" alt="bannerPicture" /> :<img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="bannerPicture" />}
+        {user != null ? <img className={styles.bannerimg} src="user.bannerPicture" alt="bannerPicture" /> : <img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="bannerPicture" />}
       </div>
       {/* User Info Section */}
       <Row>
         <div className={styles.userinfo}>
           <Col sm={1}>
           </Col>
-          <Col 
-          className={styles.sm3}
+          <Col
+            className={styles.sm3}
           // sm={3}
           >
             <div className={styles.userleft}>
               <div
                 className='m-3'>
-                  {user != null? <img className={styles.userimg} src="user.profilePicture" alt="profilePicture" /> :<img className={styles.userimg} src="../public/img/profileimg.png" alt="profilePicture" />}
+                {user != null ? <img className={styles.userimg} src="user.profilePicture" alt="profilePicture" /> : <img className={styles.userimg} src="../public/img/profileimg.png" alt="profilePicture" />}
               </div>
             </div>
           </Col>
@@ -94,11 +85,11 @@ function MyPage() {
                 >
                   {user == null ? <span>user nickname</span> : <span>{user.nickname}</span>}
                   <Link to="/checkpassword">
-                <img 
-                src="../../../../public/icons/Setting.png" alt="setting" 
-                style={{width:"5%"}}
-                />
-            
+                    <img
+                      src="../../../../public/icons/Setting.png" alt="setting"
+                      style={{ width: "5%" }}
+                    />
+
                   </Link>
                 </div>
                 <div
@@ -111,7 +102,7 @@ function MyPage() {
                 className={styles.outline}>
                 <div className={styles.userbox}>
                   <div className="mypage-user-text">
-                      {user != null ?<div>{user.selfDescription}</div > :<div>자기 소개를 작성해주세요</div>}
+                    {user != null ? <div>{user.selfDescription}</div > : <div>자기 소개를 작성해주세요</div>}
                   </div>
                 </div>
               </Row>
@@ -133,7 +124,7 @@ function MyPage() {
         </div>
       </Row>
       <Row >
-        <MypageTabbox />
+        <MypageTabbox userId={user.userId}/>
       </Row>
     </div>
   );
