@@ -1,12 +1,18 @@
 .container {
-  justify-content: start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   /* outline: 2px solid red; */
 }
 
 .box {
+  width: 90%;
   margin: 10%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 2rem;
   border-top: 3rem solid #121212;
   border-bottom: 3rem solid #121212;

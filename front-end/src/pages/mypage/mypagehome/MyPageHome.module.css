@@ -12,8 +12,14 @@
 
 .title{
     color:white;
-    margin:1rem;
+    margin:1rem 1rem 1rem 1rem;
     /* outline: 2px solid violet; */
+}
+
+.schedule{
+    color:white;
+    margin:1rem 1rem 0rem 1rem;
+
 }
 
 .bottom{
@@ -35,9 +41,11 @@
 
 
 .cardbox {
-    /* display: flex;
-    flex-wrap: wrap; */
-    /* overflow: hidden; */
+    display: flex;
+    justify-content: center;
+    /* align-items: flex-start;
+    flex-wrap: wrap;
+    overflow: hidden; */
     margin: 0 auto;
     /* outline: 2px solid white; */
 }

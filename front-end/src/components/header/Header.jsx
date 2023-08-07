@@ -139,7 +139,7 @@ function Header() {
                   >
                     LogOut
                   </Nav.Link>
-                  <Nav.Link href="/mypage" className='m-2' style={{ color: "white" }}>
+                  <Nav.Link href='/mypage/' className='m-2' style={{ color: "white" }}>
                     Profile
                   </Nav.Link>
                   <Nav.Link className='m-2' style={{ color: "white" }}

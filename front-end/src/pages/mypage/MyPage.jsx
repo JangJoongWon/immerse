@@ -9,10 +9,12 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { TEST_URL, API_BASE_URL } from '../../constants';
 
-function MyPage() {
-  // const { nickname } = useParams();
+function MyPage(props) {
+  // const { userId } = useParams();
   // const userToken = useSelector((state) => state.user.token);
   const user = useSelector(state => state.user.user);
+  // const user = axios.post(API_BASE_URL+`/mypage/${userId}`)
+  
 
 
   return (
