@@ -17,24 +17,26 @@ function MyOption() {
   };
 
   const [name, setName] = useState('');
-  const [bannerPicture, setBannerPicture] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [bannerPicture, setBannerPicture] = useState('string');
+  const [profilePicture, setProfilePicture] = useState('string');
+  // const [phoneNumber, setPhoneNumber] = useState('');
   const [nickname, setNickname] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
 
   
-  const context = {
-    name : name,
-    bannerPicture: bannerPicture,
-    profilePicture: profilePicture,
-    nickname: nickname,
-    phoneNumber: phoneNumber,
-    selfDescription: selfDescription,
-  };
- 
+
+  console.log(userToken)
   function onSubmitHandler(){
-    axios.post(TEST_URL + `/update/info`,context, {
+
+    const context = {
+      name : name,
+      bannerPicture: bannerPicture,
+      profilePicture: profilePicture,
+      nickname: nickname,
+      selfDescription: selfDescription,
+    };
+
+    axios.put(API_BASE_URL + `/user/update/info`,context, {
       headers: { 
           'Content-Type': 'application/json', 
           'Authorization': 'Bearer ' + userToken
@@ -52,19 +54,31 @@ function MyOption() {
     setName(user.name)
     // setBannerPicture('string')
     // setProfilePicture('string')
-    setPhoneNumber(user.phoneNumber)
+    // setPhoneNumber(user.phoneNumber)
     setNickname(user.nickname)
     setSelfDescription(user.selfDescription)
   }, []);
 
-  function onBannerImgeUrlChangeHandler(BannerimageUrl) {
-    setBannerImgUrl(BannerimageUrl);
+  // function onBannerImgeUrlChangeHandler(BannerimageUrl) {
+  //   setBannerImgUrl(BannerimageUrl);
+  // }
+
+  // function onImgeUrlChangeHandler(imageUrl) {
+  //   setImageUrl(imageUrl);
+  // }
+
+  function onChangeNameHandler(name) {
+    setName(name);
   }
 
-  function onImgeUrlChangeHandler(imageUrl) {
-    setImageUrl(imageUrl);
+  function onChangeNickNameHandler(nickname){
+    setNickname(nickname)
   }
 
+  function onChangeSelfDescription(selfDescription){
+    setSelfDescription(selfDescription)
+  }
+  
   return (
     <div className={styles.background}>
       <div className={styles.container}>
@@ -89,16 +103,22 @@ function MyOption() {
             <Button 
             className={styles.button} 
             type="button" 
+            size="lg" onClick={() => changeSelectTab('Name')}>
+              이름
+            </Button>
+            <Button 
+            className={styles.button} 
+            type="button" 
             size="lg" onClick={() => changeSelectTab('NickName')}>
               닉네임
             </Button>
      
-            <Button 
+            {/* <Button 
             className={styles.button} 
             type="button" 
             size="lg" onClick={() => changeSelectTab('CallNumber')}>
               전화번호
-            </Button>
+            </Button> */}
      
             <Button 
             className={styles.button} 
@@ -110,17 +130,17 @@ function MyOption() {
         <Row>
             <Form
             onSubmit={onSubmitHandler}>
-              {(selectTab=='BannerImg') && (
+              {/* {(selectTab=='BannerImg') && (
                 <Form.Group className={styles.imgbox}>
                   <InputPImg onChange={onBannerImgeUrlChangeHandler} className={styles.inputimg} />
                 </Form.Group>
-              )}
-
+              )} */}
+{/* 
               {(selectTab=='ProgileImg') && (
                 <Form.Group className={styles.imgbox}>      
                   <InputPImg onChange={onImgeUrlChangeHandler} className={styles.userimg} />
                 </Form.Group>
-              )}
+              )} */}
 
               {/* {(selectTab=='Password') && (
                 <Form.Group className={styles.password}>
@@ -154,33 +174,34 @@ function MyOption() {
                 </Form.Group>
               )} */}
 
+              {(selectTab=='Name') && (
+                <Form.Group className={styles.callNumber}>
+                  <div>
+                    <Form.Control
+                      type="text"
+                      className={styles.input}
+                      placeholder={name}
+                      // value={phoneNumber}
+                      onChange={(e) => onChangeNameHandler(e.target.value)}
+                    />
+                  </div>
+                </Form.Group>
+              )}
+
               {(selectTab=='NickName') && (
                 <Form.Group className={styles.nickname}>
                   <div>
                     <Form.Control
                       type="text"
                       className={styles.input}
-                      placeholder=" 현재 닉네임"
+                      placeholder={nickname}
                       // value={nickname}
-                      // onChange={(e) => setNickname(e.target.value)}
+                      onChange={(e) => onChangeNickNameHandler(e.target.value)}
                     />
                   </div>
                 </Form.Group>
               )}
 
-              {(selectTab=='CallNumber') && (
-                <Form.Group className={styles.callNumber}>
-                  <div>
-                    <Form.Control
-                      type="text"
-                      className={styles.input}
-                      placeholder="현재 전화번호"
-                      // value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                    />
-                  </div>
-                </Form.Group>
-              )}
 
               {(selectTab=='SelfDescription') && (
                 <Form.Group className={styles.selfDescription}>
@@ -189,9 +210,9 @@ function MyOption() {
                       type="text"
                       style={{height:"100%",width:"50%"}}
                       className={styles.input}
-                      placeholder="자기소개"
+                      placeholder={selfDescription}
                       // value={selfDescription}
-                      onChange={(e) => setSelfDescription(e.target.value)}
+                      onChange={(e) => onChangeSelfDescription(e.target.value)}
                     />
                   </div>
                 </Form.Group>
@@ -200,7 +221,9 @@ function MyOption() {
 
         </Row>
         <Form.Group style={{ textAlign: "end" }}>
-                <Button type="submit" size="lg">
+                <Button 
+                onClick={onSubmitHandler}
+                type="submit" size="lg">
                   변경
                 </Button>
         </Form.Group>
