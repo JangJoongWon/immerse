@@ -4,6 +4,9 @@ import java.net.Authenticator;
 import java.util.List;
 import java.util.Optional;
 
+import com.sandcastle.immerse.model.dto.ShowTagDto;
+import com.sandcastle.immerse.model.dto.TagDto;
+import com.sandcastle.immerse.service.ShowTagServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class ShowController {
 
 	private final ShowService showService;
+	private final ShowTagServiceImpl showTagService;
 
 	@ResponseBody
 	@GetMapping("/")
@@ -55,16 +59,19 @@ public class ShowController {
 
 	@ResponseBody
 	@PostMapping("/")
-	public Long postShow(@RequestBody ShowRequest form, Authentication auth) {
+	public Long postShow(@RequestBody ShowRequest form, @RequestBody(required = false) List<ShowTagDto> showTagDtoList, Authentication auth) {
 		Long userId = Long.valueOf(auth.getName());
 		System.out.println("userId = " + userId);
 		form.setUserId(userId);
-		return showService.postShow(form);
+		Long showId = showService.postShow(form);
+		showTagService.saveAllShowTag(showId , showTagDtoList);
+		return showId;
 	}
 
 	@ResponseBody
 	@PutMapping("/{show_id}")
-	public Long putShow(@PathVariable Long show_id, @RequestBody ShowRequest form) {
+	public Long putShow(@PathVariable Long show_id, @RequestBody ShowRequest form , @RequestBody(required = false) List<ShowTagDto> showTagDtoList) {
+		showTagService.updateShowTag(show_id,showTagDtoList);
 		return showService.putShow(show_id, form);
 	}
 
