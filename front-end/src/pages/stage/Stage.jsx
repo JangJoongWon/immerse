@@ -1,5 +1,5 @@
 // import React from 'react'
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import styles from './Stage.module.css'
 import StageInfo from "../../components/cards/StageInfo"
 
@@ -8,8 +8,7 @@ import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSession, setShowData } from '../../redux/sessionSlice';
+import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../constants';
 import { Audience, Performer } from './components';
 import { Button } from 'react-bootstrap';
@@ -18,20 +17,26 @@ const Stage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [ov, setOv] = useState(undefined);
+    const ov = useRef(new OpenVidu());
     const [subscribers, setSubscribers] = useState([]);
     const [publisher, setPublisher] = useState(undefined);
     const [mainStreamManager, setMainStreamManager] = useState(undefined);
-    
-    const prevSession = useRef(undefined);
-    
+    const [session, setSession] = useState(undefined);
+    const [showData, setShowData] = useState({});
+
     const userToken = useSelector((state) => state.user.token);
     const user = useSelector(state => state.user.user);
-    const session = useSelector(state => state.session.session);
-    const showData = useSelector(state => state.session.showData);
-    const dispatch = useDispatch();
 
     const isAuthor = () => user.nickname === showData.nickname; // session id는 공연자의 id로 설정
+
+    const fetchData = async () => {
+        const response = await axios.get(`${API_BASE_URL}/shows/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + userToken
+            }
+        });
+    }
 
     const getToken = async (isAuthor) => {
         try {
@@ -102,49 +107,37 @@ const Stage = () => {
     const addSubscriber = (streamManager) => {
         const nickname = JSON.parse(streamManager.stream.connection.data).clientData;
             
-        if (nickname === showData.nickname) { // mainStream
-            setMainStreamManager(streamManager);
-        }
-        else {
-            let ls = subscribers;
-            console.log(ls);
-            
-            ls.push(streamManager);
-            setSubscribers([...ls]);
-        }
+        if (nickname === showData.nickname) setMainStreamManager(streamManager);
+        else setSubscribers(subscribers => [...subscribers, streamManager]);
     }
 
-    const deleteSubscriber = (streamManager) => {
+    const deleteSubscriber = useCallback(streamManager => {
         const nickname = JSON.parse(streamManager.stream.connection.data).clientData;
-         
         if (nickname === showData.nickname) {
             setMainStreamManager(undefined);
         }
         else {
-            let ls = subscribers;
-            let index = ls.indexOf(streamManager, 0);
-            if (index > -1) {
-                ls.splice(index, 1);
-                setSubscribers([...ls]);
-            }
+            setSubscribers(prevSubcsribers => {
+                const index = prevSubcsribers.indexOf(streamManager, 0);
+                if (index > -1) {
+                    const ls = [...prevSubcsribers];
+                    ls.splice(index, 1);
+                    return ls;
+                }
+                return prevSubcsribers;
+            });
         }
-    }
+    }, []);
 
     const joinSession = (isAuthor) => {
-        const newOV = new OpenVidu();
-        const newSession = newOV.initSession();
+        const newSession = ov.current.initSession();
 
         // On every new Stream received...
         newSession.on('streamCreated', (event) => {
             // Subscribe to the Stream to receive it. Second parameter is undefined
             // so OpenVidu doesn't create an HTML video by its own
-            let subscriber = newSession.subscribe(event.stream, undefined);
-            
-            console.log('-------stream created--------');
-            if (subscriber) addSubscriber(subscriber.stream.streamManager);
-            // console.log(event.stream);
-            // console.log(subscriber);
-            // console.log(subscriber.stream);
+            const subscriber = newSession.subscribe(event.stream, undefined);
+            addSubscriber(subscriber);
         });
 
         // On every Stream destroyed...
@@ -171,7 +164,7 @@ const Stage = () => {
 
                 // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
                 // element: we will manage it on our own) and with the desired properties
-                let newPublisher = await newOV.initPublisherAsync(undefined, {
+                let newPublisher = await ov.current.initPublisherAsync(undefined, {
                     audioSource: undefined, // The source of audio. If undefined default microphone
                     videoSource: undefined, // The source of video. If undefined default webcam
                     publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
@@ -185,7 +178,7 @@ const Stage = () => {
                 newSession.publish(newPublisher);
 
                 // Obtain the current video device in use
-                var devices = await newOV.getDevices();
+                var devices = await ov.current.getDevices();
                 var videoDevices = devices.filter(device => device.kind === 'videoinput');
                 var currentVideoDeviceId = newPublisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
                 var currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
@@ -196,8 +189,7 @@ const Stage = () => {
                 // setPublisher(newPublisher);
                 addSubscriber(newPublisher);
                 
-                setOv(newOV);
-                dispatch(setSession(newSession));
+                setSession(newSession);
                 
                 // Set the main video in the page to display our webcam and store our Publisher
                 // this.setState({
@@ -212,124 +204,50 @@ const Stage = () => {
         });
     }
 
-    const leaveSession = async () => {
-        console.log(session);
+    const leaveSession = useCallback(() => {
+        console.log('--------leave--------');
         if (session) {
             session.disconnect();
         }
-
-        // Empty all properties...
-        setOv(null);
-        dispatch(setSession(undefined));
+        ov.current = new OpenVidu();
+        setSession(undefined);
         setSubscribers([]);
         setMainStreamManager(undefined);
         setPublisher(undefined);
-        console.log("cleaned!")
-        
-        try {
-            const response = await axios.post(API_BASE_URL + '/rooms/' + showData.user_id + '/disconnect', {}, {
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + userToken
-                },
-            });
-            console.log(response.data);
-            dispatch(setShowData({}));
-            return response.data; // NO CONTENT
-        }
-        catch (e) {
-            console.log(e);
-        }
-    }
 
-    const onBeforeUnload = () => {
-        console.log('------------clean up!------------');
-        leaveSession();
-    }
-
-    const handleMainVideoStream = (stream) => {
-        // if (this.state.mainStreamManager !== stream) {
-        //     this.setState({
-        //         mainStreamManager: stream
-        //     });
-        // }
-    }
-
-    const switchCamera = () => {
-        // try {
-        //     const devices = await this.OV.getDevices()
-        //     var videoDevices = devices.filter(device => device.kind === 'videoinput');
-
-        //     if (videoDevices && videoDevices.length > 1) {
-
-        //         var newVideoDevice = videoDevices.filter(device => device.deviceId !== this.state.currentVideoDevice.deviceId)
-
-        //         if (newVideoDevice.length > 0) {
-        //             // Creating a new publisher with specific videoSource
-        //             // In mobile devices the default and first camera is the front one
-        //             var newPublisher = this.OV.initPublisher(undefined, {
-        //                 videoSource: newVideoDevice[0].deviceId,
-        //                 publishAudio: true,
-        //                 publishVideo: true,
-        //                 mirror: true
-        //             });
-
-        //             //newPublisher.once("accessAllowed", () => {
-        //             await this.state.session.unpublish(this.state.mainStreamManager)
-
-        //             await this.state.session.publish(newPublisher)
-        //             this.setState({
-        //                 currentVideoDevice: newVideoDevice[0],
-        //                 mainStreamManager: newPublisher,
-        //                 publisher: newPublisher,
-        //             });
-        //         }
-        //     }
-        // } catch (e) {
-        //     console.error(e);
-        // }
-    }
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await axios.get(`${API_BASE_URL}/shows/${id}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + userToken
-                }
-            });
-            console.log(response.data);
-            dispatch(setShowData(response.data));
-        }
-        // if (!userToken) navigate('/login');
-        dispatch(setSession(undefined));
-        dispatch(setShowData({}));
-        fetchData();
-
-        // window.addEventListener('beforeunload', onBeforeUnload);
-        window.addEventListener('popstate', onBeforeUnload);
-        return () => {
-            if (session) {
-                session.disconnect();
+        const fetch = async () => {
+            try {
+                const response = await axios.post(API_BASE_URL + '/rooms/' + showData.user_id + '/disconnect', {}, {
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + userToken
+                    },
+                });
+                console.log(response.data);
+                setShowData({});
+                return response.data; // NO CONTENT
             }
-            // window.removeEventListener('beforeunload', onBeforeUnload); 
-            // window.removeEventListener('popstate', onBeforeUnload);
-        };
-    }, []);
+            catch (e) {
+                console.log(e);
+            }
+        }
+        fetch();
+    }, [session]);
 
     useEffect(() => {
-        console.log('------------session changed--------------')
-        console.log(prevSession.current);
-        if (prevSession.current) {
-            console.log('---------disconnect-----------');
-            prevSession.current.disconnect();
+        const handleBeforeUnload = (event) => {
+            leaveSession();
         }
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        // window.addEventListener('popstate', handleBeforeUnload);
+        window.onpopstate = handleBeforeUnload;
 
-        console.log(session);
-
-        prevSession.current = session;
-
-    }, [session]);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+            // window.removeEventListener('popstate', handleBeforeUnload);
+            // window.onpopstate = () => {}; 
+        }
+    }, [leaveSession]);
 
     return (
         <div className={styles.container}>

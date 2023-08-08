@@ -12,6 +12,8 @@ public interface SubscribeService {
 
     List<UserDto> getFollowers(Long userId);
 
+    boolean existsByFollowingId(Long userId, Long followingId);
+
     void deleteSubscribe(Long followerId, Long followingId);
 
 }

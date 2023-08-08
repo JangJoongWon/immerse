@@ -13,6 +13,7 @@ import com.sandcastle.immerse.repository.ShowRepository;
 import com.sandcastle.immerse.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class SearchServiceImpl implements SearchService {
     private final ShowRepository showRepository;
 
     @Override
+    @Transactional
     public void saveSearch(Long userId, SearchDto searchDto) {
 
         UserEntity userEntity = userRepository.findById(userId)
@@ -43,6 +45,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
+    @Transactional
     public List<SearchDto> findAllMySearchHistories(Long userId) {
 
         List<SearchEntity> searchEntityList = searchRepository.findAllByUserEntity_UserId(userId);
@@ -62,6 +65,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
+    @Transactional
     public List<UserDto> findAllUsersContainContent(String content) {
 
         List<UserEntity> userEntityList = userRepository.findByNicknameContains(content);
@@ -83,6 +87,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
+    @Transactional
     public List<ShowListResponse> findAllShowsContainContent(String content) {
 
         List<ShowEntity> showEntityList = showRepository.findByTitleContains(content);
@@ -91,8 +96,10 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
+    @Transactional
     public List<ShowListResponse> findAllShowsContainTag(String content) {
 
         return null;
     }
+
 }
