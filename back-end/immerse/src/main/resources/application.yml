@@ -1,0 +1,22 @@
+cloud:
+  aws:
+    credentials:
+      access-key: { }
+      secret-key: { }
+
+    region:
+      static : { }
+
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name : {}
+
+spring:
+  servlet:
+    multipart:
+      enable: true
+      file-size-threshold : 5MB
+      max-file-size : 10MB
