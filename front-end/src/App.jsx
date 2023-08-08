@@ -15,7 +15,7 @@ import Category from './pages/category/Category';
 import Checkpassword from './pages/checkpassword/CheckPassword';
 import NotFound from './pages/notfound/NotFound';
 import MyOption from './pages/myoption/MyOption';
-import Test from './components/inputpicture/test';
+// import Test from './components/inputpicture/test';
 import CameraTest from './pages/cameratest/CameraTest';
 
 function App() {
@@ -30,14 +30,27 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          {!token && <Route path="/login" element={<SignIn />} />}
-          {token && <Route path="/login" element={<Navigate to="/" replace />} />}
-          {!token && <Route path="/signup" element={<SignUp />} />}
-          {token && <Route path="/signup" element={<Navigate to="/" replace />} />}
+          {!token ? (
+            <Route path="/login" element={<SignIn />} />
+            ):(
+            <Route path="/login" element={<Navigate to="/" replace />} />
+          )}
+          {!token ? (
+            <Route path="/signup" element={<SignUp />} />
+            ):(
+            <Route path="/signup" element={<Navigate to="/" replace />} />
+          )}
 
-          {/* <Route path="/signup" element={<SignUp />} /> */}
+          {token ? (
+            <Route path="/stage/:id" element={<Stage />} />
+          ):(
+            <Route path="/stage/:id" element={<Navigate to="/login" replace />} />
+          )}
 
-          <Route path="/stage/:id" element={<Stage />} />
+          {/* {token && <Route path="/stage/:id" element={<Stage />} />}
+          {!token && <Route path="/stage/:id" element={<Navigate to="/login" replace />} />} */}
+          {/* <Route path="/stage/:id" element={<Stage />} /> */}
+
           <Route path="/mypage/:nickname" element={<Mypage />} />
           <Route path="/search/:word" element={<Search />} />
           <Route path="/category/:id" element={<Category />} />

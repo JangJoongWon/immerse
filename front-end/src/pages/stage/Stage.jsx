@@ -301,7 +301,7 @@ const Stage = () => {
             console.log(response.data);
             dispatch(setShowData(response.data));
         }
-        if (!userToken) navigate('/login');
+        // if (!userToken) navigate('/login');
         dispatch(setSession(undefined));
         dispatch(setShowData({}));
         fetchData();
