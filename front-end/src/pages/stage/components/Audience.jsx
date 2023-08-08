@@ -41,8 +41,13 @@ function Audience(props) {
                     return (
                         <div key={index} className={styles.gridItem}>
                             {/* <h1>{index}</h1> */}
-                            {/* Your grid content */}
-                            {index < props.subscribers.length ? (
+                            {/* 1번 인덱스는 공연자를 위한 공간으로 남겨두었기 때문에
+                                0번에서 2번으로 뛰어넘어야 함. 이 때 subscribers는 1번을 뛰어넘지 않음.
+                                index가 0이라면 그대로 0을 참조,
+                                index가 2 이상이라면 1을 뺀 값으로 참조하게 함.
+                                (!!index = 0 if index == 0 else 1)
+                            */}
+                            {index - !!index < props.subscribers.length ? (
                                 <div 
                                 // className="stream-container col-md-6 col-xs-6" 
                                 className={styles.streamcontainer}
