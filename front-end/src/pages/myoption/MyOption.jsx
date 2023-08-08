@@ -23,29 +23,30 @@ function MyOption() {
     setSelectTab(tab);
   };
 
-  const [name, setName] = useState('');
+  
   const [bannerPicture, setBannerPicture] = useState('string');
   const [profilePicture, setProfilePicture] = useState('string');
-  const [phoneNumber, setPhoneNumber] = useState('string');
+  const [name, setName] = useState('');
   const [nickname, setNickname] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
 
   
-
-  console.log(user)
-  console.log(user.phoneNumber)
+  // console.log(user)
+  // console.log(user.phoneNumber)
   function onSubmitHandler(){
+    console.log(name)
     console.log(nickname)
-    console.log(phoneNumber)
     console.log(selfDescription)
+
     const context = {
       name : name,
+      nickname: nickname,
       bannerPicture: bannerPicture,
       profilePicture: profilePicture,
-      nickname: nickname,
-      phoneNumber: phoneNumber,
       selfDescription: selfDescription,
     };
+ 
+
     //유저정보 수정 요청
     axios.put(TEST_URL + `/user/update/info`,context, {
       headers: { 
@@ -91,8 +92,8 @@ function MyOption() {
     setNickname(nickname)
   }
 
-  function onPhoneNumberChangeHandler(phoneNumber){
-    setPhoneNumber(phoneNumber)
+  function onNameChangeHandler(name){
+    setName(name)
   }
 
   function onSelfDescription(selfDescription){
@@ -123,16 +124,17 @@ function MyOption() {
             <Button 
             className={styles.button} 
             type="button" 
+            size="lg" onClick={() => changeSelectTab('Name')}>
+              이름
+            </Button>
+
+            <Button 
+            className={styles.button} 
+            type="button" 
             size="lg" onClick={() => changeSelectTab('NickName')}>
               닉네임
             </Button>
      
-            <Button 
-            className={styles.button} 
-            type="button" 
-            size="lg" onClick={() => changeSelectTab('CallNumber')}>
-              전화번호
-            </Button>
      
             <Button 
             className={styles.button} 
@@ -187,6 +189,19 @@ function MyOption() {
                 </Form.Group>
               )} */}
 
+              {(selectTab=='Name') && (
+                <Form.Group className={styles.callNumber}>
+                  <div>
+                    <Form.Control
+                      type="text"
+                      className={styles.input}
+                      placeholder={name}
+                      // value={phoneNumber}
+                      onChange={(e) => onNameChangeHandler(e.target.value)}
+                    />
+                  </div>
+                </Form.Group>
+              )}
               {(selectTab=='NickName') && (
                 <Form.Group className={styles.nickname}>
                   <div>
@@ -201,19 +216,6 @@ function MyOption() {
                 </Form.Group>
               )}
 
-              {(selectTab=='CallNumber') && (
-                <Form.Group className={styles.callNumber}>
-                  <div>
-                    <Form.Control
-                      type="text"
-                      className={styles.input}
-                      placeholder={phoneNumber}
-                      // value={phoneNumber}
-                      onChange={(e) => onPhoneNumberChangeHandler(e.target.value)}
-                    />
-                  </div>
-                </Form.Group>
-              )}
 
               {(selectTab=='SelfDescription') && (
                 <Form.Group className={styles.selfDescription}>

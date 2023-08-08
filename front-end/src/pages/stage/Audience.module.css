@@ -24,7 +24,8 @@
 }
 
 .gridItem {
-    background-color: lightgray;
+    box-shadow: 0 0 0.5rem white;
+    /* background-color: gray; */
     /* padding: 20px; */
   }
 
@@ -63,6 +64,11 @@ h1 {
 
 .optionbar {
     width: 200rem;
-    height: 5rem;
+    height: 5.5rem;
     background: rgba(217,217,217,0.73);
+}
+
+.w100h100 {
+    width: 100%;
+    height: 100%;
 }

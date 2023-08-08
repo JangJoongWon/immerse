@@ -3,11 +3,12 @@ import styles from './Audience.module.css'
 import { UserVideoComponent } from './video';
 // import { Row, Col} from 'react-bootstrap'
 import {useState} from 'react'
+import {Row,Col} from 'react-bootstrap'
+import { curtton, optionopen, optionclose } from '../../assets/icons/index';
 function Audience(props) {
     
   const [optionValue,setOptionValue] = useState(false)  
   
-
   const onClickChangeOption = ()=>{
     setOptionValue(!optionValue)
   }
@@ -30,7 +31,13 @@ function Audience(props) {
                                             <UserVideoComponent
                                                 streamManager={props.mainStreamManager} />
                                         </div>
-                                    ) : null}
+                                    ) : 
+                                        <div
+                                        className={styles.w100h100} >
+                                            <img
+                                            className={styles.w100h100}
+                                            src={curtton} alt="comming soon" />
+                                        </div>}
                             </div>
                             
                         );
@@ -66,17 +73,31 @@ function Audience(props) {
                     <div
                     onClick={onClickChangeOption}
                     >
-                    <div>
-                        <img 
-                        onClick={onClickChangeOption}
-                        src="../../../public/icons/OptionCloseButton.png" alt="OptionCloseButton" />
-                    </div>
+                     <div>
+                        <Row>
+                         <Col>
+
+                            <div
+                            // className={styles.w100h100}
+                            >
+                                <img 
+                                // className={styles.w100h100}
+                                onClick={onClickChangeOption}
+                                src={optionopen} alt="OptionCloseButton" 
+                                />
+                                
+                            </div>
+                         </Col>
+                        </Row>
+                     </div>
                     </div>
                 </div>
                 :
-                <img 
-                onClick={onClickChangeOption}
-                src="../../../public/icons/OptionOpenButton.png" alt="OptionOpenButton" />
+                <div>
+                    <img 
+                    onClick={onClickChangeOption}
+                src={optionopen} alt="OptionOpenButton" />
+                </div>    
                 }
             </div>
         </div>

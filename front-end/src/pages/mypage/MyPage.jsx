@@ -85,7 +85,7 @@ function MyPage() {
                   className={styles.username}
                 >
                   {user == null ? <span>user nickname</span> : <span>{user.nickname}</span>}
-                  <Link to="/checkpassword">
+                  <Link to="/MyOption">
                 <img 
                 src={settings} alt="setting" 
                 style={{width:"5%"}}

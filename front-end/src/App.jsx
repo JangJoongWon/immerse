@@ -40,7 +40,7 @@ function App() {
             <Route path="/mypage/:nickname" element={<Mypage />} />
             <Route path="/search/:word" element={<Search />} />
             <Route path="/category/:id" element={<Category />} />
-            <Route path="/checkpassword" element={<Checkpassword />} />
+            {/* <Route path="/checkpassword" element={<Checkpassword />} /> */}
             <Route path="/myoption" element={<MyOption />} />
             <Route path="/cameratest" element={<CameraTest />} />
             <Route path="/*" element={<NotFound />} />
