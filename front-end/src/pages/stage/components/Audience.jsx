@@ -49,7 +49,7 @@ function Audience(props) {
                                 // onClick={() => props.handleMainVideoStream(props.publisher)}
                                 >
                                     <UserVideoComponent
-                                        streamManager={props.subscribers[index]} />
+                                        streamManager={props.subscribers[index - !!index]} />
                                 </div>
                             ) : null}
                         </div>
