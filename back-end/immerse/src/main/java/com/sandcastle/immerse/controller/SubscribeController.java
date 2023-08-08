@@ -28,15 +28,22 @@ public class SubscribeController {
     // 사용자가 구독한 사람들 반환(follower의 following들을 반환)
     @GetMapping("/following/{userId}")
     public ResponseEntity<?> getFolloings(@PathVariable Long userId) {
-        List<UserDto> userEntityList = subscribeServiceImpl.getFollowings(userId);
-        return ResponseEntity.ok().body(userEntityList);
+        List<UserDto> userDtoList = subscribeServiceImpl.getFollowings(userId);
+        return ResponseEntity.ok().body(userDtoList);
     }
 
     // 사용자를 구독한 사람들 반환(following의 follower들을 반환)
     @GetMapping("/follower/{userId}")
     public ResponseEntity<?> getFollowers(@PathVariable Long userId) {
-        List<UserDto> userEntityList = subscribeServiceImpl.getFollowers(userId);
-        return ResponseEntity.ok().body(userEntityList);
+        List<UserDto> userDtoList = subscribeServiceImpl.getFollowers(userId);
+        return ResponseEntity.ok().body(userDtoList);
+    }
+
+    @GetMapping("/check/{followingId}")
+    public ResponseEntity<?> existsByFollowingId(Authentication authentication, @PathVariable Long followingId) {
+        Long userId = Long.valueOf(authentication.getName());
+        boolean check = subscribeServiceImpl.existsByFollowingId(userId, followingId);
+        return ResponseEntity.ok().body(check);
     }
 
     @DeleteMapping("")
