@@ -56,14 +56,14 @@ function SearchResult({word}) {
             event.preventDefault();
             handleLiveButtonClick();
             }}
-            style = {liveState ? {color:'#0d6efd'} : {color:'white'}}
+            style = {liveState ? {color:'#8b00ff'} : {color:'white'}}
             >공연</a>
 
             <a href="/" onClick={(event) => {
             event.preventDefault();
             handleChannelButtonClick();
             }}
-            style = {liveState ? {color:'white'} : {color:'#0d6efd'}}
+            style = {liveState ? {color:'white'} : {color:'#8b00ff'}}
             >채널</a>
             </ul>
         </div>

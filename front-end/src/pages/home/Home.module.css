@@ -1,13 +1,28 @@
-  .container {
-      /* padding-top: 10px; */
-      background-color: #1a1b1e;
-      width: 100%;
-      padding-bottom: 50px;
-    }
-  
-  .contents {
-    width: 100%;
-  }
+.container {
+  position: relative;
+  background-color: #1a1b1e;
+  width: 100%;
+  height: 90vh;
+  overflow: hidden; /* Prevents scroll on this container */
+}
+
+.body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.contents {
+  width: 100%;
+}
+
   
   .banner {
     width: 100%;
@@ -49,6 +64,18 @@
     right: 0px;
     margin-bottom: 40px;
     margin-right: 50px;
+  }
+
+  .makeButton {
+    background-color: #8b00ff;
+    border: #8b00ff;
+    width: 200px;
+    height: 50px;
+  }
+
+  .makeButton:hover {
+    background-color: #8b00ff;
+    border: #8b00ff;
   }
 
   

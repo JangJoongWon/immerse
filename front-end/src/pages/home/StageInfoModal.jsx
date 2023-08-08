@@ -73,15 +73,21 @@ function StageInfoModal({ show, onHide, data }) {
             <Col xs={6}>
               <div className={styles.right}>
                 <div className={styles.text}>
-                  <h1>{data.title}</h1>
-                  <p>{data.nickname}</p>
-                  <p>{data.startTime}~{data.endTime}</p>
-                  <p>{data.date}</p>
+                  <h1 style={{color:'black'}}>{data.title}</h1>
+                  <p style={{fontWeight:'900'}}>공연자 : {data.nickname}</p>
+                  {data.startTime && data.endTime ? (
+                    <p>{data.startTime}~{data.endTime}</p>
+                  ):(
+                    <></>
+                  )}
+                  {data.date ? (
+                    <p>{data.date}</p>
+                  ):(
+                    <></>
+                  )}
                   <p>{data.description}</p>
-                  <p>{data.price}</p>
-                  <p>{data.attendancLimit}</p>
-                  <p>{data.maxAttendance}</p>
-                  <p>{data.category_id}</p>
+                  <p>가격 : {data.price}</p>
+                  <p>최대 인원 : {data.attendancLimit}</p>
 
                   {data.showProgress === 'SCHEDULED' ? (
                     user && user.nickname ? (

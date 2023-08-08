@@ -33,12 +33,11 @@ function Card({ data }) {
         </div>
         <header>
             <div className={styles.channelcard}>
-                <h1>{data.nickname}</h1>
-                <h2>{data.email} | {data.point}</h2>
-                <h3>{data.selfDescription}</h3>
+                <h4 style={{color: 'white'}}>{data.nickname}</h4>
+                <p>{data.selfDescription}</p>
             </div>
             <div>
-                <Button>구독 버튼</Button>
+                <Button>구독</Button>
             </div>
         </header>
       </div>
