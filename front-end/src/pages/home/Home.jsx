@@ -111,8 +111,7 @@ function Home() {
                   onHide={() => setMakeStageOn(false)}
                 />
                 <Button
-                  className='makeButton'
-                  variant="primary"
+                  className={styles.makeButton}
                   onClick={openMakeStage}
                 >
                   방만들기

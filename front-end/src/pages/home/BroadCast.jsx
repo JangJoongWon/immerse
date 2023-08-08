@@ -14,16 +14,9 @@ function Card({ data }) {
   const navigate = useNavigate()
 
   const categoryMap = useSelector(state => state.category.categoryMap);
-  const token = useSelector(state => state.user.token)
 
   const openStageInfo = async (event) => {
     event.preventDefault();
-  
-    // if (!token) {
-    //   alert('로그인이 필요합니다.');
-    //   navigate('/login');
-    //   return;
-    // }
   
     try {
       const response = await axios.get(`${API_BASE_URL}/shows/${data.showId}`);

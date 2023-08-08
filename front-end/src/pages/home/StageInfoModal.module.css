@@ -32,12 +32,12 @@
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
 }
 
-.texts{
+.text{
     border: 1px solid green;
     width: 90%;
-    height: 90%;
+    margin: 20px;
 }

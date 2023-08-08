@@ -47,10 +47,6 @@ function App() {
             <Route path="/stage/:id" element={<Navigate to="/login" replace />} />
           )}
 
-          {/* {token && <Route path="/stage/:id" element={<Stage />} />}
-          {!token && <Route path="/stage/:id" element={<Navigate to="/login" replace />} />} */}
-          {/* <Route path="/stage/:id" element={<Stage />} /> */}
-
           <Route path="/mypage/:nickname" element={<Mypage />} />
           <Route path="/search/:word" element={<Search />} />
           <Route path="/category/:id" element={<Category />} />

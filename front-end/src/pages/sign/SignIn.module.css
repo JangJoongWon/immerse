@@ -7,7 +7,6 @@
   }
 
 .signinbox {
-    /* border: 1px solid white; */
     width: 50%;
     display: flex;
     justify-content: center;
@@ -26,26 +25,14 @@
 }
 
 .boxcontent {
-    /* border : 1px solid white; */
     flex: 0.8;
     margin-top: 10%;
     margin-bottom: 10%;
-    /* background-color: #202027; */
 }
 
-/* @media (max-width: 1000px) {
-    .boxcontent {
-      flex: 0.8;
-    }
-  } */
-
 .title {
-    /* display: flex;
-    justify-content: start; */
     margin-left: 10%;
     margin-bottom: 5%;
-    /* border-bottom: 1px solid white; */
-    /* background-color: rgb(130, 130, 130); */
 }
 
 .title h3{
@@ -63,11 +50,9 @@
 
 .loginform {
     width: 80%;
-    /* border: 1px solid red; */
 }
 
 .inputbox {
-    /* border: 1px solid green; */
     margin-bottom: 5%;
 }
 
@@ -85,13 +70,13 @@
 
 .loginButton {
   width: 100%;
-  background-color: orange;
-  border: orange;
+  background-color: #8b00ff;
+  border: #8b00ff;
 }
 
 .loginButton:hover {
-  background-color: orange;
-  border: orange;
+  background-color: #8b00ff;
+  border: #8b00ff;
 }
 
 .tosignup span{
@@ -99,4 +84,5 @@
 }
 .tosignup a{
   text-decoration: none;
+  color: #8b00ff;
 }
