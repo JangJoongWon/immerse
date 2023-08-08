@@ -2,7 +2,7 @@ package com.sandcastle.immerse.model.entity;
 
 import javax.persistence.Entity;
 
-@Entity
+//@Entity
 public class UserEffectEntity {
 
 }

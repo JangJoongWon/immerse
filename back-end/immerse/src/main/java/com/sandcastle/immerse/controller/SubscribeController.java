@@ -39,6 +39,13 @@ public class SubscribeController {
         return ResponseEntity.ok().body(userDtoList);
     }
 
+    @GetMapping("/check/{followingId}")
+    public ResponseEntity<?> existsByFollowingId(Authentication authentication, @PathVariable Long followingId) {
+        Long userId = Long.valueOf(authentication.getName());
+        boolean check = subscribeServiceImpl.existsByFollowingId(userId, followingId);
+        return ResponseEntity.ok().body(check);
+    }
+
     @DeleteMapping("")
     public ResponseEntity<?> deleteSubscribe(Authentication authentication, Long followingId) {
         Long followerId = Long.valueOf(authentication.getName());
