@@ -6,6 +6,7 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import lombok.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +42,8 @@ public class SwaggerdocsConfig {
         addSecurityItem.addList("JWT");
 
         return new OpenAPI()
+                .addServersItem(new Server().url("https://i9d203.p.ssafy.io:8080"))
+                .addServersItem(new Server().url("https://localhost:8080"))
                 // Security 인증 컴포넌트 설정
                 .components(new Components().addSecuritySchemes("JWT", bearerAuth))
                 // API 마다 Security 인증 컴포넌트 설정
