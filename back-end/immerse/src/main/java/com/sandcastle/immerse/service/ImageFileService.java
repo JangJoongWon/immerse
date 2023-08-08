@@ -3,7 +3,10 @@ package com.sandcastle.immerse.service;
 import com.sandcastle.immerse.model.dto.ImageFileDto;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+
 public interface ImageFileService {
 
-    public void uploadImageFile(MultipartFile file) throws Exception;
+    @Transactional
+    public Long uploadImageFile(MultipartFile file) throws Exception;
 }
