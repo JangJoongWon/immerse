@@ -278,10 +278,11 @@ const Stage = () => {
                         publisher={publisher}
                         mainStreamManager={mainStreamManager}
                         subscribers={subscribers}
+                        leaveSession={leaveSession}
                         />
                 )
             : null}
-            <Button onClick={leaveSession}>Leave</Button>
+            {/* <Button onClick={leaveSession}>Leave</Button> */}
         </div>
     );
 }

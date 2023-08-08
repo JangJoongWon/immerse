@@ -1,8 +1,9 @@
 import {useState} from 'react'
 import styles from './AudienceOption.module.css'
-import { videooffoption, videoonoption, effectoption, speackeroffoption, speackeronoption, micoffoption, miconoption} from '../../../../assets/icons/index'
+import { exit, videooffoption, videoonoption, effectoption, speackeroffoption, speackeronoption, micoffoption, miconoption} from '../../../../assets/icons/index'
 function AudienceOption(props) {
   console.log('props:',props)
+  console.log(props.leaveSession)
   const [videoEnable,setVideoEnable] = useState(true)
   const [audioEnable,setAudioEnable] = useState(true)
   const [micEnable,setMicEnable] = useState(true)
@@ -28,47 +29,80 @@ function AudienceOption(props) {
       >
         { videoEnable
          ? 
-         <img
-          className={styles.img}
-          onClick={onChangeVideoHandler}
-          src={videoonoption} alt="videoonoption" />
+         <div
+         className={styles.imgbox}
+         >
+           <img
+            style={{height:"70%",margin:"auto 1.5px"}}
+            className={styles.img}
+            onClick={onChangeVideoHandler}
+            src={videoonoption} alt="videoonoption" />
+         </div>
          :
-         <img 
-         className={styles.img}
-         onClick={onChangeVideoHandler}
-         src={videooffoption} alt="videooffoption" />
+         <div
+         className={styles.imgbox}
+         >
+           <img 
+           className={styles.img}
+           onClick={onChangeVideoHandler}
+           src={videooffoption} alt="videooffoption" />
+         </div>
          }
         {
           audioEnable
           ?
-          <img
-          className={styles.img}
-          onClick={onChangeAudioHandler}
-          src={speackeronoption} alt="speackeronoption" />
+          <div
+          className={styles.imgbox}>
+            <img
+            className={styles.img}
+            onClick={onChangeAudioHandler}
+            src={speackeronoption} alt="speackeronoption" />
+          </div>
           :
-          <img
-          className={styles.img}
-          onClick={onChangeAudioHandler}
-          src={speackeroffoption} alt="speackeroffoption" />
+          <div
+          className={styles.imgbox}>
+            <img
+            className={styles.img}
+            onClick={onChangeAudioHandler}
+            src={speackeroffoption} alt="speackeroffoption" />
+          </div>
         }
         
         {
           micEnable
           ?
-          <img
-          className={styles.img}
-          onClick={onChangeMicHandler}
-          src={miconoption} alt="miconoption" />
+          <div
+          className={styles.imgbox}>
+            <img
+            className={styles.img}
+            style={{margin:'0 6px'}}
+            onClick={onChangeMicHandler}
+            src={miconoption} alt="miconoption" />
+          </div>
           :
-          <img
-          className={styles.img}
-          onClick={onChangeMicHandler}
-          src={micoffoption} alt="micoffoption" />
+          <div
+          className={styles.imgbox}>
+            <img
+            className={styles.img}
+            onClick={onChangeMicHandler}
+            src={micoffoption} alt="micoffoption" />
+          </div>
         }
         
-        <img 
+        <div
+        className={styles.imgbox}>
+          <img 
+            className={styles.img}
+          src={effectoption} alt="effectoption" />
+        </div>
+
+        <div
+        className={styles.imgbox}>
+          <img
+          onClick={props.leaveSession} 
           className={styles.img}
-        src={effectoption} alt="effectoption" />
+          src={exit} alt="exit" />
+        </div>
       </div>
     </div>
   )

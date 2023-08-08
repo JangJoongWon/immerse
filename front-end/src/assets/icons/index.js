@@ -14,5 +14,7 @@ import speackeroffoption from './SpeakerOffOption.png';
 import speackeronoption from './SpeakerOnOption.png';
 import micoffoption from './MicOffOption.png';
 import miconoption from './MicOnOption.png';
+import exit from './exit.png'
 
 export { camOn, camOff, settings, micOff, micOn, chatOn, optionOn, optionOff, curtton, videooffoption, videoonoption, effectoption, speackeroffoption, speackeronoption, micoffoption, miconoption }
+export { exit }

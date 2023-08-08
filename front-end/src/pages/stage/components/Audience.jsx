@@ -6,10 +6,9 @@ import {useState} from 'react'
 import { chatOn, optionOn, optionOff, curtton } from '/src/assets/icons'
 import AudienceOption from './audienceoption/AudienceOption'
 
-function Audience(props) {
-    
+function Audience(props) { 
   const [optionValue,setOptionValue] = useState(false)  
-  
+  console.log(props.leaveSession)
 
   const onClickChangeOption = ()=>{
     setOptionValue(!optionValue)
@@ -82,7 +81,9 @@ function Audience(props) {
                 className={styles.optionbar}>
                     <div>
                         <div>
-                            <AudienceOption props={props}/>
+                            <AudienceOption 
+                            leaveSession={props.leaveSession}                            
+                            props={props.subscribers}/>
                         </div>
                         <div>
                             <img 
