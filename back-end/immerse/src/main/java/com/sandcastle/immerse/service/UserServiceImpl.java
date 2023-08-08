@@ -160,10 +160,12 @@ public class UserServiceImpl implements UserService {
                 });
 
         // nickname 중복 검사
-        userRepository.findByNickname(userDto.getNickname())
-                .ifPresent(user -> {
-                    throw new AppException(ErrorCode.NICKNAME_DUPLICATED, "이미 사용중인 닉네임입니다.");
-                });
+        if(!userDto.getNickname().equals(userEntity.getNickname())) {
+            userRepository.findByNickname(userDto.getNickname())
+                    .ifPresent(user -> {
+                        throw new AppException(ErrorCode.NICKNAME_DUPLICATED, "이미 사용중인 닉네임입니다.");
+                    });
+        }
 
         /**
          * 더티체킹으로 변경시 entity에 @NotNull이 설정되어있어도 값이 null로 수정 되어버린다.
