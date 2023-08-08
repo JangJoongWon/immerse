@@ -37,8 +37,9 @@
 }
 
 .title {
-  display: flex;
-  justify-content: center;
+  /* display: flex;
+  justify-content: center; */
+  margin-left: 5%;
 }
 
 .title h3 {

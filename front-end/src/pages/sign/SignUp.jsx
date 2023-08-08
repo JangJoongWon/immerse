@@ -109,7 +109,7 @@ function SignUp() {
 
       try {
         const response = await axios.post('https://i9d203.p.ssafy.io/api/user/signup', data);
-        console.log(data)
+        // console.log(data)
         console.log('Signup success:', response.data);
         try {
           // 서버로 이메일과 비밀번호를 전송하여 토큰 받기
@@ -128,7 +128,11 @@ function SignUp() {
         }
 
       } catch (error) {
-        console.log('Signup failed:', error.message);
+        if (error.response && error.response.data.indexOf('이미 사용중인 아이디입니다') !== -1) {
+          alert('이미 사용중인 이메일입니다');
+        } else {
+          console.log('Signup failed:', error.response ? error.response.data : error.message);
+        }
       }
     };
 
@@ -145,7 +149,6 @@ function SignUp() {
       }
     };
     
-
     const isSubmitButtonActive =
     isEmailValid(email) &&
     isPasswordValid(password1) &&
@@ -156,7 +159,6 @@ function SignUp() {
     isPhoneValid(phone) &&
     isBirthValid(birth);
 
-
   return (
     <div className={styles.container}>
       <div className={styles.signupbox}>        
@@ -165,7 +167,7 @@ function SignUp() {
               <div className={styles.title}>
                 <div>
                   <h3>회원가입</h3>
-                  <p>가입을 통해 더 다양한 서비스를 만나보세요</p>
+                  <p>가입을 통해 공연을 즐겨보세요</p>
                 </div>
               </div>
 
@@ -174,11 +176,6 @@ function SignUp() {
                   onSubmit={onSubmitHandler}>
                       <div className={styles.body}>
                         <Form.Group className={styles.inputform}>
-                          {/* <div
-                            className={styles.error}
-                            style={{ color: isEmailValid(email) ? 'blue' : 'red' }}>
-                            Email
-                          </div> */}
                           <span>메일</span>
                           {isEmailValid(email) ? (
                             <></>
@@ -188,7 +185,6 @@ function SignUp() {
                               <span>메일 형식을 확인해주세요</span>
                             </div>
                           )}
-                          <div className={styles.mailCheck}>
                             <Form.Control
                             className={styles.inputbox}
                             type="email"
@@ -196,16 +192,8 @@ function SignUp() {
                             value={email}
                             onChange={handleEmailChange}
                             />
-                            <Button>확인</Button>
-                          </div>
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
-                          {/* <div
-                            className={styles.error}
-                            style={{ color: isPasswordValid(password1) ? 'blue' : 'red' }}
-                          >
-                            Password 
-                          </div> */}
                           <span>비밀번호</span>
                           {isPasswordValid(password1) ? (
                             <></>
@@ -229,12 +217,6 @@ function SignUp() {
                           />
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
-                          {/* <div
-                            className={styles.error}
-                            style={{ color: isPassword2Valid(password2) ? 'blue' : 'red' }}
-                          >
-                            Password
-                          </div> */}
                           <span>비밀번호 확인</span>
                           {isPassword2Valid(password2) ? (
                             <></>
@@ -253,12 +235,6 @@ function SignUp() {
                           />
                         </Form.Group>
                         <Form.Group  className={styles.inputform}>
-                          {/* <div
-                            className={styles.error}
-                            style={{ color: isGenderValid(gender) ? 'blue' : 'red' }}
-                          >
-                            Gender
-                          </div> */}
                           <span>성별</span>
                           {isGenderValid(gender) ? (
                             <></>
@@ -277,12 +253,6 @@ function SignUp() {
                           </Form.Select>
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
-                          {/* <div
-                            className={styles.error}
-                            style={{ color: isNameValid(name) ? 'blue' : 'red' }}
-                          >
-                            Name
-                          </div> */}
                           <span>이름</span>
                           {isNameValid(name) ? (
                             <></>
@@ -301,12 +271,6 @@ function SignUp() {
                           />
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
-                          {/* <div
-                            className={styles.error}
-                            style={{ color: nickCheck ? 'blue' : 'red' }}
-                          >
-                            NickName
-                          </div> */}
                           <span>별병</span>
                           {nickCheck ? (
                             <></>
@@ -330,12 +294,6 @@ function SignUp() {
                           </div>
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
-                          {/* <div
-                            className={styles.error}
-                            style={{ color: isPhoneValid(phone) ? 'blue' : 'red' }}
-                          >
-                            PhoneNumber
-                          </div> */}
                           <span>전화번호</span>
                           {isPhoneValid(phone) ? (
                             <></>
@@ -359,12 +317,6 @@ function SignUp() {
                           />
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
-                          {/* <div
-                            className={styles.error}
-                            style={{ color: isBirthValid(birth) ? 'blue' : 'red' }}
-                          >
-                            Birth
-                          </div> */}
                           <span>생년월일</span>
                           {isBirthValid(birth) ? (
                             <></>
