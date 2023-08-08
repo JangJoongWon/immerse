@@ -29,23 +29,10 @@ const Stage = () => {
 
     const isAuthor = () => user.nickname === showData.nickname; // session id는 공연자의 id로 설정
 
-    const fetchData = async () => {
-        const response = await axios.get(`${API_BASE_URL}/shows/${id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + userToken
-            }
-        });
-        setShowData(response.data);
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     const getToken = async (isAuthor) => {
         try {
-            const sessionId = await (isAuthor ? createSession(showData.user_id + '') : fetchSession(showData.user_id + ''));
+            // const sessionId = await (isAuthor ? createSession(showData.user_id + '') : fetchSession(showData.user_id + ''));
+            const sessionId = await fetchSession(showData.user_id + '');
             return await createToken(sessionId);
         }
         catch (e) {
@@ -189,6 +176,7 @@ const Stage = () => {
                 var currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
 
                 console.log(newPublisher);
+                console.log(showData);
                 // if (user.nickname === id)
                 //     setMainStreamManager(newPublisher);
                 // setPublisher(newPublisher);
@@ -229,7 +217,7 @@ const Stage = () => {
                     },
                 });
                 console.log(response.data);
-                setShowData({});
+                // setShowData({});
                 return response.data; // NO CONTENT
             }
             catch (e) {
@@ -238,6 +226,32 @@ const Stage = () => {
         }
         fetch();
     }, [session]);
+
+    const popState = () => {
+        leaveSession();
+        navigate(-1);
+    }
+
+    const fetchData = async () => {
+        const response = await axios.get(`${API_BASE_URL}/shows/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + userToken
+            }
+        });
+        console.log(response.data);
+        setShowData(response.data);
+        // joinSession(false); // 방에 들어오면 바로 시작. 임시로 false 할당
+    }
+    
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (showData)
+            joinSession(false);
+    }, [showData]);
 
     useEffect(() => {
         const handleBeforeUnload = (event) => {
@@ -256,14 +270,14 @@ const Stage = () => {
 
     return (
         <div className={styles.container}>
-            {session === undefined ? (
+            {/* {session === undefined ? (
                 <div id="join">
                     <StageInfo 
                     showData={showData}
                     joinSession={joinSession}
                     />
                 </div>
-            ) : null}
+            ) : null} */}
             {session !== undefined ?
                  isAuthor() ? 
                      (
@@ -280,8 +294,12 @@ const Stage = () => {
                         subscribers={subscribers}
                         />
                 )
-            : null}
-            <Button onClick={leaveSession}>Leave</Button>
+            : (
+                <div>
+                    <h1>Loading...</h1>
+                </div>
+            )}
+            <Button onClick={popState}>Leave</Button>
         </div>
     );
 }
