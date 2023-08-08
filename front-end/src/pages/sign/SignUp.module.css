@@ -84,7 +84,6 @@
 }
 
 .inputbox {
-    border: 1px solid green;
     margin-bottom: 10px;
     width: 100%;
 }
@@ -108,7 +107,31 @@
 .nickCheck Button{
     width: 30%;
     height: 40px;
+    background-color: #8b00ff;
+    border: #8b00ff;
 }
+
+.nickCheck Button:hover {
+  background-color: #8b00ff;
+  border: #8b00ff;
+}
+
+.submitbutton Button {
+  background-color: #8b00ff;
+  border: #8b00ff;
+}
+.submitbutton Button:hover {
+  background-color: #8b00ff;
+  border: #8b00ff;
+}
+
+.submitbutton Button:disabled {
+  background-color: #8b00ff;
+  border: #8b00ff;
+}
+
+
+
 
 .mailCheck {
   display: flex;

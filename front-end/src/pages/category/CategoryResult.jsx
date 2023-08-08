@@ -45,7 +45,7 @@ function CategoryResult({ id }) {
             <div key={item.categoryId}>
               <a
                 href="/"
-                style={{ color: item.categoryId === nowSelected ? '#0d6efd' : 'white' }}
+                style={{ color: item.categoryId === nowSelected ? '#8b00ff' : 'white' }}
                 onClick={(event) => {
                   event.preventDefault();
                   toCategory(item.categoryId);

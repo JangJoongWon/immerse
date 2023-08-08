@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    border: 1px solid green;
+    /* border: 1px solid green; */
     color: white;
     position: relative;
     transition: opacity 1s ease;
@@ -19,7 +19,7 @@
   
   .thumbnail {
     width: 100%;
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     border-radius: 20px;
   }
   
@@ -65,7 +65,7 @@
   
   .tagbutton {
     text-decoration: none;
-
+    color: #8b00ff;
   }
 
 
