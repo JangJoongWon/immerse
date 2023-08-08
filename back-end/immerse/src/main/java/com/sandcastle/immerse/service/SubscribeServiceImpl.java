@@ -99,6 +99,12 @@ public class SubscribeServiceImpl implements SubscribeService {
 
     @Override
     @Transactional
+    public boolean existsByFollowingId(Long userId, Long followingId) {
+        return subscribeRepository.existsByFollowingId(userId, followingId);
+    }
+
+    @Override
+    @Transactional
     public void deleteSubscribe(Long followerId, Long followingId) {
 
         subscribeRepository.deleteByFollwerFollowing(followerId, followingId);
