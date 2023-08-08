@@ -2,7 +2,9 @@ package com.sandcastle.immerse.model.dto.show;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.sandcastle.immerse.model.dto.ShowTagDto;
 import com.sandcastle.immerse.model.entity.ShowEntity;
 
 import lombok.Data;
@@ -45,6 +47,8 @@ public class ShowRequest {
 	private Long categoryId;
 
 	private Long userId;
+
+	private List<ShowTagDto> showTagDtoList;
 
 	/**
 	 * 작성자: 주재홍
