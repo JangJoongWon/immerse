@@ -42,3 +42,4 @@ ssafy-web.log.*.gz
 
 # Ignore Spring application.yml configuration file
 /src/main/resources/application.yml
+*.yml
