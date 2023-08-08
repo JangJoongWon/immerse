@@ -1,0 +1,23 @@
+.img {
+    width: auto;
+}
+
+.imgbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+}
+
+.buttonbox{
+    width: 60%;
+    display: flex;
+    justify-content: space-evenly;
+
+}

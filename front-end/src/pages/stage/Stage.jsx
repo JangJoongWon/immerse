@@ -268,7 +268,6 @@ const Stage = () => {
                     <h1>Loading...</h1>
                 </div>
             )}
-            <Button onClick={popState}>Leave</Button>
             {/* <Button onClick={muteAllCams}>Mute</Button> */}
         </div>
     );
