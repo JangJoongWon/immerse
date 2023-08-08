@@ -7,18 +7,16 @@ import logger from 'redux-logger';
 
 import userSlice from './userSlice';
 import categorySlice from './categorySlice';
-import sessionSlice from './sessionSlice';
 
 const reducers = combineReducers({
     user: userSlice.reducer,
-    category: categorySlice.reducer,
-    session: sessionSlice.reducer
+    category: categorySlice.reducer
 })
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['user', 'category', 'session']
+    whitelist: ['user', 'category']
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

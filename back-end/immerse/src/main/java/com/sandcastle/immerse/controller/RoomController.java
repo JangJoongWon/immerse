@@ -6,9 +6,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.PostConstruct;
 
+import com.sandcastle.immerse.model.entity.ShowEntity;
+import com.sandcastle.immerse.service.ShowService;
+import lombok.RequiredArgsConstructor;
+import org.apache.http.annotation.Obsolete;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +33,7 @@ import io.openvidu.java.client.SessionProperties;
 
 @RestController
 @RequestMapping("/rooms")
-@CrossOrigin("*")
+@RequiredArgsConstructor
 public class RoomController {
 
 	@Value("${OPENVIDU_URL}")
@@ -45,6 +50,8 @@ public class RoomController {
 	 */
 	private Map<String, Room> rooms;
 
+	private final ShowService showService;
+
 	@PostConstruct
 	public void init() {
 		this.ov = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
@@ -52,8 +59,9 @@ public class RoomController {
 	}
 
 	/**
-	 * 방을 처음 만들 때 호출하는 함수
-	 * 공연자가 방에 connect 하기 전 호출함
+	 * 방을 처음 만들거나 연결하기 전 호출하는 함수
+	 * 방의 정보를 fetch함
+	 * 공연자 혹은 관객이 방에 connect 하기 전 호출하여 정보를 갱신
 	 * @param params
 	 * @return
 	 * @throws OpenViduJavaClientException
@@ -63,37 +71,19 @@ public class RoomController {
 	public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
 		throws OpenViduJavaClientException, OpenViduHttpException {
 		String sessionId = params.get("customSessionId").toString();
-		if (rooms.containsKey(sessionId)) {
-			return new ResponseEntity<>("이미 존재하는 이름입니다.", HttpStatus.CONFLICT);
+
+		SessionProperties properties = SessionProperties.fromJson(params).build();
+		Session session = ov.createSession(properties);
+
+		/**
+		 * 아무나 한 명이라도 들어오면 session 정보를 맵에 넣음
+		 */
+		if (!rooms.containsKey(sessionId)) {
+			rooms.put(sessionId, Room.builder()
+					.connections(0)
+					.maxConnections(0)
+					.build());
 		}
-
-		SessionProperties properties = SessionProperties.fromJson(params).build();
-		Session session = ov.createSession(properties);
-
-		rooms.put(sessionId, Room.builder()
-				.artist("anonymous")
-				.connections(0)
-				.build());
-
-		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
-	}
-
-	/**
-	 * 방의 정보를 fetch함
-	 * 관객이 방에 connect 하기 전 호출하여 정보를 갱신
-	 * @param sessionId
-	 * @param params
-	 * @return
-	 * @throws OpenViduJavaClientException
-	 * @throws OpenViduHttpException
-	 */
-	@PostMapping("/{sessionId}/fetch")
-	public ResponseEntity<String> fetchSession(@PathVariable("sessionId") String sessionId,
-			@RequestBody(required = false) Map<String, Object> params)
-			throws OpenViduJavaClientException, OpenViduHttpException {
-
-		SessionProperties properties = SessionProperties.fromJson(params).build();
-		Session session = ov.createSession(properties);
 
 		return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
 	}
@@ -131,14 +121,20 @@ public class RoomController {
 	 * @throws OpenViduHttpException
 	 */
 	@PostMapping("/{sessionId}/terminate")
-	public ResponseEntity<String> terminateConnection(@PathVariable("sessionId") String sessionId,
-		@RequestBody(required = false) Map<String, Object> params)
-		throws OpenViduJavaClientException, OpenViduHttpException {
+	public ResponseEntity<String> terminateConnection(
+		@PathVariable("sessionId") String sessionId,
+		@RequestBody(required = false) Map<String, Object> params,
+		Authentication authentication
+	) throws OpenViduJavaClientException, OpenViduHttpException, IllegalArgumentException {
+		Long userId = Long.valueOf(authentication.getName());
+
 		Session session = ov.getActiveSession(sessionId);
 		if (session == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		if (rooms.containsKey(sessionId)) {
+			// 공연자 본인일 때만 최고 관객수를 갱신하도록 함
+			showService.updateMaxAttendance(Long.valueOf(sessionId), userId, rooms.get(sessionId).getMaxConnections());
 			rooms.remove(sessionId);
 		}
 
@@ -150,19 +146,13 @@ public class RoomController {
 		@RequestBody(required = false) Map<String, Object> params)
 		throws OpenViduJavaClientException, OpenViduHttpException {
 		Session session = ov.getActiveSession(sessionId);
-		System.out.println(session);
-		System.out.println("---------disconnect---------");
+
 		if (session == null) {
-			System.out.println(sessionId + " terminated");
 			if (rooms.containsKey(sessionId)) {
 				rooms.remove(sessionId);
 			}
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		// session.fetch();
-		// List<Connection> connections = session.getActiveConnections();
-		// System.out.println(connections.size());
-		// if (session.getActiveConnections().size() == 0)
 		if (rooms.containsKey(sessionId)) {
 			rooms.get(sessionId).decreaseConnection();
 			if (rooms.get(sessionId).getConnections() == 0)
