@@ -117,6 +117,7 @@ public class ShowController {
 	public ResponseEntity<?> finishShow(@PathVariable Long show_id, Authentication auth) {
 		Long user_id = Long.valueOf(auth.getName());
 		showService.finishShow(show_id, user_id);
+		showTagService.deleteShowTag(show_id);
 
 		return ResponseEntity.ok().body("show finished successfully.");
 	}
