@@ -36,7 +36,12 @@ const Stage = () => {
                 'Authorization': 'Bearer ' + userToken
             }
         });
+        setShowData(response.data);
     }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const getToken = async (isAuthor) => {
         try {
