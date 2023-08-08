@@ -43,6 +43,7 @@ public class SwaggerdocsConfig {
 
         return new OpenAPI()
                 // http 및 Local Server 추가
+                .addServersItem(new Server().url("http://i9d203.p.ssafy.io:8080"))
                 .addServersItem(new Server().url("https://i9d203.p.ssafy.io:8080"))
                 .addServersItem(new Server().url("https://localhost:8080"))
                 // Security 인증 컴포넌트 설정
