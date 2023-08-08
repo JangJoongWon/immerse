@@ -59,19 +59,19 @@ public class ShowController {
 
 	@ResponseBody
 	@PostMapping("/")
-	public Long postShow(@RequestBody ShowRequest form, @RequestBody(required = false) List<ShowTagDto> showTagDtoList, Authentication auth) {
+	public Long postShow(@RequestBody ShowRequest form, Authentication auth) {
 		Long userId = Long.valueOf(auth.getName());
 		System.out.println("userId = " + userId);
 		form.setUserId(userId);
 		Long showId = showService.postShow(form);
-		showTagService.saveAllShowTag(showId , showTagDtoList);
+		showTagService.saveAllShowTag(showId , form.getShowTagDtoList());
 		return showId;
 	}
 
 	@ResponseBody
 	@PutMapping("/{show_id}")
-	public Long putShow(@PathVariable Long show_id, @RequestBody ShowRequest form , @RequestBody(required = false) List<ShowTagDto> showTagDtoList) {
-		showTagService.updateShowTag(show_id,showTagDtoList);
+	public Long putShow(@PathVariable Long show_id, @RequestBody ShowRequest form) {
+		showTagService.updateShowTag(show_id,form.getShowTagDtoList());
 		return showService.putShow(show_id, form);
 	}
 

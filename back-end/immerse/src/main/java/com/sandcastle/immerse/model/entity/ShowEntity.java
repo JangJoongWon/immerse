@@ -72,6 +72,10 @@ public class ShowEntity {
 	@Builder.Default
 	private int maxAttendance = 0;
 
+	public void setMaxAttendance(int count) {
+		maxAttendance = count;
+	}
+
 	/**
 	 * 공연의 진행 상황
 	 *
@@ -118,7 +122,7 @@ public class ShowEntity {
 	 * 진행중 상태가 아니라면 예외 처리
 	 */
 	public void end() throws IllegalStateException {
-		if (showProgress != ShowProgress.OVER) {
+		if (showProgress != ShowProgress.IN_PROGRESS) {
 			throw new IllegalStateException("The show trying to end is not in progress!");
 		}
 		showProgress = ShowProgress.OVER;

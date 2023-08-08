@@ -9,28 +9,21 @@ function Performer(props) {
             <div className={styles.contentbox}>
                 <div className={styles.leftside}>
                     <div className={styles.gridItem}>
-                        {/* Your grid content */}
-                        <div>
-                            {props.mainStreamManager !== undefined ? (
-                                <div>
-                                    <UserVideoComponent
-                                        streamManager={props.mainStreamManager} />
-                                </div>
-                            ) : null}
-                        </div>
+                        {props.mainStreamManager !== undefined ? (
+                            <div className={styles.streamcontainer}>
+                                <UserVideoComponent
+                                    streamManager={props.mainStreamManager} />
+                            </div>
+                        ) : null}
                     </div>
                 </div>
                 <div className={styles.rightside}>
                     {Array.from({ length: 11 }, (_, index) => (
                     <div key={index} className={styles.gridItem}>
                        {index < props.subscribers.length ? (
-                            <div 
-                            // className="stream-container col-md-6 col-xs-6" 
-                            className={styles.streamcontainer}
-                            // onClick={() => props.handleMainVideoStream(props.publisher)}
-                            >
-                                <UserVideoComponent
-                                    streamManager={props.subscribers[index]} />
+                            <div className={styles.streamcontainer}>
+                                <UserVideoComponent 
+                                streamManager={props.subscribers[index]} />
                             </div>
                         ) : null}
                     </div>

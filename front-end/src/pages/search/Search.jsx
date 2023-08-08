@@ -4,7 +4,6 @@ import Result from './SearchResult'
 import { useParams } from 'react-router-dom';
 
 function Search() {
-
   const { word } = useParams();
 
   return (
@@ -14,8 +13,9 @@ function Search() {
           <div className={styles.middle}>
             <div className={styles.searchresult}>
               <div className={styles.resultbox}>
-                <h2>{word} 로 검색한 결과</h2>
+                <h1 style={{color:'white'}}>{word} 로 검색한 결과</h1>
                 <Result word={word}/>
+                
               </div>
             </div>
           </div>
