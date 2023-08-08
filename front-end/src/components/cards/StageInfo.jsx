@@ -1,35 +1,34 @@
 // import React from 'react'
-import { Button, Row, Col } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import styles from "./StageInfo.module.css"
 
 function StageInfo(props) {
   return (
     <div className={styles.container}>
         <div className={styles.box}>
-            <Row>
-                <Col xs={6}>
-                    <div className={styles.left}>
-                        <div className={styles.poster}>
-                            <img className={styles.posterimg} src="../../../public/icons/totoro2.jpg" alt="" />
-                        </div>
+            <div className={styles.loadingmessage}>
+                <h1>{props.showData ? props.showData.nickname : null} 님의 공연으로 이동중입니다.</h1>
+                <div className={styles.buttonbox}>
+                    <div className={styles.loadingImg}>
+                        <div className={styles.loadingSpinner}></div>
                     </div>
-                </Col>
-                <Col xs={6}>
-                    <div className={styles.right}>
-                        <div className={styles.texts}>    
-                            <h1>{props.showData ? props.showData.nickname : null} 의 공연</h1>
-                            <p>info</p>
-                            <Button
+                    <div >
+                        <div>
+                            <Button className={styles.tobutton}
                             onClick={() => props.joinSession(false)}
                             >입장하기</Button>
+                        </div>
 
-                            <Button
+                        <div>
+                            <Button className={styles.tobutton}
                             onClick={() => props.joinSession(true)}
                             >시작하기</Button>
                         </div>
                     </div>
-                </Col>
-            </Row>
+
+                </div>
+            </div>
+
         </div>
     </div>
   )
