@@ -46,7 +46,7 @@ const UserVideoComponent = (props) => {
                     <div
                     style={{position:"absolute",color:"white",top:"5%",right:"3%"}}
                     >
-                        <VideoHandler toggleVideo={toggleVideo} toggleAudio={toggleAudio} />
+                        <VideoHandler toggleVideo={toggleVideo} toggleAudio={toggleAudio} streamManager={props.streamManager} />
                     </div>
                 </div>
             ) : null}
