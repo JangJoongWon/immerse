@@ -1,21 +1,18 @@
 package com.sandcastle.immerse.model.dto;
 
-import com.sandcastle.immerse.model.entity.ShowEntity;
-import com.sandcastle.immerse.model.entity.UserEntity;
+import java.time.LocalDate;
+
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDate;
 
 @Data
 @Builder
 public class ReservationDto {
 
-//    private Long reservationId;
-    private LocalDate reservationDate;
+	//    private Long reservationId;
+	private LocalDate reservationDate;
 
-    private ShowEntity showEntity;
+	private Long showId;
 
-    private UserEntity userEntity;
-
+	private Long userId;
 }
