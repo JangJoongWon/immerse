@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import styles from './MakeStageModal.module.css'
-import { useDropzone } from 'react-dropzone';
 import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
 import axios from 'axios';
 import { API_BASE_URL } from '../../constants';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function MakeStageModal({ show, onHide }) {
 
   const token = useSelector(state => state.user.token);
   const genres = useSelector(state => state.category.categories);
+  const navigate = useNavigate()
 
   const [liveState, setLiveState] = useState(false)
 
@@ -93,8 +94,8 @@ function MakeStageModal({ show, onHide }) {
     
     try {
       const res = await axios.post(`${API_BASE_URL}/shows/`, payload, { headers });
-      console.log(res.data);
       onHide();
+      return res.data;
     }
     catch (e) {
       console.log(e);
@@ -105,8 +106,8 @@ function MakeStageModal({ show, onHide }) {
   const reserveStage = async () => {
     try {
       const res = await scheduleStage();
-      alert("예약되었습니다!");
-      onHide();
+      alert('공연이 예약되었습니다.')
+      navigate(`/stageinfo/${res}`)
       return res;
     }
     catch (e) {
