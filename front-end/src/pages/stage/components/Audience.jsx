@@ -8,7 +8,6 @@ import AudienceOption from './audienceoption/AudienceOption'
 
 function Audience(props) { 
   const [optionValue,setOptionValue] = useState(false)  
-  console.log(props.leaveSession)
 
   const onClickChangeOption = ()=>{
     setOptionValue(!optionValue)
@@ -83,7 +82,7 @@ function Audience(props) {
                         <div>
                             <AudienceOption 
                             leaveSession={props.leaveSession}                            
-                            props={props.subscribers}/>
+                            subscribers={props.subscribers}/>
                         </div>
                         <div>
                             <img 
