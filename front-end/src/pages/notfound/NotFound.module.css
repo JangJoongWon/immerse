@@ -27,9 +27,6 @@
     .notFoundMessage h1 {
       font-size: 300px;
     }
-    .notFoundMessage h2 {
-      font-size: 200px;
-    }
   }
 
  @media (max-width: 700px) {
