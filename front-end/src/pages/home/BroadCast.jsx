@@ -30,7 +30,7 @@ function Card({ data }) {
   };
 
   const toProfile = () => {
-    navigate('/mypage/data.nickname')
+    navigate(`/mypage/${data.nickname}`)
   }
 
   const toCategory = (data) => {

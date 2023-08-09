@@ -1,34 +1,67 @@
+.container {
+  background-color: #1a1b1e;
+}
+
 .bottom{
     display: flex;
     justify-content: end;
 } 
+
+.notification {
+  left: 0;
+}
 
 
 .picturebox {
     width: 100%;
   }
 
-  .photobox {
-    border: 2px dashed black;
-    border-radius: 20px;
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .imgbox {
-    border-radius: 20px;
-  }
+.photobox {
+  border: 2px dashed black;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
-  .imagefile {
-    width: 100%;
-    border-radius: 20px;
-  }
+.imgbox {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 20px;
+}
 
-  .picturebox .active {
-    border-color: green;
-  }
-  
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 62.5%;
+}
+
+.imagefile {
+  margin-top: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+}
+
+.picturebox .active {
+  border-color: green;
+}
+
+.makestageButton {
+  background-color: #8b00ff;
+  border: #8b00ff;
+  margin-top: 10px;
+}
+.makestageButton:hover {
+  background-color: #8b00ff;
+}
+.makestageButton:disabled {
+  background-color: #8b00ff;
+}
