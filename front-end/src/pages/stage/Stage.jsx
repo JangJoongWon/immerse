@@ -1,7 +1,6 @@
 // import React from 'react'
 import { useEffect, useState, useRef, useCallback } from 'react';
 import styles from './Stage.module.css'
-import StageInfo from "../../components/cards/StageInfo"
 
 import { OpenVidu } from 'openvidu-browser';
 
@@ -10,7 +9,7 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../constants';
-import { Audience, Performer } from './components';
+import { Audience, Performer, Loading } from './components';
 import { Button } from 'react-bootstrap';
 
 const Stage = () => {
@@ -263,11 +262,7 @@ const Stage = () => {
                     mainStreamManager={mainStreamManager}
                     subscribers={subscribers}
                     />  
-            : (
-                <div>
-                    <h1>Loading...</h1>
-                </div>
-            )}
+                : <Loading showData={showData} />}
             {/* <Button onClick={muteAllCams}>Mute</Button> */}
         </div>
     );
