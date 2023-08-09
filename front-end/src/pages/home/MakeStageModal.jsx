@@ -82,6 +82,9 @@ function MakeStageModal({ show, onHide }) {
       'price': price,
       'attendanceLimit': max,
       'categoryId': genre,
+      'showTagDtoList': [
+        
+      ]
     };
     console.log(payload)
     const headers = { 
