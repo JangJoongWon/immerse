@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { logOut } from './redux/userSlice';
 import Header from './components/header/Header';
 import styles from './App.module.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -15,13 +17,26 @@ import Category from './pages/category/Category';
 import Checkpassword from './pages/checkpassword/CheckPassword';
 import NotFound from './pages/notfound/NotFound';
 import MyOption from './pages/myoption/MyOption';
-// import Test from './components/inputpicture/test';
 import CameraTest from './pages/cameratest/CameraTest';
 import StageInfo from './pages/home/StageInfo';
 
 function App() {
   const token = useSelector((state) => state.user.token);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    const handleUnload = () => {
+      // 창을 닫을 때 로그아웃 처리
+      dispatch(logOut());
+    };
+  
+    window.addEventListener('unload', handleUnload);
+  
+    return () => {
+      window.removeEventListener('unload', handleUnload);
+    };
+  }, []);
+  
   return (
     <Router>
       <div>
@@ -57,7 +72,6 @@ function App() {
           <Route path="/myoption" element={<MyOption />} />
           <Route path="/cameratest" element={<CameraTest />} />
           <Route path="/*" element={<NotFound />} />
-          {/* <Route path="/test" element={<Test />} /> */}
         </Routes>
       </div>
     </Router>

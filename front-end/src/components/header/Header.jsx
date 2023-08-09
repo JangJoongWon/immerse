@@ -98,6 +98,7 @@ function Header() {
         <Navbar.Brand 
           href="/" 
           style={{ color: "white", fontWeight: "bold", fontSize: "2rem" }}
+          className='logotext'
         >
           Immerse
         </Navbar.Brand>

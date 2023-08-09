@@ -42,7 +42,7 @@ function Home() {
 
       try {
         const categoriesResponse = await axios.get(`${API_BASE_URL}/categories/`);
-        console.log(categoriesResponse);
+        // console.log(categoriesResponse);
         const categories = categoriesResponse.data;
         const cagoryMap = {};
         for (const e of categories) {
@@ -51,7 +51,7 @@ function Home() {
             categoryName
           };
         }
-        console.log(cagoryMap);
+        // console.log(cagoryMap);
         dispatch(setCategories([...categories]));
         dispatch(setCagoryMap(cagoryMap));
       }
@@ -61,7 +61,7 @@ function Home() {
 
       try {
         const response1 = await axios.get(`${API_BASE_URL}/shows/popular/progress`);
-        console.log('progress axios success', response1);
+        // console.log('progress axios success', response1);
         setLiveStage(response1.data)
       } catch (error) {
         console.log('progress axios error:', error.message);
@@ -69,7 +69,7 @@ function Home() {
   
       try {
         const response2 = await axios.get(`${API_BASE_URL}/shows/popular/reservation`);
-        console.log('reservation axios success', response2);
+        // console.log('reservation axios success', response2);
         setReserveStage(response2.data)
       } catch (error) {
         console.log('reservation axios error:', error.message);

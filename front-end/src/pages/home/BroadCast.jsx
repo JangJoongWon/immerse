@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { mainBanner } from '../../assets/images';
 
 function Card({ data }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -38,7 +39,7 @@ function Card({ data }) {
         <div className={styles.thumbnail} onClick={toStageInfo}>
           <div className={styles.posterContainer}>
             <img
-              src={`https://image.tmdb.org/t/p/original/${data.thumbnail}`}
+              src={mainBanner}
               className={styles.poster}
               alt="Movie Poster"
             />
