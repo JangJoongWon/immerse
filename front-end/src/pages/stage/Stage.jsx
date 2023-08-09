@@ -261,6 +261,7 @@ const Stage = () => {
                     publisher={publisher}
                     mainStreamManager={mainStreamManager}
                     subscribers={subscribers}
+                    leaveSession={popState}
                     />  
                 : <Loading showData={showData} />}
             {/* <Button onClick={muteAllCams}>Mute</Button> */}
