@@ -41,7 +41,6 @@ function SearchResult({word}) {
     
     const handleLiveButtonClick = () => {
       setLiveState(true);
-      console.log(datas)
     };
     
     const handleChannelButtonClick = () => {
@@ -75,7 +74,7 @@ function SearchResult({word}) {
           <div className={`${styles.categories} ${styles.gridItem}`}>
           {liveState ? (
             searchShow.map((item) => (
-              <BroadCast key={item.pk} data={item} className={styles.card} />
+              <BroadCast key={item.showId} data={item} className={styles.card} />
             ))
           ) : (
             searchUser.map((item) => (
