@@ -1,15 +1,25 @@
 package com.sandcastle.immerse.controller;
 
-import com.sandcastle.immerse.model.dto.ReservationDto;
-import com.sandcastle.immerse.service.ReservationServiceImpl;
-import com.sandcastle.immerse.service.ShowService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sandcastle.immerse.model.dto.ReservationDto;
+import com.sandcastle.immerse.model.dto.show.ShowListResponse;
+import com.sandcastle.immerse.service.ReservationService;
+import com.sandcastle.immerse.service.ShowService;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * Controller Setting
@@ -35,93 +45,96 @@ import java.util.Optional;
 @RequestMapping("/reservation")
 @RequiredArgsConstructor
 public class ReservationController {
-    private final ReservationServiceImpl reservationService;
-    private final ShowService showService;
+	private final ReservationService reservationService;
+	private final ShowService showService;
 
-    /**
-     * 예약 등록하기
-     * 이건 공연 페이지의 공연 만들기 또한 같이 포함하여야 한다.
-     */
-    @ResponseBody
-    @PostMapping("/{showId}")
-    public Long postShow(@RequestBody ReservationDto request ,@PathVariable Long showId , Authentication authentication) throws Exception {
-        return reservationService.postReservation(request, showId , authentication);
-    }
+	/**
+	 * 예약 등록하기
+	 * 이건 공연 페이지의 공연 만들기 또한 같이 포함하여야 한다.
+	 */
+	@ResponseBody
+	@PostMapping("/{showId}")
+	public Long postShow(@RequestBody(required = false) ReservationDto request, @PathVariable Long showId,
+		Authentication authentication) throws Exception {
+		Long userId = Long.valueOf(authentication.getName());
+		return reservationService.postReservation(showId, userId);
+	}
 
-    /**
-     * 모든 예약 리스트 조회하기
-     *
-     * @return List<Reservation Entity>
-     *
-     * ResponseEntity<?> ResponseEntity는 HTTP 응답을 나타냅니다.
-     * ResponseEntity는 HTTP 응답 상태 코드, 응답 헤더 및 응답 본문을 포함합니다.
-     * ResponseEntity<?>는 어떤 종류의 객체라도 포함할 수 있는 ResponseEntity입니다.
-     * 예를 들어, List<ResponseEntity<?>>는 ResponseEntity의 목록을 나타냅니다.
-     * 이 목록에는 ResponseEntity의 모든 종류의 객체가 포함될 수 있습니다.
-     */
-    @GetMapping("")
-    public ResponseEntity<?> getReservations() {
-        System.out.println("get All Reservations");
-        return ResponseEntity.ok(reservationService.findALLReservation());
-    }
+	/**
+	 * 모든 예약 리스트 조회하기
+	 *
+	 * @return List<Reservation Entity>
+	 *
+	 * ResponseEntity<?> ResponseEntity는 HTTP 응답을 나타냅니다.
+	 * ResponseEntity는 HTTP 응답 상태 코드, 응답 헤더 및 응답 본문을 포함합니다.
+	 * ResponseEntity<?>는 어떤 종류의 객체라도 포함할 수 있는 ResponseEntity입니다.
+	 * 예를 들어, List<ResponseEntity<?>>는 ResponseEntity의 목록을 나타냅니다.
+	 * 이 목록에는 ResponseEntity의 모든 종류의 객체가 포함될 수 있습니다.
+	 */
+	@GetMapping("")
+	public ResponseEntity<?> getReservations() {
+		System.out.println("get All Reservations");
+		return ResponseEntity.ok(reservationService.findALLReservation());
+	}
 
-    /**
-     * 예약 고유번호를 이용하여 예약 정보를 조회하는 기능
-     *
-     * @return
-     */
+	/**
+	 * 예약 고유번호를 이용하여 예약 정보를 조회하는 기능
+	 *
+	 * @return
+	 */
 
-    @GetMapping("/{reservationId}")
-    public ResponseEntity<?> getReservationById(@PathVariable Long reservationId) {
-        Optional<?> result = reservationService.findByIdReservation(reservationId);
-        if(result.isPresent()){
-            System.out.println("Reservation id : "+reservationId +" Found" );
-            return ResponseEntity.ok(result);
-        } else {
-            System.out.println("Reservaion not Found");
-            return null;
-        }
-    }
-    /**
-     * 특정 유저의 예약 리스트 조회
-     */
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<?> findListReservationByUserId(@PathVariable Long userId){
-        System.out.println("get All Reservations , user_id :" + userId);
-        return ResponseEntity.ok(reservationService.findListReservationByUserId(userId));
-    }
+	@GetMapping("/{reservationId}")
+	public ResponseEntity<?> getReservationById(@PathVariable Long reservationId) {
+		Optional<?> result = reservationService.findByIdReservation(reservationId);
+		if (result.isPresent()) {
+			System.out.println("Reservation id : " + reservationId + " Found");
+			return ResponseEntity.ok(result);
+		} else {
+			System.out.println("Reservaion not Found");
+			return null;
+		}
+	}
 
-    /**
-     * 특정 공연의 예약 리스트 조회
-     */
-    @GetMapping("/show/{showId}")
-    public ResponseEntity<?> findListReservationByShowId(@PathVariable Long showId){
-        System.out.println("get All Reservations , show_id :" + showId);
-        return ResponseEntity.ok(reservationService.findListReservationByShowId(showId));
-    }
+	/**
+	 * 특정 유저의 예약 리스트 조회
+	 */
+	@GetMapping("/user/{userId}")
+	public ResponseEntity<List<ShowListResponse>> findListReservationByUserId(@PathVariable Long userId) {
+		System.out.println("get All Reservations , user_id :" + userId);
+		return ResponseEntity.ok(reservationService.findListReservationByUserId(userId));
+	}
 
-    /**
-     * 특정 공연의 예약을 한 예약의 개수 조회
-     * 이 공연이 매진 되었는지, 최대 인원에 맞는지 확인하기 위해 사용하는 기능
-     */
+	/**
+	 * 특정 공연의 예약 리스트 조회
+	 */
+	@GetMapping("/show/{showId}")
+	public ResponseEntity<?> findListReservationByShowId(@PathVariable Long showId) {
+		System.out.println("get All Reservations , show_id :" + showId);
+		return ResponseEntity.ok(reservationService.findListReservationByShowId(showId));
+	}
 
-    @GetMapping("/show/{showId}/count")
-    public Integer findLengthReservationByShowId(@PathVariable Long showId){
-        return reservationService.findListReservationByShowId(showId).size();
-    }
+	/**
+	 * 특정 공연의 예약을 한 예약의 개수 조회
+	 * 이 공연이 매진 되었는지, 최대 인원에 맞는지 확인하기 위해 사용하는 기능
+	 */
 
-    /**
-     * 예약 고유 번호를 인자값으로 하여 특정 예약 정보를 테이블에서 지우는 기능
-     */
-    @DeleteMapping("/{reservationId}")
-    public void deleteByReservationId(@PathVariable Long reservationId){
-        Optional<?> result = reservationService.findByIdReservation(reservationId);
-        if(result.isPresent()){
-            reservationService.deleteByReservationId(reservationId);
-            System.out.println("Reservation Delete Complete");
-        } else {
-            System.out.println("Reservation not Found");
-        }
-        return ;
-    }
+	@GetMapping("/show/{showId}/count")
+	public Integer findLengthReservationByShowId(@PathVariable Long showId) {
+		return reservationService.findListReservationByShowId(showId).size();
+	}
+
+	/**
+	 * 예약 고유 번호를 인자값으로 하여 특정 예약 정보를 테이블에서 지우는 기능
+	 */
+	@DeleteMapping("/{reservationId}")
+	public void deleteByReservationId(@PathVariable Long reservationId) {
+		Optional<?> result = reservationService.findByIdReservation(reservationId);
+		if (result.isPresent()) {
+			reservationService.deleteByReservationId(reservationId);
+			System.out.println("Reservation Delete Complete");
+		} else {
+			System.out.println("Reservation not Found");
+		}
+		return;
+	}
 }
