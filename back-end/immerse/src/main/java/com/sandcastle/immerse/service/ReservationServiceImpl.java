@@ -1,17 +1,23 @@
 package com.sandcastle.immerse.service;
 
-import com.sandcastle.immerse.model.dto.ReservationDto;
-import com.sandcastle.immerse.model.entity.ReservationEntity;
-import com.sandcastle.immerse.model.entity.UserEntity;
-import com.sandcastle.immerse.repository.ReservationRepository;
-import com.sandcastle.immerse.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.sandcastle.immerse.model.dto.UserDto;
+import com.sandcastle.immerse.model.dto.show.ShowListResponse;
+import com.sandcastle.immerse.model.entity.ReservationEntity;
+import com.sandcastle.immerse.model.entity.ShowEntity;
+import com.sandcastle.immerse.model.entity.UserEntity;
+import com.sandcastle.immerse.repository.ReservationRepository;
+import com.sandcastle.immerse.repository.ShowRepository;
+import com.sandcastle.immerse.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * Service 클래스는 비즈니스 로직을 수행하는 클래스이다.
@@ -22,91 +28,95 @@ import java.util.Optional;
  * @RequiredArgsConstructor : private final 로 생성한 생성자들을 자동으로 @Autowired , 의존성을 주입해 준다.
  */
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
 
-    private final ReservationRepository reservationRepository;
-    private final UserRepository userRepository;
-//    private final ShowRepository showRepository;
-    /**
-     * Tanssactional 은 트랜잭션을 적용하는데 사용됨
-     * 하나의 작업 단위를 나타내며, 이 어노테이션에 사용할 수 있는 속성은 다음과 같다.
-     * isolation : 트랜잭션의 격리 수준 // default : READ_COMMIT
-     * propagaion : 트랜잭션의 전파 방식 // default : REQUIRED
-     * readOnly : 트랜잭션을 읽기 전용으로 설정합니다. // default : false
-     * timeout : 트랜잭션의 타임아웃을 지정합니다. // default : -1
-     */
+	private final ReservationRepository reservationRepository;
+	private final UserRepository userRepository;
+	private final ShowRepository showRepository;
+	/**
+	 * Tanssactional 은 트랜잭션을 적용하는데 사용됨
+	 * 하나의 작업 단위를 나타내며, 이 어노테이션에 사용할 수 있는 속성은 다음과 같다.
+	 * isolation : 트랜잭션의 격리 수준 // default : READ_COMMIT
+	 * propagaion : 트랜잭션의 전파 방식 // default : REQUIRED
+	 * readOnly : 트랜잭션을 읽기 전용으로 설정합니다. // default : false
+	 * timeout : 트랜잭션의 타임아웃을 지정합니다. // default : -1
+	 */
 
-    /**
-     * Reservation Entity 을 builder 로 구성하여 이를 테이블에 저장하는 기능
-     */
-    @Override
-    public Long postReservation(ReservationDto request , Long showId, Authentication authentication){
-        Long userId = Long.valueOf(authentication.getName());
+	/**
+	 * Reservation Entity 을 builder 로 구성하여 이를 테이블에 저장하는 기능
+	 */
+	@Override
+	@Transactional
+	public Long postReservation(Long showId, Long userId) throws IllegalArgumentException {
 
-        UserEntity userEntity = userRepository.findById(userId)
-                .orElseThrow(() -> {
-                    return new IllegalArgumentException("Id없음요");
-                });
+		UserEntity user = userRepository.findById(userId)
+			.orElseThrow(() -> new IllegalArgumentException("No such user!"));
 
-        ReservationEntity reservation = ReservationEntity.builder()
-                .reservationDate(request.getReservationDate())
-                .showEntity(request.getShowEntity())
-                .userEntity(userEntity)
-                .build();
+		ShowEntity show = showRepository.findById(showId)
+			.orElseThrow(() -> new IllegalArgumentException("No such show!"));
 
-        return reservationRepository.save(reservation).getReservationID();
-    }
+		ReservationEntity reservation = ReservationEntity.builder()
+			.reservationDate(LocalDate.now())
+			.showEntity(show)
+			.userEntity(user)
+			.build();
 
-    /**
-     * 지금 존재하는 모든 예약 테이블 조회
-     * @return 모든 예약 엔티티로 이루어진 리스트로 반환
-     */
-    @Override
-    public List<ReservationEntity> findALLReservation() {
-        return reservationRepository.findAll();
-    }
+		return reservationRepository.save(reservation).getReservationID();
+	}
 
+	/**
+	 * 지금 존재하는 모든 예약 테이블 조회
+	 * @return 모든 예약 엔티티로 이루어진 리스트로 반환
+	 */
+	@Override
+	public List<ReservationEntity> findALLReservation() {
+		return reservationRepository.findAll();
+	}
 
-    /**
-     * 예약 고유 번호를 통하여 예약 정보를 조회할 수 있는 기능
-     * @param id : Reservation_id
-     * @return : ReservationEntity
-     */
-    @Override
-    public Optional<ReservationEntity> findByIdReservation(Long id){
-        return reservationRepository.findById(id);
-    }
+	/**
+	 * 예약 고유 번호를 통하여 예약 정보를 조회할 수 있는 기능
+	 * @param id : Reservation_id
+	 * @return : ReservationEntity
+	 */
+	@Override
+	public Optional<ReservationEntity> findByIdReservation(Long id) {
+		return reservationRepository.findById(id);
+	}
 
+	/**
+	 * 특정 유저의 예약 리스트 조회 : 특정 유저의 ID 를 통하여 예약정보 리스트를 조회할 수 있는 기능
+	 * @param userId : 특정 유저의 고유 번호
+	 */
+	@Override
+	public List<ShowListResponse> findListReservationByUserId(Long userId) {
+		List<ReservationEntity> entityList = reservationRepository.findListReservationByUserId(userId);
+		return entityList.stream().map(e -> new ShowListResponse(e.getShowEntity())).collect(Collectors.toList());
+	}
 
+	/**
+	 * 특정 공연의 예약 리스트 조회 : 특정 공연 ID 를 통하여 예약정보 리스트를 조회할 수 있는 기능
+	 * @param showId : 특정 공연의 고유 ID
+	 */
+	@Override
+	public List<UserDto> findListReservationByShowId(Long showId) {
+		List<ReservationEntity> entityList = reservationRepository.findListReservationByShowId(showId);
+		return entityList.stream().map(e -> UserDto.builder().
+			userId(e.getUserEntity().getUserId()).
+			nickname(e.getUserEntity().getNickname())
+			.build()).collect(Collectors.toList());
+	}
 
-    /**
-     * 특정 유저의 예약 리스트 조회 : 특정 유저의 ID 를 통하여 예약정보 리스트를 조회할 수 있는 기능
-     * @param userId : 특정 유저의 고유 번호
-     */
-    @Override
-    public List<ReservationEntity> findListReservationByUserId(Long userId){
-        return reservationRepository.findListReservationByUserId(userId);
-    }
-
-    /**
-     * 특정 공연의 예약 리스트 조회 : 특정 공연 ID 를 통하여 예약정보 리스트를 조회할 수 있는 기능
-     * @param showId : 특정 공연의 고유 ID
-     */
-    @Override
-    public List<ReservationEntity> findListReservationByShowId(Long showId){
-        return reservationRepository.findListReservationByShowId(showId);
-    }
-
-    /**
-     * 예약 취소 : 예약 고유 번호를 통하여 예약 정보를 삭제할 수 있는 기능
-     * @id : 예약 고유 번호
-     * reservationRepository 안에 있는 쿼리문을 불러와서 테이블을 삭제한다.
-     */
-    @Override
-    public void deleteByReservationId(Long id){
-        reservationRepository.deleteByReservationId(id);
-    }
-
+	/**
+	 * 예약 취소 : 예약 고유 번호를 통하여 예약 정보를 삭제할 수 있는 기능
+	 * @id : 예약 고유 번호
+	 * reservationRepository 안에 있는 쿼리문을 불러와서 테이블을 삭제한다.
+	 */
+	@Override
+	@Transactional
+	public void deleteByReservationId(Long id) {
+		reservationRepository.deleteByReservationId(id);
+	}
 
 }
