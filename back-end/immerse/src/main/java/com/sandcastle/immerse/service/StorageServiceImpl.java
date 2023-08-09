@@ -36,7 +36,7 @@ public class StorageServiceImpl {
 
 
 
-        return s3Client.getUrl("bucketName", fileName).toString();
+        return s3Client.getUrl(bucketName, fileName).toString();
     }
 
     public byte[] downloadFile(String fileName){
