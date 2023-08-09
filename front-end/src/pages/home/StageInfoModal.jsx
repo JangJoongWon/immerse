@@ -12,7 +12,7 @@ function StageInfoModal({ show, onHide, data }) {
   const user = useSelector(state => state.user.user);
   const token = useSelector(state => state.user.token);
   // const categories = useSelector(state => state.category.categories)
-  const categoryMap = useSelector(state => state.category.categoryMap);
+  // const categoryMap = useSelector(state => state.category.categoryMap);
 
   const attendStage = () => {
     if(!token){
@@ -23,13 +23,28 @@ function StageInfoModal({ show, onHide, data }) {
     navigate(`/stage/${data.showId}`);
   }
 
-  const reserveStage = () => {
+  const reserveStage = async () => {
     if(!token){
       alert('로그인 해주세요')
       navigate('/login')
       return;
     }
-    alert('예약하고 싶어여')
+    const headers = { 
+      'Content-Type': 'application/json', 
+      'Authorization': 'Bearer ' + token
+    };
+
+    const payload = {
+      'showId' : data.showId,
+      
+    }
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/reservations/${data.showId}`, { payload }, { headers });
+      console.log(response)
+    } catch(error) {
+      console.log(error)
+    }
   }
 
   const startStage = async () => {

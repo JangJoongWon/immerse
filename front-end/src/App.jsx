@@ -17,6 +17,7 @@ import NotFound from './pages/notfound/NotFound';
 import MyOption from './pages/myoption/MyOption';
 // import Test from './components/inputpicture/test';
 import CameraTest from './pages/cameratest/CameraTest';
+import StageInfo from './pages/home/StageInfo';
 
 function App() {
   const token = useSelector((state) => state.user.token);
@@ -47,6 +48,8 @@ function App() {
             <Route path="/stage/:id" element={<Navigate to="/login" replace />} />
           )}
 
+          <Route path="/stageinfo/:showId" element={<StageInfo />} />
+          
           <Route path="/mypage/:nickname" element={<Mypage />} />
           <Route path="/search/:word" element={<Search />} />
           <Route path="/category/:id" element={<Category />} />
