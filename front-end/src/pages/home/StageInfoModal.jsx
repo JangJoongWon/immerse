@@ -11,6 +11,8 @@ function StageInfoModal({ show, onHide, data }) {
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user);
   const token = useSelector(state => state.user.token);
+  // const categories = useSelector(state => state.category.categories)
+  const categoryMap = useSelector(state => state.category.categoryMap);
 
   const attendStage = () => {
     if(!token){
@@ -74,6 +76,7 @@ function StageInfoModal({ show, onHide, data }) {
               <div className={styles.right}>
                 <div className={styles.text}>
                   <h1 style={{color:'black'}}>{data.title}</h1>
+                  {/* <p>{categoryMap[data.category_id].categoryName}</p> */}
                   <p style={{fontWeight:'900'}}>공연자 : {data.nickname}</p>
                   {data.startTime && data.endTime ? (
                     <p>{data.startTime}~{data.endTime}</p>
@@ -87,7 +90,7 @@ function StageInfoModal({ show, onHide, data }) {
                   )}
                   <p>{data.description}</p>
                   <p>가격 : {data.price}</p>
-                  <p>최대 인원 : {data.attendancLimit}</p>
+                  <p>최대 인원 : {data.attendanceLimit}</p>
 
                   {data.showProgress === 'SCHEDULED' ? (
                     user && user.nickname ? (
