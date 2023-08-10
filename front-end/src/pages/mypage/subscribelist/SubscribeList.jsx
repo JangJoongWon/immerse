@@ -22,16 +22,19 @@ function SubscribeList(props) {
     },[]);
 
   return (
-    <div
-      className={styles.gridItem}>
-       {
-          list.map((channel) => (
-            <Card 
-            className ={styles.card}
-            key = {channel.email}
-            data={channel}/>
-          ))
-       }
+    <div 
+    className={styles.container}>
+      <div
+        className={styles.gridItem}>
+        {
+            list.map((channel) => (
+              <Card 
+              className ={styles.card}
+              key = {channel.email}
+              data={channel}/>
+            ))
+        }
+      </div>
     </div>
   )
 }
