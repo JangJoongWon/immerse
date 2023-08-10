@@ -20,7 +20,7 @@ import java.io.IOException;
 @Service
 public class StorageServiceImpl {
 
-    @Value("${cloud.aws.region}")
+    @Value("${application.bucket.name}")
     private String bucketName;
     @Autowired
     private AmazonS3 s3Client;

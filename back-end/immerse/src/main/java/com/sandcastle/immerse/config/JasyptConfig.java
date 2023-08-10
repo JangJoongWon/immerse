@@ -20,7 +20,6 @@ public class JasyptConfig {
     public StringEncryptor passwordEncryptor(){
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-        System.out.println("key ----------------------" + key);
         config.setPassword(key);
         config.setAlgorithm(algorithm);
         config.setKeyObtentionIterations("1000");
