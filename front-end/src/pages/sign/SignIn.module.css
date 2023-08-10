@@ -70,13 +70,15 @@
 
 .loginButton {
   width: 100%;
-  background-color: #8b00ff;
-  border: #8b00ff;
+  background-color: #9D72FF;
+  padding: 5px;
+  border-radius: 10px;
 }
 
 .loginButton:hover {
-  background-color: #8b00ff;
-  border: #8b00ff;
+  background-color: #9D72FF;
+  box-shadow: 0 0 5px #9D72FF,
+              0 0 25px #9D72FF
 }
 
 .tosignup span{
@@ -84,5 +86,5 @@
 }
 .tosignup a{
   text-decoration: none;
-  color: #8b00ff;
+  color: #9D72FF;
 }

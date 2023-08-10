@@ -67,15 +67,19 @@
   }
 
   .makeButton {
-    background-color: #8b00ff;
-    border: #8b00ff;
+    background-color: #9D72FF;
+    border: #9D72FF;
     width: 200px;
     height: 50px;
+    border-radius: 10px;
+    color: white;
   }
 
   .makeButton:hover {
-    background-color: #8b00ff;
-    border: #8b00ff;
+    background-color: #9D72FF;
+    box-shadow: 0 0 5px #9D72FF,
+                0 0 25px #9D72FF
+   /* -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);   */
   }
 
   

@@ -271,7 +271,7 @@ function SignUp() {
                           />
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
-                          <span>별병</span>
+                          <span>별명</span>
                           {nickCheck ? (
                             <></>
                           ) : (
@@ -290,7 +290,7 @@ function SignUp() {
                             value={nickname}
                             onChange={handleNickNameChange}
                             />
-                            <Button onClick={nickNameCheck}>확인</Button>
+                            <button onClick={nickNameCheck}>확인</button>
                           </div>
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
@@ -338,11 +338,11 @@ function SignUp() {
 
                         {isSubmitButtonActive ? (
                           <div className={styles.submitbutton}>
-                            <Button type="submit">회원가입</Button>
+                            <button type="submit">회원가입</button>
                           </div>
                         ) : (
                           <div className={styles.submitbutton}>
-                            <Button type="submit" disabled>회원가입</Button>
+                            <button type="submit" disabled>회원가입</button>
                           </div>
                         )}
 

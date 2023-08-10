@@ -50,21 +50,39 @@ function SearchResult({word}) {
   return (
     <div className={styles.container}>
         <div className={styles.toggleButton}>
-            <ul className={styles.statebutton}>
-            <a href="/" onClick={(event) => {
-            event.preventDefault();
-            handleLiveButtonClick();
-            }}
-            style = {liveState ? {color:'#8b00ff'} : {color:'white'}}
-            >공연</a>
-
-            <a href="/" onClick={(event) => {
-            event.preventDefault();
-            handleChannelButtonClick();
-            }}
-            style = {liveState ? {color:'white'} : {color:'#8b00ff'}}
-            >채널</a>
-            </ul>
+            {liveState ? (
+              <ul className={styles.statebutton}>
+                <a href="/" onClick={(event) => {
+                  event.preventDefault();
+                handleLiveButtonClick();
+                }}
+                className={styles.selected}
+                >공연</a>
+  
+                <a href="/" onClick={(event) => {
+                event.preventDefault();
+                handleChannelButtonClick();
+                }}
+                className={styles.notSelected}
+                >채널</a>
+              </ul>
+                ) : (
+              <ul className={styles.statebutton}>
+                <a href="/" onClick={(event) => {
+                event.preventDefault();
+                handleLiveButtonClick();
+                }}
+                className={styles.notSelected}
+                >공연</a>
+  
+                <a href="/" onClick={(event) => {
+                event.preventDefault();
+                handleChannelButtonClick();
+                }}
+                className={styles.selected}
+                >채널</a>
+              </ul>
+            )}
         </div>
 
         <div className={styles.result}>
