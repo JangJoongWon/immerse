@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { TEST_URL, API_BASE_URL } from '../../constants';
-import context from 'react-bootstrap/esm/AccordionContext';
 import { settings } from '/src/assets/icons';
 
 function MyPage() {
@@ -16,8 +15,10 @@ function MyPage() {
   // console.log(nickname)
   const userToken = useSelector((state) => state.user.token);
   // const user = useSelector(state => state.user.user);
+  const mydata = useSelector(state => state.user.user);
 
   const [user, setUser] = useState({});
+  // const [scribe, setScribe] = useState(null);
   const [subscription, setSubscription] = useState(false);
   // const [userId, setUserId] = useState(1);
 
@@ -26,6 +27,7 @@ function MyPage() {
     axios.get(API_BASE_URL + `/user/mypage/${nickname}`)
       .then(response => {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
+        // console.log(response)
         console.log(response.data.userId)
         checksubscription(response.data.userId)
       })
@@ -80,6 +82,8 @@ function MyPage() {
       }
     },)
       .then(response => {
+        setUser(response.data);
+        console.log(response)
         // setUser(response.data);
         checksubscription(user.userId)
         console.log(response.data)
@@ -88,6 +92,8 @@ function MyPage() {
         console.error('Error fetching data:', error);
       });
   }
+
+  const isCurrentUser = () => mydata.userId === user.userId;
 
 
   return (
@@ -122,11 +128,13 @@ function MyPage() {
                 >
                   {user == null ? <span>user nickname</span> : <span>{user.nickname}</span>}
                   <Link to="/myoption">
-                <img 
-                src={settings} alt="setting" 
-                style={{width:"5%"}}
-                />
-            
+                    {
+                      isCurrentUser() &&
+                      <img 
+                      src={settings} alt="setting" 
+                      style={{width:"5%"}}
+                      />
+                    }
                   </Link>
                 </div>
                 <div
@@ -150,22 +158,26 @@ function MyPage() {
           <Col sm={3}>
             <Row>
             </Row>
-            {subscription 
-            ?
-            <div className={styles.userright}>
-              <button
-                onClick={cancelsubscription}
-                className={styles.cancelsubscription}
-              >구독 취소</button>
+            { !isCurrentUser() &&
+            <div>
+                {subscription 
+                ?
+                <div className={styles.userright}>
+                  <button
+                    onClick={cancelsubscription}
+                    className={styles.cancelsubscription}
+                  >구독 취소</button>
+                </div>
+                :
+                <div className={styles.userright}>
+                <button
+                  onClick={subscribe}
+                  className={styles.subscribe}
+                >구독</button>
+              </div>
+                }
             </div>
-            :
-            <div className={styles.userright}>
-            <button
-              onClick={subscribe}
-              className={styles.subscribe}
-            >구독</button>
-          </div>
-            }
+          }
           </Col>
 
         </div>
