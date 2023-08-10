@@ -1,6 +1,7 @@
 package com.sandcastle.immerse.config;
 import com.sandcastle.immerse.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,10 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final UserService userServiceImpl;
-    private String secretKey = "testKey";
+
+	@Value("${application.jwt.password}")
+    private String propertySecretKey;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+		String secretKey = propertySecretKey;
 		return httpSecurity
 			.httpBasic().disable()
 			.csrf().disable()
