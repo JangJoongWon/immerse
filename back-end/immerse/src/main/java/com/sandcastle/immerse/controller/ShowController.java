@@ -47,6 +47,9 @@ public class ShowController {
 	@GetMapping("/{show_id}")
 	public ResponseEntity<ShowResponse> getShow(@PathVariable Long show_id) {
 		Optional<ShowResponse> res = showService.findShow(show_id);
+		if (res.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
 		return new ResponseEntity<ShowResponse>(res.get(), HttpStatus.OK);
 	}
 

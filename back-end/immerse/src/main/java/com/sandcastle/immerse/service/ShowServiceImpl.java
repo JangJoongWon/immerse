@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import com.sandcastle.immerse.repository.ShowRepository;
 import com.sandcastle.immerse.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
@@ -46,8 +48,9 @@ public class ShowServiceImpl implements ShowService {
 	}
 
 	public Optional<ShowResponse> findShow(Long id) {
-		ShowEntity show = showRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("does not exist!"));
+		ShowEntity show = showRepository.findById(id).orElse(null);
+
+		if (show == null) return Optional.empty();
 
 		ShowResponse res = ShowResponse.builder()
 			.title(show.getTitle())
