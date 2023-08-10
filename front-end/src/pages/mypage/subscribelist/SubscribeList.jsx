@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
-import Card from './mypagechannelcard/myPageChannelCard'
+import Card from '../../search/SearchChannel'
 import axios from 'axios';
 import { API_BASE_URL } from '../../../constants';
 import styles from './SubscribeList.module.css'
@@ -23,13 +23,13 @@ function SubscribeList(props) {
 
   return (
     <div
-      className={styles.box}>
+      className={styles.gridItem}>
        {
           list.map((channel) => (
             <Card 
             className ={styles.card}
             key = {channel.email}
-            channel={channel}/>
+            data={channel}/>
           ))
        }
     </div>
