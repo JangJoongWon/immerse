@@ -20,7 +20,7 @@ function Card({ data }) {
 
   const checksubscription = (followingId) => {
 
-    axios.get(TEST_URL + `/subscribe/check/${followingId}`, {
+    axios.get(API_BASE_URL + `/subscribe/check/${followingId}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${userToken}`
@@ -38,7 +38,7 @@ function Card({ data }) {
 
   const cancelsubscription = () => {
 
-    axios.delete(TEST_URL + `/subscribe/${data.userId}`, {
+    axios.delete(API_BASE_URL + `/subscribe/${data.userId}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${userToken}`
@@ -54,7 +54,7 @@ function Card({ data }) {
   }
 
   const subscribe = () => {
-    axios.post(TEST_URL + '/subscribe', {
+    axios.post(API_BASE_URL + '/subscribe', {
       userId: data.userId
     }, {
       headers: {

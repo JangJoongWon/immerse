@@ -23,7 +23,7 @@ function MyPage() {
 
   useEffect(() => {
     // Axios를 사용하여 데이터를 불러옴
-    axios.get(TEST_URL + `/user/mypage/${nickname}`)
+    axios.get(API_BASE_URL + `/user/mypage/${nickname}`)
       .then(response => {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
         console.log(response.data.userId)
@@ -37,7 +37,7 @@ function MyPage() {
 
   const checksubscription = (followingId) => {
 
-    axios.get(TEST_URL + `/subscribe/check/${followingId}`, {
+    axios.get(API_BASE_URL + `/subscribe/check/${followingId}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${userToken}`
@@ -55,7 +55,7 @@ function MyPage() {
 
   const cancelsubscription = () => {
 
-    axios.delete(TEST_URL + `/subscribe/${user.userId}`, {
+    axios.delete(API_BASE_URL + `/subscribe/${user.userId}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${userToken}`
@@ -71,7 +71,7 @@ function MyPage() {
   }
 
   const subscribe = () => {
-    axios.post(TEST_URL + '/subscribe', {
+    axios.post(API_BASE_URL + '/subscribe', {
       userId: user.userId
     }, {
       headers: {
