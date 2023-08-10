@@ -6,20 +6,17 @@ import java.util.Optional;
 
 import com.sandcastle.immerse.model.dto.ShowTagDto;
 import com.sandcastle.immerse.model.dto.TagDto;
+import com.sandcastle.immerse.model.dto.show.ShowWrapper;
 import com.sandcastle.immerse.service.ShowTagServiceImpl;
+import com.sandcastle.immerse.service.StorageServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sandcastle.immerse.model.dto.show.ShowListResponse;
 import com.sandcastle.immerse.model.dto.show.ShowRequest;
@@ -27,6 +24,7 @@ import com.sandcastle.immerse.model.dto.show.ShowResponse;
 import com.sandcastle.immerse.service.ShowService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -36,7 +34,7 @@ public class ShowController {
 
 	private final ShowService showService;
 	private final ShowTagServiceImpl showTagService;
-
+	private StorageServiceImpl storageService;
 	@ResponseBody
 	@GetMapping("/")
 	public List<ShowListResponse> getShows() {
@@ -62,10 +60,15 @@ public class ShowController {
 
 	@ResponseBody
 	@PostMapping("/")
-	public Long postShow(@RequestBody ShowRequest form, Authentication auth) {
+	public Long postShow(@RequestBody ShowWrapper wrapper,  Authentication auth) {
 		Long userId = Long.valueOf(auth.getName());
 		System.out.println("userId = " + userId);
+
+		ShowRequest form = wrapper.getForm();
+		MultipartFile file = wrapper.getFile();
+
 		form.setUserId(userId);
+		form.setThumbnail(storageService.uploadFile(file));
 		Long showId = showService.postShow(form);
 		showTagService.saveAllShowTag(showId , form.getShowTagDtoList());
 		return showId;
@@ -73,8 +76,12 @@ public class ShowController {
 
 	@ResponseBody
 	@PutMapping("/{show_id}")
-	public Long putShow(@PathVariable Long show_id, @RequestBody ShowRequest form) {
-		showTagService.updateShowTag(show_id,form.getShowTagDtoList());
+	public Long putShow(@PathVariable Long show_id, @RequestBody ShowWrapper wrapper) {
+
+		ShowRequest form = wrapper.getForm();
+		MultipartFile file = wrapper.getFile();
+
+		form.setThumbnail(storageService.uploadFile(file));
 		return showService.putShow(show_id, form);
 	}
 
