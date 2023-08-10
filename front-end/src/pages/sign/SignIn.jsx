@@ -126,7 +126,7 @@ function SignIn() {
                 </div>
 
                 <div className={styles.submitbutton}>
-                  <Button type="submit" className={styles.loginButton}>로그인</Button>
+                  <button type="submit" className={styles.loginButton}>로그인</button>
                 </div>
 
               </Form>

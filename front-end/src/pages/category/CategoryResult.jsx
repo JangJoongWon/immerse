@@ -43,15 +43,30 @@ function CategoryResult({ id }) {
           <ul className={styles.categoryZip}>
           {categories.map((item) => (
             <div key={item.categoryId}>
-              <a
+              {item.categoryId === nowSelected ? (
+                <a
+                  href="/"
+                  // style={{ color: item.categoryId === nowSelected ? '#8b00ff' : 'white' }}
+                  className={styles.selected}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    toCategory(item.categoryId);
+                  }}>
+                  {item.categoryName}
+                </a>
+              ) : (
+                <a
                 href="/"
-                style={{ color: item.categoryId === nowSelected ? '#8b00ff' : 'white' }}
+                // style={{ color: item.categoryId === nowSelected ? '#8b00ff' : 'white' }}
+                className={styles.notSelected}
                 onClick={(event) => {
                   event.preventDefault();
                   toCategory(item.categoryId);
                 }}>
                 {item.categoryName}
               </a>
+
+              )}
             </div>
           ))}
           </ul>
