@@ -1,11 +1,76 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './SearchChannel.module.css';
 import { Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { mainBanner } from '../../assets/images';
 // import { NeonButton } from '../../components/button';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { TEST_URL, API_BASE_URL } from '../../constants';
 
 function Card({ data }) {
+  const userToken = useSelector((state) => state.user.token);
+  const [subscription, setSubscription] = useState(false);
+
+
+  useEffect(() => {
+      checksubscription(data.userId)
+
+  }, []);
+
+  const checksubscription = (followingId) => {
+
+    axios.get(API_BASE_URL + `/subscribe/check/${followingId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+      }
+    })
+      .then(response => {
+      setSubscription(response.data)
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+  }
+
+  const cancelsubscription = () => {
+
+    axios.delete(API_BASE_URL + `/subscribe/${data.userId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+      }
+    })
+      .then(response => {
+      checksubscription(data.userId)
+      console.log(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
+
+  const subscribe = () => {
+    axios.post(API_BASE_URL + '/subscribe', {
+      userId: data.userId
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+      }
+    },)
+      .then(response => {
+        // setUser(response.data);
+        checksubscription(data.userId)
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
 
   const navigate = useNavigate();
   const goProfile = () => {
@@ -39,7 +104,16 @@ function Card({ data }) {
                 )}
               </div>
               <div className={styles.subbutton}>
-                  <Button>구독</Button>
+                  {subscription 
+                  ?
+                  <Button
+                  onClick={cancelsubscription}
+                  >구독 취소</Button>
+                  :
+                  <Button
+                  onClick={subscribe}
+                  >구독</Button>
+                  }
               </div>
             </div>
         </div>
