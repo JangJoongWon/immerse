@@ -15,7 +15,7 @@ function ReservationSchedule(props) {
 
   useEffect(() => {
     // Axios를 사용하여 데이터를 불러옴
-      axios.get(TEST_URL + `/reservation/user/${userId}`, {
+      axios.get(API_BASE_URL + `/reservation/user/${userId}`, {
                 headers: { 
                     'Content-Type': 'application/json', 
                     'Authorization': 'Bearer ' + userToken

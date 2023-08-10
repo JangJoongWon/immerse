@@ -9,8 +9,13 @@
   .container:hover {
     cursor: pointer;
     transform: scale(1.1);
-    background-color: #31363B;
+    /* background-color: #31363B; */
     border-radius: 20px;
+    box-shadow: 0 0 1px #CE96FB,
+                0 0 5px #CE96FB,
+                0 0 10px #CE96FB,
+                0 0 20px #CE96FB;
+/* -webkit-box-reflect:below 1px linear-gradient(transparent, #0005); */
   }
   
   .content {
@@ -65,7 +70,7 @@
   
   .tagbutton {
     text-decoration: none;
-    color: #8b00ff;
+    color: #9D72FF;
   }
 
 

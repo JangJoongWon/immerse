@@ -18,7 +18,7 @@ function MyPage() {
   // const user = useSelector(state => state.user.user);
 
   const [user, setUser] = useState({});
-  // const [scribe, setScribe] = useState(null);
+  const [subscription, setSubscription] = useState(false);
   // const [userId, setUserId] = useState(1);
 
   useEffect(() => {
@@ -26,7 +26,8 @@ function MyPage() {
     axios.get(API_BASE_URL + `/user/mypage/${nickname}`)
       .then(response => {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
-        // console.log(response)
+        console.log(response.data.userId)
+        checksubscription(response.data.userId)
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -34,6 +35,40 @@ function MyPage() {
   }, []);
 
 
+  const checksubscription = (followingId) => {
+
+    axios.get(API_BASE_URL + `/subscribe/check/${followingId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+      }
+    })
+      .then(response => {
+      setSubscription(response.data)
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+  }
+
+  const cancelsubscription = () => {
+
+    axios.delete(API_BASE_URL + `/subscribe/${user.userId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+      }
+    })
+      .then(response => {
+      checksubscription(user.userId)
+      console.log(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
 
   const subscribe = () => {
     axios.post(API_BASE_URL + '/subscribe', {
@@ -45,8 +80,9 @@ function MyPage() {
       }
     },)
       .then(response => {
-        setUser(response.data);
-        console.log(response)
+        // setUser(response.data);
+        checksubscription(user.userId)
+        console.log(response.data)
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -85,7 +121,7 @@ function MyPage() {
                   className={styles.username}
                 >
                   {user == null ? <span>user nickname</span> : <span>{user.nickname}</span>}
-                  <Link to="/checkpassword">
+                  <Link to="/myoption">
                 <img 
                 src={settings} alt="setting" 
                 style={{width:"5%"}}
@@ -114,12 +150,22 @@ function MyPage() {
           <Col sm={3}>
             <Row>
             </Row>
+            {subscription 
+            ?
             <div className={styles.userright}>
               <button
-                onClick={subscribe}
-                className={styles.scribe}
-              >구독</button>
+                onClick={cancelsubscription}
+                className={styles.cancelsubscription}
+              >구독 취소</button>
             </div>
+            :
+            <div className={styles.userright}>
+            <button
+              onClick={subscribe}
+              className={styles.subscribe}
+            >구독</button>
+          </div>
+            }
           </Col>
 
         </div>

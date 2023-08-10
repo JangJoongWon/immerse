@@ -12,11 +12,13 @@ function CardList({Live, Reserve}) {
     const liveData = Live
     const reserveData = Reserve
     
-    const handleLiveButtonClick = () => {
+    const handleLiveButtonClick = (e) => {
+      e.preventDefault();
       setLiveState(true);
     };
     
-    const handleReserveButtonClick = () => {
+    const handleReserveButtonClick = (e) => {
+      e.preventDefault();
       setLiveState(false);
     };
   
@@ -24,21 +26,30 @@ function CardList({Live, Reserve}) {
     <div className={styles.container}>
 
         <div className={styles.listResult}>
-          <ul className={styles.statebutton}>
-            <a href="/" onClick={(event) => {
-            event.preventDefault();
-            handleLiveButtonClick();
-            }}
-            style = {liveState ? {color:'#8b00ff'} : {color:'white'}}
-            >라이브  </a>
+          {liveState ? (
+            <ul className={styles.statebutton}>
+              <a 
+              className={styles.selected}
+              href="/" onClick={handleLiveButtonClick}
+              >라이브</a>
+              <a 
+              className={styles.notSelected}
+              href="/" onClick={handleReserveButtonClick}
+              >공연예정</a>
+            </ul>
+            ) : (
+            <ul className={styles.statebutton}>
+              <a 
+              className={styles.notSelected}
+              href="/" onClick={handleLiveButtonClick}
+              >라이브</a>
+              <a 
+              className={styles.selected}
+              href="/" onClick={handleReserveButtonClick}
+              >공연예정</a>
+            </ul>
+            )}
 
-            <a href="/" onClick={(event) => {
-            event.preventDefault();
-            handleReserveButtonClick();
-            }}
-            style = {liveState ? {color:'white'} : {color:'#8b00ff'}}
-            >공연예정</a>
-          </ul>
 
           <div className={`${styles.popularList} ${styles.gridMove}`}>
           {liveState ? (

@@ -3,12 +3,11 @@ import styles from './Audience.module.css'
 import { UserVideoComponent } from './video';
 // import { Row, Col} from 'react-bootstrap'
 import {useState} from 'react'
-import { chatOn, optionOn, optionOff } from '/src/assets/icons'
+import { chatOn, optionOn, optionOff, curtton } from '/src/assets/icons'
+import AudienceOption from './audienceoption/AudienceOption'
 
-function Audience(props) {
-    
+function Audience(props) { 
   const [optionValue,setOptionValue] = useState(false)  
-  
 
   const onClickChangeOption = ()=>{
     setOptionValue(!optionValue)
@@ -32,7 +31,15 @@ function Audience(props) {
                                             <UserVideoComponent
                                                 streamManager={props.mainStreamManager} />
                                         </div>
-                                    ) : null}
+                                    ) : 
+                                    <div
+                                    className={styles.w100h100}>
+                                        <img 
+                                        className={styles.w100h100}
+                                        src={curtton} alt="comming soon" />
+
+                                    </div>
+                                        }
                             </div>
                             
                         );
@@ -64,29 +71,36 @@ function Audience(props) {
             <div className={styles.sidebar}>
                 <img src={chatOn} alt="chatingOpenButton" />
             </div>
+        </div>
             <div
             className={styles.option}>
                 { optionValue
                 ?
                 <div 
                 className={styles.optionbar}>
-                    <div
-                    onClick={onClickChangeOption}
-                    >
                     <div>
-                        <img 
-                        onClick={onClickChangeOption}
-                        src={optionOff} alt="OptionCloseButton" />
-                    </div>
+                        <div>
+                            <AudienceOption 
+                            leaveSession={props.leaveSession}                            
+                            subscribers={props.subscribers}/>
+                        </div>
+                        <div>
+                            <img 
+                            className={`${styles.noStyle} ${styles.closeOption}`}
+                            onClick={onClickChangeOption}
+                            src={optionOff} alt="OptionClose" />
+                        </div>
                     </div>
                 </div>
                 :
-                <img 
-                onClick={onClickChangeOption}
-                src={optionOn} alt="OptionOpenButton" />
+                <div>
+                    <img 
+                    className={`${styles.noStyle} ${styles.openOption}`}
+                    onClick={onClickChangeOption}
+                    src={optionOn} alt="OptionOpen" />
+                </div>
                 }
             </div>
-        </div>
     </div>
   )
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import com.sandcastle.immerse.repository.ShowRepository;
 import com.sandcastle.immerse.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
@@ -46,8 +48,9 @@ public class ShowServiceImpl implements ShowService {
 	}
 
 	public Optional<ShowResponse> findShow(Long id) {
-		ShowEntity show = showRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException("does not exist!"));
+		ShowEntity show = showRepository.findById(id).orElse(null);
+
+		if (show == null) return Optional.empty();
 
 		ShowResponse res = ShowResponse.builder()
 			.title(show.getTitle())
@@ -114,6 +117,20 @@ public class ShowServiceImpl implements ShowService {
 
 	@Override
 	@Transactional
+	public Long updateMaxAttendance(Long showId, Long userId, int count) throws IllegalArgumentException {
+		ShowEntity show = showRepository.findById(showId)
+				.orElseThrow(() -> new IllegalArgumentException("No Show!"));
+
+		if (userId != show.getUser().getUserId()) { // 공연자 자신이 아니라면
+			throw new IllegalArgumentException("User is not the Artist of the show!");
+		}
+		show.setMaxAttendance(count);
+
+		return show.getShowId();
+	}
+
+	@Override
+	@Transactional
 	public Long startShow(Long showId, Long userId) throws IllegalStateException, IllegalArgumentException {
 		ShowEntity show = showRepository.findById(showId)
 				.orElseThrow(() -> new IllegalArgumentException("No Show!"));
@@ -129,6 +146,7 @@ public class ShowServiceImpl implements ShowService {
 	}
 
 	@Override
+	@Transactional
 	public Long finishShow(Long showId, Long userId) throws IllegalStateException, IllegalArgumentException {
 		ShowEntity show = showRepository.findById(showId)
 				.orElseThrow(() -> new IllegalArgumentException("No show!"));

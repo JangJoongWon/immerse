@@ -5,32 +5,23 @@ import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../constants';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { mainBanner } from '../../assets/images';
 
 function Card({ data }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [stageInfoOn, setStageInfoOn] = useState(false);
   const [cardInfo, setCardInfo] = useState({})
 
   const navigate = useNavigate()
 
   const categoryMap = useSelector(state => state.category.categoryMap);
 
-  const openStageInfo = async (event) => {
+  const toStageInfo = async (event) => {
     event.preventDefault();
-  
-    try {
-      const response = await axios.get(`${API_BASE_URL}/shows/${data.showId}`);
-      console.log('Get success:', response.data);
-      setCardInfo(response.data);
-      setStageInfoOn(true);
-      console.log(cardInfo);
-    } catch (error) {
-      console.log('Get error', error);
-    }
+    navigate(`/stageinfo/${data.showId}`)
   };
 
   const toProfile = () => {
-    navigate('/mypage/data.nickname')
+    navigate(`/mypage/${data.nickname}`)
   }
 
   const toCategory = (data) => {
@@ -45,17 +36,17 @@ function Card({ data }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className={styles.content}>
-        <div className={styles.thumbnail} onClick={openStageInfo}>
+        <div className={styles.thumbnail} onClick={toStageInfo}>
           <div className={styles.posterContainer}>
             <img
-              src={`https://image.tmdb.org/t/p/original/${data.thumbnail}`}
+              src={mainBanner}
               className={styles.poster}
               alt="Movie Poster"
             />
           </div>
         </div>
         <header>
-          <div onClick={openStageInfo}><h4>{data.title}</h4></div>
+          <div onClick={toStageInfo}><h4>{data.title}</h4></div>
           <div onClick={toProfile}>{data.nickname}</div>
         </header>
       </div>
@@ -70,11 +61,6 @@ function Card({ data }) {
             #{categoryMap[data.category_id].categoryName}
           </a>
         </footer>
-      <StageInfo
-        show={stageInfoOn}
-        onHide={() => setStageInfoOn(false)}
-        data={cardInfo}
-      />
     </div>
   );
 }

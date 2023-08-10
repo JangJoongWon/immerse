@@ -39,7 +39,7 @@
 
 .gridItem {
     background-color: lightgray;
-    padding: 20px;
+    /* padding: 20px; */
   }
 
 .sidebar {
@@ -48,4 +48,9 @@
 
 h1 {
     color: red;
+}
+
+.streamcontainer {
+    width: 100%;
+    height: 100%;
 }

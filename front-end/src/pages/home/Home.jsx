@@ -42,7 +42,7 @@ function Home() {
 
       try {
         const categoriesResponse = await axios.get(`${API_BASE_URL}/categories/`);
-        console.log(categoriesResponse);
+        // console.log(categoriesResponse);
         const categories = categoriesResponse.data;
         const cagoryMap = {};
         for (const e of categories) {
@@ -51,7 +51,7 @@ function Home() {
             categoryName
           };
         }
-        console.log(cagoryMap);
+        // console.log(cagoryMap);
         dispatch(setCategories([...categories]));
         dispatch(setCagoryMap(cagoryMap));
       }
@@ -110,12 +110,12 @@ function Home() {
                   show={MakeStageOn}
                   onHide={() => setMakeStageOn(false)}
                 />
-                <Button
+                <button
                   className={styles.makeButton}
                   onClick={openMakeStage}
                 >
                   방만들기
-                </Button>
+                </button>
               </div>
             </div>
           </div>

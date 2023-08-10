@@ -1,30 +1,28 @@
 package com.sandcastle.immerse.service;
 
-import com.sandcastle.immerse.model.dto.ReservationDto;
-import com.sandcastle.immerse.model.entity.ReservationEntity;
-import org.springframework.security.core.Authentication;
-
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
+
+import com.sandcastle.immerse.model.dto.UserDto;
+import com.sandcastle.immerse.model.dto.show.ShowListResponse;
+import com.sandcastle.immerse.model.entity.ReservationEntity;
+
+@Transactional(readOnly = true)
 public interface ReservationService {
 
-    @Transactional
-    public Long postReservation(ReservationDto request,Long showId, Authentication authentication);
-    @Transactional
-    List<ReservationEntity> findALLReservation();
+	@Transactional(readOnly = false)
+	public Long postReservation(Long showId, Long userId) throws IllegalArgumentException;
 
-    @Transactional
-    Optional<ReservationEntity> findByIdReservation(Long id);
+	List<ReservationEntity> findALLReservation();
 
+	Optional<ReservationEntity> findByIdReservation(Long id);
 
-    @Transactional
-    List<ReservationEntity> findListReservationByUserId(Long userId);
+	List<ShowListResponse> findListReservationByUserId(Long userId);
 
-    @Transactional
-    List<ReservationEntity> findListReservationByShowId(Long showId);
+	List<UserDto> findListReservationByShowId(Long showId);
 
-    @Transactional
-    void deleteByReservationId(Long id);
+	@Transactional(readOnly = false)
+	void deleteByReservationId(Long id);
 }

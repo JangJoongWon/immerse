@@ -12,7 +12,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Table(name = "effects")
 public class EffectEntity {
-
     @Id
     @Column(name = "effect_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

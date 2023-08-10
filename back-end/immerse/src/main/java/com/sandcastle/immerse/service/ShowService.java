@@ -44,6 +44,9 @@ public interface ShowService {
 	public Long putShow(Long showId, ShowRequest req);
 
 	@Transactional(readOnly = false)
+	public Long updateMaxAttendance(Long showId, Long userId, int count) throws IllegalArgumentException;
+
+	@Transactional(readOnly = false)
     public Long startShow(Long showId, Long userId) throws IllegalStateException, IllegalArgumentException;
 
 	@Transactional(readOnly = false)
