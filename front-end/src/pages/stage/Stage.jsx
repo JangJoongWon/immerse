@@ -22,6 +22,7 @@ const Stage = () => {
     const [mainStreamManager, setMainStreamManager] = useState(undefined);
     const [session, setSession] = useState(undefined);
     const [showData, setShowData] = useState({});
+    const [chats, setChats] = useState([]);
 
     const userToken = useSelector((state) => state.user.token);
     const user = useSelector(state => state.user.user);
@@ -100,6 +101,10 @@ const Stage = () => {
         }
     }, []);
 
+    const pushPublisher = (p) => {
+        setPublisher(prev => p);
+    }
+
     const joinSession = () => {
         const newSession = ov.current.initSession();
 
@@ -124,7 +129,20 @@ const Stage = () => {
 
         newSession.on('signal:force-mute', event => {
             console.log(event);
-        })
+            console.log(publisher)
+            if (publisher) {
+                console.log("cam off");
+                publisher.stream.getMediaStream().getVideoTracks()[0].enabled = false;
+            }
+        });
+
+        newSession.on('signal:chat', event => {
+            const newChat = {
+                // from: event.from,
+                message: event.data
+            };
+            pushChat(newChat);
+        });
 
         getToken().then((token) => {
             newSession
@@ -133,7 +151,7 @@ const Stage = () => {
 
                 // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
                 // element: we will manage it on our own) and with the desired properties
-                let newPublisher = await ov.current.initPublisherAsync(undefined, {
+                const newPublisher = await ov.current.initPublisherAsync(undefined, {
                     audioSource: undefined, // The source of audio. If undefined default microphone
                     videoSource: undefined, // The source of video. If undefined default webcam
                     publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
@@ -152,6 +170,9 @@ const Stage = () => {
                 var currentVideoDeviceId = newPublisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
                 var currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
 
+                console.log(newPublisher);
+                pushPublisher(newPublisher);
+                console.log(publisher);
                 addSubscriber(newPublisher);
                 setSession(newSession);
             })
@@ -205,12 +226,25 @@ const Stage = () => {
     const muteAllCams = () => {
         session.signal({
             data: "mute!",
-            to: [],
+            to: [], // empty to all
             type: "force-mute"
         })
         .then(() => {
             console.log("all muted");
+        });
+    }
+    const testChat = () => {
+        session.signal({
+            data: "test from " + user.nickname + Date.now(),
+            to: [],
+            type: "chat"
         })
+        .then(() => {
+            console.log("sent successfully!");
+        });
+    }
+    const pushChat = (newChat) => {
+        setChats(prev => [...prev, newChat]);
     }
 
     const popState = () => {
@@ -255,6 +289,10 @@ const Stage = () => {
         }
     }, [leaveSession]);
 
+    useEffect(() => {
+        console.log(chats);
+    }, [chats]);
+
     return (
         <div className={styles.container}>
             {session !== undefined ?
@@ -271,6 +309,17 @@ const Stage = () => {
                     />  
                 : <Loading showData={showData} />}
             <Button onClick={muteAllCams}>Mute</Button>
+            <Button onClick={testChat}>Chat test</Button>
+            <Button onClick={() => pushChat({ message: "test" })}>Chat test</Button>
+            <ul>
+                {chats.map((chat, i) => {
+                    return (
+                        <li key={"chat " + i} id={"chat " + i}>
+                            {chat.message}
+                        </li>
+                    )
+                })}
+            </ul>
         </div>
     );
 }
