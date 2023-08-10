@@ -54,22 +54,27 @@ function Card({ data }) {
   }
 
   const subscribe = () => {
-    axios.post(API_BASE_URL + '/subscribe', {
-      userId: data.userId
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${userToken}`
-      }
-    },)
-      .then(response => {
-        // setUser(response.data);
-        checksubscription(data.userId)
-        console.log(response.data)
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+
+    if (!userToken) {
+      navigate('/login')
+    } else {
+      axios.post(API_BASE_URL + '/subscribe', {
+        userId: data.userId
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userToken}`
+        }
+      },)
+        .then(response => {
+          // setUser(response.data);
+          checksubscription(data.userId)
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
   }
 
   const navigate = useNavigate();
@@ -106,13 +111,15 @@ function Card({ data }) {
               <div className={styles.subbutton}>
                   {subscription 
                   ?
-                  <Button
+                  <button
                   onClick={cancelsubscription}
-                  >구독 취소</Button>
+                  className={styles.delsubutton}
+                  >구독 취소</button>
                   :
-                  <Button
+                  <button
                   onClick={subscribe}
-                  >구독</Button>
+                  className={styles.subutton}
+                  >구독</button>
                   }
               </div>
             </div>
