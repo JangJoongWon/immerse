@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.14'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+
+
 //    id 'checkstyle'
 }
 
@@ -40,6 +42,13 @@ dependencies {
     implementation 'io.openvidu:openvidu-java-client:2.23.0'
 
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+    // AWS S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    //Jasypt
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+
 
 }
 
