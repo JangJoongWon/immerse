@@ -19,10 +19,11 @@ public class SecurityConfig {
     private final UserService userServiceImpl;
 
 	@Value("${application.jwt.password}")
-    private String secretKey;
+    private String propertySecretKey;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+		String secretKey = propertySecretKey;
 		return httpSecurity
 			.httpBasic().disable()
 			.csrf().disable()
