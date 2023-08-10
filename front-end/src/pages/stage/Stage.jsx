@@ -122,6 +122,10 @@ const Stage = () => {
             console.warn(exception);
         });
 
+        newSession.on('signal:force-mute', event => {
+            console.log(event);
+        })
+
         getToken().then((token) => {
             newSession
             .connect(token, { clientData: user.nickname })
@@ -199,11 +203,14 @@ const Stage = () => {
     }, [session]);
 
     const muteAllCams = () => {
-        for (const e of subscribers) {
-            const nickname = JSON.parse(e.stream.connection.data).clientData;
-        
-            // ov.getCameras(user.user_id);
-        }
+        session.signal({
+            data: "mute!",
+            to: [],
+            type: "force-mute"
+        })
+        .then(() => {
+            console.log("all muted");
+        })
     }
 
     const popState = () => {
@@ -263,7 +270,7 @@ const Stage = () => {
                     subscribers={subscribers}
                     />  
                 : <Loading showData={showData} />}
-            {/* <Button onClick={muteAllCams}>Mute</Button> */}
+            <Button onClick={muteAllCams}>Mute</Button>
         </div>
     );
 }
