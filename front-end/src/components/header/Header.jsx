@@ -145,7 +145,7 @@ function Header() {
                     LogOut
                   </Nav.Link>
                   <Nav.Link onClick={toProfile} className={`m-2 ${styles.linkunit}`} style={{ color: "white" }}>
-                    {user.nickname}
+                    {user?.nickname}
                   </Nav.Link>
                   {/* <Nav.Link className='m-2' style={{ color: "white" }}
                     onClick={deleteAccount}
