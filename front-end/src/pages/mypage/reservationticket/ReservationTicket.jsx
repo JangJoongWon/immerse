@@ -9,7 +9,7 @@ function ReservationTicket({ data }) {
             className={styles.box}>
           <Col sm={9} 
             style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`,
+              // backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`,
               backgroundSize: 'cover',
               // backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
