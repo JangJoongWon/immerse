@@ -49,6 +49,19 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    */
   ReservationEntity save(ReservationDto request);
 
+  @Query("SELECT count(r.id) > 0 " +
+          "FROM ReservationEntity r " +
+          "WHERE r.showEntity.id = :showId " +
+          "AND r.userEntity.id = :userId")
+  boolean exists(@Param("showId") Long showId, @Param("userId") Long userId);
+
+  @Modifying
+  @Query("DELETE " +
+          "FROM ReservationEntity r " +
+          "WHERE r.showEntity.id = :showId " +
+          "AND r.userEntity.id = :userId")
+  void delete(@Param("showId") Long showId, @Param("userId") Long userId);
+
   /**
    * 모든 객체를 반환한다.
    * @return

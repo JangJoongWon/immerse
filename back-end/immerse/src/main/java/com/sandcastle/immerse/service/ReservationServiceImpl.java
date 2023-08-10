@@ -51,6 +51,12 @@ public class ReservationServiceImpl implements ReservationService {
 	@Transactional
 	public Long postReservation(Long showId, Long userId) throws IllegalArgumentException {
 
+		// toggle reservation
+		if (reservationRepository.exists(showId, userId)) {
+			reservationRepository.delete(showId, userId);
+			return null;
+		}
+
 		UserEntity user = userRepository.findById(userId)
 			.orElseThrow(() -> new IllegalArgumentException("No such user!"));
 

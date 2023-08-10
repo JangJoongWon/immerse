@@ -54,10 +54,14 @@ public class ReservationController {
 	 */
 	@ResponseBody
 	@PostMapping("/{showId}")
-	public Long postShow(@RequestBody(required = false) ReservationDto request, @PathVariable Long showId,
+	public ResponseEntity<Long> postShow(@RequestBody(required = false) ReservationDto request, @PathVariable Long showId,
 		Authentication authentication) throws Exception {
 		Long userId = Long.valueOf(authentication.getName());
-		return reservationService.postReservation(showId, userId);
+		Long reservationId = reservationService.postReservation(showId, userId);
+		if (reservationId == null) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(reservationId);
 	}
 
 	/**
