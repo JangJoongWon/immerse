@@ -1,20 +1,57 @@
 // 공연기록에서 가장 앞에 있는 포스터를 좌측 상단
 // 방명록내용에서 4개를 우측 상단
 // 이전 공연기록을 하단에 출력
-import data from '../../../stage_data.json';
-import guest from '../../../guest.json';
 import MyPageCard from '../mypagecard/MyPageCard';
 import { Row, Col } from 'react-bootstrap';
 import styles from './MyPageHome.module.css';
 import ReservationTicket from '../reservationticket/ReservationTicket';
+import {useState, useEffect} from 'react'
+import axios from 'axios'
+import {API_BASE_URL, TEST_URL} from '../../../constants/index'
+import { useSelector } from 'react-redux';
+import { mainBanner } from '/src/assets/images';
+
 
 function MyPageHome(props) {
-  var { user_id } = props;
-  var stage_list = data.filter((stage) => {
-    return user_id === stage.fields.user_id;
-  });
-  // Sort stage_list by date in descending order (most recent first)
-  stage_list.sort((a, b) => new Date(b.fields.date) - new Date(a.fields.date));
+
+  const userToken = useSelector((state)=>state.user.token)
+  const user = useSelector((state)=>state.user.user)
+  const [list,setList] = useState([])
+  const [schedule,setSchedule] = useState([])
+
+  
+  useEffect(() => {
+    // Axios를 사용하여 데이터를 불러옴
+      axios.get(API_BASE_URL + '/shows/', {
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'Authorization': 'Bearer ' + userToken
+                },
+            })
+      .then(response => {
+        const tmp = response.data.filter((show) => show.user_id == user.userId )
+        setList(tmp); // 불러온 데이터를 상태(State)에 저장
+
+        console.log(tmp)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+      axios.get(API_BASE_URL + `/reservation/user/${user.userId}`, {
+        headers: { 
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + userToken
+        },
+      })
+      .then(response => {
+      setSchedule(response.data); // 불러온 데이터를 상태(State)에 저장
+      console.log(response.data)
+      })
+      .catch(error => {
+      console.error('Error fetching data:', error);
+      });
+    },[]);
 
   return (
     <div
@@ -39,7 +76,7 @@ function MyPageHome(props) {
             <img
               style={{width:'100%',height:'90%', padding: '5% 10%'}}
               className={styles.poster}
-              src={`https://image.tmdb.org/t/p/original/${stage_list[0].fields.poster_path}`}
+              src={mainBanner}
               alt="None"
             />
           </div>
@@ -59,8 +96,8 @@ function MyPageHome(props) {
             className={styles.ticketbox}
             >
               {/* data.map 메소드를 사용하여 ReservationTicket 컴포넌트들을 그리드 형태로 배치 */}
-              {data.slice(0,3).map((data) => (
-                <Col sm={8} key={data.id}>
+              {schedule.slice(0,3).map((data) => (
+                <Col sm={8} key={data.title}>
                   <ReservationTicket data={data} />
                 </Col>
               ))}
@@ -108,11 +145,11 @@ function MyPageHome(props) {
         className={styles.bottom}>
             <Row
             className={styles.cardbox}>
-            {stage_list.slice(1,4).map((stage) => (
+            {list.slice(1,4).map((show) => (
                   <MyPageCard 
-                  key={stage.id}
+                  key={show.title}
                   className={styles.card} 
-                  data={stage} />
+                  show={show} />
             ))}
             </Row>
         </div>

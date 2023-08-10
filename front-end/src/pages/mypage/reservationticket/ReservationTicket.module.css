@@ -1,10 +1,10 @@
 .container{
-    background-color: #121212;
+    /* background-color: #121212; */
     /* outline: red 2px solid; */
 }
 
 .box {
-    background-color: #31363B;
+    /* background-color: #31363B; */
     box-shadow: 0 0 1rem rgba(255,255,255,00.5rem);
     margin: 5%;
     color:white;
@@ -31,6 +31,8 @@
 }
 
 .left{
+    background-color: #31363B;
+    z-index: 1;
     height: 8rem;
     border-bottom-right-radius: 5%;
     border-top-right-radius: 5%;

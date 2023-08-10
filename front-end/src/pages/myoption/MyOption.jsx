@@ -5,27 +5,30 @@ import InputPImg from './inputimg/InputImg';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { TEST_URL, API_BASE_URL } from '../../constants';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 function MyOption() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const userToken = useSelector((state) => state.user.token);
-
+  console.log(user)
   const [selectTab, setSelectTab] = useState('BannerImg');
 
   const changeSelectTab = (tab) => {
     setSelectTab(tab);
   };
-
+  const [passwordError, setPasswordError] = useState(true)
   const [name, setName] = useState('');
   const [bannerPicture, setBannerPicture] = useState('string');
   const [profilePicture, setProfilePicture] = useState('string');
   // const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
 
-  
-
-  console.log(userToken)
   function onSubmitHandler(){
 
     const context = {
@@ -59,6 +62,52 @@ function MyOption() {
     setSelfDescription(user.selfDescription)
   }, []);
 
+  const deleteAccount = async (token) => {
+    // event.preventDefault();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/user/withdrawal`, config);
+      dispatch(logOut())
+      console.log('Check success:', response);
+
+    } catch (error) {
+      console.log('Check error', error);
+    }
+  };
+
+
+  const onDeletetHandler = async (event) => {
+    event.preventDefault();
+    
+    const data = {
+      email : user.email,
+      password : password
+    }
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/user/signin`, data);
+      const token = response.data;
+      if (token) {
+        deleteAccount(token)
+        alert('회원 탈퇴가 되었습니다.')
+        navigate('/',{replace:true})
+      } else {
+        console.log('Delete failed: Invalid token');
+      }
+    } catch (error) {
+      if (error.response && error.response.data === 'INVALID_PASSWORD 잘못된 패스워드를 입력 했습니다.') {
+        setPasswordError(false)}
+      else {
+        console.log('Delete failed:', error.response.data)
+      }
+    }
+  }
+
   // function onBannerImgeUrlChangeHandler(BannerimageUrl) {
   //   setBannerImgUrl(BannerimageUrl);
   // }
@@ -79,6 +128,10 @@ function MyOption() {
     setSelfDescription(selfDescription)
   }
   
+  function onChangePassword(password){
+    setPassword(password)
+  }
+
   return (
     <div className={styles.background}>
       <div className={styles.container}>
@@ -125,6 +178,14 @@ function MyOption() {
             type="button" 
             size="lg" onClick={() => changeSelectTab('SelfDescription')}>
               자기소개
+            </Button>
+
+            <Button 
+            className={styles.button} 
+            type="button" 
+            variant="danger"
+            size="lg" onClick={() => changeSelectTab('deleteAccount')}>
+              회원탈퇴
             </Button>
         </Row>
         <Row>
@@ -217,9 +278,39 @@ function MyOption() {
                   </div>
                 </Form.Group>
               )}
+
+              {(selectTab=='deleteAccount') && (
+                <Form.Group className={styles.selfDescription}>
+                  <div>
+                    <Form.Control
+                      type="password"
+                      style={{height:"100%",width:"50%"}}
+                      className={styles.input}
+                      placeholder={'회원 탈퇴를 위해 비밀번호를 입력해주세요'}
+                      // value={selfDescription}
+                      onChange={(e) => onChangePassword(e.target.value)}
+                    />
+                  {passwordError ? (
+                    <></>
+                  ):(
+                    <p style={{color:'red'}}>비밀번호를 확인해 주세요</p>
+                  )}
+                  </div>
+                </Form.Group>
+              )}
             </Form>
 
         </Row>
+                
+        {(selectTab=='deleteAccount') && 
+        
+        <Button variant='danger' onClick={onDeletetHandler}>
+          회원 탈퇴
+        </Button>
+      
+        
+        }
+
         <Form.Group style={{ textAlign: "end" }}>
                 <Button 
                 onClick={onSubmitHandler}
