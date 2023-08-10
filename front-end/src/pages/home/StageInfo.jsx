@@ -97,15 +97,15 @@ function StageInfo() {
                     {showData.showProgress === 'SCHEDULED' ? (
                         user && user.nickname ? (
                             showData.nickname !== user.nickname ? (
-                            <Button onClick={reserveStage}>예약하기</Button>
+                            <button onClick={reserveStage} className={styles.submitbutton}>예약하기</button>
                         ) : (
-                            <Button onClick={startStage}>시작하기</Button>
+                            <button onClick={startStage} className={styles.submitbutton}>시작하기</button>
                         )
                         ) : (
-                        <Button onClick={reserveStage}>예약하기</Button> // user 객체가 null인 경우 기본 동작
+                        <button onClick={reserveStage} className={styles.submitbutton}>예약하기</button> // user 객체가 null인 경우 기본 동작
                         )
                     ) : (
-                        <Button onClick={attendStage}>입장하기</Button>
+                        <button onClick={attendStage} className={styles.submitbutton}>입장하기</button>
                     )}
                     </div>
                 </div>

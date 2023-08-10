@@ -1,3 +1,27 @@
 .stage-page-container {
     background-color: black;
 }
+
+.chatbox {
+    display: flex;
+}
+.inputchat {
+
+}
+.chatbutton {
+    width: 10%;
+}
+
+.chatcontainer {
+    height: 500px;
+    border: 1px solid black;
+}
+
+.chatingbox {
+    padding: 5px;
+    background-color: green;
+    border: 1px solid white;
+    width: 50%;
+    border-radius: 10px;
+    margin: 10px;
+}

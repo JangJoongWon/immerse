@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../constants';
 import { Audience, Performer, Loading } from './components';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 const Stage = () => {
     const { id } = useParams(); // session id는 show_id로 설정 (겹치는 일이 없도록!)
@@ -136,12 +136,26 @@ const Stage = () => {
             }
         });
 
+        // newSession.on('signal:chat', event => {
+        //     const newChat = {
+        //         // from: event.from,
+        //         message: event.data
+        //     };
+        //     pushChat(newChat);
+        // });
+
         newSession.on('signal:chat', event => {
-            const newChat = {
-                // from: event.from,
-                message: event.data
-            };
-            pushChat(newChat);
+            try {
+                const chatData = JSON.parse(event.data);
+                console.log('chatData:', chatData)
+                // const newChat = {
+                //     // from: chatData.from,
+                //     message: chatData.message
+                // };
+                pushChat(chatData);
+            } catch (error) {
+                console.error('Error parsing chat data:', error);
+            }
         });
 
         getToken().then((token) => {
@@ -233,16 +247,47 @@ const Stage = () => {
             console.log("all muted");
         });
     }
+
+    const [ChatText, setChatText] = useState('')
+    const handleChatChange = (e) => {
+        setChatText(e.target.value);
+      };
+
     const testChat = () => {
+
+        // 현재 시간
+        const currentTime = new Date();
+        const hours = currentTime.getHours();
+        const minutes = currentTime.getMinutes();
+        const formattedTime = `${hours}:${minutes}`;
+
+        const chatData = {
+            text: ChatText,
+            nickname: user.nickname,
+            timestamp: formattedTime
+        };
+
         session.signal({
-            data: "test from " + user.nickname + Date.now(),
+            data: JSON.stringify(chatData),
             to: [],
             type: "chat"
         })
         .then(() => {
             console.log("sent successfully!");
+            setChatText('');
         });
-    }
+    };
+
+    // const testChat = () => {
+    //     session.signal({
+    //         data: 'test from' + user.nickname + Date.now(),
+    //         to: [],
+    //         type: "chat"
+    //     })
+    //     .then(() => {
+    //         console.log("sent successfully!");
+    //     });
+    // }
     const pushChat = (newChat) => {
         setChats(prev => [...prev, newChat]);
     }
@@ -309,18 +354,50 @@ const Stage = () => {
                     leaveSession={popState}
                     />  
                 : <Loading showData={showData} />}
-            <Button onClick={muteAllCams}>Mute</Button>
-            <Button onClick={testChat}>Chat test</Button>
-            <Button onClick={() => pushChat({ message: "test" })}>Chat test</Button>
-            <ul>
+
+                <div className={styles.chatbox}>
+                    <Form.Control 
+                    className={styles.inputchat}
+                    type="text" 
+                    value={ChatText}
+                    onChange={handleChatChange}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            testChat();
+                        }
+                    }} />
+                    <Button className={styles.chatbutton} onClick={testChat}>submit</Button>
+                </div>
+            
+            {/* <Button onClick={muteAllCams}>Mute</Button> */}
+            {/* <Button onClick={testChat}>Chat test</Button> */}
+            {/* <Button onClick={() => pushChat({ message: "test" })}>Chat test</Button> */}
+
+            <div className={styles.chatcontainer}>
                 {chats.map((chat, i) => {
                     return (
+                        <div 
+                          className={styles.chatingbox} 
+                          key={"chat " + i} id={"chat " + i}>
+                            <p>작성자 : {chat.nickname}</p>
+                            <p>내용 : {chat.text}</p>
+                            <p>시간 : {chat.timestamp}</p>
+                        </div>
+                    )
+                })}
+
+            </div>
+            {/* <ul>
+                {chats.map((chat, i) => {
+                    return (
+
                         <li key={"chat " + i} id={"chat " + i}>
                             {chat.message}
                         </li>
                     )
                 })}
-            </ul>
+            </ul> */}
         </div>
     );
 }
