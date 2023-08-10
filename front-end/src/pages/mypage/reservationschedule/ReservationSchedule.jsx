@@ -93,9 +93,8 @@ function ReservationSchedule(props) {
         <Row
         >
           {/* data.map 메소드를 사용하여 ReservationTicket 컴포넌트들을 그리드 형태로 배치 */}
-          {list.map((data) => (
+          {list?.map((data) => (
             <Col 
-              key={data.id}
               key={data.title}
               style={{margin: '1% 0% 5% 0%'}}
               sm={4} >

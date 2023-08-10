@@ -22,7 +22,8 @@ function SubscribeList(props) {
     },[]);
 
   return (
-    <div>
+    <div 
+    className={styles.container}>
       <div
         className={styles.gridItem}>
         {

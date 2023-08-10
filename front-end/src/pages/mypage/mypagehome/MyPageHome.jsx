@@ -17,6 +17,7 @@ function MyPageHome(props) {
   const userToken = useSelector((state)=>state.user.token)
   const user = useSelector((state)=>state.user.user)
   const [list,setList] = useState([])
+  const [schedule,setSchedule] = useState([])
 
   
   useEffect(() => {
@@ -35,6 +36,20 @@ function MyPageHome(props) {
       })
       .catch(error => {
         console.error('Error fetching data:', error);
+      });
+
+      axios.get(API_BASE_URL + `/reservation/user/${user.userId}`, {
+        headers: { 
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + userToken
+        },
+      })
+      .then(response => {
+      setSchedule(response.data); // 불러온 데이터를 상태(State)에 저장
+      console.log(response.data)
+      })
+      .catch(error => {
+      console.error('Error fetching data:', error);
       });
     },[]);
 
@@ -81,7 +96,7 @@ function MyPageHome(props) {
             className={styles.ticketbox}
             >
               {/* data.map 메소드를 사용하여 ReservationTicket 컴포넌트들을 그리드 형태로 배치 */}
-              {list.slice(0,3).map((data) => (
+              {schedule.slice(0,3).map((data) => (
                 <Col sm={8} key={data.title}>
                   <ReservationTicket data={data} />
                 </Col>
