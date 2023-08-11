@@ -105,6 +105,7 @@ public class ReservationController {
 	@GetMapping("/user/{userId}")
 	public ResponseEntity<List<ShowListResponse>> findListReservationByUserId(@PathVariable Long userId) {
 		System.out.println("get All Reservations , user_id :" + userId);
+
 		return ResponseEntity.ok(reservationService.findListReservationByUserId(userId));
 	}
 
