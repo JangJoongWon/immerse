@@ -26,7 +26,7 @@
     background-color: white;
     display: flex;
     justify-content: center;
-    align-items: first baseline;
+    align-items:flex-end;
     /* outline: 2px solid yellow; */
 }
 
@@ -90,3 +90,6 @@
     /* outline: 2px solid blue; */
 }
 
+img{
+    margin-bottom: 10%;
+}

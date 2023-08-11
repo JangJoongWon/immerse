@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styles from './ReservationTicket.module.css';
-
+import {bacode} from '/src/assets/icons'
 
 function ReservationTicket({ data }) {
   return (
@@ -61,14 +61,14 @@ function ReservationTicket({ data }) {
           </Col>
           <Col sm={3} 
               className={styles.right}>
-            {/* <div>
+            <div>
               <Row
                 style={{margin:"0 auto"}}
                 sm={3}>    
-                <h2
+                {/* <h2
                 style={{color:"gold"}}
                 >Free
-                </h2>
+                </h2> */}
               </Row>
               <Row sm={3}>
                 <div></div>
@@ -77,16 +77,15 @@ function ReservationTicket({ data }) {
                 <div
                 className={`${styles.rightfont} ${styles.date}`}
                 >  
-                  {data.fields.date.slice(6,10)}
                 </div>
               </Row>
               <Row>
                 <div
                 className={`${styles.rightfont} ${styles.time}`}>
-                  {data.fields.time}
+                  <img src={bacode} alt="" />
                 </div>
               </Row>
-            </div> */}
+            </div>
           </Col>
         </Row>
   );
