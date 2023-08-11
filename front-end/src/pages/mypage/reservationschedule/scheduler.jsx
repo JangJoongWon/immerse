@@ -10,8 +10,8 @@ function test(props) {
     const newEvents = events.map(item => ({
       title : item.title,
       allDay :false,
-      start : item.startTime,
-      end : item.endTime,
+      start : new Date(item.startTime),
+      end : new Date(item.endTime),
     }));
     // const events = [
     //   {title:"오늘도 출근",

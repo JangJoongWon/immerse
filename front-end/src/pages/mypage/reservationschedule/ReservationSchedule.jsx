@@ -51,21 +51,17 @@ function ReservationSchedule(props) {
     <div>
       <div className={styles.buttonbox}>
         <div
-        onClick={() => handleClick('Calendar')}
         className={styles.calendarbuttonbox}
         >
           <img
+          onClick={() => handleClick('Calendar')}
           onMouseOver={() => setCalendarIsHovered(true)}
           onMouseOut={() => setCalendarIsHovered(false)} 
           className={styles.calendarbutton}
           src={ (isSelectd==='Calendar'||calendarisHovered) ? calendarHover : calendar } alt="calendar" />
-        </div>
-        
-        <div
-        onClick={() => handleClick('Ticket')}
-        className={styles.ticketbuttonbox
-        }>
+          
           <img
+          onClick={() => handleClick('Ticket')}
           onMouseOver={() => setTicketIsHovered(true)}
           onMouseOut={() => setTicketIsHovered(false)} 
           className={styles.ticketbutton} 
