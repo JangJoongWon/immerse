@@ -50,7 +50,11 @@ public class ShowListResponse {
 	 * 공연자 별명
 	 */
 	private String nickname;
-	
+
+	private LocalDate startTime;
+
+	private LocalDate endTime;
+
 	public ShowListResponse(ShowEntity show) {
 		showId = show.getShowId();
 		title = show.getTitle();
@@ -60,5 +64,8 @@ public class ShowListResponse {
 		category_id = show.getCategory().getCategoryId();
 		user_id = show.getUser().getUserId();
 		nickname = show.getUser().getNickname();
+		startTime = LocalDate.from(show.getStartTime());
+		endTime = LocalDate.from(show.getEndTime());
+
 	}
 }
