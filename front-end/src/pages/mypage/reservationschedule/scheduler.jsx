@@ -13,18 +13,7 @@ function test(props) {
       start : new Date(item.startTime),
       end : new Date(item.endTime),
     }));
-    // const events = [
-    //   {title:"오늘도 출근",
-    //   allDay:false,
-    //   start: new Date(2023,7,8,11,0),
-    //   end: new Date(2023,7,8,12,0),
-    // },
-    //   {title:"내일도 출근",
-    //   allDay:false,
-    //   start: new Date(2023,7,8,17,0),
-    //   end: new Date(2023,7,8,18,0),
-    // }
-    // ]
+
   return (
     <div
     style={{backgroudColor:"white"}}>
@@ -34,7 +23,7 @@ function test(props) {
     //   events={myEventsList}
       startAccessor="start"
       endAccessor="end"
-      style={{ backgroundColor: 'white', height: "30rem" }}
+      style={{ backgroundColor: '#8B00FF', color:'white', height: "30rem" }}
     />
   </div>
   )
