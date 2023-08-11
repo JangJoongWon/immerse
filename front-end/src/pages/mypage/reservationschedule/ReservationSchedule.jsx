@@ -79,7 +79,7 @@ function ReservationSchedule(props) {
         style={{ opacity: opacity.to(o => 1 - o), transform }} 
         className={styles.schedulerbox}>
         <Scheduler 
-        event = {list}
+        events = {list}
         className={styles.scheduler}
         />
       </a.div>

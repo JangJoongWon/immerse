@@ -316,7 +316,7 @@ function MyOption() {
                   </Button>
                   :  
                     <Button 
-                    onClick={onSubmitHandler}
+                    onSubmit={onSubmitHandler}
                     type="submit" size="lg">
                       변경
                     </Button>
