@@ -116,12 +116,12 @@ function SignIn() {
                   {emailError ? (
                     <></>
                   ):(
-                    <p style={{color:'red'}}>이메일를 확인해 주세요</p>
+                    <p style={{color:'red'}}>계정 정보를 확인해 주세요</p>
                   )}
                   {passwordError ? (
                     <></>
                   ):(
-                    <p style={{color:'red'}}>비밀번호를 확인해 주세요</p>
+                    <p style={{color:'red'}}>계정 정보를 확인해 주세요</p>
                   )}
                 </div>
 
