@@ -55,13 +55,18 @@
 }
 
 .makestageButton {
-  background-color: #8b00ff;
-  border: #8b00ff;
+  background-color: #9D72FF;
+  border: #9D72FF;
   margin-top: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  color: white;
 }
 .makestageButton:hover {
-  background-color: #8b00ff;
+  background-color: #9D72FF;
+  box-shadow: 0 0 5px #9D72FF,
+              0 0 25px #9D72FF;
 }
 .makestageButton:disabled {
-  background-color: #8b00ff;
+  background-color: #9D72FF;
 }
