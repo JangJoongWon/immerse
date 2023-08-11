@@ -18,9 +18,9 @@ public class StorageController {
     private StorageServiceImpl storageService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestPart(value = "file" , required = false) MultipartFile file){
-        if(file.isEmpty()){
-            return new ResponseEntity<String>("null" , HttpStatus.OK);
+    public ResponseEntity<String> uploadFile(@RequestPart(value = "file" , required = false) MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(storageService.uploadFile(file), HttpStatus.OK);
         }

@@ -68,7 +68,7 @@ public class ShowController {
 //		MultipartFile file = wrapper.getFile();
 
 		form.setUserId(userId);
-		if(form.getThumbnail().equals("null")){
+		if(form.getThumbnail() == null){
 			Long defualtCategory = form.getCategoryId();
 
 			switch (defualtCategory.intValue()) {
