@@ -68,20 +68,24 @@ public class ShowController {
 //		MultipartFile file = wrapper.getFile();
 
 		form.setUserId(userId);
-		if(form.getThumbnail() == null){
+		if(form.getThumbnail() == ""){
 			Long defualtCategory = form.getCategoryId();
 
 			switch (defualtCategory.intValue()) {
 				case 0:
+					form.setThumbnail("case_0_thumbnail");
 					// defualtCategory 값이 0일 때 수행할 작업
 					break;
 				case 1:
+					form.setThumbnail("case_1_thumbnail");
 					// defualtCategory 값이 1일 때 수행할 작업
 					break;
 				case 2:
+					form.setThumbnail("case_2_thumbnail");
 					// defualtCategory 값이 2일 때 수행할 작업
 					break;
 				case 3:
+					form.setThumbnail("case_3_thumbnail");
 					// defualtCategory 값이 3일 때 수행할 작업
 					break;
 				// 추가적인 case 문을 필요에 따라 작성할 수 있습니다.
