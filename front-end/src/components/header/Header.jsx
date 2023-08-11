@@ -140,7 +140,10 @@ function Header() {
                 <>
                   <Nav.Link
                     className={`m-2 ${styles.linkunit}`} style={{ color: 'white'}}
-                    onClick={() => {dispatch(logOut());}}
+                    onClick={() => {
+                      navigate('/');
+                      dispatch(logOut());
+                    }}
                   >
                     LogOut
                   </Nav.Link>

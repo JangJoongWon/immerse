@@ -10,6 +10,7 @@ import { TEST_URL, API_BASE_URL } from '../../constants';
 
 function Card({ data }) {
   const userToken = useSelector((state) => state.user.token);
+  const user = useSelector((state) => state.user.user);
   const [subscription, setSubscription] = useState(false);
 
 
@@ -108,6 +109,7 @@ function Card({ data }) {
                   <p className={styles.discription}>안녕하세요. {data.nickname}입니다.</p>
                 )}
               </div>
+              { (user.userId != data.userId) &&
               <div className={styles.subbutton}>
                   {subscription 
                   ?
@@ -122,6 +124,7 @@ function Card({ data }) {
                   >구독</button>
                   }
               </div>
+              }
             </div>
         </div>
       </div>
