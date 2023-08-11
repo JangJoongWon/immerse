@@ -91,8 +91,10 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity,L
    * @return 이 유저를 포함하고 있는 모든 예약들을 리스트로 조회
    * @Modifying : 이 쿼리문을 데이터베이스의 트랙잭션을 수행할 수 있다는 어노테이션
    */
+
   @Modifying
-  @Query(value = "SELECT * FROM reservations WHERE user_id = :userID " , nativeQuery = true)
+  @Query(value = "SELECT * FROM reservations JOIN shows USING (show_id) " +
+          "WHERE reservations.user_id = :userID AND show_progress = 0", nativeQuery = true)
   List<ReservationEntity> findListReservationByUserId(@Param("userID") Long userId);
 
   /**
