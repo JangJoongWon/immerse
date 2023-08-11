@@ -2,6 +2,8 @@
 import styles from './Performer.module.css'
 import { UserVideoComponent } from './video'
 import ChattingBox from './ChattingBox'
+import PerformerOption from './performeroption/PerformerOption'
+import { chatOn } from '/src/assets/icons'
 
 function Performer(props) {
   return (
@@ -18,6 +20,9 @@ function Performer(props) {
                                 </div>
                             ) : null}
                         </div>
+                        <PerformerOption 
+                        leaveSession={props.leaveSession}                            
+                        subscribers={props.subscribers}/>
                     </div>
                     <div className={styles.rightside}>
                         {Array.from({ length: 11 }, (_, index) => (
@@ -33,7 +38,7 @@ function Performer(props) {
                     </div>
                 </div>
                 <div className={styles.sidebar}>
-
+                     <img src={chatOn} alt="chatingOpenButton" />
                 </div>
             </div>
         </div>
