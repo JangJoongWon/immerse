@@ -9,7 +9,7 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../constants';
-import { Audience, Performer, Loading } from './components';
+import { Audience, Performer, Loading, ChattingBox } from './components';
 import { Button, Form } from 'react-bootstrap';
 
 const Stage = () => {
@@ -341,21 +341,27 @@ const Stage = () => {
     return (
         <div className={styles.container}>
             {session !== undefined ?
-                isAuthor() ? 
+                    <>
+                {isAuthor() ? 
                     <Performer
                     publisher={publisher}
                     mainStreamManager={mainStreamManager}
                     subscribers={subscribers}
-                    /> :
+                    session={session} chats={chats}
+                    />
+                    :
                     <Audience 
                     publisher={publisher}
                     mainStreamManager={mainStreamManager}
                     subscribers={subscribers}
                     leaveSession={popState}
-                    />  
+                    session={session} chats={chats}
+                    />}  
+                    {/* <ChattingBox session={session} chats={chats}/> */}
+                    </> 
                 : <Loading showData={showData} />}
 
-                <div className={styles.chatbox}>
+                {/* <div className={styles.chatbox}>
                     <Form.Control 
                     className={styles.inputchat}
                     type="text" 
@@ -369,10 +375,6 @@ const Stage = () => {
                     }} />
                     <Button className={styles.chatbutton} onClick={testChat}>submit</Button>
                 </div>
-            
-            {/* <Button onClick={muteAllCams}>Mute</Button> */}
-            {/* <Button onClick={testChat}>Chat test</Button> */}
-            {/* <Button onClick={() => pushChat({ message: "test" })}>Chat test</Button> */}
 
             <div className={styles.chatcontainer}>
                 {chats.map((chat, i) => {
@@ -386,18 +388,8 @@ const Stage = () => {
                         </div>
                     )
                 })}
+            </div> */}
 
-            </div>
-            {/* <ul>
-                {chats.map((chat, i) => {
-                    return (
-
-                        <li key={"chat " + i} id={"chat " + i}>
-                            {chat.message}
-                        </li>
-                    )
-                })}
-            </ul> */}
         </div>
     );
 }

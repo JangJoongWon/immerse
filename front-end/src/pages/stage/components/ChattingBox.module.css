@@ -1,0 +1,25 @@
+.chatbox {
+    display: flex;
+}
+
+.chatbutton {
+    width: 10%;
+}
+
+.chatcontainer {
+    height: 500px;
+    border: 1px solid black;
+}
+
+.chatingbox {
+    padding: 5px;
+    /* background-color: green; */
+    border: 1px solid black;
+    width: 50%;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.mychat {
+    /* background-color: blue; */
+}

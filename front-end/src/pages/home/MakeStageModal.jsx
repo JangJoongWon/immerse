@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styles from './MakeStageModal.module.css'
 import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
 import axios from 'axios';
-import { API_BASE_URL } from '../../constants';
+import { API_BASE_URL, TEST_URL } from '../../constants';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -71,34 +71,56 @@ function MakeStageModal({ show, onHide }) {
     return title.trim() !== '' && parseFloat(price) >= 0;
   };
 
+
   const scheduleStage = async () => {
-    const payload = {
-      'title' : title,
-      'startTime': start,
-      'endTime': end,
-      'date': date,
-      'description': description,
-      'thumbnail': uploadedImage,
-      'price': price,
-      'attendanceLimit': max,
-      'categoryId': genre,
-      'showTagDtoList': [
-        
-      ]
-    };
-    console.log(payload)
+
+    const payload = new FormData();
+    payload.append('file', uploadedImage);
+
     const headers = { 
-      'Content-Type': 'application/json', 
+      "Content-Type": "multipart/form-data", 
       'Authorization': 'Bearer ' + token
     };
     
     try {
-      const res = await axios.post(`${API_BASE_URL}/shows/`, payload, { headers });
-      onHide();
-      return res.data;
+      const res = await axios.post(`${TEST_URL}/file/upload`, payload, { headers });
+      // console.log(res.data)
+      console.log('success send!')
+
+      const stageData = {
+        'title' : title,
+        'startTime': start,
+        'endTime': end,
+        'date': date,
+        'thumbnail': res.data,
+        'description': description,
+        'price': price,
+        'attendanceLimit': max,
+        'categoryId': genre,
+        'showTagDtoList': []
+      };
+      console.log('stageData:', stageData)
+
+      try {
+        const headers = { 
+          "Content-Type": "application/json", 
+          'Authorization': 'Bearer ' + token
+        };
+        const response = await axios.post(`${API_BASE_URL}/shows`, stageData, { headers });
+        console.log('생성에 성공했습니다.')
+        console.log(response)
+
+      } catch(e) {
+        console.log('생성에 실패했습니다.')
+        console.log(e);
+        throw e;
+      }
+
+      // onHide();
     }
     catch (e) {
       console.log(e);
+      console.log('failed send!')
       throw e;
     } 
   }
@@ -107,7 +129,7 @@ function MakeStageModal({ show, onHide }) {
     try {
       const res = await scheduleStage();
       alert('공연이 예약되었습니다.')
-      navigate(`/stageinfo/${res}`)
+      // navigate(`/stageinfo/${res}`)
       return res;
     }
     catch (e) {
@@ -228,7 +250,7 @@ function MakeStageModal({ show, onHide }) {
 
                   </Col>
                 </Row>
-                <Button className={styles.makestageButton} type='button' onClick={makeStage} disabled={!mustInput()}>예약하기</Button>
+                <button className={styles.makestageButton} type='button' onClick={makeStage} disabled={!mustInput()}>예약하기</button>
               </Form>
             </Modal.Body>
           </Container>
