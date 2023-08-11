@@ -9,10 +9,19 @@ import ChattingBox from './ChattingBox'
 
 function Audience(props) { 
   const [optionValue,setOptionValue] = useState(false)  
+  const [chattingBoxOn, setChattingBoxOn] = useState(false)
+
 
   const onClickChangeOption = ()=>{
     setOptionValue(!optionValue)
   }
+
+  const handleChattingBox = () => {
+    setChattingBoxOn(!chattingBoxOn)
+  }
+
+
+
   return (
     <>
         <div className={styles.container}>
@@ -22,12 +31,9 @@ function Audience(props) {
                         if (index === 1) {
                             return (
                                 <div key={index} className={`${styles.bigGridItem} ${styles.bigGrid}`}>
-                                    {/* <h1>{[1].join(', ')}</h1> */}
                                     {props.mainStreamManager !== undefined ? (
                                             <div 
-                                            // className="stream-container col-md-6 col-xs-6" 
                                             className={styles.streamcontainer}
-                                            // onClick={() => props.handleMainVideoStream(props.publisher)}
                                             >
                                             
                                                 <UserVideoComponent
@@ -70,10 +76,24 @@ function Audience(props) {
                         );
                     })}
                 </div>
-                <div className={styles.sidebar}>
-                    <img src={chatOn} alt="chatingOpenButton" />
+                    {chattingBoxOn ? (
+                        <div className={styles.totalside}>
+                                <div className={styles.sidebar}>
+                                    <img src={chatOn} onClick={handleChattingBox} alt="chatingOpenButton" />
+                                </div>
+                            <div className={styles.totalsidecontent}>
+                                <div className={styles.chattingboxcontainer}>
+                                    <ChattingBox session={props.session} chats={props.chats}/>
+                                </div>
+                            </div>
+                        </div>
+                     ) : (
+                         
+                        <div className={styles.sidebar}>
+                            <img src={chatOn} onClick={handleChattingBox} alt="chatingOpenButton" />
+                        </div>
+                    )}
                 </div>
-            </div>
                 <div
                 className={styles.option}>
                     { optionValue
@@ -104,7 +124,6 @@ function Audience(props) {
                     }
                 </div>
         </div>
-        <ChattingBox session={props.session} chats={props.chats}/>
     </>
   )
 }

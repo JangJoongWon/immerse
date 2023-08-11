@@ -356,7 +356,8 @@ const Stage = () => {
                     subscribers={subscribers}
                     leaveSession={popState}
                     session={session} chats={chats}
-                    />}  
+                    />
+                    }  
                     {/* <ChattingBox session={session} chats={chats}/> */}
                     </> 
                 : <Loading showData={showData} />}

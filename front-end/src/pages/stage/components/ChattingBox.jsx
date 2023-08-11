@@ -39,40 +39,40 @@ function ChattingBox({session, chats}) {
 
   return (
     <div className={styles.container}>
-        <div className={styles.chatbox}>
-                    <Form.Control 
-                    className={styles.inputchat}
-                    type="text" 
-                    value={ChatText}
-                    onChange={handleChatChange}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            e.preventDefault();
-                            testChat();
-                        }
-                    }} />
-                    <button className={styles.chatbutton} onClick={testChat}>submit</button>
+
+        <div className={styles.chatcontainer}>
+        {chats && chats.length > 0 ? (
+            chats.map((chat, i) => (
+                <div
+                    className={`${styles.chatingbox} ${
+                        chat.nickname === user.nickname ? styles.mychat : ''
+                    }`}
+                    key={"chat " + i}
+                    id={"chat " + i}
+                >
+                    <p>{chat.nickname}  {chat.timestamp}</p>
+                    <p>{chat.text}</p>
                 </div>
-
-            <div className={styles.chatcontainer}>
-            {chats && chats.length > 0 ? (
-                chats.map((chat, i) => (
-                    <div
-                        className={`${styles.chatingbox} ${
-                            chat.nickname === user.nickname ? styles.mychat : ''
-                        }`}
-                        key={"chat " + i}
-                        id={"chat " + i}
-                    >
-                        <p>{chat.nickname}  {chat.timestamp}</p>
-                        <p>{chat.text}</p>
-                    </div>
-                ))
-            ) : (
-                <p>No chats available.</p>
-            )}
-
-            </div>
+            ))
+        ) : (
+            <p>No chats available.</p>
+        )}
+        </div>
+        
+        <div className={styles.chatbox}>
+            <Form.Control 
+            className={styles.inputchat}
+            type="text" 
+            value={ChatText}
+            onChange={handleChatChange}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    testChat();
+                }
+            }} />
+            {/* <button className={styles.chatbutton} onClick={testChat}>submit</button> */}
+        </div>
     </div>
   )
 }
