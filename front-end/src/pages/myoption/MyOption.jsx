@@ -135,10 +135,13 @@ function MyOption() {
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-        <div>
-          개인 정보 수정
+        <div >
+          <h1 
+          className={styles.maintitle}
+          >회원정보 수정</h1>
         </div>
-        <Row>
+        <div 
+        className={styles.buttonbox}>
             <Button
             className={styles.button} 
             type="button" 
@@ -149,37 +152,17 @@ function MyOption() {
             <Button 
             className={styles.button} 
             type="button" 
-            size="lg" onClick={() => changeSelectTab('ProgileImg')}>
+            size="lg" onClick={() => changeSelectTab('ProfileImg')}>
               프로필 이미지
             </Button>
    
             <Button 
             className={styles.button} 
             type="button" 
-            size="lg" onClick={() => changeSelectTab('Name')}>
-              이름
-            </Button>
-            <Button 
-            className={styles.button} 
-            type="button" 
-            size="lg" onClick={() => changeSelectTab('NickName')}>
-              닉네임
+            size="lg" onClick={() => changeSelectTab('ProfileInfo')}>
+              프로필 정보
             </Button>
      
-            {/* <Button 
-            className={styles.button} 
-            type="button" 
-            size="lg" onClick={() => changeSelectTab('CallNumber')}>
-              전화번호
-            </Button> */}
-     
-            <Button 
-            className={styles.button} 
-            type="button" 
-            size="lg" onClick={() => changeSelectTab('SelfDescription')}>
-              자기소개
-            </Button>
-
             <Button 
             className={styles.button} 
             type="button" 
@@ -187,8 +170,9 @@ function MyOption() {
             size="lg" onClick={() => changeSelectTab('deleteAccount')}>
               회원탈퇴
             </Button>
-        </Row>
-        <Row>
+        </div>
+        <div 
+        className={styles.formbox}>
             <Form
             onSubmit={onSubmitHandler}>
               {/* {(selectTab=='BannerImg') && (
@@ -235,89 +219,113 @@ function MyOption() {
                 </Form.Group>
               )} */}
 
-              {(selectTab=='Name') && (
-                <Form.Group className={styles.callNumber}>
-                  <div>
-                    <Form.Control
-                      type="text"
-                      className={styles.input}
-                      placeholder={name}
-                      // value={phoneNumber}
-                      onChange={(e) => onChangeNameHandler(e.target.value)}
-                    />
+              {(selectTab=='ProfileInfo') && (
+                <Form.Group>
+                  <div 
+                  className={styles.title}>
+                    <h3>
+                    프로필 정보
+                    </h3>
                   </div>
-                </Form.Group>
-              )}
-
-              {(selectTab=='NickName') && (
-                <Form.Group className={styles.nickname}>
                   <div>
-                    <Form.Control
-                      type="text"
-                      className={styles.input}
-                      placeholder={nickname}
-                      // value={nickname}
-                      onChange={(e) => onChangeNickNameHandler(e.target.value)}
-                    />
+                    <div
+                    className={styles.inputbox}>
+                      <Form.Label
+                      className={styles.inputtitle}
+                      >이름</Form.Label>
+                      <Form.Control
+                        type="text"
+                        className={styles.input}
+                        placeholder={name}
+                        // value={phoneNumber}
+                        onChange={(e) => onChangeNameHandler(e.target.value)}
+                        />
+                    </div>
                   </div>
-                </Form.Group>
-              )}
-
-
-              {(selectTab=='SelfDescription') && (
-                <Form.Group className={styles.selfDescription}>
                   <div>
-                    <Form.Control
-                      type="text"
-                      style={{height:"100%",width:"50%"}}
-                      className={styles.input}
-                      placeholder={selfDescription}
-                      // value={selfDescription}
-                      onChange={(e) => onChangeSelfDescription(e.target.value)}
-                    />
+                    <div
+                    className={styles.inputbox}
+                    >
+                      <Form.Label
+                      className={styles.inputtitle}
+                      >닉네임</Form.Label>
+                      <Form.Control
+                        type="text"
+                        className={styles.input}
+                        placeholder={nickname}
+                        // value={nickname}
+                        onChange={(e) => onChangeNickNameHandler(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                    className={styles.inputbox}>
+                      <Form.Label
+                      className={styles.inputtitle}
+                      >자기소개</Form.Label>
+                      <Form.Control
+                        type="text"
+                        // style={{height:"100%",width:"50%"}}
+                        className={styles.input}
+                        placeholder={selfDescription}
+                        // value={selfDescription}
+                        onChange={(e) => onChangeSelfDescription(e.target.value)}
+                      />
+                    </div>
                   </div>
                 </Form.Group>
               )}
 
               {(selectTab=='deleteAccount') && (
                 <Form.Group className={styles.selfDescription}>
+                  <div 
+                  className={styles.title}>
+                    <h3>
+                    회원 탈퇴
+                    </h3>
+                  </div>
                   <div>
-                    <Form.Control
-                      type="password"
-                      style={{height:"100%",width:"50%"}}
-                      className={styles.input}
-                      placeholder={'회원 탈퇴를 위해 비밀번호를 입력해주세요'}
-                      // value={selfDescription}
-                      onChange={(e) => onChangePassword(e.target.value)}
-                    />
-                  {passwordError ? (
-                    <></>
-                  ):(
-                    <p style={{color:'red'}}>비밀번호를 확인해 주세요</p>
-                  )}
+                    <div
+                    className={styles.inputbox}
+                    >
+                      <Form.Label
+                        className={styles.inputtitle}
+                        >비밀번호 확인</Form.Label>
+                      <Form.Control
+                        type="password"
+                        className={styles.input}
+                        placeholder={'회원 탈퇴를 위해 비밀번호를 입력해주세요'}
+                        onChange={(e) => onChangePassword(e.target.value)}
+                        />
+                        {passwordError ? (
+                          <></>
+                        ):(
+                          <p style={{color:'red'}}>비밀번호를 확인해 주세요</p>
+                        )}
+                    </div>
                   </div>
                 </Form.Group>
               )}
+            <Form.Group style={{ textAlign: "end" }}>
+
+                 {(selectTab=='deleteAccount') 
+                  ?
+                  <Button variant='danger' onClick={onDeletetHandler}>
+                    회원 탈퇴
+                  </Button>
+                  :  
+                    <Button 
+                    onClick={onSubmitHandler}
+                    type="submit" size="lg">
+                      변경
+                    </Button>
+                  }
+            </Form.Group>
             </Form>
-
-        </Row>
+        </div>
                 
-        {(selectTab=='deleteAccount') && 
-        
-        <Button variant='danger' onClick={onDeletetHandler}>
-          회원 탈퇴
-        </Button>
-      
-        
-        }
 
-        <Form.Group style={{ textAlign: "end" }}>
-                <Button 
-                onClick={onSubmitHandler}
-                type="submit" size="lg">
-                  변경
-                </Button>
-        </Form.Group>
       </div>
     </div>
   );
