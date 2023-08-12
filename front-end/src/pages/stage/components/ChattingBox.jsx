@@ -40,22 +40,19 @@ function ChattingBox({session, chats}) {
     <div className={styles.container}>
 
         <div className={styles.chatcontainer}>
-        {chats && chats.length > 0 ? (
-            chats.map((chat, i) => (
-                <div className={`${chat.nickname === user.nickname ? styles.mychat : ''}`}>
-                    <div
-                        className={styles.chatingbox}
-                        key={"chat " + i}
-                        id={"chat " + i}
-                    >
-                        <p className={styles.usernick}>{chat.nickname}  {chat.timestamp}</p>
-                        <p className={styles.chatcontent}>{chat.text}</p>
+            {chats && chats.length > 0 ? (
+                chats.map((chat, i) => (
+                    <div className={`${styles.chatboxcontainer} ${chat.nickname === user.nickname ? styles.mychat : styles.notmychat}`}
+                    key={"chat " + i} id={"chat " + i}>
+                        <div className={styles.chatingbox}>
+                            <p className={styles.usernick}>{chat.nickname}  {chat.timestamp}</p>
+                            <p className={styles.chatcontent}>{chat.text}</p>
+                        </div>
                     </div>
-                </div>
-            ))
-        ) : (
-            <p>No chats available.</p>
-        )}
+                ))
+            ) : (
+                <p>No chats available.</p>
+            )}
         </div>
         
         <div className={styles.chatbox}>

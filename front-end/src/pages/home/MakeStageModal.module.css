@@ -69,4 +69,5 @@
 }
 .makestageButton:disabled {
   background-color: #9D72FF;
+  pointer-events: none;
 }
