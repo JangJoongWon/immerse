@@ -13,7 +13,6 @@ function ChattingBox({session, chats}) {
       };
 
     const testChat = () => {
-
         // 현재 시간
         const currentTime = new Date();
         const hours = currentTime.getHours();
@@ -43,15 +42,15 @@ function ChattingBox({session, chats}) {
         <div className={styles.chatcontainer}>
         {chats && chats.length > 0 ? (
             chats.map((chat, i) => (
-                <div
-                    className={`${styles.chatingbox} ${
-                        chat.nickname === user.nickname ? styles.mychat : ''
-                    }`}
-                    key={"chat " + i}
-                    id={"chat " + i}
-                >
-                    <p>{chat.nickname}  {chat.timestamp}</p>
-                    <p>{chat.text}</p>
+                <div className={`${chat.nickname === user.nickname ? styles.mychat : ''}`}>
+                    <div
+                        className={styles.chatingbox}
+                        key={"chat " + i}
+                        id={"chat " + i}
+                    >
+                        <p className={styles.usernick}>{chat.nickname}  {chat.timestamp}</p>
+                        <p className={styles.chatcontent}>{chat.text}</p>
+                    </div>
                 </div>
             ))
         ) : (
@@ -61,8 +60,9 @@ function ChattingBox({session, chats}) {
         
         <div className={styles.chatbox}>
             <Form.Control 
-            className={styles.inputchat}
+            className={`${styles.inputchat} ${styles.customInput}`}
             type="text" 
+            placeholder='Enter Chat'
             value={ChatText}
             onChange={handleChatChange}
             onKeyDown={(e) => {

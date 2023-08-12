@@ -106,7 +106,7 @@ function MakeStageModal({ show, onHide }) {
           "Content-Type": "application/json", 
           'Authorization': 'Bearer ' + token
         };
-        const response = await axios.post(`${API_BASE_URL}/shows`, stageData, { headers });
+        const response = await axios.post(`${API_BASE_URL}/shows/`, stageData, { headers });
         console.log('생성에 성공했습니다.')
         console.log(response)
 

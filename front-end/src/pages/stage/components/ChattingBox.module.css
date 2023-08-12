@@ -3,15 +3,34 @@
     display: flex;
     flex-direction: column;
     /* border: 1px solid black; */
-    background-color: white;
+    background-color: black;
 }
+
+.inputchat {
+    background-color: black;
+    color: white;
+}
+
+.inputchat:focus {
+    background-color: black;
+    color: white;
+}
+
+.inputchat::placeholder {
+    color: white;
+  }
 
 .chatbox {
     position: absolute;
-    width: 90%;
+    width: 92%;
     bottom: 0;
     z-index: 1;
     height: 40px;
+}
+
+.mychat {
+    display: flex;
+    justify-content: end;
 }
 
 .chatcontainer {
@@ -24,9 +43,23 @@
 
 .chatingbox {
     padding: 5px;
-    /* background-color: green; */
-    border: 1px solid black;
-    width: 90%;
+    border: 1px solid white;
+    max-width: 80%;
     border-radius: 10px;
-    margin: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
 }
+
+.usernick {
+    margin-bottom: 1px;
+    font-weight: 900;
+    color: white;
+  }
+  
+  .chatcontent {
+    margin-top: 1px;
+    margin-bottom: 2px;
+    line-height: 1;
+    color: white;
+  }

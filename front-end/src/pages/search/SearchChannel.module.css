@@ -25,7 +25,6 @@
   .thumbnail {
     width: 40%;
     border-radius: 50%;
-    border: 1px solid white;
     aspect-ratio: 1 / 1;
     position: relative;
   }
@@ -73,7 +72,8 @@
 
   .container:hover {
     transform: scale(1.1);
-    background-color: #31363B;
+    box-shadow: 0 0 5px #9D72FF,
+                0 0 25px #9D72FF;
   }
   
   .subutton {
@@ -82,6 +82,7 @@
     border-radius: 10px;
     color: white;
     background-color: #9D72FF;
+    border: 1px solid #9D72FF;
   }
 
   .subutton:hover {
@@ -94,11 +95,12 @@
     padding: 5px;
     border-radius: 10px;
     color: white;
-    background-color: #FF2079;
+    background-color: #FF8B8B;
+    border: 1px solid #FF8B8B;
   }
   .delsubutton:hover {
-    box-shadow: 0 0 5px #FF2079,
-                0 0 25px #FF2079;
+    box-shadow: 0 0 5px #FF8B8B,
+                0 0 25px #FF8B8B;
   }
 
   .info {
