@@ -80,6 +80,7 @@
   }
 
   .openOption {
+    margin-bottom : 0%;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -93,6 +94,7 @@
   }
 
   .totalside {
+    z-index: 100;
     position: absolute;
     width: 30%;
     right: 0;
