@@ -3,7 +3,8 @@ import { useState } from 'react'
 import styles from './Performer.module.css'
 import { UserVideoComponent } from './video'
 import ChattingBox from './ChattingBox'
-import { chatOn, optionOn, optionOff, curtton } from '/src/assets/icons'
+import PerformerOption from './performeroption/PerformerOption'
+import { chatOn } from '/src/assets/icons'
 
 function Performer(props) {
     const [chattingBoxOn, setChattingBoxOn] = useState(false)
@@ -25,6 +26,9 @@ function Performer(props) {
                                 </div>
                             ) : null}
                         </div>
+                        <PerformerOption 
+                        leaveSession={props.leaveSession}                            
+                        subscribers={props.subscribers}/>
                     </div>
                     <div className={styles.rightside}>
                         {Array.from({ length: 11 }, (_, index) => (
