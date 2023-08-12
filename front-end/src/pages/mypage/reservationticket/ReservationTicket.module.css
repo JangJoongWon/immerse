@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap');
+
+
 .container{
     /* background-color: #121212; */
     /* outline: red 2px solid; */
@@ -31,6 +34,7 @@
 }
 
 .left{
+    
     background-color: #31363B;
     z-index: 1;
     height: 8rem;
@@ -62,7 +66,8 @@
 }
 
 .leftfont {
-    font-family: sans-serif;
+    font-family: 'Permanent Marker','Dongle';
+    /* font-family: sans-serif; */
     /* text-shadow: 0 1px #121212; */
 }
 
@@ -74,15 +79,30 @@
 
   
 .title {
+    text-align: center;
+    /* outline: 2px solid black; */
+}
+
+.nickname {
     text-align: start;
     /* outline: 2px solid black; */
 }
 
+.leftdate {
+    text-align: end;
+}
+
 .date {
+    display: flex;
+    justify-content: start;
+    align-items: center;
     /* outline: 2px solid brown; */
 }
 
 .time {
+    display: flex;
+    justify-content: start;
+    align-items: center;
     /* outline: 2px solid green; */
 }
 
@@ -92,4 +112,11 @@
 
 img{
     margin-bottom: 10%;
+}
+
+.bacode{
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
