@@ -347,6 +347,7 @@ const Stage = () => {
                     publisher={publisher}
                     mainStreamManager={mainStreamManager}
                     subscribers={subscribers}
+                    leaveSession={popState}
                     session={session} chats={chats}
                     />
                     :
