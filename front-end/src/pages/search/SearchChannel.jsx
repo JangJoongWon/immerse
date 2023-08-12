@@ -15,8 +15,9 @@ function Card({ data }) {
 
 
   useEffect(() => {
-      checksubscription(data.userId)
-
+    if(user){
+      checksubscription(data?.userId)
+    }
   }, []);
 
   const checksubscription = (followingId) => {
@@ -60,7 +61,7 @@ function Card({ data }) {
       navigate('/login')
     } else {
       axios.post(API_BASE_URL + '/subscribe', {
-        userId: data.userId
+        userId: data?.userId
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -109,7 +110,7 @@ function Card({ data }) {
                   <p className={styles.discription}>안녕하세요. {data.nickname}입니다.</p>
                 )}
               </div>
-              { (user.userId != data.userId) &&
+              { user && ( user.userId != data.userId) &&
               <div className={styles.subbutton}>
                   {subscription 
                   ?

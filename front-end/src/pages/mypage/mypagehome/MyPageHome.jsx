@@ -21,36 +21,39 @@ function MyPageHome(props) {
 
   
   useEffect(() => {
-    // Axios를 사용하여 데이터를 불러옴
-      axios.get(API_BASE_URL + '/shows/', {
-                headers: { 
-                    'Content-Type': 'application/json', 
-                    'Authorization': 'Bearer ' + userToken
-                },
-            })
-      .then(response => {
-        const tmp = response.data.filter((show) => show.user_id == user.userId )
-        setList(tmp); // 불러온 데이터를 상태(State)에 저장
-
-        console.log(tmp)
-      })
-      .catch(error => {
+    if (userToken){
+      // Axios를 사용하여 데이터를 불러옴
+        axios.get(API_BASE_URL + '/shows/', {
+                  headers: { 
+                      'Content-Type': 'application/json', 
+                      'Authorization': 'Bearer ' + userToken
+                  },
+              })
+        .then(response => {
+          const tmp = response.data.filter((show) => show.user_id == user.userId )
+          setList(tmp); // 불러온 데이터를 상태(State)에 저장
+  
+          console.log(tmp)
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+  
+        axios.get(API_BASE_URL + `/reservation/user/${user.userId}`, {
+          headers: { 
+              'Content-Type': 'application/json', 
+              'Authorization': 'Bearer ' + userToken
+          },
+        })
+        .then(response => {
+        setSchedule(response.data); // 불러온 데이터를 상태(State)에 저장
+        console.log(response.data)
+        })
+        .catch(error => {
         console.error('Error fetching data:', error);
-      });
+        });
 
-      axios.get(API_BASE_URL + `/reservation/user/${user.userId}`, {
-        headers: { 
-            'Content-Type': 'application/json', 
-            'Authorization': 'Bearer ' + userToken
-        },
-      })
-      .then(response => {
-      setSchedule(response.data); // 불러온 데이터를 상태(State)에 저장
-      console.log(response.data)
-      })
-      .catch(error => {
-      console.error('Error fetching data:', error);
-      });
+    }
     },[]);
 
   return (

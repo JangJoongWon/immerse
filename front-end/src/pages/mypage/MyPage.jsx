@@ -29,7 +29,9 @@ function MyPage() {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
         // console.log(response)
         console.log(response.data.userId)
-        checksubscription(response.data.userId)
+        if (mydata){
+          checksubscription(response.data.userId)
+        }
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -93,7 +95,7 @@ function MyPage() {
       });
   }
 
-  const isCurrentUser = () => mydata.userId === user.userId;
+  const isCurrentUser = () => mydata && mydata.userId === user.userId;
 
 
   return (
