@@ -28,13 +28,13 @@
 
 
 .buttonbox{
-    position: absolute;
-    left: 0;
+    /* position: absolute; */
+    /* left: 0; */
     /* margin: 5%; */
 }
 
 .calendarbuttonbox{
-    margin: 30%;
+    /* margin: 30%; */
 }
 
 .ticketbuttonbox{
@@ -44,10 +44,12 @@
 .calendarbutton{
     /* margin: 30%; */
     cursor: pointer;
+    margin-bottom: 2%;
 }
 
 .ticketbutton{
     /* margin: 30%; */
     cursor: pointer;
+    margin-bottom: 2%;
 
 }
