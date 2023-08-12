@@ -7,6 +7,7 @@ import moment from 'moment';
 function ReservationTicket({ data }) {
 
   const {
+    thumbnail,
     title,
     showProgress,
     nickname,
@@ -38,7 +39,7 @@ function ReservationTicket({ data }) {
             className={styles.box}>
           <Col 
             style={{
-              // backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`,
+              backgroundImage: `url(${thumbnail})`,
               backgroundSize: 'cover',
               // backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
@@ -60,7 +61,8 @@ function ReservationTicket({ data }) {
               <Col
               className={`${styles.leftfont} ${styles.title}`}
               >
-                <h1>
+                <h1 
+                style={{color:'white'}}>
                 {title}
                 </h1>
               </Col>

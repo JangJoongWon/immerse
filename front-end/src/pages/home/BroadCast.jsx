@@ -38,7 +38,7 @@ function Card({ data }) {
         <div className={styles.thumbnail} onClick={toStageInfo}>
           <div className={styles.posterContainer}>
             <img
-              src={mainBanner}
+              src={data.thumbnail?data.thumbnail:mainBanner}
               className={styles.poster}
               alt="Movie Poster"
             />
