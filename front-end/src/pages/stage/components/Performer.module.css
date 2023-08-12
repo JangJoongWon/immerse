@@ -56,3 +56,34 @@ h1 {
     width: 100%;
     height: 100%;
 }
+
+.totalside {
+    position: absolute;
+    width: 30%;
+    right: 0;
+    display: flex;
+  }
+  
+  .totalsidecontent {
+    overflow-y: auto;
+    max-height: 100%;
+    width: 100%;
+  }
+
+  .sidebar {
+    display:flex;
+    align-items: center;
+    border: 1px solid red;
+    width: 30px;
+  }
+
+
+  .sidebar img {
+    width: 100%;
+  }
+
+  .chattingboxcontainer {
+    height: 90vh;
+    width: 100%;
+    border: 1px solid white;
+  }

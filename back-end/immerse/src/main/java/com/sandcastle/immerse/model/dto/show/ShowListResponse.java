@@ -1,6 +1,7 @@
 package com.sandcastle.immerse.model.dto.show;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.sandcastle.immerse.model.entity.ShowEntity;
 import com.sandcastle.immerse.model.enums.ShowProgress;
@@ -51,9 +52,9 @@ public class ShowListResponse {
 	 */
 	private String nickname;
 
-	private LocalDate startTime;
+	private LocalDateTime startTime;
 
-	private LocalDate endTime;
+	private LocalDateTime endTime;
 
 	public ShowListResponse(ShowEntity show) {
 		showId = show.getShowId();
@@ -64,8 +65,8 @@ public class ShowListResponse {
 		category_id = show.getCategory().getCategoryId();
 		user_id = show.getUser().getUserId();
 		nickname = show.getUser().getNickname();
-		startTime = LocalDate.from(show.getStartTime());
-		endTime = LocalDate.from(show.getEndTime());
+		startTime = LocalDateTime.from(show.getStartTime());
+		endTime = LocalDateTime.from(show.getEndTime());
 
 	}
 }

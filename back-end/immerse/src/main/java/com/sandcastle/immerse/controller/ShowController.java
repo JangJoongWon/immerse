@@ -60,15 +60,41 @@ public class ShowController {
 
 	@ResponseBody
 	@PostMapping("/")
-	public Long postShow(@RequestBody ShowWrapper wrapper,  Authentication auth) {
+	public Long postShow(@RequestBody ShowRequest form,  Authentication auth) {
 		Long userId = Long.valueOf(auth.getName());
 		System.out.println("userId = " + userId);
 
-		ShowRequest form = wrapper.getForm();
-		MultipartFile file = wrapper.getFile();
+//		ShowRequest form = wrapper.getForm();
+//		MultipartFile file = wrapper.getFile();
 
 		form.setUserId(userId);
-		form.setThumbnail(storageService.uploadFile(file));
+		if(form.getThumbnail() == ""){
+			Long defualtCategory = form.getCategoryId();
+
+			switch (defualtCategory.intValue()) {
+				case 0:
+					form.setThumbnail("case_0_thumbnail");
+					// defualtCategory 값이 0일 때 수행할 작업
+					break;
+				case 1:
+					form.setThumbnail("case_1_thumbnail");
+					// defualtCategory 값이 1일 때 수행할 작업
+					break;
+				case 2:
+					form.setThumbnail("case_2_thumbnail");
+					// defualtCategory 값이 2일 때 수행할 작업
+					break;
+				case 3:
+					form.setThumbnail("case_3_thumbnail");
+					// defualtCategory 값이 3일 때 수행할 작업
+					break;
+				// 추가적인 case 문을 필요에 따라 작성할 수 있습니다.
+				default:
+					// 위의 case에 해당하지 않는 경우의 기본 작업
+					break;
+			}
+		}
+
 		Long showId = showService.postShow(form);
 		showTagService.saveAllShowTag(showId , form.getShowTagDtoList());
 		return showId;

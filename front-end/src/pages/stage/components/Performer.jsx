@@ -1,4 +1,5 @@
 // import React from 'react'
+import { useState } from 'react'
 import styles from './Performer.module.css'
 import { UserVideoComponent } from './video'
 import ChattingBox from './ChattingBox'
@@ -6,6 +7,11 @@ import PerformerOption from './performeroption/PerformerOption'
 import { chatOn } from '/src/assets/icons'
 
 function Performer(props) {
+    const [chattingBoxOn, setChattingBoxOn] = useState(false)
+    const handleChattingBox = () => {
+      setChattingBoxOn(!chattingBoxOn)
+    }
+
   return (
     <>
         <div className={styles.container}>
@@ -37,12 +43,27 @@ function Performer(props) {
                         ))}
                     </div>
                 </div>
-                <div className={styles.sidebar}>
-                     <img src={chatOn} alt="chatingOpenButton" />
-                </div>
+
+                {chattingBoxOn ? (
+                        <div className={styles.totalside}>
+                                <div className={styles.sidebar}>
+                                    <img src={chatOn} onClick={handleChattingBox} alt="chatingOpenButton" />
+                                </div>
+                            <div className={styles.totalsidecontent}>
+                                <div className={styles.chattingboxcontainer}>
+                                    <ChattingBox session={props.session} chats={props.chats}/>
+                                </div>
+                            </div>
+                        </div>
+                     ) : (
+                         
+                        <div className={styles.sidebar}>
+                            <img src={chatOn} onClick={handleChattingBox} alt="chatingOpenButton" />
+                        </div>
+                    )}
             </div>
         </div>
-        <ChattingBox session={props.session} chats={props.chats} />
+        
     </>
   )
 }
