@@ -5,8 +5,10 @@ import { mainBanner } from '/src/assets/images';
 import { useNavigate } from 'react-router-dom';
 
 function MyPageCard(props) {
+  
   const {show} = props
-  console.log(show)
+  // console.log(show.thumbnail)
+  // console.log(show)
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate()
   
@@ -29,13 +31,13 @@ function MyPageCard(props) {
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
     >
-
+      {/* <img src={show.thumbnail} alt="thumbnail" /> */}
       <div
       style={{
         border : '1px solid white',
         borderRadius:'10%',
         height:'15rem',
-        backgroundImage: `${mainBanner}`,
+        backgroundImage: `url(${show.thumbnail})`,
         backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'top',
@@ -55,23 +57,23 @@ function MyPageCard(props) {
             Live
           </span>
         </div>)}
+        { (show?.showProgress === 'SCHEDULED') 
+        && (<div
+          className={`${styles.blinkingtext} ${styles.statebox}`}
+        >
+          <span
+          className={styles.title}
+          style={{color:'gold',marginLeft:"5%"}}
+          >●</span>
+          <span
+          className={styles.title}
+          style={{color:'white',marginLeft:"2%"}}
+          >
+            Reserved
+          </span>
+        </div>)}
         {hovered && 
         <div>
-          { (show?.showProgress === 'SCHEDULED') 
-          && (<div
-            className={`${styles.blinkingtext} ${styles.statebox}`}
-          >
-            <span
-            className={styles.title}
-            style={{color:'gold',marginLeft:"5%"}}
-            >●</span>
-            <span
-            className={styles.title}
-            style={{color:'white',marginLeft:"2%"}}
-            >
-              Reserved
-            </span>
-          </div>)}
           <div className={styles.content}>
             <div className={styles.title}>
               <h3>{show.title}</h3>
