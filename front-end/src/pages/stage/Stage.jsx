@@ -27,7 +27,7 @@ const Stage = () => {
     const userToken = useSelector((state) => state.user.token);
     const user = useSelector(state => state.user.user);
 
-    const isAuthor = () => user.nickname != showData.nickname; 
+    const isAuthor = () => user.nickname === showData.nickname; 
 
     const getToken = async () => {
         try {
