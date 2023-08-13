@@ -55,16 +55,22 @@ public class UserController {
     }
 
     @PutMapping("/update/info")
-    public ResponseEntity<?> updateUser(@RequestPart UserWrapper wrapper,
+    public ResponseEntity<?> updateUser(@RequestBody UserDto userDto,
                                         Authentication authentication) throws Exception {
         Long userId = Long.valueOf(authentication.getName());
 
-        UserDto userDto = wrapper.getUserDto();
-        MultipartFile bannerFile = wrapper.getBannerFile();
-        MultipartFile profileFile = wrapper.getProfileFile();
+//        UserDto userDto = wrapper.getUserDto();
+//        MultipartFile bannerFile = wrapper.getBannerFile();
+//        MultipartFile profileFile = wrapper.getProfileFile();
 
-        userDto.setBannerPicture(storageService.uploadFile(bannerFile));
-        userDto.setProfilePicture(storageService.uploadFile(profileFile));
+        if(userDto.getBannerPicture() == ""){
+            userDto.setBannerPicture("default_banner");
+        }
+
+        if(userDto.getProfilePicture() == ""){
+            userDto.setProfilePicture("default_profile");
+        }
+
         userServiceImpl.updateUser(userId, userDto);
         return ResponseEntity.ok().body("회원정보가 수정되었습니다.");
     }

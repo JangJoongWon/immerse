@@ -36,13 +36,28 @@ function Card({ data }) {
     >
       <div className={styles.content}>
         <div className={styles.thumbnail} onClick={toStageInfo}>
+          
           <div className={styles.posterContainer}>
             <img
               src={data.thumbnail?data.thumbnail:mainBanner}
               className={styles.poster}
               alt="Movie Poster"
             />
+            <div className={styles.overlayContainer}>
+              {data.showProgress === 'IN_PROGRESS' ? (
+                <div className={styles.stateinfo}>
+                  <span className={`${styles.live}`}>●</span>
+                  <span className={styles.font}>Live</span>
+                </div>
+              ) : (
+                <div className={styles.stateinfo}>
+                  <span className={`${styles.reserve}`}>●</span>
+                  <span className={styles.font}>Reserve</span>
+                </div>
+              )}
+            </div>
           </div>
+
         </div>
         <header>
           <div onClick={toStageInfo}><h4>{data.title}</h4></div>
