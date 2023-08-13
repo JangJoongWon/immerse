@@ -18,6 +18,7 @@ function MyPage() {
   const mydata = useSelector(state => state.user.user);
 
   const [user, setUser] = useState({});
+  console.log(user)
   // const [scribe, setScribe] = useState(null);
   const [subscription, setSubscription] = useState(false);
   // const [userId, setUserId] = useState(1);
@@ -28,7 +29,7 @@ function MyPage() {
       .then(response => {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
         // console.log(response)
-        console.log(response.data.userId)
+        console.log(response.data)
         if (mydata){
           checksubscription(response.data.userId)
         }
@@ -102,7 +103,7 @@ function MyPage() {
     <div className={styles.container}>
       {/* Mypage Banner */}
       <div className={styles.banner}>
-        {user != null ? <img className={styles.bannerimg} src="user.bannerPicture" alt="bannerPicture" /> : <img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="bannerPicture" />}
+        {user != null ? <img className={styles.bannerimg} src={user.bannerPicture} alt="bannerPicture" /> : <img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="bannerPicture" />}
       </div>
       {/* User Info Section */}
       <Row>
@@ -116,7 +117,7 @@ function MyPage() {
             <div className={styles.userleft}>
               <div
                 className='m-3'>
-                {user != null ? <img className={styles.userimg} src="user.profilePicture" alt="profilePicture" /> : <img className={styles.userimg} src="../public/img/profileimg.png" alt="profilePicture" />}
+                {user != null ? <img className={styles.userimg} src={user.profilePicture} alt="profilePicture" /> : <img className={styles.userimg} src="../public/img/profileimg.png" alt="profilePicture" />}
               </div>
             </div>
           </Col>
