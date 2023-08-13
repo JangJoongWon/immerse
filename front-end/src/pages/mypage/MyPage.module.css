@@ -1,5 +1,5 @@
 .container {
-  background-color: #121212;
+  background-color: #1a1b1e;
   /* height: 90vh; */
 }
 
@@ -31,7 +31,7 @@
 }
 
 .userinfo {
-  padding: 4% 0;
+  padding: 2% 0;
   display: flex;
   border-radius: 5px;
   color: #FFF;

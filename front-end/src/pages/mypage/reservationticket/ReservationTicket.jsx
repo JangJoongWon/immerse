@@ -31,9 +31,6 @@ function ReservationTicket({ data }) {
   const endTimeString = endMoment.format('HH:mm');
 
 
-
-
-  
   return (
         <Row
             className={styles.box}>
