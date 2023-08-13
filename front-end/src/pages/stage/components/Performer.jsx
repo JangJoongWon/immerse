@@ -4,7 +4,7 @@ import styles from './Performer.module.css'
 import { UserVideoComponent } from './video'
 import ChattingBox from './ChattingBox'
 import PerformerOption from './performeroption/PerformerOption'
-import { chatOn } from '/src/assets/icons'
+import { chatOn, chatbutton } from '/src/assets/icons'
 
 function Performer(props) {
     const [chattingBoxOn, setChattingBoxOn] = useState(false)
@@ -48,7 +48,7 @@ function Performer(props) {
                 {chattingBoxOn ? (
                         <div className={styles.totalside}>
                                 <div className={styles.sidebar}>
-                                    <img src={chatOn} onClick={handleChattingBox} alt="chatingOpenButton" />
+                                    <img src={chatbutton} onClick={handleChattingBox} alt="chatingOpenButton" />
                                 </div>
                             <div className={styles.totalsidecontent}>
                                 <div className={styles.chattingboxcontainer}>
@@ -57,9 +57,8 @@ function Performer(props) {
                             </div>
                         </div>
                      ) : (
-                         
                         <div className={styles.sidebar}>
-                            <img src={chatOn} onClick={handleChattingBox} alt="chatingOpenButton" />
+                            <img src={chatbutton} onClick={handleChattingBox} alt="chatingOpenButton" />
                         </div>
                     )}
             </div>

@@ -42,7 +42,7 @@ function ChattingBox({session, chats}) {
         <div className={styles.chatcontainer}>
             {chats && chats.length > 0 ? (
                 chats.map((chat, i) => (
-                    <div className={`${styles.chatboxcontainer} ${chat.nickname === user.nickname ? styles.mychat : styles.notmychat}`}
+                    <div className={`${chat.nickname === user.nickname ? styles.mychat : styles.notmychat}`}
                     key={"chat " + i} id={"chat " + i}>
                         <div className={styles.chatingbox}>
                             <p className={styles.usernick}>{chat.nickname}  {chat.timestamp}</p>
