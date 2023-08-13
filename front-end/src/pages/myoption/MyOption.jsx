@@ -33,50 +33,39 @@ function MyOption() {
   const onSubmitHandler = async (event) => {
     event.preventDefault()
     const bannerpayload = new FormData();
-    bannerpayload.append('bannerFile', bannerPicture);
+    bannerpayload.append('File', bannerPicture);
 
     const profilepayload = new FormData();
-    profilepayload.append('profileFile', profilePicture);
+    profilepayload.append('File', profilePicture);
     
     const headers = {
-      "Content-Type": "multipart/form-mixed", 
+      "Content-Type": "multipart/form-data", 
       'Authorization': 'Bearer ' + userToken
     };
 
 
     try {
-      // const bannerRes = await axios.post(`${TEST_URL}/file/upload`, bannerpayload, { headers });
-      // const profileRes = await axios.post(`${TEST_URL}/file/upload`, profilepayload, { headers });
+      const bannerRes = await axios.post(`${TEST_URL}/file/upload`, bannerpayload, { headers });
+      const profileRes = await axios.post(`${TEST_URL}/file/upload`, profilepayload, { headers });
+
+      console.log('succes send!')
 
       const userDto = {
         name : name ,
-        bannerPicture: 'string',
-        profilePicture: 'string',
+        bannerPicture: bannerRes.data,
+        profilePicture: profileRes.data,
         nickname : nickname,
         selfDescription : selfDescription,
       };
 
-      // const wrapper = new FormData();
-      // wrapper.append('userDto', JSON.stringify(userDto));
-      // wrapper.append('bannerFile', bannerPicture, 'banner.jpg'); // bannerpayload는 이미지 파일
-      // wrapper.append('profileFile', profilePicture, 'profile.jpg'); // profilepayload는 이미지 파일
-
-      
-      // 문자열을 UTF-8로 인코딩
-      const textEncoder = new TextEncoder();
-      const utf8Encodedbanner = textEncoder.encode(bannerpayload);
-      const utf8Encodedprofile = textEncoder.encode(profilepayload);
-
-      const wrapper = {
-        userDto : userDto,
-        bannerFile : bannerpayload,
-        profileFile: profilepayload,
-      }
-
       try {
-        console.log(wrapper)
 
-        const response = await axios.put(`${API_BASE_URL}/user/update/info`, wrapper, { headers });
+        const headers = {
+          "Content-Type": "application/json",  
+          'Authorization': 'Bearer ' + userToken
+        };
+    
+        const response = await axios.put(`${API_BASE_URL}/user/update/info`, userDto, { headers });
         console.log('회원정보 수정이 성공했습니다.')
         console.log(response)
 
