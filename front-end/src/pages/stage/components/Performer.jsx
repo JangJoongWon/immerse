@@ -27,7 +27,8 @@ function Performer(props) {
                             ) : null}
                         </div>
                         <PerformerOption 
-                        leaveSession={props.leaveSession}                            
+                        leaveSession={props.leaveSession}
+                        mainStreamManager={props.mainStreamManager}                            
                         subscribers={props.subscribers}/>
                     </div>
                     <div className={styles.rightside}>

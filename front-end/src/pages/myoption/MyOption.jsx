@@ -21,42 +21,76 @@ function MyOption() {
     setSelectTab(tab);
   };
   const [passwordError, setPasswordError] = useState(true)
+
   const [name, setName] = useState('');
-  const [bannerPicture, setBannerPicture] = useState('string');
-  const [profilePicture, setProfilePicture] = useState('string');
+  const [bannerPicture, setBannerPicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(null);
   // const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
 
-  function onSubmitHandler(){
+  const onSubmitHandler = async (event) => {
+    event.preventDefault()
+    const bannerpayload = new FormData();
+    bannerpayload.append('file', bannerPicture);
 
-    const context = {
-      name : name,
-      bannerPicture: bannerPicture,
-      profilePicture: profilePicture,
-      nickname: nickname,
-      selfDescription: selfDescription,
+    const profilepayload = new FormData();
+    profilepayload.append('file', profilePicture);
+    
+    const headers = {
+      "Content-Type": "multipart/form-data", 
+      'Authorization': 'Bearer ' + userToken
     };
 
-    axios.put(API_BASE_URL + `/user/update/info`,context, {
-      headers: { 
-          'Content-Type': 'application/json', 
+
+    try {
+      const bannerRes = await axios.post(`${TEST_URL}/file/upload`, bannerpayload, { headers });
+      const profileRes = await axios.post(`${TEST_URL}/file/upload`, profilepayload, { headers });
+
+      console.log('success send!')
+      // console.log(bannerRes.data)
+      // console.log(profileRes.data)
+
+      const userDto = {
+        name : name ,
+        bannerPicture: bannerRes.data,
+        profilePicture: profileRes.data,
+        nickname : nickname,
+        selfDescription : selfDescription,
+      };
+
+      try {
+
+        const headers = {
+          "Content-Type": "application/json",  
           'Authorization': 'Bearer ' + userToken
-              },
-            })
-          .then(response => {
-          console.log(response.data)
-          })
-          .catch(error => {
-          console.error('Error fetching data:', error);
-          });
+        };
+    
+        const response = await axios.put(`${API_BASE_URL}/user/update/info`, userDto, { headers });
+        console.log('회원정보 수정이 성공했습니다.')
+        console.log(response)
+
+      } catch(e) {
+        console.log('회원정보 수정이 실패했습니다.')
+        console.log(e);
+        throw e;
+      }
+
+      // onHide();
+    }
+    catch (e) {
+      console.log(e);
+      console.log('failed send!')
+      throw e;
+    } 
+
   }
 
   useEffect(() => {
     setName(user.name)
-    // setBannerPicture('string')
-    // setProfilePicture('string')
+    // setBannerPicture(user.bannerPicture)
+    // setProfilePicture(user.profilePicture)
     // setPhoneNumber(user.phoneNumber)
     setNickname(user.nickname)
     setSelfDescription(user.selfDescription)
@@ -108,13 +142,22 @@ function MyOption() {
     }
   }
 
-  // function onBannerImgeUrlChangeHandler(BannerimageUrl) {
-  //   setBannerImgUrl(BannerimageUrl);
-  // }
+  const handlebannerImageUpload = (event) => {
+    const file = event.target.files[0];
 
-  // function onImgeUrlChangeHandler(imageUrl) {
-  //   setImageUrl(imageUrl);
-  // }
+    if (file) {
+      setBannerPicture(file);
+    }
+  };
+
+  const handleProfileImageUpload = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      setProfilePicture(file);
+    }
+  };
+
 
   function onChangeNameHandler(name) {
     setName(name);
@@ -175,17 +218,58 @@ function MyOption() {
         className={styles.formbox}>
             <Form
             onSubmit={onSubmitHandler}>
-              {/* {(selectTab=='BannerImg') && (
+              {(selectTab=='BannerImg') && (
                 <Form.Group className={styles.imgbox}>
-                  <InputPImg onChange={onBannerImgeUrlChangeHandler} className={styles.inputimg} />
+                  <div
+                  style={{marginBottom:'3%'}}  
+                  className={styles.title}>
+                    <h3>
+                    배너 이미지
+                    </h3>
+                  </div>
+                    <Form.Control type="file" onChange={handlebannerImageUpload} />
+                    {bannerPicture ? (
+                        <div className={styles.imgbox}>
+                          <div className={styles.imageWrapper}>
+                            <img src={URL.createObjectURL(bannerPicture)} alt="Uploaded" className={styles.imagefile} />
+                          </div>
+                        </div>
+                      ):(
+                        <div className={styles.imgbox}>
+                          <div className={styles.imageWrapper}>
+                          </div>
+                        </div>
+                      )}
+                  {/* <InputPImg onChange={onBannerImgeUrlChangeHandler} className={styles.inputimg} /> */}
                 </Form.Group>
-              )} */}
-{/* 
-              {(selectTab=='ProgileImg') && (
-                <Form.Group className={styles.imgbox}>      
-                  <InputPImg onChange={onImgeUrlChangeHandler} className={styles.userimg} />
+              )}
+
+              {(selectTab=='ProfileImg') && (
+                <Form.Group className={styles.imgbox}>
+                  <div
+                  style={{marginBottom:'3%'}} 
+                  className={styles.title}>
+                    <h3>
+                    프로필 이미지
+                    </h3>
+                  </div>
+                    <Form.Control type="file" onChange={handleProfileImageUpload} />
+                    {profilePicture ? (
+                        <div className={styles.imgbox}>
+                          <div className={styles.imageWrapper}>
+                            <img src={URL.createObjectURL(profilePicture)} alt="Uploaded" className={styles.imagefile} />
+                          </div>
+                        </div>
+                      ):(
+                        <div className={styles.imgbox}>
+                          <div className={styles.imageWrapper}>
+                          </div>
+                        </div>
+                      )}
+                  {/* <InputPImg onChange={onBannerImgeUrlChangeHandler} className={styles.inputimg} /> */}
                 </Form.Group>
-              )} */}
+              )}
+
 
               {/* {(selectTab=='Password') && (
                 <Form.Group className={styles.password}>
