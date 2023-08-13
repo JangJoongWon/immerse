@@ -10,6 +10,7 @@ import axios from 'axios'
 import {API_BASE_URL, TEST_URL} from '../../../constants/index'
 import { useSelector } from 'react-redux';
 import { mainBanner } from '/src/assets/images';
+import MyCarousel from './MyCarousel';
 
 
 function MyPageHome(props) {
@@ -74,14 +75,9 @@ function MyPageHome(props) {
           </div>
           <div
             className={styles.posterbox}
-            style={{width:'90%',height:'30rem'}}
+            style={{width:'90%',marginTop:'6%'}}
             >
-            <img
-              style={{width:'100%',height:'90%', padding: '5% 10%'}}
-              className={styles.poster}
-              src={mainBanner}
-              alt="None"
-            />
+              <MyCarousel data={list.slice(0,3)} />
           </div>
         </Col>
         <Col>
@@ -148,7 +144,7 @@ function MyPageHome(props) {
         className={styles.bottom}>
             <Row
             className={styles.cardbox}>
-            {list.slice(1,4).map((show) => (
+            {list.slice(3,6).map((show) => (
                   <MyPageCard 
                   key={show.title}
                   className={styles.card} 

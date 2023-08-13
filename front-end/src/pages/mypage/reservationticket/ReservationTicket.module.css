@@ -8,7 +8,7 @@
 
 .box {
     /* background-color: #31363B; */
-    box-shadow: 0 0 1rem rgba(255,255,255,00.5rem);
+    box-shadow: 0 0 1rem #9D72FF;
     margin: 5%;
     color:white;
     width: 90%;
@@ -68,12 +68,12 @@
 .leftfont {
     font-family: 'Permanent Marker','Dongle';
     /* font-family: sans-serif; */
-    /* text-shadow: 0 1px #121212; */
+    text-shadow: 0 0 1rem #1a1b1e;
 }
 
 .rightfont {
-    font-family: sans-serif;
-    text-shadow: 0 1px #BDBDBD;
+    font-family: 'Permanent Marker','Dongle';
+    text-shadow: 0 1px #1a1b1e;
     color: #121212;
 }
 
