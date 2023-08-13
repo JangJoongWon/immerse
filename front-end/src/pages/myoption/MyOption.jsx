@@ -33,10 +33,10 @@ function MyOption() {
   const onSubmitHandler = async (event) => {
     event.preventDefault()
     const bannerpayload = new FormData();
-    bannerpayload.append('File', bannerPicture);
+    bannerpayload.append('file', bannerPicture);
 
     const profilepayload = new FormData();
-    profilepayload.append('File', profilePicture);
+    profilepayload.append('file', profilePicture);
     
     const headers = {
       "Content-Type": "multipart/form-data", 
@@ -48,7 +48,9 @@ function MyOption() {
       const bannerRes = await axios.post(`${TEST_URL}/file/upload`, bannerpayload, { headers });
       const profileRes = await axios.post(`${TEST_URL}/file/upload`, profilepayload, { headers });
 
-      console.log('succes send!')
+      console.log('success send!')
+      // console.log(bannerRes.data)
+      // console.log(profileRes.data)
 
       const userDto = {
         name : name ,
@@ -87,8 +89,8 @@ function MyOption() {
 
   useEffect(() => {
     setName(user.name)
-    // setBannerPicture('string')
-    // setProfilePicture('string')
+    // setBannerPicture(user.bannerPicture)
+    // setProfilePicture(user.profilePicture)
     // setPhoneNumber(user.phoneNumber)
     setNickname(user.nickname)
     setSelfDescription(user.selfDescription)
