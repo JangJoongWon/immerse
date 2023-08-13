@@ -36,7 +36,7 @@ function MyPageCard(props) {
       style={{
         border : '1px solid white',
         borderRadius:'10%',
-        height:'15rem',
+        height:'17rem',
         backgroundImage: `url(${show.thumbnail})`,
         backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',

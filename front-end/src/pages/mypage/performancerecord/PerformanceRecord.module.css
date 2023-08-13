@@ -11,11 +11,11 @@
   margin: 10%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
   gap: 2rem;
-  border-top: 3rem solid #121212;
-  border-bottom: 3rem solid #121212;
+  border-top: 3rem solid #1a1b1e;
+  border-bottom: 3rem solid #1a1b1e;
   /* outline: 2px solid white; */
   /* justify-content:flex-start; */
 

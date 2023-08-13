@@ -41,7 +41,7 @@ function Card({ data }) {
             <img
               src={data.thumbnail?data.thumbnail:mainBanner}
               className={styles.poster}
-              alt="Movie Poster"
+              alt="thrmbnail"
             />
             <div className={styles.overlayContainer}>
               {data.showProgress === 'IN_PROGRESS' ? (
