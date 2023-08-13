@@ -46,11 +46,14 @@ function MakeStageModal({ show, onHide }) {
   const maxChange = (e) => {
     setMax(e.target.value);
   }
-  const dateChange = (e) => {
-    setDate(e.target.value);
-  }
+  // const dateChange = (e) => {
+  //   setDate(e.target.value);
+  // }
   const startChange = (e) => {
     setStart(e.target.value);
+    const datetime = new Date(e.target.value);
+    const extractedDate = datetime.toISOString().split('T')[0];
+    setDate(extractedDate);
   }
   const endChange = (e) => {
     setEnd(e.target.value);
@@ -58,17 +61,34 @@ function MakeStageModal({ show, onHide }) {
 
   const [uploadedImage, setUploadedImage] = useState(null);
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      setUploadedImage(file);
-      // console.log(uploadedImage)
+  const handleImageUpload = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      if (isImageFile(selectedFile)) {
+        setUploadedImage(selectedFile);
+      } else {
+        // 이미지 파일이 아닌 경우에 대한 처리
+        alert('이미지 파일만 가능합니다.');
+      }
     }
   };
 
+  const isImageFile = (file) => {
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    return allowedExtensions.test(file.name);
+  };
+
+  const isEndTimeValid = () => {
+    return end >= start;
+  }
+
+  const areAllFieldsFilled = () => {
+    return date.trim()!=='' && start.trim() !== '' && end.trim() !== '';
+  };
+
+
   const mustInput = () => {
-    return title.trim() !== '' && parseFloat(price) >= 0;
+    return title.trim() !== '' && parseFloat(price) >= 0 && areAllFieldsFilled() && isEndTimeValid();
   };
 
 
@@ -107,11 +127,10 @@ function MakeStageModal({ show, onHide }) {
           'Authorization': 'Bearer ' + token
         };
         const response = await axios.post(`${API_BASE_URL}/shows/`, stageData, { headers });
-        console.log('생성에 성공했습니다.')
         console.log(response)
+        navigate(`/stageinfo/${response.data}`)
 
       } catch(e) {
-        console.log('생성에 실패했습니다.')
         console.log(e);
         throw e;
       }
@@ -129,7 +148,6 @@ function MakeStageModal({ show, onHide }) {
     try {
       const res = await scheduleStage();
       alert('공연이 예약되었습니다.')
-      // navigate(`/stageinfo/${res}`)
       return res;
     }
     catch (e) {
@@ -237,15 +255,20 @@ function MakeStageModal({ show, onHide }) {
                       )}
                     </Form.Group>
               
-                    <Form.Group>
-                      <Form.Label>공연 날짜</Form.Label>
+                    {/* <Form.Group>
+                      <Form.Label><span style={{color:'red'}}>*</span>공연 날짜</Form.Label>
                       <Form.Control type="date" placeholder="Enter date"  value={date} onChange={dateChange} />
-                    </Form.Group>
+                    </Form.Group> */}
 
                     <Form.Group>
-                      <Form.Label>공연 시간</Form.Label>
+                      <Form.Label><span style={{color:'red'}}>*</span>공연 시간(시작, 종료)</Form.Label>
                       <Form.Control type="datetime-local" placeholder="Enter start time"  value={start} onChange={startChange}/>
                       <Form.Control type="datetime-local" placeholder="Enter end time"  value={end} onChange={endChange}/>
+                      {end && !isEndTimeValid() ? (
+                        <p><span style={{color:'red'}}>※</span>시간 입력이 잘못되었습니다.</p>
+                      ):(
+                        <></>
+                      )}
                     </Form.Group>
 
                   </Col>
