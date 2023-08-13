@@ -105,6 +105,21 @@ const Stage = () => {
         setPublisher(prev => p);
     }
 
+    const handleEffect = event => {
+        event;
+
+        console.log(event);
+
+        console.log(subscribers);
+
+        for (const s of subscribers) {
+            console.log(s);
+            if (event.from.connectionId === s.session.connection.connectionId) {
+                console.log(event.from + " used effect!");
+            }
+        }
+    }
+
     const joinSession = () => {
         const newSession = ov.current.initSession();
 
@@ -157,6 +172,14 @@ const Stage = () => {
                 console.error('Error parsing chat data:', error);
             }
         });
+
+        newSession.on('signal:effect', event => {
+            try {
+                handleEffect(event);
+            } catch (error) {
+                console.log(error);    
+            }
+        })
 
         getToken().then((token) => {
             newSession
@@ -217,24 +240,30 @@ const Stage = () => {
                 });
                 console.log(response.data);
 
-                if (isAuthor()) {
-                    const res = await axios.put(`${API_BASE_URL}/shows/${id}/finish`, {}, {
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + userToken
-                        },
-                    });
-                    console.log(res.data);
-                }
-
-                // setShowData({});
                 return response.data; // NO CONTENT
             }
             catch (e) {
                 console.log(e);
             }
         }
+        const finish = async () => {
+            try {
+                const res = await axios.put(`${API_BASE_URL}/shows/${id}/finish`, {}, {
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + userToken
+                    },
+                });
+                console.log(res.data);
+
+                return res.data; // NO CONTENT
+            }
+            catch (e) {
+                console.log(e);
+            }
+        }
         fetch();
+        if (isAuthor()) finish();
     }, [session]);
 
     const muteAllCams = () => {
@@ -277,6 +306,18 @@ const Stage = () => {
             setChatText('');
         });
     };
+
+    const pushEffect = () => {
+        session.signal({
+            data: "use effect from " + user.user_id,
+            to: [],
+            type: 'effect'
+        })
+        .then(() => {
+            console.log("send effect succassfully!");
+
+        })
+    }
 
     // const testChat = () => {
     //     session.signal({
@@ -338,6 +379,10 @@ const Stage = () => {
         console.log(chats);
     }, [chats]);
 
+    useEffect(() => {
+        console.log(subscribers);
+    }, [subscribers]);
+
     return (
         <div className={styles.container}>
             {session !== undefined ?
@@ -362,7 +407,7 @@ const Stage = () => {
                     {/* <ChattingBox session={session} chats={chats}/> */}
                     </> 
                 : <Loading showData={showData} />}
-
+                <Button onClick={pushEffect}>test effect</Button>
                 {/* <div className={styles.chatbox}>
                     <Form.Control 
                     className={styles.inputchat}
