@@ -3,7 +3,7 @@ import styles from './Audience.module.css'
 import { UserVideoComponent } from './video';
 // import { Row, Col} from 'react-bootstrap'
 import {useState} from 'react'
-import { chatOn, optionOn, optionOff, curtton } from '/src/assets/icons'
+import { chatOn, optionOn, optionOff, curtton, chatbutton } from '/src/assets/icons'
 import AudienceOption from './audienceoption/AudienceOption'
 import ChattingBox from './ChattingBox'
 
@@ -79,7 +79,7 @@ function Audience(props) {
                     {chattingBoxOn ? (
                         <div className={styles.totalside}>
                                 <div className={styles.sidebar}>
-                                    <img src={chatOn} onClick={handleChattingBox} alt="chatingOpenButton" />
+                                    <img src={chatbutton} onClick={handleChattingBox} alt="chatingOpenButton" />
                                 </div>
                             <div className={styles.totalsidecontent}>
                                 <div className={styles.chattingboxcontainer}>
@@ -90,7 +90,7 @@ function Audience(props) {
                      ) : (
                          
                         <div className={styles.sidebar}>
-                            <img src={chatOn} onClick={handleChattingBox} alt="chatingOpenButton" />
+                            <img src={chatbutton} onClick={handleChattingBox} alt="chatingOpenButton" />
                         </div>
                     )}
                 </div>

@@ -18,6 +18,7 @@ import ticketHover from './ticketHover.png'
 import calendar from './calendar.png'
 import calendarHover from './calendarHover.png'
 import bacode from './bacode.png'
+import chatbutton from './chatbutton.png'
 
-export { camOn, camOff, settings, micOff, micOn, chatOn, optionOn, optionOff, curtton, videooffoption, videoonoption, effectoption, micoffoption, miconoption }
+export { camOn, camOff, settings, micOff, micOn, chatOn, optionOn, optionOff, curtton, videooffoption, videoonoption, effectoption, micoffoption, miconoption, chatbutton }
 export { exit, ticket, calendar, ticketHover, calendarHover, bacode }
