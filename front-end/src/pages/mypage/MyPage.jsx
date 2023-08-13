@@ -28,7 +28,7 @@ function MyPage() {
       .then(response => {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
         // console.log(response)
-        console.log(response.data.userId)
+        console.log(response.data)
         if (mydata){
           checksubscription(response.data.userId)
         }

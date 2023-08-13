@@ -45,7 +45,7 @@ input::placeholder{
 
 
 .imgbox{
-  outline: 2px dashed snow;
+  /* outline: 2px dashed snow; */
 }
 
 .inputimg{
@@ -151,4 +151,29 @@ input::placeholder{
 .inputtitle {
   color: white;
 
+}
+
+.imgbox {
+  position: relative;
+  padding: 3%;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 20px;
+}
+
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 50%;
+}
+
+.imagefile {
+  margin-top: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
