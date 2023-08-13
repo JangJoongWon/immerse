@@ -106,38 +106,19 @@ const Stage = () => {
         setPublisher(prev => p);
     }
 
-    const handleEffect = useCallback(event => {
-        event;
-
-        console.log(event);
-
-        console.log(subscribers);
-
-        subscribers.forEach(s => {
-            console.log(s);
-        })
-
-        for (const s of subscribers) {
-            console.log(s);
-            if (event.from.connectionId === s.session.connection.connectionId) {
-                console.log(event.from + " used effect!");
-            }
-        }
-    }, [userEffect]);
-
     useEffect(() => {
         console.log(subscribers);
         subscribers.forEach(s => {
             console.log(s);
             console.log(userEffect);
             if (userEffect) {
-                if (userEffect.from.connectionId === s.session.connection.connectionId) {
+                if (userEffect.from.connectionId === s.stream.connection.connectionId) {
                     console.log(userEffect.from.data + " used effect!");
                 }
             }
             
         })
-    }, [handleEffect]);
+    }, [subscribers, userEffect]);
 
     const joinSession = () => {
         const newSession = ov.current.initSession();
@@ -195,7 +176,6 @@ const Stage = () => {
         newSession.on('signal:effect', event => {
             try {
                 setUserEffect(event);
-                handleEffect(event);
             } catch (error) {
                 console.log(error);    
             }
