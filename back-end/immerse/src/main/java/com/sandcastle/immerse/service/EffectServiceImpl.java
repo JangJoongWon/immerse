@@ -53,4 +53,9 @@ public class EffectServiceImpl implements EffectService {
         return effectEntityList;
     }
 
+    @Override
+    public List<EffectEntity> findAllEffect() {
+        return effectRepository.findAll();
+    }
+
 }

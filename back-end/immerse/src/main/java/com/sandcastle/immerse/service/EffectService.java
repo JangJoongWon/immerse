@@ -10,4 +10,6 @@ public interface EffectService {
     void saveEffect(Long userId, Long effectId);
 
     List<EffectEntity> findEffectByUserId(Long userId);
+
+    List<EffectEntity> findAllEffect();
 }
