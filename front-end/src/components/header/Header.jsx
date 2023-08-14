@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { setUser } from '../../redux/userSlice';
 
 import { HiOutlineSearch } from "react-icons/hi";
 import styles from './Header.module.css'
@@ -45,6 +46,27 @@ function Header() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        if (token) {
+          const res = await axios.get(`${API_BASE_URL}/user/mypage`, {
+            headers: {
+              'Content-Type': 'application/json', 
+              'Authorization': 'Bearer ' + token
+            }
+          });
+          dispatch(setUser(res.data));
+        }
+      }
+      catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserInfo();
+  }, []);
+  
 
   const deleteAccount = async (event) => {
     event.preventDefault();
@@ -89,7 +111,7 @@ function Header() {
 
 
   return (
-    <div>
+    <div className={styles.headercontainer}>
       <Navbar 
       style={{ background: "#1a1b1e", color: "white"}} 
       expand={expand}
@@ -148,11 +170,11 @@ function Header() {
                     LogOut
                   </Nav.Link>
                   {user?(
-                    <Nav.Link onClick={toProfile} className={`m-2 ${styles.linkunit}`} style={{ color: "white" }}>
-                      {user.nickname}
+                    <Nav.Link onClick={toProfile} className={`${styles.linkprofile}`} style={{ color: "white" }}>
+                      <img src={user.profilePicture} alt="Noprofile" className={styles.profilePicture} />
                     </Nav.Link>
                   ):(
-                    <Nav.Link onClick={toProfile} className={`m-2 ${styles.linkunit}`} style={{ color: "white" }}>
+                    <Nav.Link onClick={toProfile} className={`${styles.linkunit}`} style={{ color: "white" }}>
                       Profile
                     </Nav.Link>
                     )}
@@ -164,10 +186,10 @@ function Header() {
                 </>
               ) : (
                 <>
-                  <Nav.Link href="/login" className={`m-2 ${styles.linkunit}`} style={{ color: "white" }}>
+                  <Nav.Link href="/login" className={`${styles.linkunit}`} style={{ color: "white" }}>
                     LogIn
                   </Nav.Link>
-                  <Nav.Link href="/signup" className={`m-2 ${styles.linkunit}`} style={{ color: "white" }}>
+                  <Nav.Link href="/signup" className={`${styles.linkunit}`} style={{ color: "white" }}>
                     SignUp
                   </Nav.Link>
                 </>
