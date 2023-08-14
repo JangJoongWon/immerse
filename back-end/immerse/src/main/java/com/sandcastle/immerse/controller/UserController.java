@@ -50,6 +50,12 @@ public class UserController {
         return ResponseEntity.ok().body(check);
     }
 
+    @GetMapping("/check/email/{email}")
+    public ResponseEntity<?> existsByEmail(@PathVariable String email) throws Exception {
+        boolean check = userServiceImpl.existsByEmail(email);
+        return ResponseEntity.ok().body(check);
+    }
+
     @PutMapping("/update/info")
     public ResponseEntity<?> updateUser(@RequestBody UserDto userDto, Authentication authentication) throws Exception {
         Long userId = Long.valueOf(authentication.getName());

@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
     private String key = "testKey";
-    private Long expireTimeMs = 1000 * 60 * 60l * 24; // 토큰 만료시간 : 24시간
+    private Long expireTimeMs = 1000 * 60 * 60l * 1; // 토큰 만료시간 : 1시간
 
     @Override
     @Transactional
@@ -148,6 +148,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public boolean existsByNickname(String nickname) {
         return userRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    @Transactional
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     @Override
