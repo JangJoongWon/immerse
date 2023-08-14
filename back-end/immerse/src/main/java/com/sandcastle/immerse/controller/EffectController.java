@@ -22,10 +22,9 @@ public class EffectController {
         return ResponseEntity.ok().body("이펙트 저장완료");
     }
 
-    @GetMapping("")
+    @GetMapping("/")
     public ResponseEntity<?> findEffectByUserId(Authentication authentication) {
-        Long userId = Long.valueOf(authentication.getName());
-        List<EffectEntity> effectEntityList = EffectServiceImpl.findEffectByUserId(userId);
+        List<EffectEntity> effectEntityList = EffectServiceImpl.findAllEffect();
         return ResponseEntity.ok().body(effectEntityList);
     }
 
