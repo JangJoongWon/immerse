@@ -77,6 +77,11 @@ public class SearchServiceImpl implements SearchService {
                     .userId(ue.getUserId())
                     .email(ue.getEmail())
                     .nickname(ue.getNickname())
+                    .gender(ue.getGender())
+                    .name(ue.getName())
+                    .phoneNumber(ue.getPhoneNumber())
+                    .profilePicture(ue.getProfilePicture())
+                    .bannerPicture(ue.getBannerPicture())
                     .selfDescription(ue.getSelfDescription())
                     .build();
 
