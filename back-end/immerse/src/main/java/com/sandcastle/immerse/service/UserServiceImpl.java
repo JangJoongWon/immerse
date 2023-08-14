@@ -154,6 +154,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    @Transactional
     public void updateUser(Long userId, UserDto userDto) {
 
         UserEntity userEntity = userRepository.findById(userId)
