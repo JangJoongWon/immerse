@@ -24,6 +24,7 @@ const Stage = () => {
     const [showData, setShowData] = useState({});
     const [chats, setChats] = useState([]);
     const [userEffect, setUserEffect] = useState(undefined);
+    const [effectList,setEffectList] = useState([])
 
     const userToken = useSelector((state) => state.user.token);
     const user = useSelector(state => state.user.user);
@@ -114,6 +115,12 @@ const Stage = () => {
             if (userEffect) {
                 if (userEffect.from.connectionId === s.stream.connection.connectionId) {
                     console.log(userEffect.from.data + " used effect!");
+                    console.log(userEffect.from.data)
+                    setEffectList(prev =>([...prev, JSON.parse(userEffect.from.data).clientData]))
+                    setTimeout(() => {
+                        setEffectList(effectList.filter((nickname)=> nickname != JSON.parse(userEffect.from.data).clientData ))
+                      }, 10000);
+                    
                 }
             }
             
@@ -407,6 +414,7 @@ const Stage = () => {
                     />
                     :
                     <Audience 
+                    effectList = {effectList}
                     publisher={publisher}
                     mainStreamManager={mainStreamManager}
                     subscribers={subscribers}

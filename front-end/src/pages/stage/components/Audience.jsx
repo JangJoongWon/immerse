@@ -2,12 +2,13 @@
 import styles from './Audience.module.css'
 import { UserVideoComponent } from './video';
 // import { Row, Col} from 'react-bootstrap'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { chatOn, optionOn, optionOff, curtton, chatbutton } from '/src/assets/icons'
 import AudienceOption from './audienceoption/AudienceOption'
 import ChattingBox from './ChattingBox'
 
 function Audience(props) { 
+  const {effectList} = props
   const [optionValue,setOptionValue] = useState(false)  
   const [chattingBoxOn, setChattingBoxOn] = useState(false)
 
@@ -19,6 +20,7 @@ function Audience(props) {
   const handleChattingBox = () => {
     setChattingBoxOn(!chattingBoxOn)
   }
+
 
 
 
@@ -69,6 +71,7 @@ function Audience(props) {
                                     // onClick={() => props.handleMainVideoStream(props.publisher)}
                                     >
                                         <UserVideoComponent
+                                            effectList = {effectList}
                                             streamManager={props.subscribers[index - !!index]} />
                                     </div>
                                 ) : null}
