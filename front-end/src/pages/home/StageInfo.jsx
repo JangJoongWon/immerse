@@ -24,6 +24,7 @@ function StageInfo() {
           setShowData(response.data);
         } catch (error) {
           console.error(error);
+          navigate('/');
         }
       };
   
