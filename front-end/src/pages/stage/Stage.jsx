@@ -344,8 +344,18 @@ const Stage = () => {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + userToken
             }
+        })
+        .catch((error) => {
+            console.log(error);
+            alert('잘못된 접근이거나 없는 공연입니다.');
+            navigate('/*');
         });
         console.log(response.data);
+        if (response.data.showProgress === 'OVER') {
+            alert('종료된 공연입니다.');
+            navigate('/');
+        }
+
         setShowData(response.data);
         // joinSession(false); // 방에 들어오면 바로 시작. 임시로 false 할당
     }
