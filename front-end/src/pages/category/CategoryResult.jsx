@@ -46,7 +46,6 @@ function CategoryResult({ id }) {
               {item.categoryId === nowSelected ? (
                 <a
                   href="/"
-                  // style={{ color: item.categoryId === nowSelected ? '#8b00ff' : 'white' }}
                   className={styles.selected}
                   onClick={(event) => {
                     event.preventDefault();
