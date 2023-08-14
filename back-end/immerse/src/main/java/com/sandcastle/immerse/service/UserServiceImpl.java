@@ -7,6 +7,7 @@ import com.sandcastle.immerse.model.entity.UserEntity;
 import com.sandcastle.immerse.repository.UserRepository;
 import com.sandcastle.immerse.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
-    private String key = "testKey";
-    private Long expireTimeMs = 1000 * 60 * 60l * 1; // 토큰 만료시간 : 1시간
+    @Value("${application.jwt.password}")
+    private String key;
+    private Long expireTimeMs = 1000 * 60 * 60l * 24; // 토큰 만료시간 : 24시간
 
     @Override
     @Transactional

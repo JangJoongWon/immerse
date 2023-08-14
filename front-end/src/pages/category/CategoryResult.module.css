@@ -1,39 +1,80 @@
 .container {
-    width: 100%;
-    border: 2px solid green;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-  .categories {
+.categoryTags{
+  width: 20%;
+}
+
+.listResult{
+  width: 80%;
+}
+
+.selected {
+  text-shadow: 0 0 5px #8b00ff,
+                0 0 25px #8b00ff,
+                0 0 50px #8b00ff,
+                0 0 200px #8b00ff;
+-webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+.categoryZip div {
+  font-size: 20px;
+  font-weight: 900;
+  margin-right: 10%;
+}
+
+.categoryZip div a {
+  color: white;
+  text-decoration: none;
+}
+
+.categoryZip div a:hover {
+  font-size: 23px;
+  color: #9D72FF;
+}
+
+.popularList {
     width: 100%;
-    border: 1px solid orange;
+    /* border: 1px solid orange; */
   }
 
-  .gridItem {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  }
+.gridMove {
+  display: grid;
+  gap: 16px;
+}
 
-  .channelcard{
-    width: 100%;
-    border: 1px solid blue;
+@media (min-width: 401px) and (max-width: 799px) {
+  .gridMove {
+    grid-template-columns: repeat(1, 1fr);
   }
+}
+
+@media (min-width: 800px) and (max-width: 1199px) {
+  .gridMove {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .gridMove {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
 
-  @media (min-width: 400px) and (max-width: 799px) {
-    .gridItem {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  @media (min-width: 800px) and (max-width: 1199px) {
-    .gridItem {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
-  @media (min-width: 1200px) {
-    .gridItem {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
+.card {
+  position: relative;
+  padding-bottom: 100%; /* 1:1 가로 세로 비율을 위한 padding-bottom 설정 */
+  overflow: hidden;
+}
+
+.statebutton a {
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+  text-decoration: none;
+  margin-right: 10%;
+}

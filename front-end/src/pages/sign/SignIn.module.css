@@ -7,37 +7,40 @@
   }
 
 .signinbox {
-    border: 1px solid white;
     width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     .signinbox {
       width: 70%;
     }
   }
 
-.boxcontent {
-    border : 3px solid #42424A;
-    border-radius: 20px;
-    flex: 0.6;
-    background-color: #202027;
+@media (max-width: 600px) {
+  .signinbox {
+    width: 90%;
+  }
 }
 
-@media (max-width: 1000px) {
-    .boxcontent {
-      flex: 0.8;
-    }
-  }
+.boxcontent {
+    flex: 0.8;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
 
 .title {
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid white;
-    color: white;
-    /* background-color: rgb(130, 130, 130); */
+    margin-left: 10%;
+    margin-bottom: 5%;
+}
+
+.title h3{
+  color: white;
+}
+
+.title p{
+  color: white;
 }
 
 .body {
@@ -47,21 +50,41 @@
 
 .loginform {
     width: 80%;
-    border: 1px solid red;
 }
 
 .inputbox {
-    border: 1px solid green;
-    margin-top: 10px;
+    margin-bottom: 5%;
+}
+
+.inputbox .inputgroup {
+  color: white;
 }
 
 .submitbutton {
     display: flex;
     justify-content: center;
+    width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-Button {
-    background-color: #4B7F4A;
+.loginButton {
+  width: 100%;
+  background-color: #9D72FF;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.loginButton:hover {
+  background-color: #9D72FF;
+  box-shadow: 0 0 5px #9D72FF,
+              0 0 25px #9D72FF
+}
+
+.tosignup span{
+  margin-right: 5px;
+}
+.tosignup a{
+  text-decoration: none;
+  color: #9D72FF;
 }

@@ -3,64 +3,53 @@ import styles from './CastList.module.css';
 import Card from './BroadCast';
 // import datas from '../../stage_data.json';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 
-function CardList({Live, Reserve}) { // 컴포넌트 이름을 대문자로 변경
+function CardList({Live, Reserve}) {
 
     const [liveState, setLiveState] = useState(true);
-    const categories = useSelector(state => state.category.categories);
 
     const liveData = Live
     const reserveData = Reserve
-    const navigate = useNavigate();
     
-    const handleLiveButtonClick = () => {
+    const handleLiveButtonClick = (e) => {
+      e.preventDefault();
       setLiveState(true);
     };
     
-    const handleReserveButtonClick = () => {
+    const handleReserveButtonClick = (e) => {
+      e.preventDefault();
       setLiveState(false);
     };
-
-    const toCategory = (id) => {
-      navigate(`/category/${id}`)
-    }
   
   return (
     <div className={styles.container}>
 
-        <div className={styles.categoryTags}>
-          <ul className={styles.categoryZip}>
-            {categories.map((item) => (
-              <div key={item.categoryId}>
-                <a href="/" 
-                  onClick={(event) => {
-                  event.preventDefault();
-                  toCategory(item.categoryId);
-                }}>{item.categoryName}</a>
-              </div>
-            ))}
-          </ul>
-        </div>
-
         <div className={styles.listResult}>
-          <ul className={styles.statebutton}>
-            <a href="/" onClick={(event) => {
-            event.preventDefault();
-            handleLiveButtonClick();
-            }}
-            style = {liveState ? {color:'#0d6efd'} : {color:'white'}}
-            >라이브  </a>
+          {liveState ? (
+            <ul className={styles.statebutton}>
+              <a 
+              className={styles.selected}
+              href="/" onClick={handleLiveButtonClick}
+              >라이브</a>
+              <a 
+              className={styles.notSelected}
+              href="/" onClick={handleReserveButtonClick}
+              >공연예정</a>
+            </ul>
+            ) : (
+            <ul className={styles.statebutton}>
+              <a 
+              className={styles.notSelected}
+              href="/" onClick={handleLiveButtonClick}
+              >라이브</a>
+              <a 
+              className={styles.selected}
+              href="/" onClick={handleReserveButtonClick}
+              >공연예정</a>
+            </ul>
+            )}
 
-            <a href="/" onClick={(event) => {
-            event.preventDefault();
-            handleReserveButtonClick();
-            }}
-            style = {liveState ? {color:'white'} : {color:'#0d6efd'}}
-            >공연예정</a>
-          </ul>
 
           <div className={`${styles.popularList} ${styles.gridMove}`}>
           {liveState ? (
@@ -73,7 +62,9 @@ function CardList({Live, Reserve}) { // 컴포넌트 이름을 대문자로 변�
             ))
           )}
           </div>
+
         </div>
+
     </div>
   )
 }

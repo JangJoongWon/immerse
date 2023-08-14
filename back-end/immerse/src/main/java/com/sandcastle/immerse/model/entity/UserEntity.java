@@ -104,7 +104,7 @@ public class UserEntity {
 	public void updateUser(UserDto userDto) {
 		this.name = userDto.getName();
 		this.nickname = userDto.getNickname();
-		this.phoneNumber = userDto.getPhoneNumber();
+		// this.phoneNumber = userDto.getPhoneNumber();
 		this.profilePicture = userDto.getProfilePicture();
 		this.bannerPicture = userDto.getBannerPicture();
 		this.selfDescription = userDto.getSelfDescription();

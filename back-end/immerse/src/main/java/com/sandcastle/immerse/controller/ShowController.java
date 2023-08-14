@@ -4,19 +4,19 @@ import java.net.Authenticator;
 import java.util.List;
 import java.util.Optional;
 
+import com.sandcastle.immerse.model.dto.ShowTagDto;
+import com.sandcastle.immerse.model.dto.TagDto;
+import com.sandcastle.immerse.model.dto.show.ShowWrapper;
+import com.sandcastle.immerse.service.ShowTagServiceImpl;
+import com.sandcastle.immerse.service.StorageServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.sandcastle.immerse.model.dto.show.ShowListResponse;
 import com.sandcastle.immerse.model.dto.show.ShowRequest;
@@ -24,6 +24,7 @@ import com.sandcastle.immerse.model.dto.show.ShowResponse;
 import com.sandcastle.immerse.service.ShowService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -32,7 +33,8 @@ import lombok.RequiredArgsConstructor;
 public class ShowController {
 
 	private final ShowService showService;
-
+	private final ShowTagServiceImpl showTagService;
+	private StorageServiceImpl storageService;
 	@ResponseBody
 	@GetMapping("/")
 	public List<ShowListResponse> getShows() {
@@ -43,6 +45,9 @@ public class ShowController {
 	@GetMapping("/{show_id}")
 	public ResponseEntity<ShowResponse> getShow(@PathVariable Long show_id) {
 		Optional<ShowResponse> res = showService.findShow(show_id);
+		if (res.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
 		return new ResponseEntity<ShowResponse>(res.get(), HttpStatus.OK);
 	}
 
@@ -55,16 +60,62 @@ public class ShowController {
 
 	@ResponseBody
 	@PostMapping("/")
-	public Long postShow(@RequestBody ShowRequest form, Authentication auth) {
+	public Long postShow(@RequestBody ShowRequest form,  Authentication auth) {
 		Long userId = Long.valueOf(auth.getName());
 		System.out.println("userId = " + userId);
+
+//		ShowRequest form = wrapper.getForm();
+//		MultipartFile file = wrapper.getFile();
+
 		form.setUserId(userId);
-		return showService.postShow(form);
+		if(form.getThumbnail() == ""){
+			Long defualtCategory = form.getCategoryId();
+
+			switch (defualtCategory.intValue()) {
+				case 0:
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/default_img_height+(1).jpg");
+					// defualtCategory 값이 0일 때 수행할 작업
+					break;
+				case 1:
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/magic_default_img_height2+(1).jpg");
+					// defualtCategory 값이 1일 때 수행할 작업
+					break;
+				case 2:
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/song_default_img_height2+(1).jpg");
+					// defualtCategory 값이 2일 때 수행할 작업
+					break;
+				case 3:
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/comedy_default_img_height+(1).jpg");
+					// defualtCategory 값이 3일 때 수행할 작업
+					break;
+				case 4:
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/circus_default_img_height+(1).jpg");
+					// defualtCategory 값이 3일 때 수행할 작업
+					break;
+				case 5:
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/art_default_img_height+(1).jpg");
+					// defualtCategory 값이 3일 때 수행할 작업
+					break;
+				// 추가적인 case 문을 필요에 따라 작성할 수 있습니다.
+				default:
+					// 위의 case에 해당하지 않는 경우의 기본 작업
+					break;
+			}
+		}
+
+		Long showId = showService.postShow(form);
+		showTagService.saveAllShowTag(showId , form.getShowTagDtoList());
+		return showId;
 	}
 
 	@ResponseBody
 	@PutMapping("/{show_id}")
-	public Long putShow(@PathVariable Long show_id, @RequestBody ShowRequest form) {
+	public Long putShow(@PathVariable Long show_id, @RequestBody ShowWrapper wrapper) {
+
+		ShowRequest form = wrapper.getForm();
+		MultipartFile file = wrapper.getFile();
+
+		form.setThumbnail(storageService.uploadFile(file));
 		return showService.putShow(show_id, form);
 	}
 
@@ -110,6 +161,7 @@ public class ShowController {
 	public ResponseEntity<?> finishShow(@PathVariable Long show_id, Authentication auth) {
 		Long user_id = Long.valueOf(auth.getName());
 		showService.finishShow(show_id, user_id);
+		showTagService.deleteShowTag(show_id);
 
 		return ResponseEntity.ok().body("show finished successfully.");
 	}

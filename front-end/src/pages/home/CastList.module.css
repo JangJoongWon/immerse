@@ -12,25 +12,21 @@
     width: 80%;
   }
 
-  .categoryZip div {
-    font-size: 20px;
-    font-weight: 900;
-    margin-right: 10%;
+  .selected {
+    text-shadow: 0 0 5px #8b00ff,
+                  0 0 25px #8b00ff,
+                  0 0 50px #8b00ff,
+                  0 0 200px #8b00ff;
+-webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
   }
 
-  .categoryZip div a {
+  .notSelected {
     color: white;
-    text-decoration: none;
-  }
-
-  .categoryZip div a:hover {
-    font-size: 23px;
-    color: #0d6efd;
   }
 
   .popularList {
       width: 100%;
-      border: 1px solid orange;
+      /* border: 1px solid orange; */
     }
   
   .gridMove {
@@ -40,19 +36,19 @@
   
   @media (min-width: 401px) and (max-width: 799px) {
     .gridMove {
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
   
   @media (min-width: 800px) and (max-width: 1199px) {
     .gridMove {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
   
   @media (min-width: 1200px) {
     .gridMove {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
   }
   

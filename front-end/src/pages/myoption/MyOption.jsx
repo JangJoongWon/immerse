@@ -5,73 +5,186 @@ import InputPImg from './inputimg/InputImg';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { TEST_URL, API_BASE_URL } from '../../constants';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 function MyOption() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const userToken = useSelector((state) => state.user.token);
-
+  console.log(user)
   const [selectTab, setSelectTab] = useState('BannerImg');
 
   const changeSelectTab = (tab) => {
     setSelectTab(tab);
   };
+  const [passwordError, setPasswordError] = useState(true)
 
   const [name, setName] = useState('');
-  const [bannerPicture, setBannerPicture] = useState('');
-  const [profilePicture, setProfilePicture] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [bannerPicture, setBannerPicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(null);
+  // const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
 
-  
-  const context = {
-    name : name,
-    bannerPicture: bannerPicture,
-    profilePicture: profilePicture,
-    nickname: nickname,
-    phoneNumber: phoneNumber,
-    selfDescription: selfDescription,
-  };
- 
-  function onSubmitHandler(){
-    axios.post(TEST_URL + `/update/info`,context, {
-      headers: { 
-          'Content-Type': 'application/json', 
+  const onSubmitHandler = async (event) => {
+    event.preventDefault()
+    const bannerpayload = new FormData();
+    bannerpayload.append('file', bannerPicture);
+
+    const profilepayload = new FormData();
+    profilepayload.append('file', profilePicture);
+    
+    const headers = {
+      "Content-Type": "multipart/form-data", 
+      'Authorization': 'Bearer ' + userToken
+    };
+
+
+    try {
+      const bannerRes = await axios.post(`${TEST_URL}/file/upload`, bannerpayload, { headers });
+      const profileRes = await axios.post(`${TEST_URL}/file/upload`, profilepayload, { headers });
+
+      console.log('success send!')
+      // console.log(bannerRes.data)
+      // console.log(profileRes.data)
+
+      const userDto = {
+        name : name ,
+        bannerPicture: bannerRes.data,
+        profilePicture: profileRes.data,
+        nickname : nickname,
+        selfDescription : selfDescription,
+      };
+
+      try {
+
+        const headers = {
+          "Content-Type": "application/json",  
           'Authorization': 'Bearer ' + userToken
-              },
-            })
-          .then(response => {
-          console.log(response.data)
-          })
-          .catch(error => {
-          console.error('Error fetching data:', error);
-          });
+        };
+    
+        const response = await axios.put(`${API_BASE_URL}/user/update/info`, userDto, { headers });
+        console.log('회원정보 수정이 성공했습니다.')
+        console.log(response)
+
+      } catch(e) {
+        console.log('회원정보 수정이 실패했습니다.')
+        console.log(e);
+        throw e;
+      }
+
+      // onHide();
+    }
+    catch (e) {
+      console.log(e);
+      console.log('failed send!')
+      throw e;
+    } 
+
   }
 
   useEffect(() => {
     setName(user.name)
-    // setBannerPicture('string')
-    // setProfilePicture('string')
-    setPhoneNumber(user.phoneNumber)
+    // setBannerPicture(user.bannerPicture)
+    // setProfilePicture(user.profilePicture)
+    // setPhoneNumber(user.phoneNumber)
     setNickname(user.nickname)
     setSelfDescription(user.selfDescription)
   }, []);
 
-  function onBannerImgeUrlChangeHandler(BannerimageUrl) {
-    setBannerImgUrl(BannerimageUrl);
+  const deleteAccount = async (token) => {
+    // event.preventDefault();
+    const config = {
+      headers: {
+        'Content-Type': 'application/json', 
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/user/withdrawal`, config);
+      dispatch(logOut())
+      console.log('Check success:', response);
+
+    } catch (error) {
+      console.log('Check error', error);
+    }
+  };
+
+
+  const onDeletetHandler = async (event) => {
+    event.preventDefault();
+    
+    const data = {
+      email : user.email,
+      password : password
+    }
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/user/signin`, data);
+      const token = response.data;
+      if (token) {
+        deleteAccount(token)
+        alert('회원 탈퇴가 되었습니다.')
+        navigate('/',{replace:true})
+      } else {
+        console.log('Delete failed: Invalid token');
+      }
+    } catch (error) {
+      if (error.response && error.response.data === 'INVALID_PASSWORD 잘못된 패스워드를 입력 했습니다.') {
+        setPasswordError(false)}
+      else {
+        console.log('Delete failed:', error.response.data)
+      }
+    }
   }
 
-  function onImgeUrlChangeHandler(imageUrl) {
-    setImageUrl(imageUrl);
+  const handlebannerImageUpload = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      setBannerPicture(file);
+    }
+  };
+
+  const handleProfileImageUpload = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      setProfilePicture(file);
+    }
+  };
+
+
+  function onChangeNameHandler(name) {
+    setName(name);
+  }
+
+  function onChangeNickNameHandler(nickname){
+    setNickname(nickname)
+  }
+
+  function onChangeSelfDescription(selfDescription){
+    setSelfDescription(selfDescription)
+  }
+  
+  function onChangePassword(password){
+    setPassword(password)
   }
 
   return (
     <div className={styles.background}>
       <div className={styles.container}>
-        <div>
-          개인 정보 수정
+        <div >
+          <h1 
+          className={styles.maintitle}
+          >회원정보 수정</h1>
         </div>
-        <Row>
+        <div 
+        className={styles.buttonbox}>
             <Button
             className={styles.button} 
             type="button" 
@@ -82,45 +195,81 @@ function MyOption() {
             <Button 
             className={styles.button} 
             type="button" 
-            size="lg" onClick={() => changeSelectTab('ProgileImg')}>
+            size="lg" onClick={() => changeSelectTab('ProfileImg')}>
               프로필 이미지
             </Button>
    
             <Button 
             className={styles.button} 
             type="button" 
-            size="lg" onClick={() => changeSelectTab('NickName')}>
-              닉네임
+            size="lg" onClick={() => changeSelectTab('ProfileInfo')}>
+              프로필 정보
             </Button>
      
             <Button 
             className={styles.button} 
             type="button" 
-            size="lg" onClick={() => changeSelectTab('CallNumber')}>
-              전화번호
+            variant="danger"
+            size="lg" onClick={() => changeSelectTab('deleteAccount')}>
+              회원탈퇴
             </Button>
-     
-            <Button 
-            className={styles.button} 
-            type="button" 
-            size="lg" onClick={() => changeSelectTab('SelfDescription')}>
-              자기소개
-            </Button>
-        </Row>
-        <Row>
+        </div>
+        <div 
+        className={styles.formbox}>
             <Form
             onSubmit={onSubmitHandler}>
               {(selectTab=='BannerImg') && (
                 <Form.Group className={styles.imgbox}>
-                  <InputPImg onChange={onBannerImgeUrlChangeHandler} className={styles.inputimg} />
+                  <div
+                  style={{marginBottom:'3%'}}  
+                  className={styles.title}>
+                    <h3>
+                    배너 이미지
+                    </h3>
+                  </div>
+                    <Form.Control type="file" onChange={handlebannerImageUpload} />
+                    {bannerPicture ? (
+                        <div className={styles.imgbox}>
+                          <div className={styles.imageWrapper}>
+                            <img src={URL.createObjectURL(bannerPicture)} alt="Uploaded" className={styles.imagefile} />
+                          </div>
+                        </div>
+                      ):(
+                        <div className={styles.imgbox}>
+                          <div className={styles.imageWrapper}>
+                          </div>
+                        </div>
+                      )}
+                  {/* <InputPImg onChange={onBannerImgeUrlChangeHandler} className={styles.inputimg} /> */}
                 </Form.Group>
               )}
 
-              {(selectTab=='ProgileImg') && (
-                <Form.Group className={styles.imgbox}>      
-                  <InputPImg onChange={onImgeUrlChangeHandler} className={styles.userimg} />
+              {(selectTab=='ProfileImg') && (
+                <Form.Group className={styles.imgbox}>
+                  <div
+                  style={{marginBottom:'3%'}} 
+                  className={styles.title}>
+                    <h3>
+                    프로필 이미지
+                    </h3>
+                  </div>
+                    <Form.Control type="file" onChange={handleProfileImageUpload} />
+                    {profilePicture ? (
+                        <div className={styles.imgbox}>
+                          <div className={styles.imageWrapper}>
+                            <img src={URL.createObjectURL(profilePicture)} alt="Uploaded" className={styles.imagefile} />
+                          </div>
+                        </div>
+                      ):(
+                        <div className={styles.imgbox}>
+                          <div className={styles.imageWrapper}>
+                          </div>
+                        </div>
+                      )}
+                  {/* <InputPImg onChange={onBannerImgeUrlChangeHandler} className={styles.inputimg} /> */}
                 </Form.Group>
               )}
+
 
               {/* {(selectTab=='Password') && (
                 <Form.Group className={styles.password}>
@@ -154,56 +303,113 @@ function MyOption() {
                 </Form.Group>
               )} */}
 
-              {(selectTab=='NickName') && (
-                <Form.Group className={styles.nickname}>
+              {(selectTab=='ProfileInfo') && (
+                <Form.Group>
+                  <div 
+                  className={styles.title}>
+                    <h3>
+                    프로필 정보
+                    </h3>
+                  </div>
                   <div>
-                    <Form.Control
-                      type="text"
-                      className={styles.input}
-                      placeholder=" 현재 닉네임"
-                      // value={nickname}
-                      // onChange={(e) => setNickname(e.target.value)}
-                    />
+                    <div
+                    className={styles.inputbox}>
+                      <Form.Label
+                      className={styles.inputtitle}
+                      >이름</Form.Label>
+                      <Form.Control
+                        type="text"
+                        className={styles.input}
+                        placeholder={name}
+                        // value={phoneNumber}
+                        onChange={(e) => onChangeNameHandler(e.target.value)}
+                        />
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                    className={styles.inputbox}
+                    >
+                      <Form.Label
+                      className={styles.inputtitle}
+                      >닉네임</Form.Label>
+                      <Form.Control
+                        type="text"
+                        className={styles.input}
+                        placeholder={nickname}
+                        // value={nickname}
+                        onChange={(e) => onChangeNickNameHandler(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                    className={styles.inputbox}>
+                      <Form.Label
+                      className={styles.inputtitle}
+                      >자기소개</Form.Label>
+                      <Form.Control
+                        type="text"
+                        // style={{height:"100%",width:"50%"}}
+                        className={styles.input}
+                        placeholder={selfDescription}
+                        // value={selfDescription}
+                        onChange={(e) => onChangeSelfDescription(e.target.value)}
+                      />
+                    </div>
                   </div>
                 </Form.Group>
               )}
 
-              {(selectTab=='CallNumber') && (
-                <Form.Group className={styles.callNumber}>
-                  <div>
-                    <Form.Control
-                      type="text"
-                      className={styles.input}
-                      placeholder="현재 전화번호"
-                      // value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                    />
-                  </div>
-                </Form.Group>
-              )}
-
-              {(selectTab=='SelfDescription') && (
+              {(selectTab=='deleteAccount') && (
                 <Form.Group className={styles.selfDescription}>
+                  <div 
+                  className={styles.title}>
+                    <h3>
+                    회원 탈퇴
+                    </h3>
+                  </div>
                   <div>
-                    <Form.Control
-                      type="text"
-                      style={{height:"100%",width:"50%"}}
-                      className={styles.input}
-                      placeholder="자기소개"
-                      // value={selfDescription}
-                      onChange={(e) => setSelfDescription(e.target.value)}
-                    />
+                    <div
+                    className={styles.inputbox}
+                    >
+                      <Form.Label
+                        className={styles.inputtitle}
+                        >비밀번호 확인</Form.Label>
+                      <Form.Control
+                        type="password"
+                        className={styles.input}
+                        placeholder={'회원 탈퇴를 위해 비밀번호를 입력해주세요'}
+                        onChange={(e) => onChangePassword(e.target.value)}
+                        />
+                        {passwordError ? (
+                          <></>
+                        ):(
+                          <p style={{color:'red'}}>비밀번호를 확인해 주세요</p>
+                        )}
+                    </div>
                   </div>
                 </Form.Group>
               )}
-            </Form>
+            <Form.Group style={{ textAlign: "end" }}>
 
-        </Row>
-        <Form.Group style={{ textAlign: "end" }}>
-                <Button type="submit" size="lg">
-                  변경
-                </Button>
-        </Form.Group>
+                 {(selectTab=='deleteAccount') 
+                  ?
+                  <Button variant='danger' onClick={onDeletetHandler}>
+                    회원 탈퇴
+                  </Button>
+                  :  
+                    <Button 
+                    onSubmit={onSubmitHandler}
+                    type="submit" size="lg">
+                      변경
+                    </Button>
+                  }
+            </Form.Group>
+            </Form>
+        </div>
+                
+
       </div>
     </div>
   );

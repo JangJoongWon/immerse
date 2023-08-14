@@ -46,8 +46,8 @@ public class SubscribeController {
         return ResponseEntity.ok().body(check);
     }
 
-    @DeleteMapping("")
-    public ResponseEntity<?> deleteSubscribe(Authentication authentication, Long followingId) {
+    @DeleteMapping("/{followingId}")
+    public ResponseEntity<?> deleteSubscribe(Authentication authentication, @PathVariable Long followingId) {
         Long followerId = Long.valueOf(authentication.getName());
         subscribeServiceImpl.deleteSubscribe(followerId, followingId);
         return ResponseEntity.ok().body("구독정보 삭제완료");

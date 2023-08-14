@@ -15,7 +15,8 @@ SSAFY 9기 공통 프로젝트
 5. [**기술 스택**](#5)
 6. [**프로젝트 일정 및 산출물**](#6)
 7. [**개발 멤버 및 회고**](#7)
-8. [**개발 중 유의사항**](#8)
+8. [**트러블 슈팅**](#8)
+9. [**개발 중 유의사항**](#9)
 
 ---
 
@@ -90,6 +91,24 @@ D203 모래성
 ---
 
 <div id="8"></div>
+
+# 트러블 슈팅
+
+[JPA 트러블슈팅](https://www.notion.so/JPA-180c9b1a5fff4403af0e19dd531ad24c)
+
+[JWT 트러블슈팅](https://www.notion.so/JWT-476795e19e74458799b7a1da9c3949f3)
+
+[swagger 트러블슈팅](https://www.notion.so/Swagger-docs-a4eb013309f440f1b07b7a4826babb30)
+
+[React 트러블슈팅](https://www.notion.so/React-ff85c847dea548a3b9076284d95aa29c)
+
+[Docker & 젠킨스 배포](https://www.notion.so/docker-jenkins-a45e65e285e244c5a93b6a7ce7080676)
+
+[https 설정 문제](https://www.notion.so/https-ab8071b14de149999c29d5d9288b7820)
+
+---
+
+<div id="9"></div>
 
 # 개발 중 유의사항
 

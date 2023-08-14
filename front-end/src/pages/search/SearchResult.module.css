@@ -1,6 +1,6 @@
 .container {
     width: 100%;
-    border: 2px solid green;
+    /* border: 2px solid green; */
 }
 
 .statebutton a {
@@ -13,7 +13,15 @@
 
   .categories {
     width: 100%;
-    border: 1px solid orange;
+    /* border: 1px solid orange; */
+  }
+
+  .selected {
+    text-shadow: 0 0 5px #8b00ff,
+                  0 0 25px #8b00ff,
+                  0 0 50px #8b00ff,
+                  0 0 200px #8b00ff;
+  -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
   }
 
   .gridItem {
@@ -24,7 +32,11 @@
 
   .channelcard{
     width: 100%;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
+  }
+
+  .result h3 {
+    margin-bottom: 20px;
   }
 
 

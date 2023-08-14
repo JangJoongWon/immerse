@@ -1,0 +1,69 @@
+.container {
+    padding-top: 20px;
+    width: 100%;
+    background-color: #1a1b1e;
+    display: flex;
+    justify-content: center;
+}
+
+.signupbox {
+    border: 1px solid white;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media (max-width: 1000px) {
+    .signupbox {
+      width: 70%;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .signupbox {
+      width: 90%;
+    }
+  }
+
+.boxcontent {
+  width: 100%;
+  /* border : 3px solid red; */
+  border-radius: 20px;
+  flex: 0.8;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .title h3 {
+    color: white;
+    display: block;
+  }
+  
+  .title p {
+    color: white;
+    display: block;
+  }
+
+
+.signupformbox {
+display: flex;
+justify-content: center;
+border: 1px solid white;
+}
+
+Form {
+    width: 90%;
+}
+
+.inputform h4 {
+    color: white;
+    display: block;
+    margin-bottom: 3px;
+}

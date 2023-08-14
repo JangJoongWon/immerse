@@ -16,10 +16,13 @@ public class ImageFileServiceImpl implements ImageFileService{
 
     private final ImageFileRepository imageRepository;
     @Override
-    public void uploadImageFile(MultipartFile file) throws Exception{
+    public Long uploadImageFile(MultipartFile file) throws Exception{
 
         //Path 바꿔야 함!!!!!!!
-        String path = System.getProperty("user.dir") + "/src/main/resources/files";
+//        String path = System.getProperty("user.dir") + "/src/main/resources/files";
+//        String path = System.getProperty("user.dir") + "/src/main/resources/images";
+
+        String path ="/home/ubuntu/files/images";
 
         String fileName = System.currentTimeMillis()+"_"+file.getName();
 
@@ -29,7 +32,7 @@ public class ImageFileServiceImpl implements ImageFileService{
 
         ImageFileEntity imageFileEntity = new ImageFileEntity(fileName, path);
 
-        imageRepository.save(imageFileEntity);
+        return imageRepository.save(imageFileEntity).getImageId();
 
     }
 }

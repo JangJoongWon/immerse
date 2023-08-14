@@ -7,7 +7,7 @@
 }
 
 .signupbox {
-    border: 1px solid white;
+    /* border: 1px solid white; */
     width: 50%;
     display: flex;
     justify-content: center;
@@ -27,39 +27,55 @@
   }
 
 .boxcontent {
-    border : 3px solid #42424A;
-    border-radius: 20px;
-    flex: 0.8;
-    background-color: #202027;
-    margin-top: 10%;
-    margin-bottom: 10%;
+  width: 100%;
+  /* border : 3px solid #42424A; */
+  border-radius: 20px;
+  flex: 0.8;
+  /* background-color: #202027; */
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
 .title {
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid white;
-    color: white;
-    /* background-color: rgb(130, 130, 130); */
+  /* display: flex;
+  justify-content: center; */
+  margin-left: 5%;
+}
+
+.title h3 {
+  color: white;
+}
+
+.title p {
+  color: white;
 }
 
 .body {
-    width: 80%;
-    border: 1px solid yellow;
+    width: 90%;
+    /* border: 1px solid yellow; */
 }
 
 .signupform {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     margin-top: 5%;
     margin-bottom: 5%;
     display: flex;
     justify-content: center;
-    width: 80%;
+    width: 100%;
 }
 
 .inputform {
     width: 100%;
-    border: 1px solid white;
+    /* border: 1px solid white; */
+}
+
+.inputform span {
+  color: white;
+}
+
+.inputform .error {
+  margin-left: 10px;
+  display: inline-block;
 }
 
 .signupformbox {
@@ -68,7 +84,6 @@
 }
 
 .inputbox {
-    border: 1px solid green;
     margin-bottom: 10px;
     width: 100%;
 }
@@ -89,9 +104,46 @@
     justify-content: center;
 }
 
-.nickCheck Button{
+.nickCheck button{
     width: 30%;
     height: 40px;
+    background-color: #9D72FF;
+    border-radius: 10px;
+    color: white;
+}
+
+.nickCheck button:hover {
+  background-color: #9D72FF;
+  box-shadow: 0 0 5px #9D72FF,
+              0 0 25px #9D72FF;
+}
+
+.submitbutton button {
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+}
+.submitbutton button:hover {
+  background-color: #9D72FF;
+  box-shadow: 0 0 5px #9D72FF,
+              0 0 25px #9D72FF;
+}
+
+.submitbutton Button:disabled {
+  background-color: #9D72FF;
+}
+
+
+
+
+.mailCheck {
+  display: flex;
+  justify-content: center;
+}
+
+.mailCheck Button{
+  width: 30%;
+  height: 40px;
 }
 
 @media (max-width: 950px) {

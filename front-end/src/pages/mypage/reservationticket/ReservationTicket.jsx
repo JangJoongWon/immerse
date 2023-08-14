@@ -1,15 +1,42 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styles from './ReservationTicket.module.css';
-
+import {bacode} from '/src/assets/icons'
+import moment from 'moment';
 
 function ReservationTicket({ data }) {
+
+  const {
+    thumbnail,
+    title,
+    showProgress,
+    nickname,
+    showId,
+    startTime,
+    endTime,
+  } = data;
+
+  // 시작 시간과 종료 시간을 moment 객체로 변환
+  const startMoment = moment(startTime);
+  const endMoment = moment(endTime);
+
+  // 월을 영어로 표현
+  const monthName = startMoment.format('MMM');
+
+  // 일자를 숫자로 표현
+  const dayNumber = startMoment.format('D');
+
+  // 시간을 별도로 표현 (24시간 형식)
+  const startTimeString = startMoment.format('HH:mm');
+  const endTimeString = endMoment.format('HH:mm');
+
+
   return (
         <Row
             className={styles.box}>
-          <Col sm={9} 
+          <Col 
             style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.fields.poster_path})`,
+              backgroundImage: `url(${thumbnail})`,
               backgroundSize: 'cover',
               // backgroundSize: '100% 100%',
               backgroundRepeat: 'no-repeat',
@@ -18,20 +45,27 @@ function ReservationTicket({ data }) {
             className={styles.left}>
             <div
             >
-            <Row >
-              {/* <Col
+            <Row
+             style={{marginTop:'3%'}}>
+              <Col
+                style={{textAlign:"end",paddingLeft:'0'}} 
+                className={`${styles.leftfont} ${styles.logoname}`}>
+                <h6>Immerse</h6>
+              </Col>
+            </Row>
+            
+            <Row>
+              <Col
               className={`${styles.leftfont} ${styles.title}`}
               >
-                {data.fields.title}
+                <h1 
+                style={{color:'white'}}>
+                {title}
+                </h1>
               </Col>
-              <Col
-                md={4}
-                style={{textAlign:"center"}} 
-                className={`${styles.leftfont} ${styles.logoname}`}>
-                <h5>Immerse</h5>
-              </Col> */}
             </Row>
-            <Row >
+            
+            <Row>
               {/* <Col 
                 style={{alignItems:"end",marginTop:"15%"}} 
                 >
@@ -49,19 +83,38 @@ function ReservationTicket({ data }) {
                     {data.fields.genre}
                 </div>
               </Col> */}
+
+            <Row >
+              <Col
+              className={`${styles.leftfont} ${styles.nickname}`}
+              >
+                <h5>
+                {nickname}
+                </h5>
+              </Col>
+              <Col
+              className={`${styles.leftfont} ${styles.leftdate}`}
+              >
+                <h6
+                 style={{marginBottom:'3%'}}
+                >
+                {monthName},{dayNumber} 
+                </h6>
+              </Col>
+            </Row>
             </Row>
             </div>
           </Col>
           <Col sm={3} 
               className={styles.right}>
-            {/* <div>
+            <div>
               <Row
                 style={{margin:"0 auto"}}
                 sm={3}>    
-                <h2
+                {/* <h2
                 style={{color:"gold"}}
                 >Free
-                </h2>
+                </h2> */}
               </Row>
               <Row sm={3}>
                 <div></div>
@@ -70,16 +123,28 @@ function ReservationTicket({ data }) {
                 <div
                 className={`${styles.rightfont} ${styles.date}`}
                 >  
-                  {data.fields.date.slice(6,10)}
+                {monthName},{dayNumber}
                 </div>
               </Row>
               <Row>
                 <div
                 className={`${styles.rightfont} ${styles.time}`}>
-                  {data.fields.time}
+                  {startTimeString}
                 </div>
               </Row>
-            </div> */}
+              {/* <Row>
+                <div
+                className={`${styles.rightfont} ${styles.time}`}>
+                  {endTimeString}
+                </div>
+              </Row> */}
+              <Row>
+                <div
+                className={`${styles.rightfont} ${styles.bacode}`}>
+                  <img src={bacode} alt="bacode" />
+                </div>
+              </Row>
+            </div>
           </Col>
         </Row>
   );

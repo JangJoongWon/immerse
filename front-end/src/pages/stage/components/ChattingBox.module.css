@@ -1,0 +1,89 @@
+.container {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #191919;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+
+.inputchat {
+    background-color: #191919;
+    color: white;
+}
+
+.inputchat:focus {
+    background-color: #191919;
+    color: white;
+    outline:2px solid #9D72FF;
+    box-shadow: 0 0 5px #9D72FF,
+                0 0 25px #9D72FF;
+}
+
+.inputchat::placeholder {
+    color: white;
+  }
+
+.chatbox {
+    position: absolute;
+    width: 92%;
+    bottom: 0;
+    z-index: 1;
+    height: 40px;
+}
+
+.chatcontainer {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.notmychat {
+    display: flex;
+    justify-content: start;
+    margin-left: 10px;
+}
+
+.mychat {
+    display: flex;
+    justify-content: end;
+    margin-right: 10px;
+}
+
+.mychat .chatingbox {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 7px;
+    max-width: 80%;
+    margin-top: 10px;
+    background-color: #9D72FF;
+}
+
+.notmychat .chatingbox {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 7px;
+    max-width: 80%;
+    margin-top: 5px;
+    background-color: #3f3f3f;
+}
+
+
+.usernick {
+    margin-bottom: 1px;
+    font-weight: 900;
+    color: white;
+  }
+  
+  .chatcontent {
+    margin-top: 1px;
+    margin-bottom: 2px;
+    line-height: 1;
+    color: white;
+  }

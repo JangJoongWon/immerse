@@ -7,10 +7,49 @@
 
 .schedulerbox{
     border: 1rem solid #BDBDBD;
+    border: 1px solid white;
     border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 5%;
+}
+
+.ticketbox{
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    min-height: 32rem;
+    margin-bottom: 5%;
 }
 
 .scheduler{
     margin: 10%;
  
+}
+
+
+.buttonbox{
+    /* position: absolute; */
+    /* left: 0; */
+    /* margin: 5%; */
+}
+
+.calendarbuttonbox{
+    /* margin: 30%; */
+}
+
+.ticketbuttonbox{
+    margin: 30%;
+}
+
+.calendarbutton{
+    /* margin: 30%; */
+    cursor: pointer;
+    margin-bottom: 2%;
+}
+
+.ticketbutton{
+    /* margin: 30%; */
+    cursor: pointer;
+    margin-bottom: 2%;
+
 }

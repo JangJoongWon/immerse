@@ -1,5 +1,6 @@
 package com.sandcastle.immerse.model.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,4 +27,10 @@ public class ShowTagEntity {
     @ManyToOne(targetEntity = ShowEntity.class , fetch = FetchType.LAZY)
     @JoinColumn(name = "show_id" , nullable = false)
     private ShowEntity showEntity;
+
+    @Builder
+    public ShowTagEntity (TagEntity tagEntity , ShowEntity showEntity){
+        this.tagEntity = tagEntity;
+        this.showEntity = showEntity;
+    }
 }

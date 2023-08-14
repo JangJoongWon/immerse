@@ -1,8 +1,0 @@
-@media (max-width: 768px) {
-    .hide-on-small-screen {
-      display: none;
-    }
-    .hide-off-small-screen {
-      display: flex;
-    }
-  }

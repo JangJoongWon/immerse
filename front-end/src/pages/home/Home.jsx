@@ -9,6 +9,7 @@ import { setCategories, setCagoryMap } from '../../redux/categorySlice';
 import { setUser } from '../../redux/userSlice';
 import { API_BASE_URL } from '../../constants';
 import { mainBanner } from '/src/assets/images';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
 
@@ -18,6 +19,7 @@ function Home() {
   const [LiveStage, setLiveStage] = useState([])
   const [ReserveStage, setReserveStage] = useState([])
 
+  const navigate = useNavigate();
   const token = useSelector(state => state.user.token);
   const user = useSelector(state => state.user.user);
 
@@ -40,7 +42,7 @@ function Home() {
 
       try {
         const categoriesResponse = await axios.get(`${API_BASE_URL}/categories/`);
-        console.log(categoriesResponse);
+        // console.log(categoriesResponse);
         const categories = categoriesResponse.data;
         const cagoryMap = {};
         for (const e of categories) {
@@ -49,7 +51,7 @@ function Home() {
             categoryName
           };
         }
-        console.log(cagoryMap);
+        // console.log(cagoryMap);
         dispatch(setCategories([...categories]));
         dispatch(setCagoryMap(cagoryMap));
       }
@@ -77,6 +79,19 @@ function Home() {
         fetchData();
       }, []);
 
+
+    const openMakeStage = async (event) => {
+      event.preventDefault();
+
+      if (!token) {
+        alert('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
+
+      setMakeStageOn(true)
+    };
+
   return (
     <div className="App">
     <div className={styles.container}>
@@ -95,13 +110,12 @@ function Home() {
                   show={MakeStageOn}
                   onHide={() => setMakeStageOn(false)}
                 />
-                <Button
-                  className='makeButton'
-                  variant="primary"
-                  onClick={() => setMakeStageOn(true)}
+                <button
+                  className={styles.makeButton}
+                  onClick={openMakeStage}
                 >
                   방만들기
-                </Button>
+                </button>
               </div>
             </div>
           </div>

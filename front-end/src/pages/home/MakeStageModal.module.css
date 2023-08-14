@@ -1,34 +1,73 @@
+.container {
+  background-color: #1a1b1e;
+}
+
 .bottom{
     display: flex;
     justify-content: end;
 } 
+
+.notification {
+  left: 0;
+}
 
 
 .picturebox {
     width: 100%;
   }
 
-  .photobox {
-    border: 2px dashed black;
-    border-radius: 20px;
-    text-align: center;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .imgbox {
-    border-radius: 20px;
-  }
+.photobox {
+  border: 2px dashed black;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
-  .imagefile {
-    width: 100%;
-    border-radius: 20px;
-  }
+.imgbox {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 20px;
+}
 
-  .picturebox .active {
-    border-color: green;
-  }
-  
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 62.5%;
+}
+
+.imagefile {
+  margin-top: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+}
+
+.picturebox .active {
+  border-color: green;
+}
+
+.makestageButton {
+  background-color: #9D72FF;
+  border: #9D72FF;
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 10px;
+  color: white;
+}
+.makestageButton:hover {
+  background-color: #9D72FF;
+  box-shadow: 0 0 5px #9D72FF,
+              0 0 25px #9D72FF;
+}
+.makestageButton:disabled {
+  background-color: #9D72FF;
+  pointer-events: none;
+}

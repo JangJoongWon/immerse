@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { TEST_URL, API_BASE_URL } from '../../constants';
-import context from 'react-bootstrap/esm/AccordionContext';
 import { settings } from '/src/assets/icons';
 
 function MyPage() {
@@ -16,9 +15,12 @@ function MyPage() {
   // console.log(nickname)
   const userToken = useSelector((state) => state.user.token);
   // const user = useSelector(state => state.user.user);
+  const mydata = useSelector(state => state.user.user);
 
   const [user, setUser] = useState({});
+  console.log(user)
   // const [scribe, setScribe] = useState(null);
+  const [subscription, setSubscription] = useState(false);
   // const [userId, setUserId] = useState(1);
 
   useEffect(() => {
@@ -27,6 +29,10 @@ function MyPage() {
       .then(response => {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
         // console.log(response)
+        console.log(response.data)
+        if (mydata){
+          checksubscription(response.data.userId)
+        }
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -34,6 +40,40 @@ function MyPage() {
   }, []);
 
 
+  const checksubscription = (followingId) => {
+
+    axios.get(API_BASE_URL + `/subscribe/check/${followingId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+      }
+    })
+      .then(response => {
+      setSubscription(response.data)
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+  }
+
+  const cancelsubscription = () => {
+
+    axios.delete(API_BASE_URL + `/subscribe/${user.userId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`
+      }
+    })
+      .then(response => {
+      checksubscription(user.userId)
+      console.log(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
 
   const subscribe = () => {
     axios.post(API_BASE_URL + '/subscribe', {
@@ -47,18 +87,23 @@ function MyPage() {
       .then(response => {
         setUser(response.data);
         console.log(response)
+        // setUser(response.data);
+        checksubscription(user.userId)
+        console.log(response.data)
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
   }
 
+  const isCurrentUser = () => mydata && mydata.userId === user.userId;
+
 
   return (
     <div className={styles.container}>
       {/* Mypage Banner */}
       <div className={styles.banner}>
-        {user != null ? <img className={styles.bannerimg} src="user.bannerPicture" alt="bannerPicture" /> : <img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="bannerPicture" />}
+        {user != null ? <img className={styles.bannerimg} src={user.bannerPicture} alt="bannerPicture" /> : <img className={styles.bannerimg} src="../public/icons/travel.jpg" alt="bannerPicture" />}
       </div>
       {/* User Info Section */}
       <Row>
@@ -72,7 +117,7 @@ function MyPage() {
             <div className={styles.userleft}>
               <div
                 className='m-3'>
-                {user != null ? <img className={styles.userimg} src="user.profilePicture" alt="profilePicture" /> : <img className={styles.userimg} src="../public/img/profileimg.png" alt="profilePicture" />}
+                {user != null ? <img className={styles.userimg} src={user.profilePicture} alt="profilePicture" /> : <img className={styles.userimg} src="../public/img/profileimg.png" alt="profilePicture" />}
               </div>
             </div>
           </Col>
@@ -85,12 +130,14 @@ function MyPage() {
                   className={styles.username}
                 >
                   {user == null ? <span>user nickname</span> : <span>{user.nickname}</span>}
-                  <Link to="/checkpassword">
-                <img 
-                src={settings} alt="setting" 
-                style={{width:"5%"}}
-                />
-            
+                  <Link to="/myoption">
+                    {
+                      isCurrentUser() &&
+                      <img 
+                      src={settings} alt="setting" 
+                      style={{width:"5%"}}
+                      />
+                    }
                   </Link>
                 </div>
                 <div
@@ -114,12 +161,26 @@ function MyPage() {
           <Col sm={3}>
             <Row>
             </Row>
-            <div className={styles.userright}>
-              <button
-                onClick={subscribe}
-                className={styles.scribe}
-              >구독</button>
+            { !isCurrentUser() &&
+            <div>
+                {subscription 
+                ?
+                <div className={styles.userright}>
+                  <button
+                    onClick={cancelsubscription}
+                    className={styles.cancelsubscription}
+                  >구독 취소</button>
+                </div>
+                :
+                <div className={styles.userright}>
+                <button
+                  onClick={subscribe}
+                  className={styles.subscribe}
+                >구독</button>
+              </div>
+                }
             </div>
+          }
           </Col>
 
         </div>

@@ -1,0 +1,33 @@
+.img {
+    width: auto;
+}
+
+.imgbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 12%;
+    margin-right: 12%;
+}
+
+.container{
+    background-color: white;
+    height: 150%;
+    width: 90%;
+    margin: auto auto;
+    margin-top: 1rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.buttonbox{
+    position: absolute;
+    bottom: 0;
+    z-index: 100;
+    /* width: 60%; */
+    display: flex;
+    margin-bottom: 2%;
+    justify-content: center;
+
+}
