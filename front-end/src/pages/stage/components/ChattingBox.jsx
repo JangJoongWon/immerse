@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import styles from './ChattingBox.module.css'
 import { Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux/es/hooks/useSelector';
 function ChattingBox({session, chats}) {
 
     const user = useSelector(state => state.user.user);
-
+    const chatContainerRef = useRef(null);
     const [ChatText, setChatText] = useState('')
     const handleChatChange = (e) => {
         setChatText(e.target.value);
@@ -36,6 +36,12 @@ function ChattingBox({session, chats}) {
         });
     };
 
+    useEffect(() => {
+        if (chatContainerRef.current) {
+          chatContainerRef.current.scrollIntoView();
+        }
+      }, [chats]);
+
   return (
     <div className={styles.container}>
 
@@ -53,6 +59,7 @@ function ChattingBox({session, chats}) {
             ) : (
                 <p>No chats available.</p>
             )}
+            <div ref={chatContainerRef}></div>
         </div>
         
         <div className={styles.chatbox}>
@@ -68,7 +75,6 @@ function ChattingBox({session, chats}) {
                     testChat();
                 }
             }} />
-            {/* <button className={styles.chatbutton} onClick={testChat}>submit</button> */}
         </div>
     </div>
   )
