@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 import OpenViduVideoComponent from './OvVideo';
 import { Container } from 'react-bootstrap';
 // import './UserVideo.css';
@@ -6,7 +7,11 @@ import VideoHandler from './VideoHandler';
 
 const UserVideoComponent = (props) => {
 
-    const publisher = props.streamManager
+    // console.log(props)
+    console.log(props.effectList)
+    const {effectList} = props;
+    const [effect, setEffect] = useState(false);
+    const publisher = props.streamManager;
           // 비디오 On/Off 함수
     const toggleVideo = () => {
         if (publisher) {
@@ -29,16 +34,47 @@ const UserVideoComponent = (props) => {
         }
     };
 
-
+    const checkEffect = () => {
+        const tmp = effectList.filter((nickname)=> nickname == JSON.parse(props.streamManager.stream.connection.data).clientData) 
+        if(tmp.length>0){
+            setEffect(true);
+            console.log(true)
+        }
+        else{
+            setEffect(false);
+            console.log(false)
+        }
+      };
+      
+      
     const getNicknameTag = () => {
-        // Gets the nickName of the user
-        return JSON.parse(props.streamManager.stream.connection.data).clientData;
-    }
+          // Gets the nickName of the user
+          return JSON.parse(props.streamManager.stream.connection.data).clientData;
+        };
+        
+    useEffect(()=>{
+        console.log(effectList);
+        console.log(effect);
+        console.log(effectList.length);
 
+        checkEffect();
+        console.log('작동합니다');
+    }, [effectList] )
+        
     return (
         <Container style={{maxWidth: '100%', maxHeight: '100%', width: "100%", height: "100%", padding: "0" }}>
             {props.streamManager !== undefined ? (
                 <div className="streamcomponent" style={{ position:"relative", width: "100%",height: '100%' }}>
+                    {
+                        effect &&
+                        <div 
+                        style={{
+                            backgroundSize: '100% 100%',
+                            backgroundImage : `url('https://r2.jjalbot.com/2023/03/a2tqQLqWjx.gif')`,
+                            height:'100%',width:'100%',position:'absolute',top:'0',zIndex:'100',display:'flex',justifyContent:'center',alignItems:'center'}}
+                        >
+                        </div>
+                    }
                     <OpenViduVideoComponent streamManager={props.streamManager} />
                     <div
                     style={{position:"absolute",color:"white",top:"1%",left:"3%"}}
