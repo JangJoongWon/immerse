@@ -63,12 +63,12 @@ public class UserController {
 //        MultipartFile bannerFile = wrapper.getBannerFile();
 //        MultipartFile profileFile = wrapper.getProfileFile();
 
-        if(userDto.getBannerPicture() == ""){
-            userDto.setBannerPicture("default_banner");
+        if(userDto.getBannerPicture() == "/" || userDto.getBannerPicture() == ""){
+            userDto.setBannerPicture("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/default_banner.jpg");
         }
 
-        if(userDto.getProfilePicture() == ""){
-            userDto.setProfilePicture("default_profile");
+        if(userDto.getProfilePicture() == "/" || userDto.getProfilePicture() == ""){
+            userDto.setProfilePicture("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/default_profile.png");
         }
 
         userServiceImpl.updateUser(userId, userDto);

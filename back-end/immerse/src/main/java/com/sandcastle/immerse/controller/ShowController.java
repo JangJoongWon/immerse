@@ -73,19 +73,27 @@ public class ShowController {
 
 			switch (defualtCategory.intValue()) {
 				case 0:
-					form.setThumbnail("case_0_thumbnail");
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/default_img_height+(1).jpg");
 					// defualtCategory 값이 0일 때 수행할 작업
 					break;
 				case 1:
-					form.setThumbnail("case_1_thumbnail");
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/magic_default_img_height2+(1).jpg");
 					// defualtCategory 값이 1일 때 수행할 작업
 					break;
 				case 2:
-					form.setThumbnail("case_2_thumbnail");
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/song_default_img_height2+(1).jpg");
 					// defualtCategory 값이 2일 때 수행할 작업
 					break;
 				case 3:
-					form.setThumbnail("case_3_thumbnail");
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/comedy_default_img_height+(1).jpg");
+					// defualtCategory 값이 3일 때 수행할 작업
+					break;
+				case 4:
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/circus_default_img_height+(1).jpg");
+					// defualtCategory 값이 3일 때 수행할 작업
+					break;
+				case 5:
+					form.setThumbnail("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/art_default_img_height+(1).jpg");
 					// defualtCategory 값이 3일 때 수행할 작업
 					break;
 				// 추가적인 case 문을 필요에 따라 작성할 수 있습니다.
