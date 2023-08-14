@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder encoder;
     @Value("${application.jwt.password}")
     private String key;
-    private Long expireTimeMs = 1000 * 60 * 60l * 24; // 토큰 만료시간 : 24시간
+    private Long expireTimeMs = 1000 * 60 * 60l * 1; // 토큰 만료시간 : 1시간
 
     @Override
     @Transactional
