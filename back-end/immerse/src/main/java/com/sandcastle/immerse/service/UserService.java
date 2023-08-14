@@ -12,6 +12,8 @@ public interface UserService {
 
     UserDto getUser(String nickname);
     boolean existsByNickname(String nickname);
+
+    boolean existsByEmail(String email);
     void updateUser(Long userId, UserDto userDto);
     int withdrawal(Long userId);
 
