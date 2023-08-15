@@ -9,10 +9,14 @@ const UserVideoComponent = (props) => {
 
     // console.log(props)
     console.log(props.effectList)
-    const {effectList} = props;
+    const {effectList, effectMenu, effectNum} = props;
+    console.log(effectMenu)
+    console.log(effectNum)
+    console.log(effectMenu[effectNum]?.effect)
     const [effect, setEffect] = useState(false);
     const publisher = props.streamManager;
           // 비디오 On/Off 함수
+
     const toggleVideo = () => {
         if (publisher) {
         // 영상 스트림을 얻습니다.
@@ -53,9 +57,9 @@ const UserVideoComponent = (props) => {
         };
         
     useEffect(()=>{
-        console.log(effectList);
-        console.log(effect);
-        console.log(effectList.length);
+        // console.log(effectList);
+        // console.log(effect);
+        // console.log(effectList.length);
 
         checkEffect();
         console.log('작동합니다');
@@ -68,16 +72,22 @@ const UserVideoComponent = (props) => {
                     {
                         effect &&
                         <div 
-                        style={{
+                        style={
+                            effectNum > 0 
+                            ?
+                            {
                             backgroundSize: '100% 100%',
-                            backgroundImage : `url('https://r2.jjalbot.com/2023/03/a2tqQLqWjx.gif')`,
-                            height:'100%',width:'100%',position:'absolute',top:'0',zIndex:'100',display:'flex',justifyContent:'center',alignItems:'center'}}
+                            backgroundImage : `url('${effectMenu[effectNum-1].effect}')`,
+                            height:'100%',width:'100%',position:'absolute',top:'0',zIndex:'100',display:'flex',justifyContent:'center',alignItems:'center'}
+                            :
+                            {}
+                        }
                         >
                         </div>
                     }
                     <OpenViduVideoComponent streamManager={props.streamManager} />
                     <div
-                    style={{position:"absolute",color:"white",top:"1%",left:"3%"}}
+                    style={{position:"absolute",color:"white",top:"1%",left:"3%",zIndex:'200'}}
                     ><p>{getNicknameTag()}</p></div>
                     <div
                     style={{position:"absolute",color:"white",top:"5%",right:"3%"}}
