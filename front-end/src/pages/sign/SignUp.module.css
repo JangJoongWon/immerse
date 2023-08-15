@@ -104,33 +104,50 @@
     justify-content: center;
 }
 
-.nickCheck button{
-    width: 30%;
+.emailselect {
+  width: 40%;
+  height: 40px;
+}
+
+.checkbutton{
+    width: 20%;
     height: 40px;
     background-color: #9D72FF;
     border-radius: 10px;
     color: white;
 }
 
-.nickCheck button:hover {
+.checkbutton:hover {
   background-color: #9D72FF;
   box-shadow: 0 0 5px #9D72FF,
               0 0 25px #9D72FF;
 }
 
-.submitbutton button {
+.disabledbutton {
+  width: 20%;
+  height: 40px;
+  background-color: #9D72FF;
+  border-radius: 10px;
+  color: white;
+}
+
+.submitbutton .abledSubmit {
   padding: 10px;
   color: white;
   border-radius: 5px;
+  background-color: #9D72FF;
 }
-.submitbutton button:hover {
+.submitbutton .abledSubmit:hover {
   background-color: #9D72FF;
   box-shadow: 0 0 5px #9D72FF,
               0 0 25px #9D72FF;
 }
 
-.submitbutton Button:disabled {
+.disabledSubmit {
   background-color: #9D72FF;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
 }
 
 

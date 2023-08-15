@@ -95,7 +95,7 @@ function Card({ data }) {
         onClick={goProfile}>
           <div className={styles.posterContainer}>
             <img
-              src={mainBanner}
+              src={data.profilePicture}
               className={styles.poster}
               alt="Channel Thumbnail"/>
           </div>

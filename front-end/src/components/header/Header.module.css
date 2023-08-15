@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&family=Permanent+Marker&display=swap');
 
+.headercontainer {
+  height: 75px;
+}
+
 .logotext {
   padding-left: 5px;
   font-family: 'Permanent Marker', cursive;
@@ -29,6 +33,19 @@
                0 0 60px #CE96FB,
                0 0 240px #CE96FB;
    /* -webkit-box-reflect:below 1px linear-gradient(transparent, #0005); */
+}
+
+.profilePicture {
+  width: 100%;
+  border-radius: 50%;
+  height: 100%;
+}
+
+.linkprofile {
+  width: 60px;
+  border-radius: 50%;
+  padding: 10px;
+  height: 60px;
 }
 
 /* @media (max-width: 768px) {
