@@ -408,6 +408,8 @@ const Stage = () => {
                     <>
                 {isAuthor() ? 
                     <Performer
+                    pushEffect = {pushEffect}
+                    effectList = {effectList}
                     publisher={publisher}
                     mainStreamManager={mainStreamManager}
                     subscribers={subscribers}

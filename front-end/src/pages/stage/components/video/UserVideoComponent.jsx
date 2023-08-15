@@ -4,18 +4,19 @@ import OpenViduVideoComponent from './OvVideo';
 import { Container } from 'react-bootstrap';
 // import './UserVideo.css';
 import VideoHandler from './VideoHandler';
+import { useSelector } from 'react-redux';
+
 
 const UserVideoComponent = (props) => {
 
     // console.log(props)
-    console.log(props.effectList)
-    const {effectList, effectMenu, effectNum} = props;
-    console.log(effectMenu)
-    console.log(effectNum)
-    console.log(effectMenu[effectNum]?.effect)
+    const {effectList} = props;
     const [effect, setEffect] = useState(false);
     const publisher = props.streamManager;
-          // 비디오 On/Off 함수
+    const effectNum = useSelector((state) => state.user.effectNum);
+    const effectMenu = useSelector((state) => state.user.effectMenu);
+    console.log(effectNum)
+    // 비디오 On/Off 함수
 
     const toggleVideo = () => {
         if (publisher) {
