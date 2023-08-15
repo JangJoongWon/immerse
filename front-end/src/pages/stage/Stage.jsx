@@ -116,10 +116,12 @@ const Stage = () => {
                 if (userEffect.from.connectionId === s.stream.connection.connectionId) {
                     console.log(userEffect.from.data + " used effect!");
                     console.log(userEffect.from.data)
-                    setEffectList(prev =>([...prev, JSON.parse(userEffect.from.data).clientData]))
-                    setTimeout(() => {
+                    const nickName = JSON.parse(userEffect.from.data).clientData
+                    if (!effectList.includes(nickName)){
+                        setEffectList(prev =>([...prev, nickName]))
+                    }else{
                         setEffectList(effectList.filter((nickname)=> nickname != JSON.parse(userEffect.from.data).clientData ))
-                      }, 10000);
+                    }
                     
                 }
             }
@@ -404,6 +406,7 @@ const Stage = () => {
                     />
                     :
                     <Audience 
+                    pushEffect = {pushEffect}
                     effectList = {effectList}
                     publisher={publisher}
                     mainStreamManager={mainStreamManager}
@@ -415,7 +418,7 @@ const Stage = () => {
                     {/* <ChattingBox session={session} chats={chats}/> */}
                     </> 
                 : <Loading showData={showData} />}
-                <Button onClick={pushEffect}>test effect</Button>
+                {/* <Button onClick={pushEffect}>test effect</Button> */}
                 {/* <div className={styles.chatbox}>
                     <Form.Control 
                     className={styles.inputchat}

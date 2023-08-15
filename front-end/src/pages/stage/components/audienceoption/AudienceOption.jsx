@@ -17,9 +17,7 @@ function AudienceOption(props) {
 
   const [audio, setAudio] = useState(true);
   const [video, setVideo] = useState(true);
-
-
-  console.log(mysubscriber[0].stream.getMediaStream())
+  
   const onChangeVideoHandler = () => {
 
     const videoStream = mysubscriber[0].stream.getMediaStream().getVideoTracks()[0];
@@ -91,6 +89,7 @@ function AudienceOption(props) {
         <div
         className={styles.imgbox}>
           <img 
+          onClick={props.handleEffectBox}
             className={styles.img}
           src={effectoption} alt="effectoption" />
         </div>
