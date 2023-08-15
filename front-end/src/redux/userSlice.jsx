@@ -16,9 +16,21 @@ const userSlice = createSlice({
     logOut: (state) => {
       state.token = null
       state.user = null;
+    },
+    profileChange: (state, action) => {
+      if(state.user) {
+        // console.log('profile change!', action)
+        state.user['profilePicture'] = action.payload;
+      }
+    },
+    nicknameChange: (state, action) => {
+      if(state.user) {
+        // console.log('nickname change!', action)
+        state.user['nickname'] = action.payload;
+      }
     }
   },
 });
 
-export const { up, setToken, setUser, logOut } = userSlice.actions;
+export const { up, setToken, setUser, logOut, profileChange, nicknameChange } = userSlice.actions;
 export default userSlice;

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { TEST_URL, API_BASE_URL } from '../../constants';
 import { useDispatch } from 'react-redux';
-import { logOut } from '../../redux/userSlice';
+import { logOut, setUser } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 function MyOption() {
@@ -68,8 +68,11 @@ function MyOption() {
         };
     
         const response = await axios.put(`${API_BASE_URL}/user/update/info`, userDto, { headers });
-        console.log('회원정보 수정이 성공했습니다.')
-        console.log(response)
+        alert('회원정보 수정이 성공했습니다.')
+
+        const response2 = await axios.get(`${API_BASE_URL}/user/mypage`, { headers });
+        dispatch(setUser(response2.data));
+        navigate(`/mypage/${nickname}`)
 
       } catch(e) {
         console.log('회원정보 수정이 실패했습니다.')
@@ -185,34 +188,34 @@ function MyOption() {
         </div>
         <div 
         className={styles.buttonbox}>
-            <Button
-            className={styles.button} 
+            <button
+            className={styles.settingbutton} 
             type="button" 
             size="lg" onClick={() => changeSelectTab('BannerImg')}>
               배너 이미지
-            </Button>
+            </button>
 
-            <Button 
-            className={styles.button} 
+            <button 
+            className={styles.settingbutton} 
             type="button" 
             size="lg" onClick={() => changeSelectTab('ProfileImg')}>
               프로필 이미지
-            </Button>
+            </button>
    
-            <Button 
-            className={styles.button} 
+            <button 
+            className={styles.settingbutton} 
             type="button" 
             size="lg" onClick={() => changeSelectTab('ProfileInfo')}>
               프로필 정보
-            </Button>
+            </button>
      
-            <Button 
-            className={styles.button} 
+            <button 
+            className={styles.withdrawalbutton} 
             type="button" 
             variant="danger"
             size="lg" onClick={() => changeSelectTab('deleteAccount')}>
               회원탈퇴
-            </Button>
+            </button>
         </div>
         <div 
         className={styles.formbox}>
@@ -392,19 +395,23 @@ function MyOption() {
                 </Form.Group>
               )}
             <Form.Group style={{ textAlign: "end" }}>
-
+              
+              <div className={styles.buttonpoint}>
                  {(selectTab=='deleteAccount') 
                   ?
-                  <Button variant='danger' onClick={onDeletetHandler}>
+                  <button onClick={onDeletetHandler}
+                  className={styles.deletebutton}>
                     회원 탈퇴
-                  </Button>
+                  </button>
                   :  
-                    <Button 
+                    <button 
                     onSubmit={onSubmitHandler}
-                    type="submit" size="lg">
+                    type="submit"
+                    className={styles.submitbutton}>
                       변경
-                    </Button>
+                    </button>
                   }
+              </div>
             </Form.Group>
             </Form>
         </div>
