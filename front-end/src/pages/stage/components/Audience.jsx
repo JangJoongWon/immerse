@@ -6,12 +6,35 @@ import {useState, useEffect} from 'react'
 import { chatOn, optionOn, optionOff, curtton, chatbutton } from '/src/assets/icons'
 import AudienceOption from './audienceoption/AudienceOption'
 import ChattingBox from './ChattingBox'
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { API_BASE_URL } from '../../../constants';
+import { Button } from 'react-bootstrap'
 
 function Audience(props) { 
+  console.log(props)  
+  const user = useSelector((state) => state.user.user);
   const {effectList} = props
   const [optionValue,setOptionValue] = useState(false)  
   const [chattingBoxOn, setChattingBoxOn] = useState(false)
+  const [effectValue, setEffectValue] = useState(false)  
+  const [effectMenu, setEffectMenu] = useState([])
+  const [effectNum, setEffectNum] = useState(0)  
+  const [effectBoxOn, setEffectBoxOn] = useState(false)  
 
+  const isEffectMode = () => {
+    if (effectList.filter((nickname) => nickname == user.nickname).length>0){
+      return true
+    } else {
+      return false
+    }
+     
+  }  
+
+  const handleEffectMode = () => {
+    setEffectValue(!effectValue)
+    props.pushEffect()
+  }  
 
   const onClickChangeOption = ()=>{
     setOptionValue(!optionValue)
@@ -20,9 +43,43 @@ function Audience(props) {
   const handleChattingBox = () => {
     setChattingBoxOn(!chattingBoxOn)
   }
+  
+  const handleEffectBox = () => {
+    setEffectBoxOn(!effectBoxOn)
+  }
 
+  const onClickChangeEffectNum = (num) => {
+    if (num === effectNum) {
+        setEffectNum(0);
+    } else {
+        setEffectNum(num);
+    }
+}
 
+  const userToken = useSelector((state) => state.user.token);
+    
+  const createEffect = async () => {
+  try {
+      console.log('token: ' + userToken);
+      const response = await axios.get(API_BASE_URL + '/effect/', {
+        headers: { 
+            'Content-Type': 'application/json', 
+            'Authorization': 'Bearer ' + userToken
+        },
+    });
+      setEffectMenu(response.data);
+      console.log(response.data);
+      return response.data; 
+  }
+  catch (e) {
+      console.log(e);
+      throw e;
+  }
+}
 
+useEffect(()=>{
+    createEffect()
+},[])
 
   return (
     <>
@@ -71,6 +128,8 @@ function Audience(props) {
                                     // onClick={() => props.handleMainVideoStream(props.publisher)}
                                     >
                                         <UserVideoComponent
+                                            effectNum = {effectNum}
+                                            effectMenu = {effectMenu}
                                             effectList = {effectList}
                                             streamManager={props.subscribers[index - !!index]} />
                                     </div>
@@ -105,7 +164,8 @@ function Audience(props) {
                     className={styles.optionbar}>
                         <div>
                             <div>
-                                <AudienceOption 
+                                <AudienceOption
+                                handleEffectBox = {handleEffectBox}
                                 leaveSession={props.leaveSession}                            
                                 subscribers={props.subscribers}/>
                             </div>
@@ -126,6 +186,34 @@ function Audience(props) {
                     </div>
                     }
                 </div>
+
+                { effectBoxOn && 
+                <div 
+                    className={styles.effectmenu}
+                 >
+                    <div
+                    className={styles.effectbox}>
+                    {effectMenu.map((effectoption)=>(
+                        <img
+                        style={ isEffectMode() && (effectoption.effectId === effectNum) ? { boxShadow:'0 0 1rem #9D72FF'} : {} }
+                        key = {effectoption.effectId}
+                        onClick={()=>onClickChangeEffectNum(effectoption.effectId)} 
+                        className={styles.w100h100}
+                        src={effectoption.effect} alt="effect_1"
+                        />
+                    ))}
+                    </div>
+                    <div>
+                        { effectValue 
+                        ?
+                        <Button onClick={handleEffectMode}>Effect Mode On</Button>
+                        :
+                        <Button variant='danger' onClick={handleEffectMode}>Effect Mode Off</Button>
+                        }
+                    </div>
+                </div>
+
+                }
         </div>
     </>
   )
