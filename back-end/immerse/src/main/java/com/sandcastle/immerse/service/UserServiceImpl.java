@@ -48,6 +48,8 @@ public class UserServiceImpl implements UserService {
                 .nickname(userDto.getNickname())
                 .birthday(userDto.getBirthday())
                 .phoneNumber(userDto.getPhoneNumber())
+                .bannerPicture(userDto.getBannerPicture())
+                .profilePicture(userDto.getProfilePicture())
                 .build();
 
         userRepository.save(userEntity);
