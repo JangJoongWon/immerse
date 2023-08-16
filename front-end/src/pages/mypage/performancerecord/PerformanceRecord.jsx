@@ -1,9 +1,8 @@
 import MyPageCard from '../mypagecard/MyPageCard';
-// import {Row,Col} from 'react-bootstrap'
 import styles from "./PerformanceRecord.module.css"
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import {API_BASE_URL, TEST_URL} from '../../../constants/index'
+import { API_BASE_URL } from '../../../constants/index'
 import { useSelector } from 'react-redux';
 function PerformanceRecord() {
 

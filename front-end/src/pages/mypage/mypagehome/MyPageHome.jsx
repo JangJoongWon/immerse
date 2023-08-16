@@ -7,7 +7,7 @@ import styles from './MyPageHome.module.css';
 import ReservationTicket from '../reservationticket/ReservationTicket';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import {API_BASE_URL, TEST_URL} from '../../../constants/index'
+import {API_BASE_URL} from '../../../constants/index'
 import { useSelector } from 'react-redux';
 import { mainBanner } from '/src/assets/images';
 import MyCarousel from './MyCarousel';
