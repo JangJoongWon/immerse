@@ -4,7 +4,7 @@ import axios from 'axios';
 import styles from './ReservationSchedule.module.css';
 import ReservationTicket from '../reservationticket/ReservationTicket';
 import Scheduler from './scheduler'
-import {API_BASE_URL, TEST_URL} from '../../../constants/index'
+import {API_BASE_URL} from '../../../constants/index'
 import { useSelector } from 'react-redux';
 import { ticket, calendar,  ticketHover, calendarHover } from '/src/assets/icons';
 import { useSpring, a } from 'react-spring';
