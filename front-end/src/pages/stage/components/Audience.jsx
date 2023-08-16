@@ -28,7 +28,7 @@ function Audience(props) {
   const [effectBoxOn, setEffectBoxOn] = useState(false)  
 
   const isEffectMode = () => {
-    if (effectList.filter((nickname) => nickname == user.nickname).length>0){
+    if (effectList.filter(data=>data.nickName == user.nickname).length>0){  
       return true
     } else {
       return false
@@ -42,6 +42,9 @@ function Audience(props) {
   }  
 
   const onClickChangeOption = ()=>{
+    if(optionValue){
+        setEffectBoxOn(false)
+    }
     setOptionValue(!optionValue)
   }
 
@@ -55,9 +58,12 @@ function Audience(props) {
 
   const onClickChangeEffectNum = (num) => {
     if (num === effectNum) {
-        dispatch(setEffectNum(0));
+        props.pushEffect()
     } else {
         dispatch(setEffectNum(num));
+        setTimeout(()=>{
+            props.pushEffect()
+        },10)
     }
 }
 
@@ -81,6 +87,7 @@ function Audience(props) {
       throw e;
   }
 }
+
 
 useEffect(()=>{
     createEffect()
@@ -209,14 +216,6 @@ useEffect(()=>{
                         src={effectoption.effect} alt="effect_1"
                         />
                     ))}
-                    </div>
-                    <div>
-                        { effectValue 
-                        ?
-                        <Button onClick={handleEffectMode}>Effect Mode On</Button>
-                        :
-                        <Button variant='danger' onClick={handleEffectMode}>Effect Mode Off</Button>
-                        }
                     </div>
                 </div>
 

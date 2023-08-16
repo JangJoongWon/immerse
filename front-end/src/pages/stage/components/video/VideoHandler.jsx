@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { camOn, camOff, micOff, micOn } from '/src/assets/icons'
 
 function VideoHandler(props) {
-  console.log(props)
+  // console.log(props)
   const [audio, setAudio] = useState(true);
   const [video, setVideo] = useState(true);
 
