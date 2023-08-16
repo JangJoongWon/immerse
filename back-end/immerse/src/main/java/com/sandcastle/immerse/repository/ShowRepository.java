@@ -31,6 +31,8 @@ public interface ShowRepository extends JpaRepository<ShowEntity, Long> {
 	@Query(value = "select * from shows where show_progress =0 order by max_attendance desc limit 20", nativeQuery = true)
 	List<ShowEntity> getShowsOrderByReservation();
 
-	List<ShowEntity> findByTitleContains(String content);
+	@Modifying
+	@Query(value = "select * from shows where not(show_progress = 2) and title like %:content%", nativeQuery = true)
+	List<ShowEntity> findByTitleContains(@Param("content") String content);
 
 }
