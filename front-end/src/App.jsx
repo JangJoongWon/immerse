@@ -23,6 +23,7 @@ import StageInfo from './pages/home/StageInfo';
 function App() {
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     const handleUnload = () => {
@@ -45,7 +46,6 @@ function App() {
         </div>
         <Routes>
           <Route path="/" element={<Home />} />
-
           {!token ? (
             <Route path="/login" element={<SignIn />} />
             ):(

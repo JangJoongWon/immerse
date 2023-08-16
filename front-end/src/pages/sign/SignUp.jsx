@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { Form, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import styles from './SignUp.module.css'
 import axios from "axios"
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,8 @@ function SignUp() {
   const navigate = useNavigate();
   
   const [email, setEmail] = useState('');
+  const [emailURL, setEmailURL] = useState('@ssafy.com');
+  const [emailCheck, setEmailCheck] = useState(false);
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
   const [gender, setGender] = useState('');
@@ -72,6 +74,11 @@ function SignUp() {
   
   const handleEmailChange = (e) => {
       setEmail(e.target.value);
+      setEmailCheck(false);
+    };
+  const handleEmailURLChange = (e) => {
+      setEmailURL(e.target.value);
+      setEmailCheck(false);
     };
     const handlePasswordChange1 = (e) => {
       setPassword1(e.target.value);
@@ -96,7 +103,7 @@ function SignUp() {
       setBirth(e.target.value);
     };
 
-    const data = {"email": email,
+    const data = {"email": email + emailURL,
                   "password": password1,
                   "name": name,
                   "gender": gender,
@@ -136,21 +143,44 @@ function SignUp() {
       }
     };
 
-    const datanick = {"nickname" : nickname}
     const nickNameCheck = async (event) => {
       event.preventDefault();
       try {
-        const response = await axios.get(`http://i9d203.p.ssafy.io/api/user/check/${nickname}`, datanick);
+        const response = await axios.get(`http://i9d203.p.ssafy.io/api/user/check/${nickname}`);
         console.log('Check success:', response.data);
         setNickCheck(!response.data);
+        if (response.data === true) {
+          alert('사용중인 별명입니다.')
+        } else {
+          alert('사용 가능한 별명입니다.')
+        }
       } catch (error) {
         console.log('Check error', error);
-        console.log(datanick);
       }
     };
+
+    const EmailCheck = async (event) => {
+      event.preventDefault();
+      try {
+        const response = await axios.get(`http://i9d203.p.ssafy.io/api/user/check/email/${email+emailURL}`);
+        console.log('Check success:', response.data);
+        if (response.data === true) {
+          alert('사용중인 email입니다.')
+        } else {
+          alert('사용 가능한 email입니다.')
+        }
+        setEmailCheck(!response.data);
+      } catch (error) {
+        console.log('Check error', error);
+      }
+    };
+
+    const isEmailButtonActive = 
+    email &&
+    emailURL
     
     const isSubmitButtonActive =
-    isEmailValid(email) &&
+    emailCheck &&
     isPasswordValid(password1) &&
     isPassword2Valid(password2) &&
     nickCheck &&
@@ -177,7 +207,7 @@ function SignUp() {
                       <div className={styles.body}>
                         <Form.Group className={styles.inputform}>
                           <span>메일</span>
-                          {isEmailValid(email) ? (
+                          {emailCheck ? (
                             <></>
                           ) : (
                             <div className={styles.error}>
@@ -185,13 +215,28 @@ function SignUp() {
                               <span>메일 형식을 확인해주세요</span>
                             </div>
                           )}
+                          <div className={styles.nickCheck}>
                             <Form.Control
                             className={styles.inputbox}
-                            type="email"
+                            type="text"
                             placeholder="Enter Email"
                             value={email}
                             onChange={handleEmailChange}
                             />
+                            <Form.Select
+                            className={styles.emailselect}
+                            onChange={handleEmailURLChange}>
+                            <option value="@ssafy.com">@ssafy.com</option>
+                            <option value="@naver.com">@naver.com</option>
+                            <option value="@gmail.com">@gmail.com</option>
+                            <option value="@hanmail.net">@hanmail.net</option>
+                          </Form.Select>
+                          {isEmailButtonActive ? (
+                            <button onClick={EmailCheck} className={styles.checkbutton}>확인</button>
+                            ) : (
+                            <button onClick={EmailCheck} className={styles.disabledbutton} disabled>확인</button>
+                          )}
+                          </div>
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
                           <span>비밀번호</span>
@@ -290,7 +335,11 @@ function SignUp() {
                             value={nickname}
                             onChange={handleNickNameChange}
                             />
-                            <button onClick={nickNameCheck}>확인</button>
+                            {nickname ? (
+                              <button onClick={nickNameCheck}  className={styles.checkbutton}>확인</button>
+                              ) : (
+                              <button onClick={nickNameCheck}  className={styles.disabledbutton} disabled>확인</button>
+                            )}
                           </div>
                         </Form.Group>
                         <Form.Group className={styles.inputform}>
@@ -338,11 +387,11 @@ function SignUp() {
 
                         {isSubmitButtonActive ? (
                           <div className={styles.submitbutton}>
-                            <button type="submit">회원가입</button>
+                            <button type="submit" className={styles.abledSubmit}>회원가입</button>
                           </div>
                         ) : (
                           <div className={styles.submitbutton}>
-                            <button type="submit" disabled>회원가입</button>
+                            <button type="submit" className={styles.disabledSubmit} disabled>회원가입</button>
                           </div>
                         )}
 

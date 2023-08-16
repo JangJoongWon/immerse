@@ -14,26 +14,28 @@ function ChattingBox({session, chats}) {
 
     const testChat = () => {
         // 현재 시간
-        const currentTime = new Date();
-        const hours = currentTime.getHours();
-        const minutes = currentTime.getMinutes();
-        const formattedTime = `${hours}:${minutes}`;
-
-        const chatData = {
-            text: ChatText,
-            nickname: user.nickname,
-            timestamp: formattedTime
-        };
-
-        session.signal({
-            data: JSON.stringify(chatData),
-            to: [],
-            type: "chat"
-        })
-        .then(() => {
-            console.log("sent successfully!");
-            setChatText('');
-        });
+        if (ChatText.trim()) {
+            const currentTime = new Date();
+            const hours = currentTime.getHours();
+            const minutes = currentTime.getMinutes();
+            const formattedTime = `${hours}:${minutes}`;
+    
+            const chatData = {
+                text: ChatText,
+                nickname: user.nickname,
+                timestamp: formattedTime
+            };
+    
+            session.signal({
+                data: JSON.stringify(chatData),
+                to: [],
+                type: "chat"
+            })
+            .then(() => {
+                console.log("sent successfully!");
+                setChatText('');
+            });
+        }
     };
 
     useEffect(() => {

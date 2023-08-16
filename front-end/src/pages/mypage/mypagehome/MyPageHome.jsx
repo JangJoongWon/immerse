@@ -34,7 +34,7 @@ function MyPageHome(props) {
           const tmp = response.data.filter((show) => show.user_id == user.userId )
           setList(tmp); // 불러온 데이터를 상태(State)에 저장
   
-          console.log(tmp)
+          // console.log(tmp)
         })
         .catch(error => {
           console.error('Error fetching data:', error);
@@ -48,7 +48,7 @@ function MyPageHome(props) {
         })
         .then(response => {
         setSchedule(response.data); // 불러온 데이터를 상태(State)에 저장
-        console.log(response.data)
+        // console.log(response.data)
         })
         .catch(error => {
         console.error('Error fetching data:', error);

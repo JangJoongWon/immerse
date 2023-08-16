@@ -7,6 +7,7 @@ import PerformerOption from './performeroption/PerformerOption'
 import { chatOn, chatbutton } from '/src/assets/icons'
 
 function Performer(props) {
+    const {effectList} = props
     const [chattingBoxOn, setChattingBoxOn] = useState(false)
     const handleChattingBox = () => {
       setChattingBoxOn(!chattingBoxOn)
@@ -22,6 +23,7 @@ function Performer(props) {
                             {props.mainStreamManager !== undefined ? (
                                 <div className={styles.streamcontainer}>
                                     <UserVideoComponent
+                                        effectList={effectList}
                                         streamManager={props.mainStreamManager} />
                                 </div>
                             ) : null}
@@ -37,6 +39,7 @@ function Performer(props) {
                         {index < props.subscribers.length ? (
                                 <div className={styles.streamcontainer}>
                                     <UserVideoComponent 
+                                    effectList = {effectList}
                                     streamManager={props.subscribers[index]} />
                                 </div>
                             ) : null}

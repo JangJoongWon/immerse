@@ -15,10 +15,10 @@ function SearchResult({word}) {
 
     useEffect(() => {
       const fetchData = async () => {
-        console.log('word:', word)
+        // console.log('word:', word)
         try {
           const response = await axios.get(`${API_BASE_URL}/search/show/${word}`);
-          console.log('show:', response)
+          // console.log('show:', response)
           setSearchShow(response.data);
           setShowCount(response.data.length);
           // console.log(response.data.length)
@@ -27,7 +27,7 @@ function SearchResult({word}) {
         }
         try {
           const response = await axios.get(`${API_BASE_URL}/search/user/${word}`);
-          console.log('user:', response)
+          // console.log('user:', response)
           setSearchUser(response.data);
           setUserCount(response.data.length);
           // console.log(response.data.length)

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Row, Form, Button } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Form } from 'react-bootstrap';
 import styles from './MyOption.module.css';
-import InputPImg from './inputimg/InputImg';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { TEST_URL, API_BASE_URL } from '../../constants';
+import { API_BASE_URL } from '../../constants';
 import { useDispatch } from 'react-redux';
-import { logOut } from '../../redux/userSlice';
+import { logOut, setUser } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 function MyOption() {
@@ -14,7 +13,7 @@ function MyOption() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const userToken = useSelector((state) => state.user.token);
-  console.log(user)
+  // console.log(user)
   const [selectTab, setSelectTab] = useState('BannerImg');
 
   const changeSelectTab = (tab) => {
@@ -25,7 +24,8 @@ function MyOption() {
   const [name, setName] = useState('');
   const [bannerPicture, setBannerPicture] = useState(null);
   const [profilePicture, setProfilePicture] = useState(null);
-  // const [phoneNumber, setPhoneNumber] = useState('');
+  const [bannerUpload, setBannerUpload] = useState(null);
+  const [profileUpload, setProfileUpload] = useState(null);
   const [password, setPassword] = useState('');
   const [nickname, setNickname] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
@@ -33,32 +33,43 @@ function MyOption() {
   const onSubmitHandler = async (event) => {
     event.preventDefault()
     const bannerpayload = new FormData();
-    bannerpayload.append('file', bannerPicture);
+    bannerpayload.append('file', bannerUpload);
 
     const profilepayload = new FormData();
-    profilepayload.append('file', profilePicture);
+    profilepayload.append('file', profileUpload);
     
     const headers = {
       "Content-Type": "multipart/form-data", 
       'Authorization': 'Bearer ' + userToken
     };
 
-
     try {
-      const bannerRes = await axios.post(`${TEST_URL}/file/upload`, bannerpayload, { headers });
-      const profileRes = await axios.post(`${TEST_URL}/file/upload`, profilepayload, { headers });
-
-      console.log('success send!')
-      // console.log(bannerRes.data)
-      // console.log(profileRes.data)
-
+      let profilePhoto = profilePicture;
+      let bannerPhoto = bannerPicture;
+      
+      if (profileUpload) {
+        const profileRes = await axios.post(`${API_BASE_URL}/file/upload`, profilepayload, { headers });
+        profilePhoto = profileRes.data;
+      }
+      
+      if (bannerUpload) {
+        const bannerRes = await axios.post(`${API_BASE_URL}/file/upload`, bannerpayload, { headers });
+        bannerPhoto = bannerRes.data;
+      }
+      
+      console.log('success send!');
+      console.log(bannerPhoto)
+      console.log(profilePhoto)
+      
       const userDto = {
-        name : name ,
-        bannerPicture: bannerRes.data,
-        profilePicture: profileRes.data,
-        nickname : nickname,
-        selfDescription : selfDescription,
+        name: name,
+        bannerPicture: bannerPhoto,
+        profilePicture: profilePhoto,
+        nickname: nickname,
+        selfDescription: selfDescription,
       };
+      
+      console.log('userDto:', userDto)
 
       try {
 
@@ -68,8 +79,11 @@ function MyOption() {
         };
     
         const response = await axios.put(`${API_BASE_URL}/user/update/info`, userDto, { headers });
-        console.log('회원정보 수정이 성공했습니다.')
-        console.log(response)
+        alert('회원정보 수정이 성공했습니다.')
+
+        const response2 = await axios.get(`${API_BASE_URL}/user/mypage`, { headers });
+        dispatch(setUser(response2.data));
+        navigate(`/mypage/${nickname}`)
 
       } catch(e) {
         console.log('회원정보 수정이 실패했습니다.')
@@ -89,9 +103,8 @@ function MyOption() {
 
   useEffect(() => {
     setName(user.name)
-    // setBannerPicture(user.bannerPicture)
-    // setProfilePicture(user.profilePicture)
-    // setPhoneNumber(user.phoneNumber)
+    setBannerPicture(user.bannerPicture)
+    setProfilePicture(user.profilePicture)
     setNickname(user.nickname)
     setSelfDescription(user.selfDescription)
   }, []);
@@ -146,7 +159,7 @@ function MyOption() {
     const file = event.target.files[0];
 
     if (file) {
-      setBannerPicture(file);
+      setBannerUpload(file);
     }
   };
 
@@ -154,7 +167,7 @@ function MyOption() {
     const file = event.target.files[0];
 
     if (file) {
-      setProfilePicture(file);
+      setProfileUpload(file);
     }
   };
 
@@ -185,34 +198,34 @@ function MyOption() {
         </div>
         <div 
         className={styles.buttonbox}>
-            <Button
-            className={styles.button} 
+            <button
+            className={styles.settingbutton} 
             type="button" 
             size="lg" onClick={() => changeSelectTab('BannerImg')}>
               배너 이미지
-            </Button>
+            </button>
 
-            <Button 
-            className={styles.button} 
+            <button 
+            className={styles.settingbutton} 
             type="button" 
             size="lg" onClick={() => changeSelectTab('ProfileImg')}>
               프로필 이미지
-            </Button>
+            </button>
    
-            <Button 
-            className={styles.button} 
+            <button 
+            className={styles.settingbutton} 
             type="button" 
             size="lg" onClick={() => changeSelectTab('ProfileInfo')}>
               프로필 정보
-            </Button>
+            </button>
      
-            <Button 
-            className={styles.button} 
+            <button 
+            className={styles.withdrawalbutton} 
             type="button" 
             variant="danger"
             size="lg" onClick={() => changeSelectTab('deleteAccount')}>
               회원탈퇴
-            </Button>
+            </button>
         </div>
         <div 
         className={styles.formbox}>
@@ -228,10 +241,10 @@ function MyOption() {
                     </h3>
                   </div>
                     <Form.Control type="file" onChange={handlebannerImageUpload} />
-                    {bannerPicture ? (
+                    {bannerUpload ? (
                         <div className={styles.imgbox}>
                           <div className={styles.imageWrapper}>
-                            <img src={URL.createObjectURL(bannerPicture)} alt="Uploaded" className={styles.imagefile} />
+                            <img src={URL.createObjectURL(bannerUpload)} alt="Uploaded" className={styles.imagefile} />
                           </div>
                         </div>
                       ):(
@@ -254,10 +267,10 @@ function MyOption() {
                     </h3>
                   </div>
                     <Form.Control type="file" onChange={handleProfileImageUpload} />
-                    {profilePicture ? (
+                    {profileUpload ? (
                         <div className={styles.imgbox}>
                           <div className={styles.imageWrapper}>
-                            <img src={URL.createObjectURL(profilePicture)} alt="Uploaded" className={styles.imagefile} />
+                            <img src={URL.createObjectURL(profileUpload)} alt="Uploaded" className={styles.imagefile} />
                           </div>
                         </div>
                       ):(
@@ -321,7 +334,6 @@ function MyOption() {
                         type="text"
                         className={styles.input}
                         placeholder={name}
-                        // value={phoneNumber}
                         onChange={(e) => onChangeNameHandler(e.target.value)}
                         />
                     </div>
@@ -392,19 +404,23 @@ function MyOption() {
                 </Form.Group>
               )}
             <Form.Group style={{ textAlign: "end" }}>
-
+              
+              <div className={styles.buttonpoint}>
                  {(selectTab=='deleteAccount') 
                   ?
-                  <Button variant='danger' onClick={onDeletetHandler}>
+                  <button onClick={onDeletetHandler}
+                  className={styles.deletebutton}>
                     회원 탈퇴
-                  </Button>
+                  </button>
                   :  
-                    <Button 
+                    <button 
                     onSubmit={onSubmitHandler}
-                    type="submit" size="lg">
+                    type="submit"
+                    className={styles.submitbutton}>
                       변경
-                    </Button>
+                    </button>
                   }
+              </div>
             </Form.Group>
             </Form>
         </div>

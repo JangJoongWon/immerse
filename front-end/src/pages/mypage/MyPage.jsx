@@ -1,13 +1,12 @@
-import React from 'react';
+// import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import styles from './MyPage.module.css';
 import MypageTabbox from "./mypagetapbox/MyPageTabBox"
-import { Button } from 'react-bootstrap'
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { TEST_URL, API_BASE_URL } from '../../constants';
+import { API_BASE_URL } from '../../constants';
 import { settings } from '/src/assets/icons';
 
 function MyPage() {
@@ -18,7 +17,7 @@ function MyPage() {
   const mydata = useSelector(state => state.user.user);
 
   const [user, setUser] = useState({});
-  console.log(user)
+  // console.log(user)
   // const [scribe, setScribe] = useState(null);
   const [subscription, setSubscription] = useState(false);
   // const [userId, setUserId] = useState(1);
@@ -29,7 +28,7 @@ function MyPage() {
       .then(response => {
         setUser(response.data); // 불러온 데이터를 상태(State)에 저장
         // console.log(response)
-        console.log(response.data)
+        // console.log(response.data)
         if (mydata){
           checksubscription(response.data.userId)
         }
@@ -50,7 +49,7 @@ function MyPage() {
     })
       .then(response => {
       setSubscription(response.data)
-        console.log(response.data)
+        // console.log(response.data)
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -68,7 +67,7 @@ function MyPage() {
     })
       .then(response => {
       checksubscription(user.userId)
-      console.log(response.data)
+      // console.log(response.data)
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -85,11 +84,11 @@ function MyPage() {
       }
     },)
       .then(response => {
-        setUser(response.data);
-        console.log(response)
+        // setUser(response.data);
+        // console.log(response)
         // setUser(response.data);
         checksubscription(user.userId)
-        console.log(response.data)
+        // console.log(response.data)
       })
       .catch(error => {
         console.error('Error fetching data:', error);

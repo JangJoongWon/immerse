@@ -4,15 +4,19 @@ import OpenViduVideoComponent from './OvVideo';
 import { Container } from 'react-bootstrap';
 // import './UserVideo.css';
 import VideoHandler from './VideoHandler';
+import { useSelector } from 'react-redux';
+
 
 const UserVideoComponent = (props) => {
 
     // console.log(props)
-    console.log(props.effectList)
     const {effectList} = props;
-    const [effect, setEffect] = useState(false);
     const publisher = props.streamManager;
-          // 비디오 On/Off 함수
+    // const effectNum = useSelector((state) => state.user.effectNum);
+    const [effectNum, setEffectNum] = useState(0)
+    const effectMenu = useSelector((state) => state.user.effectMenu);
+    // 비디오 On/Off 함수
+
     const toggleVideo = () => {
         if (publisher) {
         // 영상 스트림을 얻습니다.
@@ -34,15 +38,27 @@ const UserVideoComponent = (props) => {
         }
     };
 
+
+    const isEffectMode = () => {
+        const nickName = JSON.parse(props.streamManager.stream.connection.data).clientData
+        if (effectList.filter(data => data.nickName == nickName).length>0){  
+          return true
+        } else {
+          return false
+        }
+         
+      }  
+
     const checkEffect = () => {
-        const tmp = effectList.filter((nickname)=> nickname == JSON.parse(props.streamManager.stream.connection.data).clientData) 
+        const nickName = JSON.parse(props.streamManager.stream.connection.data).clientData
+        const tmp = effectList.filter(data=>data.nickName === nickName) 
         if(tmp.length>0){
-            setEffect(true);
-            console.log(true)
+            setEffectNum(tmp[0].effectNum)
+            // console.log(effectNum)
+            // console.log(true)
         }
         else{
-            setEffect(false);
-            console.log(false)
+            // console.log(false)
         }
       };
       
@@ -52,32 +68,49 @@ const UserVideoComponent = (props) => {
           return JSON.parse(props.streamManager.stream.connection.data).clientData;
         };
         
+    
+
     useEffect(()=>{
-        console.log(effectList);
-        console.log(effect);
-        console.log(effectList.length);
+        // console.log(effectList);
+        // console.log(effect);
+        // console.log(effectList.length);
 
         checkEffect();
         console.log('작동합니다');
     }, [effectList] )
+
+    useEffect(()=>{
+        // console.log(effectList);
+        // console.log(effect);
+        // console.log(effectList.length);
+
+        checkEffect();
+        console.log('작동합니다');
+    }, [] )
         
     return (
         <Container style={{maxWidth: '100%', maxHeight: '100%', width: "100%", height: "100%", padding: "0" }}>
             {props.streamManager !== undefined ? (
                 <div className="streamcomponent" style={{ position:"relative", width: "100%",height: '100%' }}>
                     {
-                        effect &&
+                        isEffectMode() &&
                         <div 
-                        style={{
+                        style={
+                            effectNum > 0 
+                            ?
+                            {
                             backgroundSize: '100% 100%',
-                            backgroundImage : `url('https://r2.jjalbot.com/2023/03/a2tqQLqWjx.gif')`,
-                            height:'100%',width:'100%',position:'absolute',top:'0',zIndex:'100',display:'flex',justifyContent:'center',alignItems:'center'}}
+                            backgroundImage : `url('${effectMenu[effectNum-1].effect}')`,
+                            height:'100%',width:'100%',position:'absolute',top:'0',zIndex:'100',display:'flex',justifyContent:'center',alignItems:'center'}
+                            :
+                            {}
+                        }
                         >
                         </div>
                     }
                     <OpenViduVideoComponent streamManager={props.streamManager} />
                     <div
-                    style={{position:"absolute",color:"white",top:"1%",left:"3%"}}
+                    style={{position:"absolute",color:"white",top:"1%",left:"3%",zIndex:'200'}}
                     ><p>{getNicknameTag()}</p></div>
                     <div
                     style={{position:"absolute",color:"white",top:"5%",right:"3%"}}

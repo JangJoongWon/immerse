@@ -118,11 +118,53 @@ input::placeholder{
   background: white;
 }
 
-.button{
+.settingbutton{
   margin: 0.5rem 0;
   display: flex;
   min-width: 10rem;
-  font-size: small;
+  padding: 10px;
+  /* font-size: small; */
+  display: flex;
+  justify-content: center;
+  background-color: #9D72FF;
+  color: white;
+  border-radius: 10px;
+}
+
+.withdrawalbutton{
+  margin: 0.5rem 0;
+  display: flex;
+  min-width: 10rem;
+  padding: 10px;
+  /* font-size: small; */
+  display: flex;
+  justify-content: center;
+  background-color: #FF8B8B;
+  color: white;
+  border-radius: 10px;
+}
+
+.submitbutton {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: #9D72FF;
+  color: white;
+  border-radius: 10px;
+}
+
+.deletebutton {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: #FF8B8B;
+  color: white;
+  border-radius: 10px;
+}
+
+.buttonpoint {
+  display: flex;
+  justify-content: end;
 }
 
 .buttonbox{

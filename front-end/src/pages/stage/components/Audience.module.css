@@ -125,3 +125,27 @@
     border: 1px solid white;
     border-radius: 10px;
   }
+
+  .effectbox {
+    display: grid;
+    grid-template-columns: repeat(2, 45%);
+    grid-template-rows: repeat(2, 40%);
+    gap: 3rem;
+    justify-content: center;
+    align-content: center;
+}
+
+.effectmenu {
+  width:25rem;
+  height:25rem;
+  position:absolute;
+  left:35%;
+  bottom:23%;
+  background-color:white;
+  border-radius:1rem;
+  border: 1rem solid white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}

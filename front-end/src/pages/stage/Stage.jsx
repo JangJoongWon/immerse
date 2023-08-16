@@ -27,6 +27,7 @@ const Stage = () => {
     const [effectList,setEffectList] = useState([])
 
     const userToken = useSelector((state) => state.user.token);
+    const effectNum = useSelector((state) => state.user.effectNum);
     const user = useSelector(state => state.user.user);
 
     const isAuthor = () => user.nickname === showData.nickname; 
@@ -116,10 +117,32 @@ const Stage = () => {
                 if (userEffect.from.connectionId === s.stream.connection.connectionId) {
                     console.log(userEffect.from.data + " used effect!");
                     console.log(userEffect.from.data)
-                    setEffectList(prev =>([...prev, JSON.parse(userEffect.from.data).clientData]))
-                    setTimeout(() => {
-                        setEffectList(effectList.filter((nickname)=> nickname != JSON.parse(userEffect.from.data).clientData ))
-                      }, 10000);
+                    const nickName = JSON.parse(userEffect.from.data).clientData
+                    // 해당 닉네임을 가지고 있는 요소가 존재하지 않는 겨우에은 effectList에 추가한다.
+                    // console.log(effectList)
+                    console.log(effectList.filter(effect => effect.nickName === nickName));
+                    // console.log(effectList.map((effect)=>{ effect.nickName == nickName }))
+                    console.log(nickName)
+                    if (effectList.filter(effect => effect.nickName === nickName).length == 0){
+                        const effect = {
+                            nickName : nickName,
+                            effectNum : effectNum
+                        }
+                        setEffectList(prev =>([...prev, effect]))
+                    }
+                    // 해당 닉네임을 가지고 있고 이미 작동하고 있는 effectNum과 현재 effectNum이 동일한 경우에는 effectList에서 해당 닉네임이 포함된 요소를 없앤다.
+                    else if(effectList.filter(effect => effect.nickName === nickName && effect.effectNum === effectNum ).length > 0){
+                        setEffectList(effectList.filter(effect => effect.nickName !== nickName))
+                    }
+                    // 해당 닉네임을 가지고 있지만 이미 동작하고 있는 effectNum과 현재 effectNum이 다른 경우에는 effectList에서 해당 닉네임의 effectNum을 수정해준다.
+                    else {
+                        setEffectList(effectList.filter(effect => effect.nickName !== nickName))
+                        const effect = {
+                            nickName : nickName,
+                            effectNum : effectNum
+                        }
+                        setEffectList(prev =>([...prev, effect]))
+                    }
                     
                 }
             }
@@ -406,6 +429,8 @@ const Stage = () => {
                     <>
                 {isAuthor() ? 
                     <Performer
+                    pushEffect = {pushEffect}
+                    effectList = {effectList}
                     publisher={publisher}
                     mainStreamManager={mainStreamManager}
                     subscribers={subscribers}
@@ -414,6 +439,7 @@ const Stage = () => {
                     />
                     :
                     <Audience 
+                    pushEffect = {pushEffect}
                     effectList = {effectList}
                     publisher={publisher}
                     mainStreamManager={mainStreamManager}
@@ -425,7 +451,7 @@ const Stage = () => {
                     {/* <ChattingBox session={session} chats={chats}/> */}
                     </> 
                 : <Loading showData={showData} />}
-                <Button onClick={pushEffect}>test effect</Button>
+                {/* <Button onClick={pushEffect}>test effect</Button> */}
                 {/* <div className={styles.chatbox}>
                     <Form.Control 
                     className={styles.inputchat}
