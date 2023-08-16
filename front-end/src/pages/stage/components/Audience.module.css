@@ -130,7 +130,7 @@
     display: grid;
     grid-template-columns: repeat(2, 45%);
     grid-template-rows: repeat(2, 40%);
-    gap: 3rem;
+    gap: 2rem;
     justify-content: center;
     align-content: center;
 }
