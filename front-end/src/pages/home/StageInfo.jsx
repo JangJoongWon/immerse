@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './StageInfo.module.css'
 import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../constants';
-import { Button } from 'react-bootstrap';
 
 function StageInfo() {
 
@@ -20,7 +19,7 @@ function StageInfo() {
       const fetchData = async () => {
         try {
           const response = await axios.get(`${API_BASE_URL}/shows/${showId}`);
-          console.log(response)
+          // console.log('ShowInfo:', response)
           setShowData(response.data);
         } catch (error) {
           console.error(error);
@@ -53,7 +52,7 @@ function StageInfo() {
     
         try {
           const response = await axios.post(`${API_BASE_URL}/reservation/${showData.showId}`, {}, { headers });
-          console.log(response)
+          // console.log(response)
           alert('예약되었습니다!')
         } catch(error) {
           console.log(error)
@@ -62,14 +61,14 @@ function StageInfo() {
     
       const startStage = async () => {
         try {
-          console.log(token);
+          // console.log(token);
           const res = await axios.put(`${API_BASE_URL}/shows/${showData.showId}/start`, {}, {
             headers: {
               'Content-Type': 'application/json', 
               'Authorization': 'Bearer ' + token
             }
           });
-          console.log(res.data);
+          // console.log(res.data);
           navigate(`/stage/${showData.showId}`);
         }
         catch (e) {

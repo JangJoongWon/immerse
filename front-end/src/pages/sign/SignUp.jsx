@@ -74,6 +74,7 @@ function SignUp() {
   
   const handleEmailChange = (e) => {
       setEmail(e.target.value);
+      setEmailCheck(false);
     };
   const handleEmailURLChange = (e) => {
       setEmailURL(e.target.value);
