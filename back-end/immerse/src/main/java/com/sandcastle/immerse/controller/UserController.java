@@ -19,7 +19,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserDto userDto) throws Exception {
-        userDto.setBannerPicture("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/default_banner.jpg");
+        userDto.setBannerPicture("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/default_banner+(1).jpg");
         userDto.setProfilePicture("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/default_profile.png");
         userServiceImpl.signup(userDto);
         return ResponseEntity.ok().body("회원가입이 완료되었습니다.");
@@ -72,7 +72,7 @@ public class UserController {
 //        MultipartFile profileFile = wrapper.getProfileFile();
 
         if(userDto.getBannerPicture() == "/" || userDto.getBannerPicture() == ""){
-            userDto.setBannerPicture("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/default_banner.jpg");
+            userDto.setBannerPicture("https://ssafy-d203-bucket.s3.ap-northeast-2.amazonaws.com/default_banner+(1).jpg");
         }
 
         if(userDto.getProfilePicture() == "/" || userDto.getProfilePicture() == ""){

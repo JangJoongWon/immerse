@@ -89,17 +89,17 @@ public class UserEntity {
 //	@OneToMany(mappedBy = "followingId")
 //	private List<SubscribeEntity> followings = new ArrayList<>();
 
-	@Builder
-	public UserEntity(String email, String password, String name, String gender, String nickname, LocalDate birthday,
-		String phoneNumber) {
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.gender = gender;
-		this.nickname = nickname;
-		this.birthday = birthday;
-		this.phoneNumber = phoneNumber;
-	}
+//	@Builder
+//	public UserEntity(String email, String password, String name, String gender, String nickname, LocalDate birthday,
+//		String phoneNumber) {
+//		this.email = email;
+//		this.password = password;
+//		this.name = name;
+//		this.gender = gender;
+//		this.nickname = nickname;
+//		this.birthday = birthday;
+//		this.phoneNumber = phoneNumber;
+//	}
 
 	public void updateUser(UserDto userDto) {
 		this.name = userDto.getName();
@@ -114,5 +114,19 @@ public class UserEntity {
 		this.status = 0;
 
 		return this.status;
+	}
+
+	@Builder
+	public UserEntity(String email, String password, String name, String gender, String nickname, LocalDate birthday,
+					  String phoneNumber , String profilePicture , String bannerPicture) {
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.gender = gender;
+		this.nickname = nickname;
+		this.birthday = birthday;
+		this.phoneNumber = phoneNumber;
+		this.profilePicture = profilePicture;
+		this.bannerPicture = bannerPicture;
 	}
 }
