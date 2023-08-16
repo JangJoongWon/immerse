@@ -14,7 +14,7 @@ function SubscribeList(props) {
       axios.get(API_BASE_URL + `/subscribe/following/${userId}`, { userId: userId })
       .then(response => {
         setList(response.data); // 불러온 데이터를 상태(State)에 저장
-        console.log(response.data)
+        // console.log(response.data)
       })
       .catch(error => {
         console.error('Error fetching data:', error);

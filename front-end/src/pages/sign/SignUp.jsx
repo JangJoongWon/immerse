@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Form, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { Form, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import styles from './SignUp.module.css'
 import axios from "axios"
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ function SignUp() {
   const navigate = useNavigate();
   
   const [email, setEmail] = useState('');
-  const [emailURL, setEmailURL] = useState('');
+  const [emailURL, setEmailURL] = useState('@ssafy.com');
   const [emailCheck, setEmailCheck] = useState(false);
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
@@ -149,6 +149,11 @@ function SignUp() {
         const response = await axios.get(`http://i9d203.p.ssafy.io/api/user/check/${nickname}`);
         console.log('Check success:', response.data);
         setNickCheck(!response.data);
+        if (response.data === true) {
+          alert('사용중인 별명입니다.')
+        } else {
+          alert('사용 가능한 별명입니다.')
+        }
       } catch (error) {
         console.log('Check error', error);
       }
@@ -159,6 +164,11 @@ function SignUp() {
       try {
         const response = await axios.get(`http://i9d203.p.ssafy.io/api/user/check/email/${email+emailURL}`);
         console.log('Check success:', response.data);
+        if (response.data === true) {
+          alert('사용중인 email입니다.')
+        } else {
+          alert('사용 가능한 email입니다.')
+        }
         setEmailCheck(!response.data);
       } catch (error) {
         console.log('Check error', error);
@@ -216,7 +226,6 @@ function SignUp() {
                             <Form.Select
                             className={styles.emailselect}
                             onChange={handleEmailURLChange}>
-                            <option>Select Email</option>
                             <option value="@ssafy.com">@ssafy.com</option>
                             <option value="@naver.com">@naver.com</option>
                             <option value="@google.com">@google.com</option>

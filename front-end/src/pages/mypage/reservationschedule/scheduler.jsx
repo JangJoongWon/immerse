@@ -23,7 +23,7 @@ function test(props) {
     //   events={myEventsList}
       startAccessor="start"
       endAccessor="end"
-      style={{ backgroundColor: '#9D72FF', color:'white', height: "30rem" }}
+      style={{ color:'white', height: "30rem" }}
     />
   </div>
   )

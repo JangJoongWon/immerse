@@ -7,7 +7,7 @@ import styles from './MyPageHome.module.css';
 import ReservationTicket from '../reservationticket/ReservationTicket';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import {API_BASE_URL, TEST_URL} from '../../../constants/index'
+import {API_BASE_URL} from '../../../constants/index'
 import { useSelector } from 'react-redux';
 import { mainBanner } from '/src/assets/images';
 import MyCarousel from './MyCarousel';
@@ -34,7 +34,7 @@ function MyPageHome(props) {
           const tmp = response.data.filter((show) => show.user_id == user.userId )
           setList(tmp); // 불러온 데이터를 상태(State)에 저장
   
-          console.log(tmp)
+          // console.log(tmp)
         })
         .catch(error => {
           console.error('Error fetching data:', error);
@@ -48,7 +48,7 @@ function MyPageHome(props) {
         })
         .then(response => {
         setSchedule(response.data); // 불러온 데이터를 상태(State)에 저장
-        console.log(response.data)
+        // console.log(response.data)
         })
         .catch(error => {
         console.error('Error fetching data:', error);
