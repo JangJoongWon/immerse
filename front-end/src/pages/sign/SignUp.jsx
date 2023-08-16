@@ -103,7 +103,7 @@ function SignUp() {
       setBirth(e.target.value);
     };
 
-    const data = {"email": email,
+    const data = {"email": email + emailURL,
                   "password": password1,
                   "name": name,
                   "gender": gender,
@@ -228,7 +228,7 @@ function SignUp() {
                             onChange={handleEmailURLChange}>
                             <option value="@ssafy.com">@ssafy.com</option>
                             <option value="@naver.com">@naver.com</option>
-                            <option value="@google.com">@google.com</option>
+                            <option value="@gmail.com">@gmail.com</option>
                             <option value="@hanmail.net">@hanmail.net</option>
                           </Form.Select>
                           {isEmailButtonActive ? (
