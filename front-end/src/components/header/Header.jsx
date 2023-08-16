@@ -9,12 +9,9 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
-import { setUser } from '../../redux/userSlice';
 
 import { HiOutlineSearch } from "react-icons/hi";
 import styles from './Header.module.css'
-import { API_BASE_URL } from '../../constants';
 
 function Header() {
   const [expand, setExpand] = useState(null);
@@ -46,45 +43,6 @@ function Header() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        if (token) {
-          const res = await axios.get(`${API_BASE_URL}/user/mypage`, {
-            headers: {
-              'Content-Type': 'application/json', 
-              'Authorization': 'Bearer ' + token
-            }
-          });
-          dispatch(setUser(res.data));
-        }
-      }
-      catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUserInfo();
-  }, []);
-  
-
-  const deleteAccount = async (event) => {
-    event.preventDefault();
-    const config = {
-      headers: {
-        'Content-Type': 'application/json', 
-        'Authorization': `Bearer ${token}`
-      }
-    };
-    try {
-      const response = await axios.delete(`${API_BASE_URL}/user/withdrawal`, config);
-      dispatch(logOut())
-      console.log('Check success:', response);
-
-    } catch (error) {
-      console.log('Check error', error);
-    }
-  };
   
   const wordChange = (e) => {
     setWord(e.target.value);
@@ -108,7 +66,6 @@ function Header() {
       console.log(error)
     }
   }
-
 
   return (
     <div className={styles.headercontainer}>
@@ -178,11 +135,6 @@ function Header() {
                       Profile
                     </Nav.Link>
                     )}
-                  {/* <Nav.Link className='m-2' style={{ color: "white" }}
-                    onClick={deleteAccount}
-                  >
-                    DeleteAccount
-                  </Nav.Link> */}
                 </>
               ) : (
                 <>
