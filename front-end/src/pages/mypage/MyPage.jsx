@@ -84,7 +84,7 @@ function MyPage() {
       }
     },)
       .then(response => {
-        setUser(response.data);
+        // setUser(response.data);
         // console.log(response)
         // setUser(response.data);
         checksubscription(user.userId)

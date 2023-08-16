@@ -78,20 +78,27 @@
 
 
 .cancelsubscription{
-  border: 1rem solid red;
-  box-shadow: 0 0 1rem red;
+  border: 1rem solid #FF8B8B;
   border-radius: 20%;
   color: white;
-  background: red;
+  background: #FF8B8B;
+}
 
+.cancelsubscription:hover {
+  box-shadow: 0 0 5px #FF8B8B,
+              0 0 25px #FF8B8B;
 }
 
 .subscribe {
-  border: 1rem solid white;
-  box-shadow: 0 0 1rem white;
+  border: 1rem solid #9D72FF;
   border-radius: 20%;
-  color: black;
-  background: white;
+  color: white;
+  background: #9D72FF;
+}
+
+.subscribe:hover {
+  box-shadow: 0 0 5px #9D72FF,
+              0 0 25px #9D72FF;
 }
 
 @media (min-width: 576px) {
