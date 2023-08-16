@@ -168,3 +168,15 @@
       font-size: 7px;
     }
   }
+
+.eyeIcon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto 2px;
+  height: 30px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #9D72FF;
+}

@@ -14,10 +14,10 @@ function CategoryResult({ id }) {
 
     useEffect(() => {
       const fetchData = async () => {
-        console.log('id:', id)
+        // console.log('id:', id)
         try {
           const response = await axios.get(`${API_BASE_URL}/shows/categories/${id}`);
-          console.log('show:', response)
+          // console.log('show:', response)
           setSearchShow(response.data);
         } catch (error) {
           console.error('Error fetching search results:', error);
