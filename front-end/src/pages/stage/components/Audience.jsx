@@ -10,20 +10,25 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { API_BASE_URL } from '../../../constants';
 import { Button } from 'react-bootstrap'
+import { useDispatch } from 'react-redux';
+import { setEffectNum, setEffectMenu } from '../../../redux/userSlice'
 
 function Audience(props) { 
   console.log(props)  
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
+  const effectNum = useSelector((state) => state.user.effectNum);
+  const effectMenu = useSelector((state) => state.user.effectMenu);
   const {effectList} = props
   const [optionValue,setOptionValue] = useState(false)  
   const [chattingBoxOn, setChattingBoxOn] = useState(false)
   const [effectValue, setEffectValue] = useState(false)  
-  const [effectMenu, setEffectMenu] = useState([])
-  const [effectNum, setEffectNum] = useState(0)  
+//   const [effectMenu, setEffectMenu] = useState([])
+//   const [effectNum, setEffectNum] = useState(0)  
   const [effectBoxOn, setEffectBoxOn] = useState(false)  
 
   const isEffectMode = () => {
-    if (effectList.filter((nickname) => nickname == user.nickname).length>0){
+    if (effectList.filter(data=>data.nickName == user.nickname).length>0){  
       return true
     } else {
       return false
@@ -37,6 +42,9 @@ function Audience(props) {
   }  
 
   const onClickChangeOption = ()=>{
+    if(optionValue){
+        setEffectBoxOn(false)
+    }
     setOptionValue(!optionValue)
   }
 
@@ -50,9 +58,12 @@ function Audience(props) {
 
   const onClickChangeEffectNum = (num) => {
     if (num === effectNum) {
-        setEffectNum(0);
+        props.pushEffect()
     } else {
-        setEffectNum(num);
+        dispatch(setEffectNum(num));
+        setTimeout(()=>{
+            props.pushEffect()
+        },10)
     }
 }
 
@@ -67,7 +78,7 @@ function Audience(props) {
             'Authorization': 'Bearer ' + userToken
         },
     });
-      setEffectMenu(response.data);
+      dispatch(setEffectMenu(response.data));
       console.log(response.data);
       return response.data; 
   }
@@ -76,6 +87,7 @@ function Audience(props) {
       throw e;
   }
 }
+
 
 useEffect(()=>{
     createEffect()
@@ -96,6 +108,8 @@ useEffect(()=>{
                                             >
                                             
                                                 <UserVideoComponent
+                                                    effectMenu = {effectMenu}
+                                                    effectList = {effectList}
                                                     streamManager={props.mainStreamManager} />
                                             </div>
                                         ) : 
@@ -202,14 +216,6 @@ useEffect(()=>{
                         src={effectoption.effect} alt="effect_1"
                         />
                     ))}
-                    </div>
-                    <div>
-                        { effectValue 
-                        ?
-                        <Button onClick={handleEffectMode}>Effect Mode On</Button>
-                        :
-                        <Button variant='danger' onClick={handleEffectMode}>Effect Mode Off</Button>
-                        }
                     </div>
                 </div>
 
