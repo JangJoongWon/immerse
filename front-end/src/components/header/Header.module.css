@@ -1,16 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&family=Permanent+Marker&display=swap');
 
 .headercontainer {
-  height: 75px;
+  height: 70px;
 }
+
+/* .unitlist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
 
 .logotext {
   padding-left: 5px;
   font-family: 'Permanent Marker', cursive;
-  /* font-weight: bold; */
   letter-spacing: 2px;
   color: white;
   font-size: 2rem;
+  margin-left: 10px;
 }
 .logotext:hover {
   /* border-radius: 30px; */
@@ -23,11 +29,10 @@
 
 .linkunit{
   border-radius: 10px;
+  margin: 5px;
 }
 
 .linkunit:hover {
-  /* background-color: #CE96FB; */
-  /* border: 1px solid #CE96FB; */
   text-shadow: 0 0 10px #CE96FB,
                0 0 30px #CE96FB,
                0 0 60px #CE96FB,
@@ -42,10 +47,10 @@
 }
 
 .linkprofile {
-  width: 60px;
+  width: 50px;
   border-radius: 50%;
   padding: 10px;
-  height: 60px;
+  height: 50px;
 }
 
 /* @media (max-width: 768px) {
