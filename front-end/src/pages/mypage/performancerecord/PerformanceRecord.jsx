@@ -23,8 +23,8 @@ function PerformanceRecord() {
       .then(response => {
         const tmp = response.data.filter((show) => show.user_id == user.userId )
         setList(tmp); // 불러온 데이터를 상태(State)에 저장
-        console.log(response.data)
-        console.log(tmp)
+        // console.log(response.data)
+        // console.log(tmp)
       })
       .catch(error => {
         console.error('Error fetching data:', error);

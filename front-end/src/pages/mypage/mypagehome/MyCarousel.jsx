@@ -2,7 +2,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import { mainBanner } from '/src/assets/images';
 
 function MyCarousel(props) {
-  console.log(props)
+  // console.log(props)
   const {data} = props
   return (
     <Carousel>
