@@ -27,12 +27,11 @@ function Audience(props) {
 //   const [effectMenu, setEffectMenu] = useState([])
 //   const [effectNum, setEffectNum] = useState(0)  
   const [effectBoxOn, setEffectBoxOn] = useState(false)  
-
+  const [change, setChange] = useState(false)  
   
   const pushEffect = () => {
     session.signal({
         data: JSON.stringify({
-            nickname : user.nickname,
             effectNum: effectNum
           }),
         to: [],
@@ -74,6 +73,7 @@ function Audience(props) {
   }
 
   const onClickChangeEffectNum = (num) => {
+    setChange(true)
     if (num === effectNum) {
         pushEffect()
         // props.changeEffectList(num)
@@ -85,7 +85,9 @@ function Audience(props) {
 
 useEffect(() => {
     // effectNum이 변경될 때 실행할 작업
-    pushEffect();
+    if(change){
+        pushEffect();
+    }
   }, [effectNum]);
 
   const userToken = useSelector((state) => state.user.token);

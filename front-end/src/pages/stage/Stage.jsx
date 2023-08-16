@@ -26,7 +26,6 @@ const Stage = () => {
     const [userEffect, setUserEffect] = useState(undefined);
     const [effectList,setEffectList] = useState([])
     const [effectNum, setEffectNum] = useState(0)
-    const [nickName, setNickName] = useState('')
 
     const userToken = useSelector((state) => state.user.token);
     // const effectNum = useSelector((state) => state.user.effectNum);
@@ -244,9 +243,7 @@ const Stage = () => {
 
         newSession.on('signal:effect', event => {
             try {
-                const nickName = JSON.parse(event.data).nickname;
                 const effectNum = JSON.parse(event.data).effectNum;
-                setNickName(nickName)
                 setEffectNum(effectNum)
                 // changeEffectList(nickName,effectNum)
                 setUserEffect(event);
