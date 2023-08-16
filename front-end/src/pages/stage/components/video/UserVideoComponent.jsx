@@ -4,18 +4,18 @@ import OpenViduVideoComponent from './OvVideo';
 import { Container } from 'react-bootstrap';
 // import './UserVideo.css';
 import VideoHandler from './VideoHandler';
+import { useSelector } from 'react-redux';
+
 
 const UserVideoComponent = (props) => {
 
     // console.log(props)
-    console.log(props.effectList)
-    const {effectList, effectMenu, effectNum} = props;
-    console.log(effectMenu)
-    console.log(effectNum)
-    console.log(effectMenu[effectNum]?.effect)
-    const [effect, setEffect] = useState(false);
+    const {effectList} = props;
     const publisher = props.streamManager;
-          // 비디오 On/Off 함수
+    // const effectNum = useSelector((state) => state.user.effectNum);
+    const [effectNum, setEffectNum] = useState(0)
+    const effectMenu = useSelector((state) => state.user.effectMenu);
+    // 비디오 On/Off 함수
 
     const toggleVideo = () => {
         if (publisher) {
@@ -38,15 +38,27 @@ const UserVideoComponent = (props) => {
         }
     };
 
+
+    const isEffectMode = () => {
+        const nickName = JSON.parse(props.streamManager.stream.connection.data).clientData
+        if (effectList.filter(data => data.nickName == nickName).length>0){  
+          return true
+        } else {
+          return false
+        }
+         
+      }  
+
     const checkEffect = () => {
-        const tmp = effectList.filter((nickname)=> nickname == JSON.parse(props.streamManager.stream.connection.data).clientData) 
+        const nickName = JSON.parse(props.streamManager.stream.connection.data).clientData
+        const tmp = effectList.filter(data=>data.nickName === nickName) 
         if(tmp.length>0){
-            setEffect(true);
-            console.log(true)
+            setEffectNum(tmp[0].effectNum)
+            // console.log(effectNum)
+            // console.log(true)
         }
         else{
-            setEffect(false);
-            console.log(false)
+            // console.log(false)
         }
       };
       
@@ -56,6 +68,8 @@ const UserVideoComponent = (props) => {
           return JSON.parse(props.streamManager.stream.connection.data).clientData;
         };
         
+    
+
     useEffect(()=>{
         // console.log(effectList);
         // console.log(effect);
@@ -64,13 +78,22 @@ const UserVideoComponent = (props) => {
         checkEffect();
         console.log('작동합니다');
     }, [effectList] )
+
+    useEffect(()=>{
+        // console.log(effectList);
+        // console.log(effect);
+        // console.log(effectList.length);
+
+        checkEffect();
+        console.log('작동합니다');
+    }, [] )
         
     return (
         <Container style={{maxWidth: '100%', maxHeight: '100%', width: "100%", height: "100%", padding: "0" }}>
             {props.streamManager !== undefined ? (
                 <div className="streamcomponent" style={{ position:"relative", width: "100%",height: '100%' }}>
                     {
-                        effect &&
+                        isEffectMode() &&
                         <div 
                         style={
                             effectNum > 0 

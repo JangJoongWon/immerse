@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
   name: 'userSlice',
-  initialState: { value: 0, token: null, user: null },
+  initialState: { value: 0, token: null, user: null, effectNum : 0, effectMenu : null },
   reducers: {
     up: (state, action) => {
       state.value = state.value + action.payload;
@@ -28,9 +28,19 @@ const userSlice = createSlice({
         // console.log('nickname change!', action)
         state.user['nickname'] = action.payload;
       }
+    },
+    setEffectNum: (state,action) => {
+      if(state.user){
+        state.effectNum = action.payload;
+      }
+    },
+    setEffectMenu: (state,action) => {
+      if(state.user){
+        state.effectMenu = action.payload
+      }
     }
   },
 });
 
-export const { up, setToken, setUser, logOut, profileChange, nicknameChange } = userSlice.actions;
+export const { up, setToken, setUser, logOut, profileChange, nicknameChange, setEffectNum, setEffectMenu } = userSlice.actions;
 export default userSlice;
