@@ -15,18 +15,34 @@ import { setEffectNum, setEffectMenu } from '../../../redux/userSlice'
 
 function Audience(props) { 
   console.log(props)  
-  const {effectNum,setEffectNum} = props
+//   const {setEffectNum} = props
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-//   const effectNum = useSelector((state) => state.user.effectNum);
+  const effectNum = useSelector((state) => state.user.effectNum);
   const effectMenu = useSelector((state) => state.user.effectMenu);
-  const {effectList} = props
+  const {effectList, session} = props
   const [optionValue,setOptionValue] = useState(false)  
   const [chattingBoxOn, setChattingBoxOn] = useState(false)
   const [effectValue, setEffectValue] = useState(false)  
 //   const [effectMenu, setEffectMenu] = useState([])
 //   const [effectNum, setEffectNum] = useState(0)  
   const [effectBoxOn, setEffectBoxOn] = useState(false)  
+
+  
+  const pushEffect = () => {
+    session.signal({
+        data: JSON.stringify({
+            nickname : user.nickname,
+            effectNum: effectNum
+          }),
+        to: [],
+        type: 'effect'
+    })
+    .then(() => {
+        console.log("send effect succassfully!");
+
+    })
+}
 
   const isEffectMode = () => {
     if (effectList.filter(data=>data.nickName == user.nickname).length>0){  
@@ -59,17 +75,18 @@ function Audience(props) {
 
   const onClickChangeEffectNum = (num) => {
     if (num === effectNum) {
-        props.pushEffect()
+        pushEffect()
         // props.changeEffectList(num)
     } else {
         console.log(effectNum)
-        setEffectNum(num);
-        setTimeout(()=>{
-            props.pushEffect()
-            // props.changeEffectList(num)
-        },100)
+        dispatch(setEffectNum(num));
     }
 }
+
+useEffect(() => {
+    // effectNum이 변경될 때 실행할 작업
+    pushEffect();
+  }, [effectNum]);
 
   const userToken = useSelector((state) => state.user.token);
     

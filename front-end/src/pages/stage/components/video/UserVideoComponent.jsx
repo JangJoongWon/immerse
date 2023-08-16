@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 
 
 const UserVideoComponent = (props) => {
+    
 
     // console.log(props)
     const {effectList} = props;
