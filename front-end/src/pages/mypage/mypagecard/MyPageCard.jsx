@@ -8,13 +8,15 @@ function MyPageCard(props) {
   
   const {show} = props
   // console.log(show.thumbnail)
-  // console.log(show)
+  // console.log('show:', show)
   const [hovered, setHovered] = useState(false);
   const navigate = useNavigate()
   
   const toStageInfo = async (event) => {
     event.preventDefault();
-    navigate(`/stageinfo/${show.showId}`)
+    if (show.showProgress !== 'OVER') {
+      navigate(`/stageinfo/${show.showId}`)
+    }
   };
 
   const handleMouseOver = () => {
@@ -30,6 +32,7 @@ function MyPageCard(props) {
       className={styles.container}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      onClick={toStageInfo}
     >
       {/* <img src={show.thumbnail} alt="thumbnail" /> */}
       <div
@@ -79,11 +82,11 @@ function MyPageCard(props) {
               <h3>{show.title}</h3>
               <h5>{show.nickname}</h5>
             </div>
-            {show?.showProgress === "IN_PROGRESS" && (
+            {/* {show?.showProgress === "IN_PROGRESS" && (
               <div className={styles.button}>
                 <Button onClick={toStageInfo} variant="danger">입장</Button>
               </div>
-            )}
+            )} */}
         </div>
         </div>
         }

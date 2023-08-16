@@ -3,6 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import styles from './ReservationTicket.module.css';
 import {bacode} from '/src/assets/icons'
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 function ReservationTicket({ data }) {
 
@@ -15,6 +16,8 @@ function ReservationTicket({ data }) {
     startTime,
     endTime,
   } = data;
+
+  const navigate = useNavigate()
 
   // 시작 시간과 종료 시간을 moment 객체로 변환
   const startMoment = moment(startTime);
@@ -30,10 +33,16 @@ function ReservationTicket({ data }) {
   const startTimeString = startMoment.format('HH:mm');
   const endTimeString = endMoment.format('HH:mm');
 
+  const toStageInfo = (e) => {
+    e.preventDefault();
+    navigate(`/stageinfo/${showId}`)
+  }
+
 
   return (
         <Row
-            className={styles.box}>
+            className={styles.box}
+            onClick={toStageInfo}>
           <Col 
             style={{
               backgroundImage: `url(${thumbnail})`,
