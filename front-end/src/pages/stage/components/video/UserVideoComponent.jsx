@@ -39,8 +39,9 @@ const UserVideoComponent = (props) => {
     };
 
 
+    // effectList에 해당 유저의 닉네임이 존재하면 true를 없으면 false를 반환합니다.
     const isEffectMode = () => {
-        const nickName = JSON.parse(props.streamManager.stream.connection.data).clientData
+        const nickName = JSON.parse(publisher.stream.connection.data).clientData
         if (effectList.filter(data => data.nickName == nickName).length>0){  
           return true
         } else {
@@ -49,12 +50,12 @@ const UserVideoComponent = (props) => {
          
       }  
 
+    // effectList에 해당 유저의 닉네임이 존재하면 true를 없으면 false를 반환합니다.
     const checkEffect = () => {
-        const nickName = JSON.parse(props.streamManager.stream.connection.data).clientData
+        const nickName = JSON.parse(publisher.stream.connection.data).clientData
         const tmp = effectList.filter(data=>data.nickName === nickName) 
         if(tmp.length>0){
             setEffectNum(tmp[0].effectNum)
-            // console.log(effectNum)
             // console.log(true)
         }
         else{
@@ -71,22 +72,11 @@ const UserVideoComponent = (props) => {
     
 
     useEffect(()=>{
-        // console.log(effectList);
-        // console.log(effect);
-        // console.log(effectList.length);
 
         checkEffect();
         console.log('작동합니다');
     }, [effectList] )
 
-    useEffect(()=>{
-        // console.log(effectList);
-        // console.log(effect);
-        // console.log(effectList.length);
-
-        checkEffect();
-        console.log('작동합니다');
-    }, [] )
         
     return (
         <Container style={{maxWidth: '100%', maxHeight: '100%', width: "100%", height: "100%", padding: "0" }}>
@@ -101,7 +91,7 @@ const UserVideoComponent = (props) => {
                             {
                             backgroundSize: '100% 100%',
                             backgroundImage : `url('${effectMenu[effectNum-1].effect}')`,
-                            height:'100%',width:'100%',position:'absolute',top:'0',zIndex:'100',display:'flex',justifyContent:'center',alignItems:'center'}
+                            height:'100%',width:'100%',position:'absolute',top:'0',zIndex:'50',display:'flex',justifyContent:'center',alignItems:'center'}
                             :
                             {}
                         }
@@ -110,7 +100,7 @@ const UserVideoComponent = (props) => {
                     }
                     <OpenViduVideoComponent streamManager={props.streamManager} />
                     <div
-                    style={{position:"absolute",color:"white",top:"1%",left:"3%",zIndex:'200'}}
+                    style={{position:"absolute",color:"white",top:"1%",left:"3%",zIndex:'75'}}
                     ><p>{getNicknameTag()}</p></div>
                     <div
                     style={{position:"absolute",color:"white",top:"5%",right:"3%"}}

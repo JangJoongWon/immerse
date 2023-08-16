@@ -25,9 +25,11 @@ const Stage = () => {
     const [chats, setChats] = useState([]);
     const [userEffect, setUserEffect] = useState(undefined);
     const [effectList,setEffectList] = useState([])
+    const [effectNum, setEffectNum] = useState(0)
+    const [nickName, setNickName] = useState('')
 
     const userToken = useSelector((state) => state.user.token);
-    const effectNum = useSelector((state) => state.user.effectNum);
+    // const effectNum = useSelector((state) => state.user.effectNum);
     const user = useSelector(state => state.user.user);
 
     const isAuthor = () => user.nickname === showData.nickname; 
@@ -115,10 +117,10 @@ const Stage = () => {
             console.log(userEffect);
             if (userEffect) {
                 if (userEffect.from.connectionId === s.stream.connection.connectionId) {
-                    console.log(userEffect.from.data + " used effect!");
-                    console.log(userEffect.from.data)
+                    // console.log(userEffect.from.data + " used effect!");
+                    // console.log(userEffect.from.data)
                     const nickName = JSON.parse(userEffect.from.data).clientData
-                    // 해당 닉네임을 가지고 있는 요소가 존재하지 않는 겨우에은 effectList에 추가한다.
+                    // 해당 닉네임을 가지고 있는 요소가 존재하지 않는 경우에은 effectList에 추가한다.
                     // console.log(effectList)
                     console.log(effectList.filter(effect => effect.nickName === nickName));
                     // console.log(effectList.map((effect)=>{ effect.nickName == nickName }))
@@ -130,25 +132,62 @@ const Stage = () => {
                         }
                         setEffectList(prev =>([...prev, effect]))
                     }
-                    // 해당 닉네임을 가지고 있고 이미 작동하고 있는 effectNum과 현재 effectNum이 동일한 경우에는 effectList에서 해당 닉네임이 포함된 요소를 없앤다.
-                    else if(effectList.filter(effect => effect.nickName === nickName && effect.effectNum === effectNum ).length > 0){
-                        setEffectList(effectList.filter(effect => effect.nickName !== nickName))
-                    }
-                    // 해당 닉네임을 가지고 있지만 이미 동작하고 있는 effectNum과 현재 effectNum이 다른 경우에는 effectList에서 해당 닉네임의 effectNum을 수정해준다.
+                    // 해당 닉네임을 가지고 있으면 effectList에서 해당 닉네임이 포함된 요소를 없앤다.
                     else {
+                        const tmp = effectList.filter(effect => effect.nickName === nickName && effect.effectNum === effectNum )
                         setEffectList(effectList.filter(effect => effect.nickName !== nickName))
-                        const effect = {
-                            nickName : nickName,
-                            effectNum : effectNum
+                        
+                        // 해당 닉네임을 가지고 있지만 이미 effectList의 effectNum과 redux의 effectNum이 다른 경우에는 위에서 닉네임이 동일한 경우를 삭제해 줬기 때문에 
+                        // effectList에서 해당 닉네임의 effectNum을 추가해준다.(이 경우 전체 결과는 수정과 같아진다)
+                        if (tmp.length==0){
+                            const effect = {
+                                nickName : nickName,
+                                effectNum : effectNum
+                            }
+                            setEffectList(prev =>([...prev, effect]))
                         }
-                        setEffectList(prev =>([...prev, effect]))
                     }
+
                     
                 }
             }
             
         })
     }, [subscribers, userEffect]);
+
+
+    
+    // const changeEffectList = (nickName,effectNum) => {
+    //     console.log(nickName + " used effect!");
+    //     console.log(effectNum + " used effect!");
+    //     // 해당 닉네임을 가지고 있는 요소가 존재하지 않는 경우에은 effectList에 추가한다.
+    //     console.log(effectList.filter(effect => effect.nickName === nickName));
+    //     console.log(effectList)
+    //     console.log(nickName)
+    //     if (effectList.filter(effect => effect.nickName === nickName).length == 0){
+    //         const effect = {
+    //             nickName : nickName,
+    //             effectNum : effectNum
+    //         }
+    //         setEffectList(prev =>([...prev, effect]))
+    //     }
+    //     // 해당 닉네임을 가지고 있으면 effectList에서 해당 닉네임이 포함된 요소를 없앤다.
+    //     else {
+    //         const tmp = effectList.filter(effect => effect.nickName === nickName && effect.effectNum === effectNum )
+    //         setEffectList(effectList.filter(effect => effect.nickName !== nickName))
+            
+    //         // 해당 닉네임을 가지고 있지만 이미 effectList의 effectNum과 redux의 effectNum이 다른 경우에는 위에서 닉네임이 동일한 경우를 삭제해 줬기 때문에 
+    //         // effectList에서 해당 닉네임의 effectNum을 추가해준다.(이 경우 전체 결과는 수정과 같아진다)
+    //         if (tmp.length==0){
+    //             const effect = {
+    //                 nickName : nickName,
+    //                 effectNum : effectNum
+    //             }
+    //             setEffectList(prev =>([...prev, effect]))
+    //         }
+    //     }
+
+    // };
 
     const joinSession = () => {
         const newSession = ov.current.initSession();
@@ -205,6 +244,11 @@ const Stage = () => {
 
         newSession.on('signal:effect', event => {
             try {
+                const nickName = JSON.parse(event.data).nickname;
+                const effectNum = JSON.parse(event.data).effectNum;
+                setNickName(nickName)
+                setEffectNum(effectNum)
+                // changeEffectList(nickName,effectNum)
                 setUserEffect(event);
             } catch (error) {
                 console.log(error);    
@@ -339,7 +383,10 @@ const Stage = () => {
 
     const pushEffect = () => {
         session.signal({
-            data: "use effect from " + user.user_id,
+            data: JSON.stringify({
+                nickname : user.nickname,
+                effectNum: effectNum
+              }),
             to: [],
             type: 'effect'
         })
@@ -439,6 +486,9 @@ const Stage = () => {
                     />
                     :
                     <Audience 
+                    effectNum = {effectNum}
+                    setEffectNum = {setEffectNum}
+                    // changeEffectList = {changeEffectList}
                     pushEffect = {pushEffect}
                     effectList = {effectList}
                     publisher={publisher}
