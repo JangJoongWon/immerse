@@ -36,7 +36,7 @@ margin: 1rem;
   border: 1px solid #FFF;
   background: whitesmoke;
   /* margin: 2rem; */
-  color : white;
+  color : black;
 }
 
 input::placeholder{
