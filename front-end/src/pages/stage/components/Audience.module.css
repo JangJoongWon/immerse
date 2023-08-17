@@ -126,18 +126,9 @@
     border-radius: 10px;
   }
 
-  .effectbox {
-    display: grid;
-    grid-template-columns: repeat(3, 28%);
-    grid-template-rows: repeat(3, 35%);
-    gap: 2rem;
-    justify-content: center;
-    align-content: center;
-}
-
 .effectmenu {
-  width:25rem;
-  height:25rem;
+  width:30rem;
+  height:30rem;
   position:absolute;
   left:35%;
   bottom:23%;
@@ -148,4 +139,18 @@
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
+  overflow: auto;
+}
+
+.effectbox {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  position: absolute;
+  border: 1px solid black;
+  justify-content: center;
+  align-content: center;
+  overflow-y: scroll;
+  grid-auto-flow: row;
 }
