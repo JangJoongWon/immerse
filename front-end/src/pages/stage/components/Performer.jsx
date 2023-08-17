@@ -24,8 +24,7 @@ function Performer(props) {
                                 <div className={styles.streamcontainer}>
                                     <UserVideoComponent
                                         effectList={effectList}
-                                        streamManager={props.mainStreamManager}
-                                        mainStreamManager={props.mainStreamManager} />
+                                        streamManager={props.mainStreamManager} />
                                 </div>
                             ) : null}
                         </div>
@@ -41,8 +40,7 @@ function Performer(props) {
                                 <div className={styles.streamcontainer}>
                                     <UserVideoComponent 
                                     effectList = {effectList}
-                                    streamManager={props.subscribers[index]}
-                                    mainStreamManager={props.mainStreamManager} />
+                                    streamManager={props.subscribers[index]} />
                                 </div>
                             ) : null}
                         </div>
