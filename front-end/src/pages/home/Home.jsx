@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCategories, setCagoryMap } from '../../redux/categorySlice';
 import { setUser } from '../../redux/userSlice';
 import { API_BASE_URL } from '../../constants';
-import { mainBanner } from '/src/assets/images';
+import { mainBanner, ImmerseBanner } from '/src/assets/images';
 import { useNavigate } from 'react-router-dom';
 
 function Home() {
@@ -105,6 +105,10 @@ function Home() {
                 src={mainBanner}
                 alt=""
               />
+              <div className={styles.bannerText}>
+                <p>Immerse와 함께</p>
+                <p>나만의 공연을 즐겨보세요</p>
+              </div>
               <div className={styles.buttonContainer}>
                 <MakeStage
                   show={MakeStageOn}
