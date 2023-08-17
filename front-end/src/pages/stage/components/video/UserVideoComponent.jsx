@@ -91,7 +91,7 @@ const UserVideoComponent = (props) => {
                             ?
                             {
                             backgroundSize: '100% 100%',
-                            backgroundImage : `url('${effectMenu[effectNum-1].effect}')`,
+                            backgroundImage : `url('${(effectMenu.filter(data=> data.effectId===effectNum))[0]?.effect}')`,
                             height:'100%',width:'100%',position:'absolute',top:'0',zIndex:'50',display:'flex',justifyContent:'center',alignItems:'center'}
                             :
                             {}
