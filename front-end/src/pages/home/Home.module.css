@@ -19,10 +19,6 @@
   overflow-y: auto;
 }
 
-.body::-webkit-scrollbar {
-  display: none;
-}
-
 .contents {
   width: 100%;
 }
