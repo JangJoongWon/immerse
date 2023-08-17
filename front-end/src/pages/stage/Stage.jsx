@@ -39,14 +39,14 @@ const Stage = () => {
             return await createToken(sessionId);
         }
         catch (e) {
-            console.log(e);
+            // console.log(e);
             throw e;
         }
     }
 
     const createSession = async (sessionId) => {
         try {
-            console.log('token: ' + userToken);
+            // console.log('token: ' + userToken);
             const response = await axios.post(API_BASE_URL + '/rooms/', {
                     customSessionId: sessionId
                 }, {
@@ -55,11 +55,11 @@ const Stage = () => {
                     'Authorization': 'Bearer ' + userToken
                 },
             });
-            console.log(response.data);
+            // console.log(response.data);
             return response.data; // The sessionId
         }
         catch (e) {
-            console.log(e);
+            // console.log(e);
             throw e;
         }
     }
@@ -72,7 +72,7 @@ const Stage = () => {
                     'Authorization': 'Bearer ' + userToken
                 },
             });
-            console.log(response.data);
+            // console.log(response.data);
             return response.data; // The token
         }
         catch (e) {
@@ -110,10 +110,10 @@ const Stage = () => {
     }
 
     useEffect(() => {
-        console.log(subscribers);
+        // console.log(subscribers);
         subscribers.forEach(s => {
-            console.log(s);
-            console.log(userEffect);
+            // console.log(s);
+            // console.log(userEffect);
             if (userEffect) {
                 if (userEffect.from.connectionId === s.stream.connection.connectionId) {
                     // console.log(userEffect.from.data + " used effect!");
@@ -121,9 +121,9 @@ const Stage = () => {
                     const nickName = JSON.parse(userEffect.from.data).clientData
                     // 해당 닉네임을 가지고 있는 요소가 존재하지 않는 경우에은 effectList에 추가한다.
                     // console.log(effectList)
-                    console.log(effectList.filter(effect => effect.nickName === nickName));
+                    // console.log(effectList.filter(effect => effect.nickName === nickName));
                     // console.log(effectList.map((effect)=>{ effect.nickName == nickName }))
-                    console.log(nickName)
+                    // console.log(nickName)
                     if (effectList.filter(effect => effect.nickName === nickName).length == 0){
                         const effect = {
                             nickName : nickName,
@@ -146,11 +146,8 @@ const Stage = () => {
                             setEffectList(prev =>([...prev, effect]))
                         }
                     }
-
-                    
                 }
             }
-            
         })
     }, [subscribers, userEffect]);
 
@@ -211,10 +208,11 @@ const Stage = () => {
         });
 
         newSession.on('signal:force-mute', event => {
-            console.log(event);
-            console.log(publisher)
+            event;
+            // console.log(event);
+            // console.log(publisher)
             if (publisher) {
-                console.log("cam off");
+                // console.log("cam off");
                 publisher.stream.getMediaStream().getVideoTracks()[0].enabled = false;
             }
         });
@@ -230,7 +228,7 @@ const Stage = () => {
         newSession.on('signal:chat', event => {
             try {
                 const chatData = JSON.parse(event.data);
-                console.log('chatData:', chatData)
+                // console.log('chatData:', chatData)
                 // const newChat = {
                 //     // from: chatData.from,
                 //     message: chatData.message
@@ -278,9 +276,9 @@ const Stage = () => {
                 var currentVideoDeviceId = newPublisher.stream.getMediaStream().getVideoTracks()[0].getSettings().deviceId;
                 var currentVideoDevice = videoDevices.find(device => device.deviceId === currentVideoDeviceId);
 
-                console.log(newPublisher);
+                // console.log(newPublisher);
                 pushPublisher(newPublisher);
-                console.log(publisher);
+                // console.log(publisher);
                 addSubscriber(newPublisher);
                 setSession(newSession);
             })
@@ -291,7 +289,7 @@ const Stage = () => {
     }
 
     const leaveSession = useCallback(() => {
-        console.log('--------leave--------');
+        // console.log('--------leave--------');
         if (session) {
             session.disconnect();
         }
@@ -309,7 +307,7 @@ const Stage = () => {
                         'Authorization': 'Bearer ' + userToken
                     },
                 });
-                console.log(response.data);
+                // console.log(response.data);
 
                 return response.data; // NO CONTENT
             }
@@ -325,7 +323,7 @@ const Stage = () => {
                         'Authorization': 'Bearer ' + userToken
                     },
                 });
-                console.log(res.data);
+                // console.log(res.data);
 
                 return res.data; // NO CONTENT
             }
@@ -373,7 +371,7 @@ const Stage = () => {
             type: "chat"
         })
         .then(() => {
-            console.log("sent successfully!");
+            // console.log("sent successfully!");
             setChatText('');
         });
     };
@@ -424,7 +422,7 @@ const Stage = () => {
             alert('잘못된 접근이거나 없는 공연입니다.');
             navigate('/*');
         });
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.showProgress === 'OVER') {
             alert('종료된 공연입니다.');
             navigate('/');
@@ -458,14 +456,6 @@ const Stage = () => {
             // window.onpopstate = () => {}; 
         }
     }, [leaveSession]);
-
-    useEffect(() => {
-        console.log(chats);
-    }, [chats]);
-
-    useEffect(() => {
-        console.log(subscribers);
-    }, [subscribers]);
 
     return (
         <div className={styles.container}>
