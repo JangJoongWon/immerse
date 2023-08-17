@@ -226,11 +226,8 @@ useEffect(()=>{
                 </div>
 
                 { effectBoxOn && 
-                <div 
-                    className={styles.effectmenu}
-                 >
-                    <div
-                    className={styles.effectbox}>
+                <div className={styles.effectmenu}>
+                    <div className={styles.effectbox}>
                     {effectMenu.map((effectoption)=>(
                         <img
                         style={ isEffectMode() && (effectoption.effectId === effectNum) ? { boxShadow:'0 0 2rem #9D72FF'} : {} }
