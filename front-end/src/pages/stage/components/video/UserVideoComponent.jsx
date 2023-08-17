@@ -13,10 +13,22 @@ const UserVideoComponent = (props) => {
     // console.log(props)
     const {effectList} = props;
     const publisher = props.streamManager;
+    const mainManager=props.mainStreamManager
     // const effectNum = useSelector((state) => state.user.effectNum);
     const [effectNum, setEffectNum] = useState(0)
     const effectMenu = useSelector((state) => state.user.effectMenu);
     // 비디오 On/Off 함수
+
+    
+    const isMainManager = () => {
+        if(mainManager){
+            if(mainManager === publisher){
+                return true
+            }
+            return false
+        }
+        return false        
+    }
 
     const toggleVideo = () => {
         if (publisher) {
@@ -103,11 +115,16 @@ const UserVideoComponent = (props) => {
                     <div
                     style={{position:"absolute",color:"white",top:"1%",left:"3%",zIndex:'75'}}
                     ><p>{getNicknameTag()}</p></div>
+                    { isMainManager()
+                    ? 
+                    <div></div>
+                    :
                     <div
                     style={{position:"absolute",color:"white",top:"5%",right:"3%"}}
                     >
                         <VideoHandler toggleVideo={toggleVideo} toggleAudio={toggleAudio} streamManager={props.streamManager} />
                     </div>
+                    }
                 </div>
             ) : null}
         </Container>

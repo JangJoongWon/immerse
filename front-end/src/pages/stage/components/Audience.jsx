@@ -133,6 +133,7 @@ useEffect(()=>{
                                                 <UserVideoComponent
                                                     effectMenu = {effectMenu}
                                                     effectList = {effectList}
+                                                    mainStreamManager={props.mainStreamManager}
                                                     streamManager={props.mainStreamManager} />
                                             </div>
                                         ) : 
@@ -167,6 +168,7 @@ useEffect(()=>{
                                         <UserVideoComponent
                                             effectMenu = {effectMenu}
                                             effectList = {effectList}
+                                            mainStreamManager={props.mainStreamManager}
                                             streamManager={props.subscribers[index - !!index]} />
                                     </div>
                                 ) : null}
