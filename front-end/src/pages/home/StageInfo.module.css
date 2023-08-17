@@ -34,6 +34,18 @@
     }
   } */
 
+.redbutton {
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: #FF8B8B;
+}
+
+.redbutton:hover {
+    box-shadow: 0 0 5px #FF8B8B,
+    0 0 25px #FF8B8B;
+}
+
 .left {
     width: 50%;
     height: 100%;

@@ -54,6 +54,7 @@ function Header() {
 
   const toProfile = () => {
     navigate(`/mypage/${user.nickname}`)
+    location.reload();
   }
 
   const searchWord = async (event) => {

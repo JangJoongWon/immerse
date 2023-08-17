@@ -84,6 +84,7 @@ function Card({ data }) {
     // console.log(data)
     // navigate('/mypage')
     navigate(`/mypage/${data.nickname}`)
+    location.reload();
   }
 
   return (
