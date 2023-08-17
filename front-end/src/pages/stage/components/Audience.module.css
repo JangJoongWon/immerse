@@ -128,8 +128,8 @@
 
   .effectbox {
     display: grid;
-    grid-template-columns: repeat(2, 45%);
-    grid-template-rows: repeat(2, 40%);
+    grid-template-columns: repeat(3, 28%);
+    grid-template-rows: repeat(3, 35%);
     gap: 2rem;
     justify-content: center;
     align-content: center;
