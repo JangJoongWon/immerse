@@ -5,7 +5,7 @@ import { UserVideoComponent } from './video'
 import ChattingBox from './ChattingBox'
 import PerformerOption from './performeroption/PerformerOption'
 import { chatOn, chatbutton } from '/src/assets/icons'
-
+import { useSelector } from 'react-redux';
 
 function Performer(props) {
     const effectNum = useSelector((state) => state.user.effectNum);
