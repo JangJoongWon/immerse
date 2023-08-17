@@ -18,6 +18,10 @@
   justify-content: center;
 }
 
+.body::-webkit-scrollbar {
+  display: none;
+}
+
 .contents {
   width: 100%;
   display: flex;

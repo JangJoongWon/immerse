@@ -14,12 +14,13 @@ function StageInfo() {
     const navigate = useNavigate()
     const { showId } = useParams();
     const [showData, setShowData] = useState(null);
+    const [reservationNow, setReservationNow] = useState(false)
   
     useEffect(() => {
       const fetchData = async () => {
         try {
           const response = await axios.get(`${API_BASE_URL}/shows/${showId}`);
-          // console.log('ShowInfo:', response)
+          console.log('ShowInfo:', response)
           setShowData(response.data);
         } catch (error) {
           console.error(error);
@@ -52,8 +53,14 @@ function StageInfo() {
     
         try {
           const response = await axios.post(`${API_BASE_URL}/reservation/${showData.showId}`, {}, { headers });
-          // console.log(response)
-          alert('예약되었습니다!')
+          console.log(response)
+          if (response.data) {
+            alert('예약되었습니다!')
+            setReservationNow(true)
+          }else {
+            alert('예약이 취소되었습니다.')
+            setReservationNow(false)
+          }
         } catch(error) {
           console.log(error)
         }
@@ -97,12 +104,12 @@ function StageInfo() {
                     {showData.showProgress === 'SCHEDULED' ? (
                         user && user.nickname ? (
                             showData.nickname !== user.nickname ? (
-                            <button onClick={reserveStage} className={styles.submitbutton}>예약하기</button>
+                            <button onClick={reserveStage} className={`${reservationNow? styles.redbutton: styles.submitbutton}`}>예약하기</button>
                         ) : (
                             <button onClick={startStage} className={styles.submitbutton}>시작하기</button>
                         )
                         ) : (
-                        <button onClick={reserveStage} className={styles.submitbutton}>예약하기</button> // user 객체가 null인 경우 기본 동작
+                        <button onClick={reserveStage} className={`${reservationNow? styles.redbutton: styles.submitbutton}`}>예약하기</button> // user 객체가 null인 경우 기본 동작
                         )
                     ) : (
                         <button onClick={attendStage} className={styles.submitbutton}>입장하기</button>

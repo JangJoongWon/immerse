@@ -19,6 +19,10 @@
   overflow-y: auto;
 }
 
+.contents::-webkit-scrollbar{
+  display: none;
+}
+
 .middle {
   width: 80%;
   padding-top: 50px;

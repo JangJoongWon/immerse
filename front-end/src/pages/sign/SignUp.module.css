@@ -126,9 +126,9 @@
 .disabledbutton {
   width: 20%;
   height: 40px;
-  background-color: #9D72FF;
+  background-color: #6E48CC;
   border-radius: 10px;
-  color: white;
+  color: #cccccc;
 }
 
 .submitbutton .abledSubmit {
@@ -144,9 +144,9 @@
 }
 
 .disabledSubmit {
-  background-color: #9D72FF;
+  background-color: #6E48CC;
   padding: 10px;
-  color: white;
+  color: #cccccc;
   border-radius: 5px;
 }
 
