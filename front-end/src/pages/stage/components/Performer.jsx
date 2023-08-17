@@ -24,7 +24,7 @@ function Performer(props) {
 
     const createEffect = async () => {
         try {
-            console.log('token: ' + userToken);
+            // console.log('token: ' + userToken);
             const response = await axios.get(API_BASE_URL + '/effect/', {
               headers: { 
                   'Content-Type': 'application/json', 

@@ -78,7 +78,7 @@ function Audience(props) {
         pushEffect()
         // props.changeEffectList(num)
     } else {
-        console.log(effectNum)
+        // nsole.log(effectNum)
         dispatch(setEffectNum(num));
     }
 }
@@ -94,7 +94,7 @@ useEffect(() => {
     
   const createEffect = async () => {
   try {
-      console.log('token: ' + userToken);
+      // console.log('token: ' + userToken);
       const response = await axios.get(API_BASE_URL + '/effect/', {
         headers: { 
             'Content-Type': 'application/json', 
@@ -102,7 +102,7 @@ useEffect(() => {
         },
     });
       dispatch(setEffectMenu(response.data));
-      console.log(response.data);
+      // console.log(response.data);
       return response.data; 
   }
   catch (e) {
@@ -239,7 +239,6 @@ useEffect(()=>{
                     ))}
                     </div>
                 </div>
-
                 }
         </div>
     </>
