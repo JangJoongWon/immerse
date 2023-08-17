@@ -71,8 +71,6 @@ SSAFY 9기 공통 프로젝트
 
 # 프로젝트 일정 및 산출물
 
-## 프로젝트 일정
-
 ## 프로젝트 진행
 
 ### Git Flow
@@ -87,6 +85,17 @@ SSAFY 9기 공통 프로젝트
 
 ### 프로젝트 산출물
 
+[회의록](https://www.notion.so/51a4a4148dea40aaa23fe5c9d7f05911?v=f5b228d72472416381ec5154752d98ea)
+
+1. ERD
+
+![ERD](./exec/assets/ERD.png)
+
+2. Figma
+
+![figma](./exec/assets/figma.png)
+
+![figma2](./exec/assets/figma2.png)
 
 # 개발 멤버 및 회고
 
