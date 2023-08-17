@@ -20,7 +20,7 @@ SSAFY 9기 공통 프로젝트
 
 ---
 
-<div id="s-1"></div>
+<div id=s-1></div>
 
 # 서비스 소개
 
@@ -33,7 +33,7 @@ SSAFY 9기 공통 프로젝트
 
 ---
 
-<div id="s-2"></div>
+<div id=s-2></div>
 
 # 기획 배경
 
@@ -41,7 +41,7 @@ SSAFY 9기 공통 프로젝트
 
 ---
 
-<div id="s-3"></div>
+<div id=s-3></div>
 
 # 기능 소개
 
@@ -49,7 +49,7 @@ SSAFY 9기 공통 프로젝트
 
 ---
 
-<div id="s-4"></div>
+<div id=s-4></div>
 
 # 시연 영상
 
@@ -57,7 +57,7 @@ SSAFY 9기 공통 프로젝트
 
 ---
 
-<div id="s-5"></div>
+<div id=s-5></div>
 
 # 기술 스택
 
@@ -75,7 +75,7 @@ SSAFY 9기 공통 프로젝트
 
 ---
 
-<div id="s-6"></div>
+<div id=s-6></div>
 
 # 프로젝트 일정 및 산출물
 
@@ -97,7 +97,7 @@ SSAFY 9기 공통 프로젝트
 
 
 
-<div id="s-7"></div>
+<div id=s-7></div>
 
 # 개발 멤버 및 회고
 
@@ -113,7 +113,7 @@ D203 모래성
 
 ---
 
-<div id="s-8"></div>
+<div id=s-8></div>
 
 # 트러블 슈팅
 
@@ -131,7 +131,7 @@ D203 모래성
 
 ---
 
-<div id="s-9"></div>
+<div id=s-9></div>
 
 # 개발 중 유의사항
 
