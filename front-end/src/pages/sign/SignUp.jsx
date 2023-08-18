@@ -117,22 +117,24 @@ function SignUp() {
       try {
         const response = await axios.post('https://i9d203.p.ssafy.io/api/user/signup', data);
         // console.log(data)
-        console.log('Signup success:', response.data);
-        try {
-          // 서버로 이메일과 비밀번호를 전송하여 토큰 받기
-          const response = await axios.post('https://i9d203.p.ssafy.io/api/user/signin', data);
-          console.log('Signin Info: ', response.config.data, 'Signin Token: ', response.data)
-          const token = response.data;
-          if (token) {
-            dispatch(setToken(token));
-            console.log('Login success! Token:', token);
-            navigate('/',{replace:true});
-          } else {
-            console.log('Login failed: Invalid token');
-          }
-        } catch (error) {
-          console.log('Login failed:', error.response.data);
-        }
+        // console.log('Signup success:', response.data);
+        alert('회원가입 되었습니다.')
+        navigate('/login')
+        // try {
+        //   // 서버로 이메일과 비밀번호를 전송하여 토큰 받기
+        //   const response = await axios.post('https://i9d203.p.ssafy.io/api/user/signin', data);
+        //   console.log('Signin Info: ', response.config.data, 'Signin Token: ', response.data)
+        //   const token = response.data;
+        //   if (token) {
+        //     dispatch(setToken(token));
+        //     console.log('Login success! Token:', token);
+        //     navigate('/',{replace:true});
+        //   } else {
+        //     console.log('Login failed: Invalid token');
+        //   }
+        // } catch (error) {
+        //   console.log('Login failed:', error.response.data);
+        // }
 
       } catch (error) {
         if (error.response && error.response.data.indexOf('이미 사용중인 아이디입니다') !== -1) {
@@ -147,7 +149,7 @@ function SignUp() {
       event.preventDefault();
       try {
         const response = await axios.get(`http://i9d203.p.ssafy.io/api/user/check/${nickname}`);
-        console.log('Check success:', response.data);
+        // console.log('Check success:', response.data);
         setNickCheck(!response.data);
         if (response.data === true) {
           alert('사용중인 별명입니다.')
